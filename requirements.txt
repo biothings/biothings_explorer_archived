@@ -1,0 +1,5 @@
+requests
+
+# biothings_schema
+-e git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema.py
+
