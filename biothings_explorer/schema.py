@@ -61,10 +61,10 @@ class SchemaExtractor():
             if _property not in self.all_ids:
                 # find all descendants of domain classes
                 input_clses = set([_cls.name for _cls in _property.domain if _cls.uri in self.se.full_class_only_graph])
-                input_clses.union(self.find_descendants(input_clses))
+                input_clses |= self.find_descendants(input_clses)
                 # find all descendants of range classes
                 output_clses = set([_cls.name for _cls in _property.range if _cls.uri in self.se.full_class_only_graph])
-                output_clses.union(self.find_descendants(output_clses))
+                output_clses |= self.find_descendants(output_clses)
                 if input_clses and output_clses:
                     input_ids = set(itertools.chain.from_iterable([self.find_cls_ids(_cls) for _cls in input_clses]))
                     output_ids = set(itertools.chain.from_iterable([self.find_cls_ids(_cls) for _cls in output_clses]))
