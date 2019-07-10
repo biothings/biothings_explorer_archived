@@ -47,7 +47,6 @@ class MappingParser():
         return result
 
     def connect(self):
-        t1 = time.time()
         G = nx.MultiDiGraph()
         # classify the keys in the JSON doc
         clsf = self.classify_keys_in_json(self.mapping)
@@ -55,7 +54,6 @@ class MappingParser():
         for predicate in clsf['links']:
             if "@type" in self.mapping[predicate]:
                 sp = self.se.get_property(predicate)
-                obj_type = self.mapping[predicate]["@type"]
                 obj_clsf = self.classify_keys_in_json(self.mapping[predicate])
                 for _edge in itertools.product(clsf['id'], obj_clsf['id']):
                     output_field = self.mapping[predicate][_edge[1]]
@@ -68,12 +66,4 @@ class MappingParser():
                                input_field=output_field,
                                output_field=input_field,
                                label=sp.inverse_property)
-        t2 = time.time()
-        print('Creating network for {} took {}'.format(self.api, t2 - t1))
         return G
-
-    def find_corresponding_output_field(self, object, label):
-        return self.mapping[label][object]
-
-    def find_corresponding_input_field(self, subject):
-        return self.mapping[subject]
