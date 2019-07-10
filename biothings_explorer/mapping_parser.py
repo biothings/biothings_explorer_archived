@@ -36,28 +36,6 @@ class MappingParser():
         self.mapping = load_json_or_yaml(mapping)
         self.api = api
 
-    def classify_cls_properties(self, _cls):
-        """Classify properties into three categories, e.g. id, links, and other"""
-        if _cls in self.cls_prop_clsf:
-            return self.cls_prop_clsf[_cls]
-        else:
-            result = defaultdict(list)
-            _cls = self.se.get_class(_cls)
-            # list all properties associated with a class
-            props = _cls.list_properties(class_specific=False,
-                                         group_by_class=False)
-            for _prop in [_item['object'] for _item in props]:
-                # if property belongs to id
-                if _prop.name in self.id_list:
-                    result['id'].append(_prop.name)
-                # if the range of properties is defined in schema
-                elif set([_item.name for _item in _prop.range]) & set(self.defined_clses):
-                    result['links'].append(_prop.name)
-                else:
-                    result['other'].append(_prop.name)
-            self.cls_prop_clsf[_cls.label] = result
-            return result
-
     def classify_keys_in_json(self, json_doc):
         """ classify the keys in a json doc"""
         result = defaultdict(list)
