@@ -1,8 +1,7 @@
 from collections import defaultdict
+from .utils import find_common_path, get_dict_values
 
 from jsonpath_rw import jsonpath, parse
-from os.path import commonprefix
-
 
 class Transformer():
     def __init__(self, json_doc, mapping):
@@ -15,14 +14,6 @@ class Transformer():
         example: ensembl.gene -> ensembl[*].gene[*]
         """
         return parse(('.').join([(_item + '[*]') for _item in path.split('.')]))
-
-    @staticmethod
-    def get_dict_values(python_dict):
-        return [v for k,v in python_dict.items() if k != "@type"]
-
-    @staticmethod
-    def find_common_path(dict_values):
-        return commonprefix(dict_values).rsplit('.', 1)[0]
 
     @staticmethod
     def fetch_all_paths_from_dict(python_dict):
@@ -46,7 +37,7 @@ class Transformer():
                 splitted_path = _path.split('.')
                 lst_common_element_idx = splitted_path.index(lst_common_elem)
                 result['.'.join(splitted_path[0:lst_common_element_idx + 2])].append((k, _path))
-        return result
+        return dict(result)
 
     @staticmethod
     def fetch_value_by_jsonpath(json_dict, jsonpath):
@@ -81,8 +72,8 @@ class Transformer():
         result 2: [{"bts:dd": 1, "bts:ee": 2}]
         case 3: {"a": }
         """
-        dict_values = self.get_dict_values(mapping_dict)
-        common_path = self.find_common_path(dict_values)
+        dict_values = get_dict_values(mapping_dict)
+        common_path = find_common_path(dict_values)
         if common_path:
             all_paths = self.fetch_all_paths_from_dict(mapping_dict)
             paths_jsonpaths_dict = {}
@@ -103,7 +94,7 @@ class Transformer():
                     schema_prop = self.find_key_by_value(mapping_dict,
                                                          _tuple[0])
                     _result[schema_prop].append(jsonpaths_values_dict[_tuple[1]])
-                result.append(_result)
+                result.append(dict(_result))
             return result
         else:
             result = {}
