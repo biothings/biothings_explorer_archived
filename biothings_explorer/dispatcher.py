@@ -28,6 +28,7 @@ class Dispatcher():
         return {k:v for (k,v) in mapping_file.items() if k in ["@context", "@type", edge["label"]]}
 
     def dispatch(self):
+        """send request to and parse response from API"""
         results = defaultdict(list)
         for _edge in self.edges.values():
             mapping = self.fetch_schema_mapping_file(_edge['api'])
