@@ -9,6 +9,7 @@ that are also useful for external consumption.
 """
 import json
 import yaml
+from os.path import commonprefix
 
 import requests
 
@@ -46,3 +47,9 @@ def load_json_or_yaml(file_path):
                 yaml.parser.ParserError):
             raise ValueError("Not a valid JSON or YAML format.")
     return data
+
+def find_common_path(dict_values):
+    return commonprefix(dict_values).rsplit('.', 1)[0]
+
+def get_dict_values(python_dict):
+    return [v for k,v in python_dict.items() if k != "@type"]
