@@ -51,29 +51,27 @@ class MappingParser():
         clsf = self.classify_keys_in_json(self.mapping)
         # for each "links" properties, find its ids
         for predicate in clsf['links']:
-                if type(self.mapping[predicate]) == dict:
-                    self.mapping[predicate] = [self.mapping[predicate]]
-                for _pred in self.mapping[predicate]:
-                    if "@type" in _pred:
-                        sp = self.se.get_property(predicate)
-                        obj_clsf = self.classify_keys_in_json(_pred)
-                        common_prefix = find_common_path(get_dict_values(_pred))
-                        for _edge in itertools.product(clsf['id'], obj_clsf['id']):
-                            output_field = _pred[_edge[1]]
-                            input_field = self.mapping[_edge[0]]
-                            if predicate == 'bts:target':
-                                print(_edge)
-                            G.add_edge(_edge[0], _edge[1], label=predicate,
-                                       api=self.api,
-                                       input_field=input_field,
-                                       input_type=self.mapping["@type"],
-                                       output_type=_pred["@type"],
-                                       output_field=common_prefix if common_prefix else output_field)
-                            inverse_property = None if not sp.inverse_property else sp.inverse_property.name
-                            G.add_edge(_edge[1], _edge[0], api=self.api,
-                                       input_field=output_field,
-                                       input_type=_pred["@type"],
-                                       output_type=self.mapping["@type"],
-                                       output_field=input_field,
-                                       label=inverse_property)
+            if type(self.mapping[predicate]) == dict:
+                self.mapping[predicate] = [self.mapping[predicate]]
+            for _pred in self.mapping[predicate]:
+                if "@type" in _pred:
+                    sp = self.se.get_property(predicate)
+                    obj_clsf = self.classify_keys_in_json(_pred)
+                    common_prefix = find_common_path(get_dict_values(_pred))
+                    for _edge in itertools.product(clsf['id'], obj_clsf['id']):
+                        output_field = _pred[_edge[1]]
+                        input_field = self.mapping[_edge[0]]
+                        G.add_edge(_edge[0], _edge[1], label=predicate,
+                                   api=self.api,
+                                   input_field=input_field,
+                                   input_type=self.mapping["@type"],
+                                   output_type=_pred["@type"],
+                                   output_field=common_prefix if common_prefix else output_field)
+                        inverse_property = None if not sp.inverse_property else sp.inverse_property.name
+                        G.add_edge(_edge[1], _edge[0], api=self.api,
+                                   input_field=output_field,
+                                   input_type=_pred["@type"],
+                                   output_type=self.mapping["@type"],
+                                   output_field=input_field,
+                                   label=inverse_property)
         return G
