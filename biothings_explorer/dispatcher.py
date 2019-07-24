@@ -13,11 +13,23 @@ from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 
 class Dispatcher():
-    def __init__(self, edges, values):
+    def __init__(self, edges, values, batch_mode=False):
         self.edges = edges
         self.registry = Registry().registry
-        self.values = values
-        self.caller = BioThingsCaller()
+        self.batch_mode = batch_mode
+        self.values = self.preprocess_input_values(values)
+        self.caller = BioThingsCaller(batch_mode=batch_mode)
+
+    def preprocess_input_values(self, values):
+        if not self.batch_mode:
+            return values
+        else:
+            if type(values) == str:
+                return values
+            elif type(values) == list:
+                return ','.join(values)
+            else:
+                raise ValueError('{} should be str or list'.format(values))
 
     def fetch_schema_mapping_file(self, api):
         """Fetch schema mapping file from the registry"""
@@ -38,6 +50,11 @@ class Dispatcher():
                                             _edge['output_field'],
                                             self.values)
             _res = OutputParser(response, subset_mapping,
-                                _edge['label'], _edge['api']).parse()
-            results[_edge['label']] += _res
+                                _edge['label'],
+                                self.batch_mode,
+                                _edge['api']).parse()
+            if not self.batch_mode:
+                results[_edge['label']] += _res
+            else:
+                results[_edge['label']].append(_res)
         return dict(results)
