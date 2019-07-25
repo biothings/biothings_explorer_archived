@@ -4,13 +4,16 @@
 biothings_explorer.dispatcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This module contains code that biothings_explorer use to communicate to and receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
+This module contains code that biothings_explorer use to communicate to
+and receive from APIs. It serves as a glue between "apicall" module and
+ "api_output_parser" module.
 """
 from collections import defaultdict
 
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
+
 
 class Dispatcher():
     def __init__(self, edges, values, batch_mode=False):
