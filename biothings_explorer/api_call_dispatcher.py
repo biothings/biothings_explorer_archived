@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-biothings_explorer.dispatcher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+biothings_explorer.api_call_dispatcher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This module contains code that biothings_explorer use to communicate to
 and receive from APIs. It serves as a glue between "apicall" module and
@@ -30,7 +30,7 @@ class Dispatcher():
     @batch_mode.setter
     def batch_mode(self, value):
         self._batch_mode = value
-        self._values = self.preprocess_input_values(values)
+        self._values = self.preprocess_input_values(self._values)
 
     @property
     def values(self):
