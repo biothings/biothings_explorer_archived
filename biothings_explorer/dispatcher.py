@@ -14,14 +14,44 @@ from .api_output_parser import OutputParser
 
 class Dispatcher():
     def __init__(self, edges, values, batch_mode=False):
-        self.edges = edges
+        self._edges = edges
         self.registry = Registry().registry
-        self.batch_mode = batch_mode
-        self.values = self.preprocess_input_values(values)
+        self._batch_mode = batch_mode
+        self._values = self.preprocess_input_values(values)
         self.caller = BioThingsCaller(batch_mode=batch_mode)
 
+    @property
+    def batch_mode(self):
+        return self._batch_mode
+
+    @batch_mode.setter
+    def batch_mode(self, value):
+        self._batch_mode = value
+        self._values = self.preprocess_input_values(values)
+
+    @property
+    def values(self):
+        return self._values
+
+    @values.setter
+    def values(self, value):
+        self._values = self.preprocess_input_values(value)
+
+    @property
+    def edges(self):
+        return self._edges
+
+    @edges.setter
+    def values(self, value):
+        self._edges = value
+
     def preprocess_input_values(self, values):
-        if not self.batch_mode:
+        """Preprocess the input values
+
+        If batch_mode is set to be True, convert input values into a string
+        separated by ',' 
+        """
+        if not self._batch_mode:
             return values
         else:
             if type(values) == str:
@@ -42,18 +72,18 @@ class Dispatcher():
     def dispatch(self):
         """send request to and parse response from API"""
         results = defaultdict(list)
-        for _edge in self.edges.values():
+        for _edge in self._edges.values():
             mapping = self.fetch_schema_mapping_file(_edge['api'])
             subset_mapping = self.subset_mapping_file(_edge, mapping)
             response = self.caller.call_api(_edge['api'],
                                             _edge['input_field'],
                                             _edge['output_field'],
-                                            self.values)
+                                            self._values)
             _res = OutputParser(response, subset_mapping,
                                 _edge['label'],
-                                self.batch_mode,
+                                self._batch_mode,
                                 _edge['api']).parse()
-            if not self.batch_mode:
+            if not self._batch_mode:
                 results[_edge['label']] += _res
             else:
                 results[_edge['label']].append(_res)
