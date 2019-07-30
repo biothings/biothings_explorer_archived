@@ -34,6 +34,7 @@ class Registry():
             self.mp.load_mapping(_url, _api)
             self.registry[_api]['mapping'] = self.mp.mapping
             self.registry[_api]['graph'] = self.mp.connect()
+            self.registry[_api]['type'] = self.mp.type
             self.G = nx.compose(self.G, self.registry[_api]['graph'])
         return self.G
 
@@ -43,6 +44,7 @@ class Registry():
         return [_item['curie'] for _item in scls.list_properties(class_specific=False, group_by_class=False) if _item['curie'] in self.mp.id_list]
 
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):
+        """filter edges based on input, output and label"""
         if edge_label:
             if type(edge_label) == str:
                 edge_label = [edge_label]
