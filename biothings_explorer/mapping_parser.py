@@ -47,6 +47,7 @@ class MappingParser():
 
     def connect(self):
         G = nx.MultiDiGraph()
+        self.type = self.mapping.get("@type")
         # classify the keys in the JSON doc
         clsf = self.classify_keys_in_json(self.mapping)
         # for each "links" properties, find its ids
@@ -65,12 +66,16 @@ class MappingParser():
                                    api=self.api,
                                    input_field=input_field,
                                    input_type=self.mapping["@type"],
+                                   input_id = _edge[0],
+                                   output_id = _edge[1],
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
                         inverse_property = None if not sp.inverse_property else sp.inverse_property.name
                         G.add_edge(_edge[1], _edge[0], api=self.api,
                                    input_field=output_field,
                                    input_type=_pred["@type"],
+                                   input_id=_edge[1],
+                                   output_id=_edge[0],
                                    output_type=self.mapping["@type"],
                                    output_field=input_field,
                                    label=inverse_property)
