@@ -12,11 +12,10 @@ from .json_transformer import Transformer
 from .utils import load_json_or_yaml
 
 class OutputParser():
-    def __init__(self, res, mapping, predicate, batch_mode=False, api=None):
+    def __init__(self, res, mapping, batch_mode=False, api=None):
         self.api = api
         self.response = res
         self.mapping = mapping
-        self.predicate = predicate
         self.batch_mode = batch_mode
         self.BIOTHINGS = ['mygene.info', 'myvariant.info', 'mychem.info']
 
@@ -28,7 +27,7 @@ class OutputParser():
             new_res = []
             for _res in self.response['hits']:
                 transformed_json = Transformer(_res, self.mapping).transform()
-                new_res += transformed_json[self.predicate]
+                new_res.append(transformed_json)
             return new_res
 
     def parse_biothings_post_res(self):
@@ -40,7 +39,7 @@ class OutputParser():
                 new_res[_res['query']] = None
             else:
                 transformed_json = Transformer(_res, self.mapping).transform()
-                new_res[_res['query']] += transformed_json[self.predicate]
+                new_res[_res['query']].append(transformed_json)
         return dict(new_res)
 
     def parse(self):
