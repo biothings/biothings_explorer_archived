@@ -83,7 +83,6 @@ class Dispatcher():
                                             _edge['output_field'],
                                             self._values)
             _res = OutputParser(response, subset_mapping,
-                                _edge['label'],
                                 self._batch_mode,
                                 _edge['api']).parse()
             if not self._batch_mode:
