@@ -22,6 +22,9 @@ class BioThingsCaller():
         """construct query parameters with input, output and value"""
         get_params = 'q={input}:{value}&fields={output}'
         post_params = 'q={value}&scopes={input}&fields={output}'
+        if ',' in input_fields and not self.batch_mode:
+            _input = ' OR'.join([(_item + ':' + value) for _item in input_fields.split(',')])
+            return get_params.replace('{input}:{value}', _input).replace('{output}', output_fields)
         params = post_params if self.batch_mode else get_params
         return params.replace('{input}', input_fields).replace('{output}',output_fields).replace('{value}', value)
 
