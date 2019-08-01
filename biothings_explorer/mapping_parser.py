@@ -59,11 +59,14 @@ class MappingParser():
                     sp = self.se.get_property(predicate)
                     obj_clsf = self.classify_keys_in_json(_pred)
                     common_prefix = find_common_path(get_dict_values(_pred))
-                    for _edge in itertools.product(clsf['id'], obj_clsf['id']):
+                    input_id = [_pred['$input']] if '$input' in _pred else clsf['id']
+                    source = _pred['$source'] if '$source' in _pred else self.api
+                    for _edge in itertools.product(input_id, obj_clsf['id']):
                         output_field = _pred[_edge[1]]
                         input_field = self.mapping[_edge[0]]
                         G.add_edge(_edge[0], _edge[1], label=predicate,
                                    api=self.api,
+                                   source=source,
                                    input_field=input_field,
                                    input_type=self.mapping["@type"],
                                    input_id = _edge[0],
@@ -74,6 +77,7 @@ class MappingParser():
                         G.add_edge(_edge[1], _edge[0], api=self.api,
                                    input_field=output_field,
                                    input_type=_pred["@type"],
+                                   source=source,
                                    input_id=_edge[1],
                                    output_id=_edge[0],
                                    output_type=self.mapping["@type"],
