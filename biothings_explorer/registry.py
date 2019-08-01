@@ -46,7 +46,7 @@ class Registry():
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):
         """filter edges based on input, output and label"""
         if edge_label:
-            if type(edge_label) == str:
+            if isinstance(edge_label, str):
                 edge_label = [edge_label]
         else:
             edge_label = self.all_labels
