@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
 """
 biothings_explorer.dispatcher
@@ -6,10 +6,8 @@ biothings_explorer.dispatcher
 
 This module contains code that biothings_explorer use to communicate to and receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
 """
-from collections import defaultdict
-
 from .json_transformer import Transformer
-from .utils import load_json_or_yaml
+
 
 class OutputParser():
     def __init__(self, res, mapping, batch_mode=False, api=None):
@@ -17,29 +15,59 @@ class OutputParser():
         self.response = res
         self.mapping = mapping
         self.batch_mode = batch_mode
-        self.BIOTHINGS = ['mygene.info', 'myvariant.info', 'mychem.info']
+        self.BIOTHINGS = ['mygene.info', 'myvariant.info',
+                          'mychem.info', 'mydisease.info',
+                          'semmed']
 
     def parse_biothings_get_res(self):
         """Parse the API response from biothings API using GET method"""
         if self.response['total'] == 0:
             return None
         else:
-            new_res = []
+            new_res = {}
             for _res in self.response['hits']:
                 transformed_json = Transformer(_res, self.mapping).transform()
-                new_res.append(transformed_json)
+                if type(transformed_json) == dict:
+                    for k, v in transformed_json.items():
+                        if k in ["@context", "@type"]:
+                            new_res[k] = v
+                        else:
+                            if k not in new_res:
+                                new_res[k] = []
+                            if type(v) == list:
+                                new_res[k] += v
+                            else:
+                                new_res[k].append(v)
+                else:
+                    continue
             return new_res
 
     def parse_biothings_post_res(self):
         """Parse the API response from biothings API using POST method"""
-        new_res = defaultdict(list)
+        new_res = {}
         for _res in self.response:
             # handle case where the queried item is not found
             if _res.get('notfound'):
-                new_res[_res['query']] = None
+                if _res['query'] not in new_res:
+                    continue
+                else:
+                    new_res[_res['query']] = {}
             else:
                 transformed_json = Transformer(_res, self.mapping).transform()
-                new_res[_res['query']].append(transformed_json)
+                if _res['query'] not in new_res:
+                    new_res[_res['query']] = transformed_json
+                else:
+                    if type(transformed_json) == dict:
+                        for k, v in transformed_json.items():
+                            if k in ["@context", "@type"]:
+                                new_res[_res['query']][k] = v
+                            else:
+                                if k not in new_res[_res['query']]:
+                                    new_res[_res['query']][k] = []
+                                if type(v) == list:
+                                    new_res[_res['query']][k] += v
+                                else:
+                                    new_res[_res['query']][k].append(v)
         return dict(new_res)
 
     def parse(self):

@@ -3,6 +3,7 @@ from .utils import find_common_path, get_dict_values
 
 from jsonpath_rw import jsonpath, parse
 
+
 class Transformer():
     def __init__(self, json_doc, mapping):
         self.json_doc = json_doc
@@ -19,7 +20,7 @@ class Transformer():
     def fetch_all_paths_from_dict(python_dict):
         paths = []
         for k, v in python_dict.items():
-            if k != "@type":
+            if k not in ["@type", '$input', '$source']:
                 if type(v) == list:
                     paths += v
                 else:
@@ -74,6 +75,7 @@ class Transformer():
         """
         dict_values = get_dict_values(mapping_dict)
         common_path = find_common_path(dict_values)
+        common_path
         if common_path:
             all_paths = self.fetch_all_paths_from_dict(mapping_dict)
             paths_jsonpaths_dict = {}
@@ -94,12 +96,15 @@ class Transformer():
                     schema_prop = self.find_key_by_value(mapping_dict,
                                                          _tuple[0])
                     _result[schema_prop].append(jsonpaths_values_dict[_tuple[1]])
+                for _item in ["@type", '$input', '$source']:
+                    if _item in mapping_dict:
+                        _result[_item] = mapping_dict[_item]
                 result.append(dict(_result))
             return result
         else:
             result = {}
-            for k,v in mapping_dict.items():
-                if k != "@type":
+            for k, v in mapping_dict.items():
+                if k not in ["@type", "$input", "$source"]:
                     if type(v) == str:
                         parser = self.generate_parser(v)
                         result[k] = self.fetch_value_from_single_path(parser)
@@ -109,13 +114,15 @@ class Transformer():
                             parser = self.generate_parser(path)
                             _res += self.fetch_value_from_single_path(parser)
                         result[k] = _res
+                else:
+                    result[k] = v
             return result
 
     def fetch_value_from_single_path(self, parser):
         return [match.value for match in parser.find(self.json_doc)]
 
     def fetch_value(self, key, paths):
-        if key in ["@context", "@type"]:
+        if key in ["@context", "@type", "$input", "$source"]:
             return paths
         if type(paths) == str:
             parser = self.generate_parser(paths)
@@ -124,10 +131,18 @@ class Transformer():
             result = []
             for path in paths:
                 if type(path) == dict:
-                    result += self.parse_dict(path)
+                    _res = self.parse_dict(path)
+                    if type(_res) == list:
+                        result += _res
+                    else:
+                        result.append(_res)
                 elif type(path) == str:
                     parser = self.generate_parser(path)
-                    result += self.fetch_value_from_single_path(parser)
+                    _res = self.fetch_value_from_single_path(parser)
+                    if type(_res) == list:
+                        result += _res
+                    else:
+                        result.append(_res)
                 else:
                     raise ValueError('{} is not valid'.format(path))
             return result

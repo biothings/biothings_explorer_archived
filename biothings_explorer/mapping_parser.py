@@ -65,6 +65,7 @@ class MappingParser():
                         output_field = _pred[_edge[1]]
                         input_field = self.mapping[_edge[0]]
                         G.add_edge(_edge[0], _edge[1], label=predicate,
+                                   mapping_key=predicate,
                                    api=self.api,
                                    source=source,
                                    input_field=input_field,
@@ -82,5 +83,6 @@ class MappingParser():
                                    output_id=_edge[0],
                                    output_type=self.mapping["@type"],
                                    output_field=input_field,
-                                   label=inverse_property)
+                                   label=inverse_property,
+                                   mapping_key=_edge[0])
         return G

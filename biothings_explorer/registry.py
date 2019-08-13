@@ -18,13 +18,15 @@ class Registry():
         self.G = nx.MultiDiGraph()
         self.BIOTHINGS = {'mygene.info': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mygene.info/schema.json',
                           'myvariant.info': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/myvariant.info/schema.json',
-                          'mychem.info': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mychem.info/schema.json'}
+                          'mychem.info': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mychem.info/schema.json',
+                          'mydisease.info': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mydisease.info/schema.json',
+                          'semmed': 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmed/schema.json',}
         self.registry = {}
         self.load_biothings()
         self.all_edges_info = self.G.edges(data=True)
         self.all_labels = set([d[-1]['label'] for d in self.all_edges_info])
-        self.all_inputs = set([d[0] for d in self.all_edges_info])
-        self.all_outputs = set([d[1] for d in self.all_edges_info])
+        self.all_inputs = set([d[-1]['input_type'] for d in self.all_edges_info])
+        self.all_outputs = set([d[-1]['output_type'] for d in self.all_edges_info])
 
     def load_biothings(self):
         """load biothings API into registry network graph"""
@@ -51,12 +53,11 @@ class Registry():
         else:
             edge_label = self.all_labels
         if not input_cls:
-            input_ids = self.all_inputs
+            input_cls = self.all_inputs
         else:
-            input_ids = self.class2id(input_cls)
+            input_cls = [input_cls]
         if not output_cls:
-            output_ids = self.all_outputs
+            output_cls = self.all_outputs
         else:
-            output_ids = self.class2id(output_cls)
-        return [d for u,v,d in self.all_edges_info if u in input_ids and v in output_ids and d['label'] in edge_label]
-
+            output_cls = [output_cls]
+        return [d for u,v,d in self.all_edges_info if d['input_type'] in input_cls and d['output_type'] in output_cls and d['label'] in edge_label]
