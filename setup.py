@@ -12,15 +12,15 @@ install_requires = [
 
 
 setup(
-    name="biothings_schema",
+    name="biothings_explorer",
     version="0.0.1",
     author="Jiwen Xin, Chunlei Wu",
     author_email="cwu@scripps.edu",
-    description="Python Client for BioThings Schema",
+    description="Python Client for BioThings Explorer",
     license="BSD",
     keywords="schema biothings",
-    url="https://github.com/biothings/biothings_schema.py",
-    packages=['biothings_schema'],
+    url="https://github.com/biothings/biothings_explorer",
+    packages=['biothings_explorer'],
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
