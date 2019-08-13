@@ -23,6 +23,34 @@ MYDISEASE_MAPPING = {"mondo": "_id",
                      "umls": "mondo.xrefs.umls",
                      "name": "xrefs.umls,mondo.label"
                      }
+scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
+          'myvariant.info': ['dbsnp.rsid', '_id', 'clinvar.rsid',
+                             'dbnsfp.rsid', 'clinvar.hgvs.coding',
+                             'clinvar.hgvs.genomic', 'clinvar.hgvs.protein'],
+          'mychem.info': ['chembl.molecule_chembl_id', 'drugbank.id',
+                          'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
+                          'unii.unii', 'ginas.preferred_name'],
+          'mydisease.info': ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
+                             'mondo.xrefs.mesh', 'mondo.xrefs.umls',
+                             'mondo.label']}
+
+fields = {'mygene.info': {'entrezgene': 'gene',
+                          'name': 'name',
+                          'symbol': 'symbol',
+                          'taxid': 'taxonomy'},
+          'myvariant.info': {'_id': "hgvs",
+                             'dbsnp.rsid': 'dbsnp'},
+          'mychem.info': {'chembl.molecule_chembl_id': 'chembl',
+                          'drugbank.id': 'drugbank',
+                          'chembl.pref_name': 'name',
+                          'pubchem.cid': 'pubchem'},
+          'mydisease.info': {'_id': "mondo",
+                             'mondo.xrefs.doid': 'doid',
+                             'mondo.xrefs.hp': 'hp',
+                             'mondo.xrefs.umls': 'umls',
+                             'mondo.xrefs.mesh': 'mesh',
+                             'mondo.xrefs.label': 'name'}
+          }
 
 
 class Hint():
@@ -40,32 +68,42 @@ class Hint():
         requests = []
         requests.append(grequests.post('http://mygene.info/v3/query',
                                        data={'q': ["'" + _input + "'"],
-                                             'scopes': 'entrezgene,symbol,name,hgnc',
+                                             'scopes': ','.join(scopes['mygene.info']),
                                              'size': 4,
                                              'dotfield': True}))
         requests.append(grequests.post('http://myvariant.info/v1/query',
                                        data={'q': ["'" + _input + "'"],
-                                             'scopes': 'dbsnp.rsid, _id, clinvar.rsid, dbnsfp.rsid, clinvar.hgvs.coding, clinvar.hgvs.genomic,clinvar.hgvs.non-coding,clinvar.hgvs.protein,civic.hgvs_expression',
-                                             'fields': 'dbsnp.rsid, _id',
+                                             'scopes': ','.join(scopes['myvariant.info']),
+                                             'fields': ','.join(fields['myvariant.info'].keys()),
                                              'size': 4,
                                              'dotfield': True}))
         requests.append(grequests.post('http://mychem.info/v1/query',
                                        data={'q': ["'" + _input + "'"],
-                                             'scopes': 'chembl.molecule_chembl_id,drugbank.id,pubchem.cid,unii.unii, chembl.pref_name,drugbank.name,ginas.preferred_name',
-                                             'fields': 'chembl.molecule_chembl_id, drugbank.id,chembl.pref_name,pubchem.cid,unii.unii',
+                                             'scopes': ','.join(scopes['mychem.info']),
+                                             'fields': ','.join(fields['mychem.info'].keys()),
                                              'size': 4,
                                              'dotfield': True}))
         requests.append(grequests.post('http://mydisease.info/v1/query',
                                        data={'q': ["'" + _input + "'"],
-                                             'scopes': '_id, mondo.xrefs.doid, mondo.xrefs.hp, mondo.xrefs.mesh, mondo.xrefs.umls,mondo.label',
-                                             'fields': '_id,mondo.xrefs.doid,mondo.xrefs.hp, mondo.xrefs.mesh,mondo.xrefs.umls,mondo.label',
+                                             'scopes': ','.join(scopes['mydisease.info']),
+                                             'fields': ','.join(fields['mydisease.info']),
                                              'size': 4,
                                              'dotfield': True}))
-        t1 = time.time()
         res = grequests.map(requests)
-        t2 = time.time()
-        print('time to make request {}'.format(t2 - t1))
-        res = {k: v.json() for (k, v) in zip(self.types, res)}
-        t3 = time.time()
-        print('time to parse results {}'.format(t3 - t2))
-        return res
+        final_res = []
+        for (k, v, j) in zip(self.clients, res, self.types):
+            _res = {}
+            v = v.json()
+            for _v in v:
+                if 'notfound' in _v:
+                    continue
+                else:
+                    display = ''
+                    for field_name in fields[k]:
+                        if field_name in _v:
+                            _res[fields[k][field_name]] = _v[field_name]
+                            display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
+                    _res['display'] = display
+                    _res['type'] = j
+                    final_res.append(_res)
+        return final_res
