@@ -34,7 +34,7 @@ scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
                              'mondo.xrefs.mesh', 'mondo.xrefs.umls',
                              'mondo.label']}
 
-fields = {'mygene.info': {'entrezgene': 'gene',
+fields = {'mygene.info': {'entrezgene': 'entrez',
                           'name': 'name',
                           'symbol': 'symbol',
                           'taxid': 'taxonomy'},
