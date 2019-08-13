@@ -92,12 +92,12 @@ class Hint():
         res = grequests.map(requests)
         final_res = []
         for (k, v, j) in zip(self.clients, res, self.types):
-            _res = {}
             v = v.json()
             for _v in v:
                 if 'notfound' in _v:
                     continue
                 else:
+                    _res = {}
                     display = ''
                     for field_name in fields[k]:
                         if field_name in _v:
