@@ -1,5 +1,5 @@
-import grequests
-import time
+import asyncio
+from aiohttp import ClientSession
 
 MYGENE_MAPPING = {"entrez": "entrezgene",
                   "name": "name",
@@ -37,7 +37,8 @@ scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
 fields = {'mygene.info': {'entrezgene': 'entrez',
                           'name': 'name',
                           'symbol': 'symbol',
-                          'taxid': 'taxonomy'},
+                          'taxid': 'taxonomy',
+                          'umls.cui': 'umls'},
           'myvariant.info': {'_id': "hgvs",
                              'dbsnp.rsid': 'dbsnp'},
           'mychem.info': {'chembl.molecule_chembl_id': 'chembl',
@@ -63,47 +64,60 @@ class Hint():
                         'mychem.info': MYCHEM_MAPPING,
                         'mydisease.info': MYDISEASE_MAPPING}
 
+    async def call_api(self, _input, session):
+        async with session.post(_input['url'], data=_input['data']) as res:
+            return await res.json()
+
+    async def run(self, _input):
+        inputs = []
+        inputs.append({'url': 'http://mygene.info/v3/query',
+                       'data': {'q': ["'" + _input + "'"],
+                                'scopes': ','.join(scopes['mygene.info']),
+                                'size': 10,
+                                'dotfield': True}})
+        inputs.append({'url': 'http://myvariant.info/v1/query',
+                       'data': {'q': ["'" + _input + "'"],
+                                'scopes': ','.join(scopes['myvariant.info']),
+                                'fields': ','.join(fields['myvariant.info'].keys()),
+                                'size': 10,
+                                'dotfield': True}})
+        inputs.append({'url': 'http://mychem.info/v1/query',
+                       'data': {'q': ["'" + _input + "'"],
+                                'scopes': ','.join(scopes['mychem.info']),
+                                'fields': ','.join(fields['mychem.info'].keys()),
+                                'size': 10,
+                                'dotfield': True}})
+        inputs.append({'url': 'http://mydisease.info/v1/query',
+                       'data': {'q': ["'" + _input + "'"],
+                                'scopes': ','.join(scopes['mydisease.info']),
+                                'fields': ','.join(fields['mydisease.info']),
+                                'size': 4,
+                                'dotfield': True}
+                    })
+        tasks = []
+        async with ClientSession() as session:
+            for i in inputs:
+                task = asyncio.ensure_future(self.call_api(i, session))
+                tasks.append(task)
+            responses = await asyncio.gather(*tasks)
+            final_res = []
+            for (k, v, j) in zip(self.clients, responses, self.types):
+                for _v in v:
+                    if 'notfound' in _v:
+                        continue
+                    else:
+                        _res = {}
+                        display = ''
+                        for field_name in fields[k]:
+                            if field_name in _v:
+                                _res[fields[k][field_name]] = _v[field_name]
+                                display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
+                        _res['display'] = display
+                        _res['type'] = j
+                        final_res.append(_res)
+            return final_res
+
     def query(self, _input):
-        """query input using 4 APIs"""
-        requests = []
-        requests.append(grequests.post('http://mygene.info/v3/query',
-                                       data={'q': ["'" + _input + "'"],
-                                             'scopes': ','.join(scopes['mygene.info']),
-                                             'size': 4,
-                                             'dotfield': True}))
-        requests.append(grequests.post('http://myvariant.info/v1/query',
-                                       data={'q': ["'" + _input + "'"],
-                                             'scopes': ','.join(scopes['myvariant.info']),
-                                             'fields': ','.join(fields['myvariant.info'].keys()),
-                                             'size': 4,
-                                             'dotfield': True}))
-        requests.append(grequests.post('http://mychem.info/v1/query',
-                                       data={'q': ["'" + _input + "'"],
-                                             'scopes': ','.join(scopes['mychem.info']),
-                                             'fields': ','.join(fields['mychem.info'].keys()),
-                                             'size': 4,
-                                             'dotfield': True}))
-        requests.append(grequests.post('http://mydisease.info/v1/query',
-                                       data={'q': ["'" + _input + "'"],
-                                             'scopes': ','.join(scopes['mydisease.info']),
-                                             'fields': ','.join(fields['mydisease.info']),
-                                             'size': 4,
-                                             'dotfield': True}))
-        res = grequests.map(requests)
-        final_res = []
-        for (k, v, j) in zip(self.clients, res, self.types):
-            v = v.json()
-            for _v in v:
-                if 'notfound' in _v:
-                    continue
-                else:
-                    _res = {}
-                    display = ''
-                    for field_name in fields[k]:
-                        if field_name in _v:
-                            _res[fields[k][field_name]] = _v[field_name]
-                            display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
-                    _res['display'] = display
-                    _res['type'] = j
-                    final_res.append(_res)
-        return final_res
+        loop = asyncio.get_event_loop()
+        future = asyncio.ensure_future(self.run(_input))
+        return loop.run_until_complete(future)
