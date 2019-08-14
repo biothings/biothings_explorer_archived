@@ -100,12 +100,14 @@ class Hint():
                 task = asyncio.ensure_future(self.call_api(i, session))
                 tasks.append(task)
             responses = await asyncio.gather(*tasks)
-            final_res = []
+            final_res = {}
             for (k, v, j) in zip(self.clients, responses, self.types):
                 for _v in v:
                     if 'notfound' in _v:
                         continue
                     else:
+                        if j not in final_res:
+                            final_res[j] = []
                         _res = {}
                         display = ''
                         for field_name in fields[k]:
@@ -113,8 +115,7 @@ class Hint():
                                 _res[fields[k][field_name]] = _v[field_name]
                                 display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
                         _res['display'] = display
-                        _res['type'] = j
-                        final_res.append(_res)
+                        final_res[j].append(_res)
             return final_res
 
     def query(self, _input):
