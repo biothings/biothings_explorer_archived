@@ -50,7 +50,7 @@ fields = {'mygene.info': {'entrezgene': 'entrez',
                              'mondo.xrefs.hp': 'hp',
                              'mondo.xrefs.umls': 'umls',
                              'mondo.xrefs.mesh': 'mesh',
-                             'mondo.xrefs.label': 'name'}
+                             'mondo.label': 'name'}
           }
 
 
