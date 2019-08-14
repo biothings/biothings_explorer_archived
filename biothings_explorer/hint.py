@@ -101,13 +101,13 @@ class Hint():
                 tasks.append(task)
             responses = await asyncio.gather(*tasks)
             final_res = {}
+            for j in self.types:
+                final_res[j] = []
             for (k, v, j) in zip(self.clients, responses, self.types):
                 for _v in v:
                     if 'notfound' in _v:
                         continue
                     else:
-                        if j not in final_res:
-                            final_res[j] = []
                         _res = {}
                         display = ''
                         for field_name in fields[k]:
