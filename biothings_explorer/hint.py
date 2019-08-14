@@ -21,7 +21,7 @@ MYDISEASE_MAPPING = {"mondo": "_id",
                      "hp": "mondo.xrefs.hp",
                      "mesh": "mondo.xrefs.mesh",
                      "umls": "mondo.xrefs.umls",
-                     "name": "xrefs.umls,mondo.label"
+                     "name": "mondo.label"
                      }
 scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
           'myvariant.info': ['dbsnp.rsid', '_id', 'clinvar.rsid',
@@ -73,25 +73,25 @@ class Hint():
         inputs.append({'url': 'http://mygene.info/v3/query',
                        'data': {'q': ["'" + _input + "'"],
                                 'scopes': ','.join(scopes['mygene.info']),
-                                'size': 10,
+                                'size': 5,
                                 'dotfield': True}})
         inputs.append({'url': 'http://myvariant.info/v1/query',
                        'data': {'q': ["'" + _input + "'"],
                                 'scopes': ','.join(scopes['myvariant.info']),
                                 'fields': ','.join(fields['myvariant.info'].keys()),
-                                'size': 10,
+                                'size': 5,
                                 'dotfield': True}})
         inputs.append({'url': 'http://mychem.info/v1/query',
                        'data': {'q': ["'" + _input + "'"],
                                 'scopes': ','.join(scopes['mychem.info']),
                                 'fields': ','.join(fields['mychem.info'].keys()),
-                                'size': 10,
+                                'size': 5,
                                 'dotfield': True}})
         inputs.append({'url': 'http://mydisease.info/v1/query',
                        'data': {'q': ["'" + _input + "'"],
                                 'scopes': ','.join(scopes['mydisease.info']),
                                 'fields': ','.join(fields['mydisease.info']),
-                                'size': 4,
+                                'size': 5,
                                 'dotfield': True}
                     })
         tasks = []
