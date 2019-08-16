@@ -1,28 +1,6 @@
 import asyncio
 from aiohttp import ClientSession
 
-MYGENE_MAPPING = {"entrez": "entrezgene",
-                  "name": "name",
-                  "symbol": "symbol",
-                  "taxonomy": "taxid"}
-
-MYVARIANT_MAPPING = {"hgvs": "_id",
-                     "dbsnp": "dbsnp.rsid"}
-
-MYCHEM_MAPPING = {"chembl": "chembl.molecule_chembl_id",
-                  "drugbank": "drugbank.id",
-                  "name": "chembl.pref_name",
-                  "pubchem": "pubchem.cid",
-                  "unii": "unii.unii"
-                  }
-
-MYDISEASE_MAPPING = {"mondo": "_id",
-                     "doid": "mondo.xrefs.doid",
-                     "hp": "mondo.xrefs.hp",
-                     "mesh": "mondo.xrefs.mesh",
-                     "umls": "mondo.xrefs.umls",
-                     "name": "mondo.label"
-                     }
 scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
           'myvariant.info': ['dbsnp.rsid', '_id', 'clinvar.rsid',
                              'dbnsfp.rsid', 'clinvar.hgvs.coding',
@@ -32,7 +10,7 @@ scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
                           'unii.unii', 'ginas.preferred_name'],
           'mydisease.info': ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
                              'mondo.xrefs.mesh', 'mondo.xrefs.umls',
-                             'mondo.label']}
+                             'mondo.label', 'disgenet.xrefs.disease_name']}
 
 fields = {'mygene.info': {'entrezgene': 'entrez',
                           'name': 'name',
@@ -50,7 +28,8 @@ fields = {'mygene.info': {'entrezgene': 'entrez',
                              'mondo.xrefs.hp': 'hp',
                              'mondo.xrefs.umls': 'umls',
                              'mondo.xrefs.mesh': 'mesh',
-                             'mondo.label': 'name'}
+                             'mondo.label': 'name',
+                             'disgenet.xrefs.disease_name': 'name'}
           }
 
 
@@ -59,10 +38,6 @@ class Hint():
         self.clients = ['mygene.info', 'myvariant.info',
                         'mychem.info', 'mydisease.info']
         self.types = ['gene', 'variant', 'chemical', 'disease']
-        self.mapping = {'mygene.info': MYGENE_MAPPING,
-                        'myvariant.info': MYVARIANT_MAPPING,
-                        'mychem.info': MYCHEM_MAPPING,
-                        'mydisease.info': MYDISEASE_MAPPING}
 
     async def call_api(self, _input, session):
         async with session.post(_input['url'], data=_input['data']) as res:
@@ -94,6 +69,7 @@ class Hint():
                                 'size': 5,
                                 'dotfield': True}
                     })
+        print(inputs)
         tasks = []
         async with ClientSession() as session:
             for i in inputs:
@@ -112,9 +88,11 @@ class Hint():
                         display = ''
                         for field_name in fields[k]:
                             if field_name in _v:
-                                _res[fields[k][field_name]] = _v[field_name]
-                                display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
+                                if fields[k][field_name] not in _res:
+                                    _res[fields[k][field_name]] = _v[field_name]
+                                    display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
                         _res['display'] = display
+                        _res['type'] = j
                         final_res[j].append(_res)
             return final_res
 
