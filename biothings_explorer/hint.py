@@ -37,7 +37,8 @@ class Hint():
     def __init__(self):
         self.clients = ['mygene.info', 'myvariant.info',
                         'mychem.info', 'mydisease.info']
-        self.types = ['gene', 'variant', 'chemical', 'disease']
+        self.types = ['Gene', 'SequenceVariant',
+                      'ChemicalSubstance', 'DiseaseOrPhenotypicFeature']
 
     async def call_api(self, _input, session):
         async with session.post(_input['url'], data=_input['data']) as res:
@@ -68,7 +69,7 @@ class Hint():
                                 'fields': ','.join(fields['mydisease.info']),
                                 'size': 5,
                                 'dotfield': True}
-                    })
+                      })
         print(inputs)
         tasks = []
         async with ClientSession() as session:
