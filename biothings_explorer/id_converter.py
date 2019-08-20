@@ -57,6 +57,8 @@ class IDConverter():
     def convert_id(self):
         if isinstance(self.ids, str):
             self.ids = [self.ids]
+        if isinstance(self.ids, list):
+            self.ids = [str(i) for i in self.ids]
         if self.semantic_type not in self.semantic_type_api_mapping:
             result = {}
             for _id in self.ids:
