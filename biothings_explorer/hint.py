@@ -111,7 +111,7 @@ class Hint():
                                     display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
                         _res['display'] = display
                         _res['type'] = j
-                        primary = get_primary_id(_res)
+                        primary = get_primary_id(_res, j)
                         _res.update({'primary': primary})
                         final_res[j].append(_res)
             return final_res
