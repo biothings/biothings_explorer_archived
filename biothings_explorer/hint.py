@@ -10,7 +10,13 @@ scopes = {'mygene.info': ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
                           'unii.unii', 'ginas.preferred_name'],
           'mydisease.info': ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
                              'mondo.xrefs.mesh', 'mondo.xrefs.umls',
-                             'mondo.label', 'disgenet.xrefs.disease_name']}
+                             'mondo.label', 'disgenet.xrefs.disease_name']
+          }
+
+id_ranks = {'Gene': ['entrez', 'symbol', 'umls', 'name'],
+            'SequenceVariant': ['dbsnp', 'hgvs'],
+            'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'name'],
+            'DiseaseOrPhenotypicFeature': ['mondo', 'doid', 'umls', 'mesh', 'name']}
 
 fields = {'mygene.info': {'entrezgene': 'entrez',
                           'name': 'name',
@@ -31,6 +37,17 @@ fields = {'mygene.info': {'entrezgene': 'entrez',
                              'mondo.label': 'name',
                              'disgenet.xrefs.disease_name': 'name'}
           }
+
+
+def get_primary_id(json_doc, _type):
+    ranks = id_ranks[_type]
+    res = {}
+    for _id in ranks:
+        if _id in json_doc:
+            res['identifier'] = _id
+            res['cls'] = _type
+            res['value'] = json_doc[_id]
+    return res
 
 
 class Hint():
@@ -94,6 +111,8 @@ class Hint():
                                     display += fields[k][field_name] + '(' + str(_v[field_name]) + ')' + ' '
                         _res['display'] = display
                         _res['type'] = j
+                        primary = get_primary_id(_res)
+                        _res.update({'primary': primary})
                         final_res[j].append(_res)
             return final_res
 
