@@ -79,4 +79,11 @@ class IDConverter():
                 v.pop("@context")
             if '@type' in v:
                 v.pop("@type")
-        return unlist(_res)
+        if _res:
+            return unlist(_res)
+        else:
+            result = {}
+            self.ids = self.ids.split(',')
+            for _id in self.ids:
+                result[_id] = {self.type: _id}
+            return result

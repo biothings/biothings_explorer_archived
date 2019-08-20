@@ -39,7 +39,6 @@ class SingleEdgeQueryDispatcher():
     def query(self):
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.label)
-        print('edges', edges)
         grouped_edges = self.group_edges_by_input_id(edges)
         equivalent_ids = self.idc.convert_id()
         output_ids_dict = defaultdict(list)
@@ -53,7 +52,9 @@ class SingleEdgeQueryDispatcher():
                     input_id = q[0]['input_id']
                     if type(v[p]) == str:
                         v[p] = [v[p]]
-                    self.G.add_nodes_from(str(v[p]),
+                    if type(v[p]) == list:
+                        v[p] = [str(i) for i in v[p]]
+                    self.G.add_nodes_from(v[p],
                                           type=input_type,
                                           identifier=input_id,
                                           level=1)
@@ -80,7 +81,6 @@ class SingleEdgeQueryDispatcher():
                                                             info=None,
                                                             label=a)
                                         else:
-                                            print('_b', _b)
                                             for i,j in _b.items():
                                                 if i in output_ids and j:
                                                     output_type = _b.get("@type")
