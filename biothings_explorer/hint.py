@@ -47,6 +47,7 @@ def get_primary_id(json_doc, _type):
             res['identifier'] = _id
             res['cls'] = _type
             res['value'] = json_doc[_id]
+            break
     return res
 
 
