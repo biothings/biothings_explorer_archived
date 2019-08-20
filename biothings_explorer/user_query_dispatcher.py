@@ -9,7 +9,6 @@ Convert User Query Into Actual API Calls
 from collections import defaultdict
 
 import networkx as nx
-import time
 
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
@@ -40,6 +39,7 @@ class SingleEdgeQueryDispatcher():
     def query(self):
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.label)
+        print('edges', edges)
         grouped_edges = self.group_edges_by_input_id(edges)
         equivalent_ids = self.idc.convert_id()
         output_ids_dict = defaultdict(list)
@@ -49,12 +49,11 @@ class SingleEdgeQueryDispatcher():
             for p, q in grouped_edges.items():
                 # check if input id is in equivalent ids
                 if p in v:
-                    t0 = time.time()
                     input_type = q[0]['input_type']
                     input_id = q[0]['input_id']
                     if type(v[p]) == str:
                         v[p] = [v[p]]
-                    self.G.add_nodes_from(v[p],
+                    self.G.add_nodes_from(str(v[p]),
                                           type=input_type,
                                           identifier=input_id,
                                           level=1)
@@ -67,37 +66,37 @@ class SingleEdgeQueryDispatcher():
                     self.dp.values = v[p]
                     if type(v[p]) == list:
                         self.dp.batch_mode = True
-                    t1 = time.time()
                     _res = self.dp.dispatch()
-                    t2 = time.time()
                     for m,n in _res.items():
                         if n:
                             for a, b in n.items():
                                 if a in labels:
                                     for _b in b:
                                         if type(_b) != dict:
-                                            self.G.add_node(_b, identifier=a,
+                                            self.G.add_node(str(_b), identifier=a,
                                                             type=n["@type"],
                                                             level=2)
-                                            self.G.add_edge(v[p], _b,
+                                            self.G.add_edge(str(v[p]), str(_b),
                                                             info=None,
                                                             label=a)
                                         else:
+                                            print('_b', _b)
                                             for i,j in _b.items():
-                                                if i in output_ids:
+                                                if i in output_ids and j:
                                                     output_type = _b.get("@type")
                                                     source = _b.get("$source")
+                                                    j = [str(jj) for jj in j]
                                                     self.G.add_nodes_from(j,
                                                                           identifier=i,
                                                                           type=output_type,
                                                                           level=2)
-                                                    self.G.add_edge(v[p],
-                                                                    j[0],
+                                                    self.G.add_edge(str(v[p]),
+                                                                    str(j[0]),
                                                                     info=_b,
                                                                     label=a,
                                                                     source=source)
 
-        output_ids = [x for x,y in self.G.nodes(data=True) if y['level']==2]
+        output_ids = [x for x,y in self.G.nodes(data=True) if y and y['level']==2]
         # group output ids based on identifier and type
         for _id in output_ids:
             output_ids_dict[self.G.node[_id]['type'] + ',' + self.G.node[_id]['identifier']].append(_id)
