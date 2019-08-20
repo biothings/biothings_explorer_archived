@@ -79,6 +79,8 @@ class Dispatcher():
 
     def dispatch(self):
         """send request to and parse response from API"""
+        if not self.values:
+            return {}
         results = {}
         for _edge in self._edges:
             mapping = self.fetch_schema_mapping_file(_edge['api'])
