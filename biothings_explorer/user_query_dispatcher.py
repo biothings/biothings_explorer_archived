@@ -54,7 +54,7 @@ class SingleEdgeQueryDispatcher():
                         v[p] = [v[p]]
                     if type(v[p]) == list:
                         v[p] = [str(i) for i in v[p]]
-                    self.G.add_nodes_from(v[p],
+                    self.G.add_nodes_from([k],
                                           type=input_type,
                                           identifier=input_id,
                                           level=1)
@@ -77,7 +77,7 @@ class SingleEdgeQueryDispatcher():
                                             self.G.add_node(str(_b), identifier=a,
                                                             type=n["@type"],
                                                             level=2)
-                                            self.G.add_edge(str(v[p]), str(_b),
+                                            self.G.add_edge(str(k), str(_b),
                                                             info=None,
                                                             label=a)
                                         else:
@@ -90,7 +90,7 @@ class SingleEdgeQueryDispatcher():
                                                                           identifier=i,
                                                                           type=output_type,
                                                                           level=2)
-                                                    self.G.add_edge(str(v[p]),
+                                                    self.G.add_edge(str(k),
                                                                     str(j[0]),
                                                                     info=_b,
                                                                     label=a,

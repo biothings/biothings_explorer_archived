@@ -28,17 +28,19 @@ class ConnectTwoConcepts():
                   None, None, self.edge2, self.output_values,
                   registry=self.registry)
         q2.query()
-        print(q2.G.edges())
-        print(q2.G.nodes())
         q1_outputs = [(x, y['equivalent_ids']) for x,y in q1.G.nodes(data=True) if y and y['level']==2 and 'equivalent_ids' in y]
         q2_outputs = [(x, y['equivalent_ids']) for x,y in q2.G.nodes(data=True) if y and y['level']==2 and 'equivalent_ids' in y]
         common = common_member(q1_outputs, q2_outputs)
+        print('common', common)
         if common:
             q1_common = [_item[0] for _item in common]
             q2_common = [_item[1] for _item in common]
             q1_subset = q1.G.subgraph(q1_common + [self.input_values])
+            print('q1 subset nodes', q1_subset.nodes())
             q2.G = nx.relabel_nodes(q2.G, {v: k for (k, v) in common})
+            print('q2 original nodes', q2.G.nodes())
             q2_subset = q2.G.subgraph(q1_common + [self.output_values])
+            print('q2_subset nodes', q2_subset.nodes())
             self.G = nx.compose(q1_subset, q2_subset)
 
     def visualize(self):
