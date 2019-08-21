@@ -36,7 +36,8 @@ class ConnectTwoConcepts():
             q2_common = [_item[1] for _item in common]
             q1_subset = q1.G.subgraph(q1_common + [self.input_values])
             q2.G = nx.relabel_nodes(q2.G, {v: k for (k, v) in common})
-            q2_subset = q2.G.subgraph(q1_common + [self.output_values])
+            q2_subset = q2.G.subgraph(q1_common + [self.output_values]).reverse()
+            q2_subset.nodes[self.output_values]['level'] = 3
             self.G = nx.compose(q2_subset, q1_subset)
 
     def visualize(self):
