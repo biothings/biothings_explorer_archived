@@ -56,7 +56,7 @@ class SingleEdgeQueryDispatcher():
                         v[p] = [str(i) for i in v[p]]
                     self.G.add_nodes_from([k],
                                           type=input_type,
-                                          identifier=input_id,
+                                          identifier=self.input_id,
                                           level=1)
                     if type(v[p]) == list and len(v[p]) == 1:
                         v[p] = v[p][0]

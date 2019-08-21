@@ -41,7 +41,7 @@ class ConnectTwoConcepts():
             print('q2 original nodes', q2.G.nodes())
             q2_subset = q2.G.subgraph(q1_common + [self.output_values])
             print('q2_subset nodes', q2_subset.nodes())
-            self.G = nx.compose(q1_subset, q2_subset)
+            self.G = nx.compose(q2_subset, q1_subset)
 
     def visualize(self):
         return visualize(self.G.edges())
