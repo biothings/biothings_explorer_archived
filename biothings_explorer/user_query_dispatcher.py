@@ -39,6 +39,7 @@ class SingleEdgeQueryDispatcher():
     def query(self):
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.label)
+        print('filter_edges', edges)
         grouped_edges = self.group_edges_by_input_id(edges)
         equivalent_ids = self.idc.convert_id()
         output_ids_dict = defaultdict(list)
@@ -48,6 +49,7 @@ class SingleEdgeQueryDispatcher():
             for p, q in grouped_edges.items():
                 # check if input id is in equivalent ids
                 if p in v:
+                    print('edge', q)
                     input_type = q[0]['input_type']
                     input_id = q[0]['input_id']
                     if type(v[p]) == str:
@@ -67,34 +69,35 @@ class SingleEdgeQueryDispatcher():
                     self.dp.values = v[p]
                     if type(v[p]) == list:
                         self.dp.batch_mode = True
+                    else:
+                        self.dp.batch_mode = False
                     _res = self.dp.dispatch()
-                    for m,n in _res.items():
-                        if n:
-                            for a, b in n.items():
-                                if a in labels:
-                                    for _b in b:
-                                        if type(_b) != dict:
-                                            self.G.add_node(str(_b), identifier=a,
-                                                            type=n["@type"],
-                                                            level=2)
-                                            self.G.add_edge(str(k), str(_b),
-                                                            info=None,
-                                                            label=a)
-                                        else:
-                                            for i,j in _b.items():
-                                                if i in output_ids and j:
-                                                    output_type = _b.get("@type")
-                                                    source = _b.get("$source")
-                                                    j = [str(jj) for jj in j]
-                                                    self.G.add_nodes_from(j,
-                                                                          identifier=i,
-                                                                          type=output_type,
-                                                                          level=2)
-                                                    self.G.add_edge(str(k),
-                                                                    str(j[0]),
-                                                                    info=_b,
-                                                                    label=a,
-                                                                    source=source)
+                    print(_res)
+                    if _res:
+                        for m,n in _res.items():
+                            if n:
+                                for a, b in n.items():
+                                    if a in labels:
+                                        for _b in b:
+                                            if type(_b) != dict:
+                                                self.G.add_node(str(_b), identifier=a,
+                                                                type=n["@type"],
+                                                                level=2)
+                                                self.G.add_edge(str(k), str(_b),
+                                                                info=None,
+                                                                label=a)
+                                            else:
+                                                for i,j in _b.items():
+                                                    if i in output_ids and j:
+                                                        output_type = _b.get("@type")
+                                                        source = _b.get("$source")
+                                                        j = [str(jj) for jj in j]
+                                                        self.G.add_nodes_from(j,identifier=i,type=output_type,level=2)
+                                                        self.G.add_edge(str(k),
+                                                                        str(j[0]),
+                                                                        info=_b,
+                                                                        label=a,
+                                                                        source=source)
 
         output_ids = [x for x,y in self.G.nodes(data=True) if y and y['level']==2]
         # group output ids based on identifier and type

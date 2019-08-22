@@ -41,6 +41,7 @@ class BioThingsCaller():
     def call_api(self, api, _input, _output, value):
         """make api calls"""
         params = self.construct_query_param(_input, _output, value)
+        print('params', params)
         if not self._batch_mode:
             return requests.get(self.url_pattern[api], params=params).json()
         else:

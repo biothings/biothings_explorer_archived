@@ -97,6 +97,8 @@ class Dispatcher():
                 if self.values not in results:
                     results[self.values] = _res
                 else:
+                    if not _res:
+                        continue
                     for k, v in _res.items():
                         if k in ["@context", "@type"]:
                             results[self.values][k] = v
@@ -108,6 +110,8 @@ class Dispatcher():
                             else:
                                 results[self.values][k].append(v)
             else:
+                if not _res:
+                    continue
                 for m, n in _res.items():
                     if m not in results:
                         results[m] = n

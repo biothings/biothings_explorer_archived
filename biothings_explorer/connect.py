@@ -1,3 +1,6 @@
+from itertools import groupby
+from operator import itemgetter
+
 from .user_query_dispatcher import SingleEdgeQueryDispatcher as seqd
 from .utils import common_member, visualize
 from .registry import Registry
@@ -35,6 +38,7 @@ class ConnectTwoConcepts():
             q1_common = [_item[0] for _item in common]
             q2_common = [_item[1] for _item in common]
             q1_subset = q1.G.subgraph(q1_common + [self.input_values])
+            
             q2.G = nx.relabel_nodes(q2.G, {v: k for (k, v) in common})
             q2_subset = q2.G.subgraph(q1_common + [self.output_values]).reverse()
             q2_subset.nodes[self.output_values]['level'] = 3
