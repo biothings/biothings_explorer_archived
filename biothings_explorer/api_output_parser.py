@@ -17,7 +17,9 @@ class OutputParser():
         self.batch_mode = batch_mode
         self.BIOTHINGS = ['mygene.info', 'myvariant.info',
                           'mychem.info', 'mydisease.info',
-                          'semmed']
+                          'semmed', 'semmedanatomy',
+                          'semmedbp', 'semmedchemical',
+                          'semmedgene', 'semmedphenotype']
 
     def parse_biothings_get_res(self):
         """Parse the API response from biothings API using GET method"""

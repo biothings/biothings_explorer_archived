@@ -14,8 +14,10 @@ from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 
-BIOTHINGS_APIs = ['mygene.info', 'myvariant.info',
-                  'mychem.info', 'mydisease.info']
+BIOTHINGS_APIs = ['mygene.info', 'myvariant.info', 'mychem.info',
+                  'mydisease.info', 'semmed', 'semmedanatomy',
+                  'semmedbp', 'semmedchemical', 'semmedgene',
+                  'semmedphenotype']
 
 
 class Dispatcher():

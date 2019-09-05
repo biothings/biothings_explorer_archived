@@ -19,7 +19,12 @@ class BioThingsCaller():
                             'myvariant.info': 'http://myvariant.info/v1/query',
                             "mychem.info": "http://mychem.info/v1/query",
                             "mydisease.info": "http://mydisease.info/v1/query",
-                            "semmed": "http://pending.biothings.io/semmed/query"}
+                            "semmed": "http://pending.biothings.io/semmed/query",
+                            "semmedanatomy": "https://pending.biothings.io/semmed_anatomy/query",
+                            "semmedbp": "https://pending.biothings.io/semmedbp/query",
+                            "semmedchemical": "https://pending.biothings.io/semmedchemical/query",
+                            "semmedgene": "https://pending.biothings.io/semmedgene/query",
+                            "semmedphenotype": "https://pending.biothings.io/semmedphenotype/query"}
         self._batch_mode = batch_mode
 
     @property
