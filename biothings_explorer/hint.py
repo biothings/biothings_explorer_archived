@@ -211,7 +211,6 @@ class Hint():
             for j in self.types:
                 final_res[j] = []
             for (k, v, j) in zip(self.clients, responses, self.types):
-                print(k, v, j)
                 # response could be from GET or POST, need to restructure
                 if 'hits' in v:
                     v = v['hits']
