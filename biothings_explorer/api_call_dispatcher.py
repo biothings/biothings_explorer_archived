@@ -8,63 +8,23 @@ This module contains code that biothings_explorer use to communicate to
 and receive from APIs. It serves as a glue between "apicall" module and
  "api_output_parser" module.
 """
-
+from itertools import groupby
+from operator import itemgetter
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 
+BIOTHINGS_APIs = ['mygene.info', 'myvariant.info',
+                  'mychem.info', 'mydisease.info']
+
 
 class Dispatcher():
-    def __init__(self, edges=None, values=None, batch_mode=False, registry=None):
-        self._edges = edges
+    def __init__(self, registry=None):
         if not registry:
             self.registry = Registry().registry
         else:
             self.registry = registry.registry
-        self._batch_mode = batch_mode
-        self._values = self.preprocess_input_values(values)
-        self.caller = BioThingsCaller(batch_mode=batch_mode)
-
-    @property
-    def batch_mode(self):
-        return self._batch_mode
-
-    @batch_mode.setter
-    def batch_mode(self, value):
-        self._batch_mode = value
-        self._values = self.preprocess_input_values(self._values)
-
-    @property
-    def values(self):
-        return self._values
-
-    @values.setter
-    def values(self, value):
-        self._values = self.preprocess_input_values(value)
-
-    @property
-    def edges(self):
-        return self._edges
-
-    @edges.setter
-    def edges(self, value):
-        self._edges = value
-
-    def preprocess_input_values(self, values):
-        """Preprocess the input values
-
-        If batch_mode is set to be True, convert input values into a string
-        separated by ',' 
-        """
-        if not self._batch_mode or not values:
-            return values
-        else:
-            if type(values) == str:
-                return values
-            elif type(values) == list:
-                return ','.join(values)
-            else:
-                raise ValueError('{} should be str or list'.format(values))
+        self.caller = BioThingsCaller()
 
     def fetch_schema_mapping_file(self, api):
         """Fetch schema mapping file from the registry"""
@@ -77,38 +37,93 @@ class Dispatcher():
         else:
             return mapping_file
 
-    def dispatch(self):
-        """send request to and parse response from API"""
-        if not self.values:
-            return {}
-        results = {}
-        for _edge in self._edges:
-            mapping = self.fetch_schema_mapping_file(_edge['api'])
-            subset_mapping = self.subset_mapping_file(_edge, mapping)
-            self.caller.batch_mode = self._batch_mode
-            response = self.caller.call_api(_edge['api'],
-                                            _edge['input_field'],
-                                            _edge['output_field'],
-                                            self._values)
-            _res = OutputParser(response, subset_mapping,
-                                self._batch_mode,
-                                _edge['api']).parse()
-            if not self._batch_mode:
-                if self.values not in results:
-                    results[self.values] = _res
+    def group_edges(self, edges):
+        """Group edges based on API and API input"""
+        grouper = itemgetter("api", "input_field")
+        groups = []
+        # group all edges based on their API and input_field value
+        for key, grp in groupby(sorted(edges, key=grouper), grouper):
+            groups.append(list(grp))
+        return groups
+
+    def construct_api_calls(self, edge_groups):
+        """Construct API calls for apicall module using edge groups"""
+        # store all API call inputs
+        api_call_inputs = []
+        apis = []
+        batch_modes = []
+        input_values = []
+        # loop through each edge group
+        for grp in edge_groups:
+            outputs = []
+            values = []
+            # loop through edges in each edge group
+            for _item in grp:
+                api = _item['api']
+                input_field = _item['input_field']
+                # add output fields
+                outputs.append(_item['output_field'])
+                # add values
+                if type(_item['value']) == list:
+                    values += _item['value']
                 else:
+                    values.append(_item['value'])
+            # if API is BioThings API, use batch query feature
+            if api in BIOTHINGS_APIs:
+                # construct API call inputs for each edge group
+                api_call_inputs.append({"api": api,
+                                        "input": input_field,
+                                        "output": ','.join(set(outputs)),
+                                        "values": ','.join(set(values)),
+                                        "batch_mode": True
+                                        })
+                apis.append(api)
+                batch_modes.append(True)
+                input_values.append(values)
+            # if API is non-BioThings APIs, query each input one by one
+            else:
+                for _value in values:
+                    api_call_inputs.append({"api": api,
+                                            "input": input_field,
+                                            "output": ','.join(set(outputs)),
+                                            "values": _value,
+                                            "batch_mode": False
+                                            })
+                    apis.append(api)
+                    batch_modes.append(False)
+                    input_values.append(_value)
+        return (apis, api_call_inputs, batch_modes, values)
+
+    def dispatch(self, edges):
+        """send request to and parse response from API"""
+        results = {}
+        grped_edges = self.group_edges(edges)
+        apis, inputs, modes, vals = self.construct_api_calls(grped_edges)
+        responses = self.caller.call_apis(inputs)
+        for api, _res, batch, val in zip(apis, responses, modes, vals):
+            mapping = self.fetch_schema_mapping_file(api)
+            _res = OutputParser(_res, mapping, batch, api).parse()
+            if not batch:
+                # if val is not present in results dict and _res is not empty
+                if val not in results and _res:
+                    results[val] = _res
+                else:
+                    # if result is empty
                     if not _res:
                         continue
+                    # loop through API call response
                     for k, v in _res.items():
+                        # if key is "@context", "@type", keep the value
                         if k in ["@context", "@type"]:
-                            results[self.values][k] = v
+                            results[val][k] = v
                         else:
-                            if k not in results[self.values]:
-                                results[self.values][k] = []
+                            # if key is not present in final res, create a list
+                            if k not in results[val]:
+                                results[val][k] = []
                             if type(v) == list:
-                                results[self.values][k] += v
+                                results[val][k] += v
                             else:
-                                results[self.values][k].append(v)
+                                results[val][k].append(v)
             else:
                 if not _res:
                     continue

@@ -48,7 +48,8 @@ class OutputParser():
         for _res in self.response:
             # handle case where the queried item is not found
             if _res.get('notfound'):
-                if _res['query'] not in new_res:
+                # check if the item is already in final res
+                if _res['query'] in new_res:
                     continue
                 else:
                     new_res[_res['query']] = {}

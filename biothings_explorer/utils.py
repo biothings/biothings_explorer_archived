@@ -65,7 +65,9 @@ def find_common_path(dict_values):
 
 
 def get_dict_values(python_dict):
-    return [v for k, v in python_dict.items() if k not in ["@type", "$input", "$source"]]
+    return [v for k, v in python_dict.items() if k not in ["@type",
+                                                           "$input",
+                                                           "$source"]]
 
 
 def unlist(d):
@@ -77,6 +79,7 @@ def unlist(d):
             unlist(val)
     return d
 
+
 def restructure_equivalent_ids_dict(id_dict):
     result = []
     for k, v in id_dict.items():
@@ -87,11 +90,12 @@ def restructure_equivalent_ids_dict(id_dict):
             result.append(k + ':' + v)
     return result
 
-# Python porgram to find common elements in 
-# both sets using intersection function in 
-# sets 
-# function  
-def common_member(a, b): 
+
+# Python porgram to find common elements in
+# both sets using intersection function in
+# sets
+# function
+def common_member(a, b):
     """Python porgram to find common elements in both sets/lists
     """
     a = [(i[0], restructure_equivalent_ids_dict(i[1])) for i in a]
@@ -104,3 +108,18 @@ def common_member(a, b):
             if len(a_set.intersection(b_set)) > 0:
                 matched.append((i[0], j[0]))
     return matched
+
+
+def dict2list(_dict):
+    result = []
+    for k, v in _dict.items():
+        if k.startswith("bts:"):
+            k = k[4:]
+        if type(v) == list:
+            for _v in v:
+                result.append(k + ':' + _v)
+        elif type(v) == str:
+            result.append(k + ':' + v)
+        else:
+            raise ValueError("{} should be list or str".format(v))
+    return result

@@ -70,8 +70,8 @@ class MappingParser():
                                    source=source,
                                    input_field=input_field,
                                    input_type=self.mapping["@type"],
-                                   input_id = _edge[0],
-                                   output_id = _edge[1],
+                                   input_id=_edge[0],
+                                   output_id=_edge[1],
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
                         inverse_property = None if not sp.inverse_property else sp.inverse_property.name

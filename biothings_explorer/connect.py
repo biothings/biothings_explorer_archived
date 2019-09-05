@@ -27,10 +27,12 @@ class ConnectTwoConcepts():
                   None, None, self.edge1, self.input_values,
                   registry=self.registry)
         q1.query()
+        print('q1 nodes', q1.G.nodes())
         q2 = seqd(self.output_type, self.output_id,
                   None, None, self.edge2, self.output_values,
                   registry=self.registry)
         q2.query()
+        print('q2 nodes', q2.G.nodes())
         q1_outputs = [(x, y['equivalent_ids']) for x,y in q1.G.nodes(data=True) if y and y['level']==2 and 'equivalent_ids' in y]
         q2_outputs = [(x, y['equivalent_ids']) for x,y in q2.G.nodes(data=True) if y and y['level']==2 and 'equivalent_ids' in y]
         common = common_member(q1_outputs, q2_outputs)
