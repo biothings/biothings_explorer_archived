@@ -21,8 +21,11 @@ class MappingParser():
     """Parse the mapping file between biothings schema and biothings API"""
     BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
 
-    def __init__(self):
-        self.se = Schema(self.BIOTHINGS_SCHEMA_PATH)
+    def __init__(self, se=None):
+        if not self.se:
+            self.se = Schema(self.BIOTHINGS_SCHEMA_PATH)
+        else:
+            self.se = se
         # list all properties which are descendants of identifiers
         self.id_list = self.se.get_property("identifier",
                                             output_type="curie").descendant_properties

@@ -8,9 +8,12 @@ This module contains code that biothings_explorer use to parse the
 smartAPI registry.
 """
 import networkx as nx
+from biothings_schema import Schema
 
 from .mapping_parser import MappingParser
 from .config import metadata
+
+BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
 
 
 class Registry():
@@ -36,7 +39,8 @@ class Registry():
 
     def load_biothings(self):
         """load biothings API into registry network graph"""
-        self.mp = MappingParser()
+        self.se = Schema(BIOTHINGS_SCHEMA_PATH)
+        self.mp = MappingParser(self.se)
         for _api, _info in metadata.items():
             if 'mapping_url' in _info:
                 self.registry[_api] = {}

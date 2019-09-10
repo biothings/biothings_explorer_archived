@@ -9,6 +9,7 @@ Convert User Query Into Actual API Calls
 from collections import defaultdict
 import networkx as nx
 import time
+from biothings_schema import Schema
 
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
@@ -28,6 +29,7 @@ class SingleEdgeQueryDispatcher():
         self.values = values
         self.equivalent_ids = equivalent_ids
         if input_obj:
+            assert "primary" in input_obj
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
