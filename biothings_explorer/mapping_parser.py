@@ -22,7 +22,7 @@ class MappingParser():
     BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
 
     def __init__(self, se=None):
-        if not self.se:
+        if not se:
             self.se = Schema(self.BIOTHINGS_SCHEMA_PATH)
         else:
             self.se = se
