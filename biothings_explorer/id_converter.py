@@ -7,11 +7,10 @@ biothings_explorer.id_converter
 This module contains code that biothings_explorer use to resolve
 different identifiers
 """
-
+import time
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
-import time
 
 
 class IDConverter():
@@ -55,9 +54,7 @@ class IDConverter():
         api_call_inputs = []
         mapping_files = []
         apis = []
-        ids_list = []
         types = []
-        t1 = time.time()
         for _input in inputs:
             ids, _type, semantic_type = _input
             # convert id to list
@@ -72,11 +69,9 @@ class IDConverter():
                 if _type.startswith("bts:"):
                     _type = _type[4:]
                 for _id in ids:
-                    results[_type + ':' + _id] = {_type: _id}
+                    results[_type + ':' + _id] = {'bts:' + _type: [_id]}
             else:
-                ids_list.append(ids)
                 ids = ','.join(ids)
-                ids_list.append(ids)
                 types.append(_type)
                 mapping_file = self.fetch_schema_mapping_file(api)
                 mapping_file = self.subset_mapping_file(mapping_file)
@@ -93,18 +88,14 @@ class IDConverter():
                     if _type.startswith("bts:"):
                         _type = _type[4:]
                     for _id in ids.split(','):
-                        results[_type + ':' + _id] = {_type: _id}
-        t2 = time.time()
+                        results[_type + ':' + _id] = {'bts:' + _type: [_id]}
         # make API calls asynchronously and gather all outputs
-        responses = self.caller.call_apis(api_call_inputs)
-        t3 = time.time()
+        responses = self.caller.call_apis(api_call_inputs, size=10)
         # loop through outputs
-        for _res, _map, _api, _ids, _type in zip(responses, mapping_files,
-                                                 apis, ids_list, types):
-            t4 = time.time()
+        for _res, _map, _api, _type in zip(responses, mapping_files,
+                                                 apis, types):
             # restructure API output based on mapping file
             new_res = OutputParser(_res, _map, True, _api).parse()
-            t5 = time.time()
             # remove "@context" and "@type" from result
             for k, v in new_res.items():
                 if '@context' in v:
@@ -122,5 +113,5 @@ class IDConverter():
                     results[_type + ':' + k] = v
                 # if the dict is empty, just return itself as its value
                 else:
-                    results[_type + ':' + k] = {_type: k}
+                    results[_type + ':' + k] = {'bts:' + _type: [k]}
         return results

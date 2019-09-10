@@ -8,6 +8,7 @@ Convert User Query Into Actual API Calls
 """
 from collections import defaultdict
 import networkx as nx
+import time
 
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
@@ -16,9 +17,9 @@ from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes
 
 
 class SingleEdgeQueryDispatcher():
-    def __init__(self, input_cls, input_id, values,
-                 output_cls, output_id, pred, equivalent_ids=None,
-                 registry=None):
+    def __init__(self, input_cls=None, input_id=None, values=None,
+                 output_cls=None, output_id=None, pred=None,
+                 equivalent_ids=None, input_obj=None, registry=None):
         self.input_cls = input_cls
         self.input_id = input_id
         self.output_cls = output_cls
@@ -26,6 +27,10 @@ class SingleEdgeQueryDispatcher():
         self.pred = pred
         self.values = values
         self.equivalent_ids = equivalent_ids
+        if input_obj:
+            self.input_cls = input_obj.get("primary").get("cls")
+            self.input_id = input_obj.get("primary").get("identifier")
+            self.values = input_obj.get("primary").get("value")
         if not registry:
             self.registry = Registry()
         else:
@@ -72,12 +77,16 @@ class SingleEdgeQueryDispatcher():
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
         grouped_edges = self.group_edges_by_input_id(edges)
+        t1 = time.time()
         if not self.equivalent_ids:
             # find equivalent ids for the input value
             equivalent_ids = self.idc.convert_ids([(self.values,
                                                    self.input_id,
                                                    self.input_cls)])
             self.equivalent_ids = equivalent_ids
+        # print("equivalent_ids", self.equivalent_ids)
+        t2 = time.time()
+        # print('time to find equivalent ids {}'.format(t2-t1))
         input_edges = []
         mapping_keys = []
         output_id_types = []
@@ -85,7 +94,6 @@ class SingleEdgeQueryDispatcher():
         # populate edge with corresponding input value
         # k is the source id, v is the equivalent ids
         for k, v in self.equivalent_ids.items():
-            print('k', k)
             # p is the input id, q is the edges from the source id
             for p, q in grouped_edges.items():
                 # check if input id is in equivalent ids
@@ -102,14 +110,23 @@ class SingleEdgeQueryDispatcher():
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
                         id_mapping[_id] = k.split(':', 1)[-1]
+        # print('input_edges', input_edges)
+        if not input_edges:
+            self.G = None
+            return
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges)
+        t3 = time.time()
+        # print('time to make API calls {}'.format(t3 - t2))
+        # print('_res', _res)
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
         self.equivalent_ids.update(out_equ_ids)
+        t4 = time.time()
+        # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
 

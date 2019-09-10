@@ -10,6 +10,7 @@ smartAPI registry.
 import networkx as nx
 
 from .mapping_parser import MappingParser
+from .config import metadata
 
 
 class Registry():
@@ -36,13 +37,16 @@ class Registry():
     def load_biothings(self):
         """load biothings API into registry network graph"""
         self.mp = MappingParser()
-        for _api, _url in self.BIOTHINGS.items():
-            self.registry[_api] = {}
-            self.mp.load_mapping(_url, _api)
-            self.registry[_api]['mapping'] = self.mp.mapping
-            self.registry[_api]['graph'] = self.mp.connect()
-            self.registry[_api]['type'] = self.mp.type
-            self.G = nx.compose(self.G, self.registry[_api]['graph'])
+        for _api, _info in metadata.items():
+            if 'mapping_url' in _info:
+                self.registry[_api] = {}
+                self.mp.load_mapping(_info['mapping_url'], _api)
+                self.registry[_api]['mapping'] = self.mp.mapping
+                self.registry[_api]['graph'] = self.mp.connect()
+                self.registry[_api]['type'] = self.mp.type
+                # check why it delete some edges
+                # self.G = nx.compose(self.G, self.registry[_api]['graph'])
+                self.G.add_edges_from(self.registry[_api]['graph'].edges(data=True))
         return self.G
 
     def class2id(self, _cls):

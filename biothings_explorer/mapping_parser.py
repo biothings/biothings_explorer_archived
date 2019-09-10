@@ -14,6 +14,7 @@ import networkx as nx
 from biothings_schema import Schema
 
 from .utils import load_json_or_yaml, find_common_path, get_dict_values
+from .config import metadata
 
 
 class MappingParser():
@@ -74,15 +75,18 @@ class MappingParser():
                                    output_id=_edge[1],
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
-                        inverse_property = None if not sp.inverse_property else sp.inverse_property.name
-                        G.add_edge(_edge[1], _edge[0], api=self.api,
-                                   input_field=output_field,
-                                   input_type=_pred["@type"],
-                                   source=source,
-                                   input_id=_edge[1],
-                                   output_id=_edge[0],
-                                   output_type=self.mapping["@type"],
-                                   output_field=input_field,
-                                   label=inverse_property,
-                                   mapping_key=_edge[0])
+                        if metadata[self.api].get('api_type') == 'biothings':
+                          inverse_property = None if not sp.inverse_property else sp.inverse_property.name
+                          if not inverse_property:
+                              print(predicate)
+                          G.add_edge(_edge[1], _edge[0], api=self.api,
+                                     input_field=output_field,
+                                     input_type=_pred["@type"],
+                                     source=source,
+                                     input_id=_edge[1],
+                                     output_id=_edge[0],
+                                     output_type=self.mapping["@type"],
+                                     output_field=input_field,
+                                     label=inverse_property,
+                                     mapping_key=_edge[0])
         return G

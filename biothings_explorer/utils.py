@@ -15,6 +15,27 @@ import requests
 import graphviz
 
 
+def restructure_biolink_response(json_doc):
+    if json_doc and 'associations' in json_doc:
+        for _doc in json_doc['associations']:
+            # remove prefix
+            if 'object' in _doc and 'id' in _doc['object']:
+                object_id = _doc['object']['id']
+                try:
+                    prefix, value = object_id.split(':')
+                    # these IDs have prefix by nature
+                    if prefix not in ['MONDO', 'GO', 'HP', 'UBERON']:
+                        _doc['object']['id'] = value
+                except:
+                    pass
+            # remove empty value
+            if not _doc['publications']:
+                _doc.pop('publications')
+            if not _doc['provided_by']:
+                _doc.pop('provided_by')
+    return json_doc
+
+
 def visualize(edges, size=None):
     if size:
         d = graphviz.Digraph(graph_attr=[('size', size)])    # pylint: disable=undefined-variable

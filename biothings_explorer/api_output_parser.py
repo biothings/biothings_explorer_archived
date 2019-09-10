@@ -48,8 +48,10 @@ class OutputParser():
         """Parse the API response from biothings API using POST method"""
         new_res = {}
         for _res in self.response:
+            if type(_res) != dict:
+                continue
             # handle case where the queried item is not found
-            if _res.get('notfound'):
+            elif _res.get('notfound'):
                 # check if the item is already in final res
                 if _res['query'] in new_res:
                     continue

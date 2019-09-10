@@ -10,9 +10,12 @@ and receive from APIs. It serves as a glue between "apicall" module and
 """
 from itertools import groupby
 from operator import itemgetter
+import time
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
+from .config import metadata
+from .utils import restructure_biolink_response
 
 BIOTHINGS_APIs = ['mygene.info', 'myvariant.info', 'mychem.info',
                   'mydisease.info', 'semmed', 'semmedanatomy',
@@ -32,10 +35,12 @@ class Dispatcher():
         """Fetch schema mapping file from the registry"""
         return self.registry[api]['mapping']
 
-    def subset_mapping_file(self, edge, mapping_file):
+    def subset_mapping_file(self, edges, mapping_file):
         """Only maintain a subset of mapping file based on edge label"""
-        if edge["mapping_key"]:
-            return {k:v for (k,v) in mapping_file.items() if k in ["@context", "@type", edge["mapping_key"]]}
+        mapping_keys = [_item.get('mapping_key') for _item in edges]
+        if mapping_keys:
+            mapping_keys += ["@type", "@context"]
+            return {k: v for (k, v) in mapping_file.items() if k in mapping_keys}
         else:
             return mapping_file
 
@@ -55,6 +60,7 @@ class Dispatcher():
         apis = []
         batch_modes = []
         input_values = []
+        edges = []
         # loop through each edge group
         for grp in edge_groups:
             outputs = []
@@ -82,6 +88,7 @@ class Dispatcher():
                 apis.append(api)
                 batch_modes.append(True)
                 input_values.append(values)
+                edges.append(grp)
             # if API is non-BioThings APIs, query each input one by one
             else:
                 for _value in values:
@@ -94,18 +101,26 @@ class Dispatcher():
                     apis.append(api)
                     batch_modes.append(False)
                     input_values.append(_value)
-        return (apis, api_call_inputs, batch_modes, values)
+                    edges.append(grp)
+        return (apis, api_call_inputs, batch_modes, input_values, edges)
 
     def dispatch(self, edges):
         """send request to and parse response from API"""
         results = {}
         grped_edges = self.group_edges(edges)
-        apis, inputs, modes, vals = self.construct_api_calls(grped_edges)
+        # print('grped_edges', grped_edges)
+        apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
+        # print('modes', modes)
         responses = self.caller.call_apis(inputs)
-        for api, _res, batch, val in zip(apis, responses, modes, vals):
+        # print(responses)
+        for api, _res, batch, val, edges in zip(apis, responses, modes, vals, grped_edges):
+            if metadata[api]['api_type'] == 'biolink':
+                _res = restructure_biolink_response(_res)
             mapping = self.fetch_schema_mapping_file(api)
-            _res = OutputParser(_res, mapping, batch, api).parse()
+            subset_mapping = self.subset_mapping_file(edges, mapping)
+            _res = OutputParser(_res, subset_mapping, batch, api).parse()
             if not batch:
+                # preprocess biolink results
                 # if val is not present in results dict and _res is not empty
                 if val not in results and _res:
                     results[val] = _res
@@ -115,17 +130,20 @@ class Dispatcher():
                         continue
                     # loop through API call response
                     for k, v in _res.items():
+                        k1 = k
                         # if key is "@context", "@type", keep the value
-                        if k in ["@context", "@type"]:
-                            results[val][k] = v
+                        if k1 in ["@context", "@type"]:
+                            results[val][k1] = v
                         else:
+                            if len(edges) == 1 and edges[0]['label'] != edges[0]['mapping_key']:
+                                k1 = edges[0]['label']
                             # if key is not present in final res, create a list
-                            if k not in results[val]:
-                                results[val][k] = []
+                            if k1 not in results[val]:
+                                results[val][k1] = []
                             if type(v) == list:
-                                results[val][k] += v
+                                results[val][k1] += v
                             else:
-                                results[val][k].append(v)
+                                results[val][k1].append(v)
             else:
                 if not _res:
                     continue
@@ -134,13 +152,18 @@ class Dispatcher():
                         results[m] = n
                     else:
                         for k, v in n.items():
-                            if k in ["@context", "@type"]:
-                                results[m][k] = v
+                            k1 = k
+                            
+                            if k1 in ["@context", "@type"]:
+                                results[m][k1] = v
                             else:
-                                if k not in results[m]:
-                                    results[m][k] = []
+                                if len(edges) == 1 and edges[0]['label'] != edges[0]['mapping_key']:
+                                    k1 = edges[0]['label']
+                                if k1 not in results[m]:
+                                    results[m][k1] = []
                                 if type(v) == list:
-                                    results[m][k] += v
+                                    results[m][k1] += v
                                 else:
-                                    results[m][k].append(v)
+                                    results[m][k1].append(v)
+            print(results)
         return dict(results)
