@@ -30,7 +30,7 @@ class SingleEdgeQueryDispatcher():
         if input_obj:
             assert "primary" in input_obj
             self.input_cls = input_obj.get("primary").get("cls")
-            self.input_id = input_obj.get("primary").get("identifier")
+            self.input_id = "bts:" + input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
         if not registry:
             self.registry = Registry()
@@ -51,12 +51,17 @@ class SingleEdgeQueryDispatcher():
             nodes_to_remove = set()
             nodes_to_add = []
             edges_to_add = []
+            print(self.output_id)
             for n1, n2, data in self.G.edges(data=True):
+                print(n1, n2)
                 identifier = self.G.nodes[n2]['identifier']
+                print(identifier)
                 if self.output_id and self.output_id != identifier:
                     equivalent_ids = self.G.nodes[n2]['equivalent_ids']
                     new_vals = equivalent_ids.get(self.output_id)
                     if new_vals:
+                        print('n2', n2)
+                        print('new_vals', new_vals)
                         # get n2's node info
                         node_info = self.G.nodes[n2]
                         # change n2's identifier
@@ -64,10 +69,10 @@ class SingleEdgeQueryDispatcher():
                         for _val in new_vals:
                             # add new edge
                             edges_to_add.append((n1, _val, data))
+                            nodes_to_remove.add(n2)
                             # add new node
                             if _val not in self.G.nodes():
                                 nodes_to_add.append((_val, node_info))
-                                nodes_to_remove.add(n2)
             for n in nodes_to_remove:  # remove the merged nodes
                 self.G.remove_node(n)
             self.G.add_nodes_from(nodes_to_add)
@@ -130,6 +135,11 @@ class SingleEdgeQueryDispatcher():
         # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
+
+    def to_json(self):
+        if self.G.number_of_nodes() > 0:
+            res = nx.json_graph.node_link_data(self.G)
+            return res
 
 
 class ConnectTwoConcepts():
