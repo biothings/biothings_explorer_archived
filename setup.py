@@ -41,4 +41,5 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
+    dependency_links=['https://github.com/biothings/biothings_schema.py#egg=biothings_schema.py']
 )
