@@ -141,9 +141,23 @@ class Dispatcher():
                             if k1 not in results[val]:
                                 results[val][k1] = []
                             if type(v) == list:
-                                results[val][k1] += v
-                            else:
+                                for _v in v:
+                                    if type(_v) == dict:
+                                        results[m][k1].append(_v)
+                                    else:
+                                        item = {"@type": edges[0]['output_type'],
+                                            edges[0]['input_id']: _v,
+                                            "$source": edges[0]['api']}
+                                        results[m][k1].append(item)
+                            elif type(v) == dict:
+                                print('dict', v)
                                 results[val][k1].append(v)
+                            else:
+                                print('else', v)
+                                item = {"@type": edges[0]['output_type'],
+                                        edges[0]['input_id']: v,
+                                        "$source": edges[0]['api']}
+                                results[val][k1].append(item)
             else:
                 if not _res:
                     continue
@@ -153,7 +167,6 @@ class Dispatcher():
                     else:
                         for k, v in n.items():
                             k1 = k
-                            
                             if k1 in ["@context", "@type"]:
                                 results[m][k1] = v
                             else:
@@ -162,8 +175,19 @@ class Dispatcher():
                                 if k1 not in results[m]:
                                     results[m][k1] = []
                                 if type(v) == list:
-                                    results[m][k1] += v
-                                else:
+                                    for _v in v:
+                                        if type(_v) == dict:
+                                            results[m][k1].append(_v)
+                                        else:
+                                            item = {"@type": edges[0]['output_type'],
+                                                edges[0]['input_id']: _v,
+                                                "$source": edges[0]['api']}
+                                            results[m][k1].append(item)
+                                elif type(v) == dict:
                                     results[m][k1].append(v)
-            print(results)
+                                else:
+                                    item = {"@type": edges[0]['output_type'],
+                                            edges[0]['input_id']: v,
+                                            "$source": edges[0]['api']}
+                                    results[val][k1].append(item)
         return dict(results)
