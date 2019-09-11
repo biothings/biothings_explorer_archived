@@ -10,7 +10,6 @@ and receive from APIs. It serves as a glue between "apicall" module and
 """
 from itertools import groupby
 from operator import itemgetter
-import time
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
@@ -146,16 +145,14 @@ class Dispatcher():
                                         results[m][k1].append(_v)
                                     else:
                                         item = {"@type": edges[0]['output_type'],
-                                            edges[0]['input_id']: _v,
+                                            edges[0]['output_id']: [_v],
                                             "$source": edges[0]['api']}
                                         results[m][k1].append(item)
                             elif type(v) == dict:
-                                print('dict', v)
                                 results[val][k1].append(v)
                             else:
-                                print('else', v)
                                 item = {"@type": edges[0]['output_type'],
-                                        edges[0]['input_id']: v,
+                                        edges[0]['output_id']: [v],
                                         "$source": edges[0]['api']}
                                 results[val][k1].append(item)
             else:
@@ -180,14 +177,14 @@ class Dispatcher():
                                             results[m][k1].append(_v)
                                         else:
                                             item = {"@type": edges[0]['output_type'],
-                                                edges[0]['input_id']: _v,
+                                                edges[0]['output_id']: [_v],
                                                 "$source": edges[0]['api']}
                                             results[m][k1].append(item)
                                 elif type(v) == dict:
                                     results[m][k1].append(v)
                                 else:
                                     item = {"@type": edges[0]['output_type'],
-                                            edges[0]['input_id']: v,
+                                            edges[0]['output_id']: [v],
                                             "$source": edges[0]['api']}
                                     results[val][k1].append(item)
         return dict(results)
