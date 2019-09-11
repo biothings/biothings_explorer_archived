@@ -6,7 +6,8 @@ install_requires = [
     'networkx>=2.3',
     'jsonpath-rw>=1.4.0',
     'requests>=2.21.0',
-    'graphviz>=0.11.1'
+    'graphviz>=0.11.1',
+    'aiohttp'
 ]
 
 
