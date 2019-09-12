@@ -17,7 +17,7 @@ class OutputParser():
         self.batch_mode = batch_mode
         self.BIOTHINGS = ['mygene.info', 'myvariant.info',
                           'mychem.info', 'mydisease.info',
-                          'semmed', 'semmedanatomy',
+                          'semmeddisease', 'semmedanatomy',
                           'semmedbp', 'semmedchemical',
                           'semmedgene', 'semmedphenotype']
 

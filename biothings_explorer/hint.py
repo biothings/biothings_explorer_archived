@@ -1,5 +1,5 @@
 import asyncio
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientTimeout
 
 
 metadata = {
@@ -202,7 +202,8 @@ class Hint():
                 _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
             inputs.append(_item)
         tasks = []
-        async with ClientSession() as session:
+        timeout = ClientTimeout(total=20)
+        async with ClientSession(timeout=timeout) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_api(i, session))
                 tasks.append(task)

@@ -32,4 +32,4 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('CHEMBL518924' in seqd.G)
         self.assertTrue('CHEMBL2104426' in seqd.G)
         self.assertTrue('CHEMBL3545348' in seqd.G)
-        self.assertFalse('CHEMBL52333' in seqd.G)
+        self.assertTrue('CHEMBL52333' in seqd.G)

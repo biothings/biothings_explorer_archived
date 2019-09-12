@@ -17,7 +17,7 @@ from .config import metadata
 from .utils import restructure_biolink_response
 
 BIOTHINGS_APIs = ['mygene.info', 'myvariant.info', 'mychem.info',
-                  'mydisease.info', 'semmed', 'semmedanatomy',
+                  'mydisease.info', 'semmeddisease', 'semmedanatomy',
                   'semmedbp', 'semmedchemical', 'semmedgene',
                   'semmedphenotype']
 
@@ -62,14 +62,18 @@ class Dispatcher():
         edges = []
         # loop through each edge group
         for grp in edge_groups:
-            outputs = []
+            outputs = set()
             values = []
             # loop through edges in each edge group
             for _item in grp:
                 api = _item['api']
                 input_field = _item['input_field']
                 # add output fields
-                outputs.append(_item['output_field'])
+                if type(_item['output_field']) == list:
+                    for i in _item['output_field']:
+                        outputs.add(i)
+                else:
+                    outputs.add(_item['output_field'])
                 # add values
                 if type(_item['value']) == list:
                     values += _item['value']
@@ -80,7 +84,7 @@ class Dispatcher():
                 # construct API call inputs for each edge group
                 api_call_inputs.append({"api": api,
                                         "input": input_field,
-                                        "output": ','.join(set(outputs)),
+                                        "output": ','.join(outputs),
                                         "values": ','.join(set(values)),
                                         "batch_mode": True
                                         })
@@ -109,9 +113,7 @@ class Dispatcher():
         grped_edges = self.group_edges(edges)
         # print('grped_edges', grped_edges)
         apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
-        # print('modes', modes)
         responses = self.caller.call_apis(inputs)
-        # print(responses)
         for api, _res, batch, val, edges in zip(apis, responses, modes, vals, grped_edges):
             if metadata[api]['api_type'] == 'biolink':
                 _res = restructure_biolink_response(_res)
@@ -142,12 +144,12 @@ class Dispatcher():
                             if type(v) == list:
                                 for _v in v:
                                     if type(_v) == dict:
-                                        results[m][k1].append(_v)
+                                        results[val][k1].append(_v)
                                     else:
                                         item = {"@type": edges[0]['output_type'],
                                             edges[0]['output_id']: [_v],
                                             "$source": edges[0]['api']}
-                                        results[m][k1].append(item)
+                                        results[val][k1].append(item)
                             elif type(v) == dict:
                                 results[val][k1].append(v)
                             else:

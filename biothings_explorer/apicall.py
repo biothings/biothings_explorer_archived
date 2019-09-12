@@ -9,7 +9,7 @@ biothings schema and biothings API fields
 """
 import requests
 import asyncio
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientTimeout
 
 from .config import metadata
 
@@ -109,7 +109,8 @@ class BioThingsCaller():
             api: str
         """
         tasks = []
-        async with ClientSession() as session:
+        timeout = ClientTimeout(total=10)
+        async with ClientSession(timeout=timeout) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
                                                                size=size))

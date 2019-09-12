@@ -146,3 +146,16 @@ def dict2list(_dict):
         else:
             raise ValueError("{} should be list or str".format(v))
     return result
+
+
+def dict2tuple(_dict):
+    result = []
+    for k, v in _dict.items():
+        result.append((k, v))
+    return tuple(result)
+
+def tuple2dict(_tuple):
+    result = {}
+    for _item in _tuple:
+        result[_item[0]] = _item[1]
+    return result

@@ -80,3 +80,53 @@ def add_equivalent_ids_to_nodes(G, IDConverter):
     for m, n in equivalent_ids.items():
         G.node[m.split(':', 1)[-1]]['equivalent_ids'] = n
     return (G, equivalent_ids)
+
+
+def merge_two_networkx_graphs(G1, G2):
+    """Merge two networkx MultiDiGraphs
+
+    Params
+    ------
+    G1: networkx graph as the source graph
+    G2: networkx graph added to G1
+    """
+    G1.add_nodes_from(G1.nodes(data=True))
+    G1.add_edges_from(G2.edges(data=True))
+    return G1
+
+
+def networkx_json_to_visjs(res):
+    """Convert JSON output from networkx to visjs compatible version
+
+    Params
+    ------
+    res: JSON output from networkx of the graph
+    """
+    colors = {1: 'green', 2: 'red', 3: 'rgba(255,168,7)'}
+    if res:
+        links = res['links']
+        new_links = []
+        for _link in links:
+            _link['from'] = _link.pop('source')
+            _link['to'] = _link.pop('target')
+            _link['font'] = {'align': 'middle'}
+            _link['arrows'] = 'to'
+            new_links.append(_link)
+        res['links'] = new_links
+        new_nodes = []
+        for _node in res['nodes']:
+            _node['label'] = _node['identifier'][4:] + ':' + str(_node['id'])
+            _node['color'] = colors[_node['level']]
+            if 'equivalent_ids' in _node:
+                equ_ids = []
+                for k, v in _node['equivalent_ids'].items():
+                    if isinstance(v, list):
+                        for _v in v:
+                            equ_ids.append(k + ':' + str(_v))
+                    else:
+                        equ_ids.append(k + ":" + str(v))
+                equ_ids = '<br>'.join(equ_ids)
+                _node['equivalent_ids'] = equ_ids
+            new_nodes.append(_node)
+        res['nodes'] = new_nodes
+    return res

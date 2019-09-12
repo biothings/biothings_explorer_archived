@@ -13,17 +13,35 @@ import time
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes
+from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
+from .utils import dict2tuple, tuple2dict
+from .metadata import Metadata
+
+
+ID_RANK = {'Gene': 'bts:entrez',
+           'ChemicalSubstance': 'bts:chembl',
+           'DiseaseOrPhenotypicFeature': 'bts:mondo'}
 
 
 class SingleEdgeQueryDispatcher():
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
                  equivalent_ids=None, input_obj=None, registry=None):
+        if not registry:
+            self.registry = Registry()
+        else:
+            self.registry = registry
+        self.metadata = Metadata(reg=self.registry)
+        self.idc = IDConverter(registry=self.registry)
+        semantic_types = self.metadata.list_all_semantic_types()
+        id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
         self.output_cls = output_cls
         self.output_id = output_id
+        # if output id is not specified, use the default id for this type
+        if not output_id:
+            self.output_id = ID_RANK.get(self.output_cls)
         self.pred = pred
         self.values = values
         self.equivalent_ids = equivalent_ids
@@ -32,36 +50,46 @@ class SingleEdgeQueryDispatcher():
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = "bts:" + input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
-        if not registry:
-            self.registry = Registry()
-        else:
-            self.registry = registry
-        self.idc = IDConverter(registry=self.registry)
+        # check if input_cls is valid
+        if self.input_cls not in semantic_types:
+            raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
+        # check if input_id is valid
+        if not self.equivalent_ids and self.input_id not in id_types:
+            raise Exception("The input_id is not valid. Valid input id types are {}".format(id_types))
+        # check if output_cls is valid
+        if self.output_cls and self.output_cls not in semantic_types:
+            raise Exception("The output_cls is not valid. Valid output classes are {}".format(semantic_types))
+        if not self.equivalent_ids:
+            # find equivalent ids for the input value
+            equivalent_ids = self.idc.convert_ids([(self.values,
+                                                   self.input_id,
+                                                   self.input_cls)])
+            self.equivalent_ids = equivalent_ids
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
 
     def group_edges_by_input_id(self, edges):
         grouped_edges = defaultdict(list)
         for _edge in edges:
-            grouped_edges[_edge['input_id']].append(_edge)
+            grouped_edges[_edge['input_id']].append(dict2tuple(_edge))
         return grouped_edges
 
     def merge_equivalent_nodes(self):
+        """Merge equivalent nodes together
+        
+        nodes will be merged based on their equivalent ids
+        edges will be added to the merged node
+        """
         if self.G:
             nodes_to_remove = set()
             nodes_to_add = []
             edges_to_add = []
-            print(self.output_id)
             for n1, n2, data in self.G.edges(data=True):
-                print(n1, n2)
                 identifier = self.G.nodes[n2]['identifier']
-                print(identifier)
                 if self.output_id and self.output_id != identifier:
                     equivalent_ids = self.G.nodes[n2]['equivalent_ids']
                     new_vals = equivalent_ids.get(self.output_id)
                     if new_vals:
-                        print('n2', n2)
-                        print('new_vals', new_vals)
                         # get n2's node info
                         node_info = self.G.nodes[n2]
                         # change n2's identifier
@@ -79,17 +107,15 @@ class SingleEdgeQueryDispatcher():
             self.G.add_edges_from(edges_to_add)
 
     def query(self):
+        """Query APIs and organize outputs into networkx graph"""
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
+        if not edges:
+            print("No edges found for the <input, pred, output> you specified")
+            return
         grouped_edges = self.group_edges_by_input_id(edges)
         t1 = time.time()
-        if not self.equivalent_ids:
-            # find equivalent ids for the input value
-            equivalent_ids = self.idc.convert_ids([(self.values,
-                                                   self.input_id,
-                                                   self.input_cls)])
-            self.equivalent_ids = equivalent_ids
         # print("equivalent_ids", self.equivalent_ids)
         t2 = time.time()
         # print('time to find equivalent ids {}'.format(t2-t1))
@@ -105,10 +131,12 @@ class SingleEdgeQueryDispatcher():
                 # check if input id is in equivalent ids
                 if p in v and v[p]:
                     for _edge in q:
-                        _edge['value'] = v[p]
-                        mapping_keys.append(_edge['mapping_key'])
-                        input_edges.append(_edge)
-                        output_id_types.append(_edge['output_id'])
+                        m = _edge
+                        m = tuple2dict(m)
+                        m['value'] = v[p]
+                        mapping_keys.append(m['mapping_key'])
+                        input_edges.append(m)
+                        output_id_types.append(m['output_id'])
                     self.G.add_node(k.split(':', 1)[-1],
                                     type=self.input_cls,
                                     identifier=k.split(':', 1)[0],
@@ -116,15 +144,13 @@ class SingleEdgeQueryDispatcher():
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
                         id_mapping[_id] = k.split(':', 1)[-1]
-        # print('input_edges', input_edges)
+            # print(input_edges)
         if not input_edges:
-            self.G = None
             return
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges)
         t3 = time.time()
         # print('time to make API calls {}'.format(t3 - t2))
-        # print('_res', _res)
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
@@ -137,9 +163,117 @@ class SingleEdgeQueryDispatcher():
         self.merge_equivalent_nodes()
 
     def to_json(self):
+        """convert the graph into JSON through networkx"""
         if self.G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.G)
             return res
+        else:
+            return {}
+
+    @property
+    def output_ids(self):
+        """Retrieve output ids along with their equivalent ids"""
+        result = {}
+        if self.G.number_of_nodes() > 0:
+            for x, y in self.G.nodes(data=True):
+                if y['level'] and y['level'] == 2:
+                    identifier = y['identifier']
+                    semantic_type = y['type']
+                    if semantic_type not in result:
+                        result[semantic_type] = {}
+                    if identifier.startswith('bts:'):
+                        identifier = identifier[4:]
+                    curie = identifier + ':' + x
+                    result[semantic_type][curie] = y['equivalent_ids']
+        return result
+
+
+class Connect():
+    def __init__(self, input_obj, output_obj, max_steps=2, registry=None):
+        """
+        params
+        ------
+        max_steps: maximum number of edges connecting input and output
+        """
+        self.input_obj = input_obj
+        self.output_obj = output_obj
+        if type(max_steps) != int:
+            raise Exception("max_steps should be integer")
+        if max_steps < 1:
+            raise Exception("max_steps should be at least 2")
+        if max_steps > 4:
+            raise Exception("max_steps should be no more than 4")
+        self.steps = max_steps
+        if registry:
+            self.registry = registry
+        else:
+            self.registry = Registry()
+        self.G = nx.MultiDiGraph()
+
+    def show_path(self):
+        input_node = self.input_obj.get("primary").get("value")
+        output_node = self.output_obj.get("primary").get("value")
+        paths = []
+        for path in nx.all_simple_paths(self.G,
+                                        source=input_node,
+                                        target=output_node):
+
+            paths.append(path)
+        return paths
+
+    def sub_graph(self):
+        paths = self.show_path()
+        nodes = set()
+        for _path in paths:
+            if _path:
+                nodes = nodes | set(_path)
+        return self.G.subgraph(nodes)
+
+    def check_output_in_graph(self):
+        values = self.output_obj.get("primary").get("value")
+        if values in self.G:
+            return True
+        else:
+            return False
+
+    def to_json(self):
+        """convert the graph into JSON through networkx"""
+        sub_G = self.sub_graph()
+        if sub_G.number_of_nodes() > 0:
+            res = nx.json_graph.node_link_data(sub_G)
+            return res
+        else:
+            return {}
+
+    def connect(self):
+        for i in range(self.steps):
+            # if this is the last step, set output_cls to be the same
+            # as user specified output class, otherwise, output_cls
+            # should be none (which is try all classes)
+            if i == self.steps - 1:
+                output_cls = self.output_obj.get("primary").get("cls")
+            else:
+                output_cls = None
+            print("processing step {} ...".format(i + 1))
+            if i == 0:
+                seqd = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+                                                 output_cls=output_cls,
+                                                 pred=None)
+                seqd.query()
+                self.G = merge_two_networkx_graphs(self.G, seqd.G)
+            else:
+                output_ids = seqd.output_ids
+                if output_ids:
+                    for semantic_type, ids in output_ids.items():
+                        seqd = SingleEdgeQueryDispatcher(equivalent_ids=ids, input_cls=semantic_type, output_cls=output_cls, pred=None)
+                        seqd.query()
+                        self.G = merge_two_networkx_graphs(self.G, seqd.G)
+        print("query completed")
+        result = self.check_output_in_graph()
+        if result:
+            print("Find connection")
+        else:
+            print("Connction not found!")
 
 
 class ConnectTwoConcepts():
@@ -243,12 +377,12 @@ class ConnectTwoConcepts():
 
 
 class MultiEdgeQueryDispatcher():
-    def __init__(self, input_node, edges, registry=None):
+    def __init__(self, input_obj, edges, registry=None):
         """
         edges: [(sub_cls, pred, obj_cls), (sub_cls, pred, obj_cls)
         """
         self.edges = edges
-        self.input_node = input_node
+        self.input_obj = input_obj
         if not registry:
             self.registry = Registry()
         else:
@@ -257,33 +391,32 @@ class MultiEdgeQueryDispatcher():
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
 
-    def get_equivalent_ids(self, G):
-        result = {}
-        for x, y in G.nodes(data=True):
-            if y['level'] and y['level'] == 2:
-                identifier = y['identifier']
-                if identifier.startswith('bts:'):
-                    identifier = identifier[4:]
-                curie = identifier + ':' + x
-                result[curie] = y['equivalent_ids']
-        return result
-
     def query(self):
         for i, edge in enumerate(self.edges):
             input_cls, pred, output_cls = edge
+            print("start to query for associations between {} and {}...".format(input_cls, output_cls))
             if i == 0:
-                input_id = self.input_node['id']
-                input_values = self.input_node['values']
-                _, pred, output_cls = edge
                 equivalent_ids = None
             else:
-                equivalent_ids = self.get_equivalent_ids(seqd.G)
-                input_id = None
-                input_values = None
-            seqd = SingleEdgeQueryDispatcher(input_cls, input_id,
-                                             input_values, output_cls,
-                                             None, pred,
-                                             equivalent_ids=equivalent_ids,
-                                             registry=self.registry)
-            seqd.query()
-            self.G = nx.compose(self.G, seqd.G)
+                if input_cls != self.edges[i - 1]['output_cls']:
+                    raise Exception('The subject of edge {} does not match the object of edge {}'.format(i, i-1))
+                equivalent_ids = seqd.output_ids[input_cls]
+                self.input_obj = None
+            if (i > 0 and equivalent_ids != {}) or i == 0:
+                seqd = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+                                                 equivalent_ids=equivalent_ids,
+                                                 input_cls=input_cls,
+                                                 output_cls=output_cls,
+                                                 pred=pred)
+                seqd.query()
+                print("finished! Find {} hits.".format(seqd.G.number_of_nodes()))
+                # print(seqd.G.nodes())
+                self.G = merge_two_networkx_graphs(self.G, seqd.G)
+
+    def to_json(self):
+        """convert the graph into JSON through networkx"""
+        if self.G.number_of_nodes() > 0:
+            res = nx.json_graph.node_link_data(self.G)
+            return res
+        else:
+            return {}
