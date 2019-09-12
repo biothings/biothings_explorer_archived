@@ -109,7 +109,7 @@ class BioThingsCaller():
             api: str
         """
         tasks = []
-        timeout = ClientTimeout(total=10)
+        timeout = ClientTimeout(total=20)
         async with ClientSession(timeout=timeout) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
