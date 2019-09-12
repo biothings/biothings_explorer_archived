@@ -2,7 +2,7 @@ BioThings Explorer Jupyter Notebook
 ===================================
 
 ## Prerequisite
----------------
+
 1. Set up your python virtual environment [instructions](https://virtualenv.pypa.io/en/latest/)
 2. Install Jupyter `pip install jupyter`
 3. Downgrade Notebook `pip install notebook==5.7.5`
@@ -10,7 +10,7 @@ BioThings Explorer Jupyter Notebook
 5. Install biothings-explorer `pip install git+https://github.com/kevinxin90/bte_schema#egg=bte_schema`
 6. Install biothings-schema `pip install git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema.py`
 
-**Note: In order for biothings explorer to work with jupyter notebooks, you must downgrade Notebook to 5.7.5 and tornado to 4.5.3 (these two packages will have conflict with Python's aysncio module)**
+**Important: In order for biothings explorer to work with jupyter notebooks, you must downgrade Notebook to 5.7.5 and tornado to 4.5.3 (these two packages will have conflict with Python's aysncio module)**
 
 **Note: There might be warning or error during installation of biothings-explorer or biothings-schema. Don't worry. As long as it "shows Successfully built biothings-explorer" in the end, you will be fine**
 
@@ -19,6 +19,7 @@ BioThings Explorer Jupyter Notebook
 ------------
 
 1. BioThings Explorer Metadata
+------------------------------
 This notebook list how to find metadata information about biothings-explorer, including:
 - Find all semantic types used in BioThings Explorer
 - Find all identifier types used in BioThings Explorer
@@ -26,9 +27,11 @@ This notebook list how to find metadata information about biothings-explorer, in
 - Find all associations between semantic types in BioThings Explorer
 - Filter associations based on input/output semantic types as well as predicate
 
-**Please take a look at this notebook first before querying BioThings Explorer!**
+- **Please take a look at this notebook first before querying BioThings Explorer!**
+
 
 2. BioThings Explorer Demo
+--------------------------
 This notebook shows you some of the basic features of biothings-explorer, incluing:
 - Single Hop Query (Connecting from one entity to another through one hop query)
 - Multi Hop Query (Connecting from one entity to another through mulitple hops query)
