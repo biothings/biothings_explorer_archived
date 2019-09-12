@@ -139,7 +139,7 @@ class SingleEdgeQueryDispatcher():
                         output_id_types.append(m['output_id'])
                     self.G.add_node(k.split(':', 1)[-1],
                                     type=self.input_cls,
-                                    identifier=k.split(':', 1)[0],
+                                    identifier="bts:" + k.split(':', 1)[0],
                                     level=1,
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
