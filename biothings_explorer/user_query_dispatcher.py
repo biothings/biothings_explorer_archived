@@ -112,7 +112,7 @@ class SingleEdgeQueryDispatcher():
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
         if not edges:
-            print("No edges found for the <input, pred, output> you specified")
+            # print("No edges found for the <input, pred, output> you specified")
             return
         grouped_edges = self.group_edges_by_input_id(edges)
         t1 = time.time()
@@ -186,6 +186,41 @@ class SingleEdgeQueryDispatcher():
                     curie = identifier + ':' + x
                     result[semantic_type][curie] = y['equivalent_ids']
         return result
+
+    def show_all_nodes(self):
+        """show all nodes in the graph"""
+        return list(self.G.nodes())
+
+    def show_all_edges(self):
+        """show all edges in the graph"""
+        return list(self.G.edges())
+
+    def display_node_info(self, node):
+        """show detailed node information
+
+        Params
+        ------
+        node: str, node id
+        """
+        if node not in self.G:
+            raise Exception("{} is not in the graph".format(node))
+        return self.G.nodes[node]
+
+    def display_edge_info(self, start_node, end_node):
+        """display detailed edge info between start node and end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        if start_node not in self.G:
+            raise Exception("{} is not in the graph".format(start_node))
+        if end_node not in self.G:
+            raise Exception("{} is not in the graph".format(end_node))
+        if not self.G.has_edge(start_node, end_node):
+            raise Exception("No edge exists between {} and {}".format(start_node, end_node))
+        return dict(self.G[start_node][end_node])
 
 
 class Connect():
@@ -274,6 +309,41 @@ class Connect():
             print("Find connection")
         else:
             print("Connction not found!")
+
+    def show_all_nodes(self):
+        """show all nodes in the graph"""
+        return list(self.G.nodes())
+
+    def show_all_edges(self):
+        """show all edges in the graph"""
+        return list(self.G.edges())
+
+    def display_node_info(self, node):
+        """show detailed node information
+
+        Params
+        ------
+        node: str, node id
+        """
+        if node not in self.G:
+            raise Exception("{} is not in the graph".format(node))
+        return self.G.nodes[node]
+
+    def display_edge_info(self, start_node, end_node):
+        """display detailed edge info between start node and end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        if start_node not in self.G:
+            raise Exception("{} is not in the graph".format(start_node))
+        if end_node not in self.G:
+            raise Exception("{} is not in the graph".format(end_node))
+        if not self.G.has_edge(start_node, end_node):
+            raise Exception("No edge exists between {} and {}".format(start_node, end_node))
+        return dict(self.G[start_node][end_node])
 
 
 class ConnectTwoConcepts():
@@ -420,3 +490,58 @@ class MultiEdgeQueryDispatcher():
             return res
         else:
             return {}
+
+    def show_path(self, start_node, end_node):
+        """show paths which can connect from the start node to end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        if start_node not in self.G:
+            raise Exception("{} is not in the graph".format(start_node))
+        if end_node not in self.G:
+            raise Exception("{} is not in the graph".format(end_node))
+        paths = []
+        for path in nx.all_simple_paths(self.G,
+                                        source=start_node,
+                                        target=end_node):
+
+            paths.append(path)
+        return paths
+
+    def display_node_info(self, node):
+        """show detailed node information
+
+        Params
+        ------
+        node: str, node id
+        """
+        if node not in self.G:
+            raise Exception("{} is not in the graph".format(node))
+        return self.G.nodes[node]
+
+    def display_edge_info(self, start_node, end_node):
+        """display detailed edge info between start node and end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        if start_node not in self.G:
+            raise Exception("{} is not in the graph".format(start_node))
+        if end_node not in self.G:
+            raise Exception("{} is not in the graph".format(end_node))
+        if not self.G.has_edge(start_node, end_node):
+            raise Exception("No edge exists between {} and {}".format(start_node, end_node))
+        return dict(self.G[start_node][end_node])
+
+    def show_all_nodes(self):
+        """show all nodes in the graph"""
+        return list(self.G.nodes())
+
+    def show_all_edges(self):
+        """show all edges in the graph"""
+        return list(self.G.edges())
