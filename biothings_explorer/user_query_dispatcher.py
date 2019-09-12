@@ -398,7 +398,7 @@ class MultiEdgeQueryDispatcher():
             if i == 0:
                 equivalent_ids = None
             else:
-                if input_cls != self.edges[i - 1]['output_cls']:
+                if input_cls != self.edges[i - 1][-1]:
                     raise Exception('The subject of edge {} does not match the object of edge {}'.format(i, i-1))
                 equivalent_ids = seqd.output_ids[input_cls]
                 self.input_obj = None
