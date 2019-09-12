@@ -90,7 +90,11 @@ def merge_two_networkx_graphs(G1, G2):
     G1: networkx graph as the source graph
     G2: networkx graph added to G1
     """
-    G1.add_nodes_from(G1.nodes(data=True))
+    nodes_to_add = []
+    for k, v in G2.nodes(data=True):
+        if k not in G1:
+            nodes_to_add.append((k, v))
+    G1.add_nodes_from(nodes_to_add)
     G1.add_edges_from(G2.edges(data=True))
     return G1
 
