@@ -17,7 +17,7 @@ BioThings Explorer Jupyter Notebook
 
 ## Notebooks
 
-### 1. BioThings Explorer Metadata
+### 1. [BioThings Explorer Metadata](https://github.com/kevinxin90/bte_schema/blob/master/jupyter%20notebooks/BioThings%20Explorer%20Metadata.ipynb)
 ------------------------------
 This notebook list how to find metadata information about biothings-explorer, including:
 - Find all semantic types used in BioThings Explorer
@@ -29,7 +29,7 @@ This notebook list how to find metadata information about biothings-explorer, in
 - **Please take a look at this notebook first before querying BioThings Explorer!**
 
 
-### 2. BioThings Explorer Demo
+### 2. [BioThings Explorer Demo](https://github.com/kevinxin90/bte_schema/blob/master/jupyter%20notebooks/BioThings%20Explorer%20Demo.ipynb)
 --------------------------
 This notebook shows you some of the basic features of biothings-explorer, incluing:
 - Single Hop Query (Connecting from one entity to another through one hop query)
