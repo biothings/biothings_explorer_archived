@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+"""
+biothings_explorer.hint
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Display bioentities in biothings explorer based on user specified input
+"""
 import asyncio
 from aiohttp import ClientSession, ClientTimeout
 from .config import metadata
@@ -78,7 +86,6 @@ class Hint():
                 if 'add' in v:
                     _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
                 inputs.append(_item)
-        print(inputs)
         tasks = []
         timeout = ClientTimeout(total=20)
         async with ClientSession(timeout=timeout) as session:
@@ -90,7 +97,6 @@ class Hint():
             for j in self.types:
                 final_res[j] = []
             for (k, v, j) in zip(self.clients, responses, self.types):
-                print(k, v, j)
                 # response could be from GET or POST, need to restructure
                 if 'hits' in v:
                     v = v['hits']
