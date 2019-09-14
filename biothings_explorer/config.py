@@ -7,6 +7,7 @@ metadata = {
     "method": "post",
     "url": "http://mygene.info/v3/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mygene.info/schema.json',
+    "hint": True,
     "fields": {
       'entrezgene': 'entrez',
       'name': 'name',
@@ -21,6 +22,7 @@ metadata = {
                'clinvar.hgvs.genomic', 'clinvar.hgvs.protein'],
     "id_ranks": ['dbsnp', 'hgvs'],
     "doc_type": "SequenceVariant",
+    "hint": True,
     "api_type": "biothings",
     "url": 'http://myvariant.info/v1/query',
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/myvariant.info/schema.json',
@@ -37,6 +39,7 @@ metadata = {
     "id_ranks": ['chembl', 'drugbank', 'pubchem', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
+    "hint": True,
     "url": "http://mychem.info/v1/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mychem.info/schema.json',
     "method": "post",
@@ -54,6 +57,7 @@ metadata = {
     "id_ranks": ['mondo', 'doid', 'umls', 'mesh', 'name'],
     "doc_type": "DiseaseOrPhenotypicFeature",
     "api_type": "biothings",
+    "hint": True,
     "url": "http://mydisease.info/v1/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mydisease.info/schema.json',
     "method": "post",
@@ -105,6 +109,7 @@ metadata = {
     "method": "get",
     "url": "http://pending.biothings.io/geneset/query",
     "add": " AND type:pathway",
+    "hint": True,
     "fields": {
       'name': 'name',
       'reactome': 'reactome',
@@ -121,6 +126,7 @@ metadata = {
     "api_type": "biothings",
     "add": " AND type:mf",
     "method": "get",
+    "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
     "fields":{
       'name': 'name',
@@ -134,6 +140,7 @@ metadata = {
     "api_type": "biothings",
     "method": "get",
     "add": " AND type:cc",
+    "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
     "fields":{
       'name': 'name',
@@ -148,6 +155,7 @@ metadata = {
     "api_type": "biothings",
     "add": " AND type:bp",
     "method": "get",
+    "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
     "fields": {
       'name': 'name',
@@ -160,6 +168,7 @@ metadata = {
     "id_ranks": ['umls', 'name'],
     "doc_type": "Anatomy",
     "api_type": "biothings",
+    "hint": True,
     "url": "http://pending.biothings.io/semmed_anatomy/query",
     "method": "post",
     "fields": {
@@ -172,6 +181,7 @@ metadata = {
     "id_ranks": ['umls', 'name'],
     "doc_type": "PhenotypicFeature",
     "api_type": "biothings",
+    "hint": True,
     "url": "http://pending.biothings.io/semmedphenotype/query",
     "method": "post",
     "fields": {
@@ -184,6 +194,7 @@ metadata = {
     "id_ranks": ['umls', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
+    "hint": True,
     "url": "http://pending.biothings.io/umlschem/query",
     "method": "post",
     "fields": {
