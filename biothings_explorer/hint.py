@@ -1,170 +1,32 @@
 import asyncio
 from aiohttp import ClientSession, ClientTimeout
-
-
-metadata = {
-  "mygene.info": {
-    "scopes": ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
-    "id_ranks": ['entrez', 'symbol', 'umls', 'name'],
-    "type": "Gene",
-    "method": "post",
-    "url": "http://mygene.info/v3/query",
-    "fields": {
-      'entrezgene': 'entrez',
-      'name': 'name',
-      'symbol': 'symbol',
-      'taxid': 'taxonomy',
-      'umls.cui': 'umls'
-    }
-  },
-  "myvariant.info": {
-    "scopes": ['dbsnp.rsid', '_id', 'clinvar.rsid',
-               'dbnsfp.rsid', 'clinvar.hgvs.coding',
-               'clinvar.hgvs.genomic', 'clinvar.hgvs.protein'],
-    "id_ranks": ['dbsnp', 'hgvs'],
-    "type": "SequenceVariant",
-    "url": 'http://myvariant.info/v1/query',
-    "method": "post",
-    "fields": {
-      '_id': "hgvs",
-      'dbsnp.rsid': 'dbsnp'
-    },
-  },
-  "mychem.info": {
-    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id',
-               'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
-               'unii.unii', 'ginas.preferred_name'],
-    "id_ranks": ['chembl', 'drugbank', 'pubchem', 'name'],
-    "type": "ChemicalSubstance",
-    "url": "http://mychem.info/v1/query",
-    "method": "post",
-    "fields": {
-      'chembl.molecule_chembl_id': 'chembl',
-      'drugbank.id': 'drugbank',
-      'chembl.pref_name': 'name',
-      'pubchem.cid': 'pubchem'
-    }
-  },
-  "mydisease.info": {
-    "scopes": ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
-               'mondo.xrefs.mesh', 'mondo.xrefs.umls',
-               'mondo.label', 'disgenet.xrefs.disease_name'],
-    "id_ranks": ['mondo', 'doid', 'umls', 'mesh', 'name'],
-    "type": "DiseaseOrPhenotypicFeature",
-    "url": "http://mydisease.info/v1/query",
-    "method": "post",
-    "fields": {
-      '_id': "mondo",
-      'mondo.xrefs.doid': 'doid',
-      'mondo.xrefs.hp': 'hp',
-      'mondo.xrefs.umls': 'umls',
-      'mondo.xrefs.mesh': 'mesh',
-      'mondo.label': 'name',
-      'disgenet.xrefs.disease_name': 'name'
-    }
-  },
-  "pathway": {
-    "scopes": ['_id', 'name'],
-    "id_ranks": ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
-    "type": "Pathway",
-    "method": "get",
-    "url": "http://pending.biothings.io/geneset/query",
-    "add": " AND type:pathway",
-    "fields": {
-      'name': 'name',
-      'reactome': 'reactome',
-      'wikipathways': 'wikipathways',
-      'kegg': 'kegg',
-      'pharmgkb': 'pharmgkb',
-      'biocarta': 'biocarta'
-    }
-  },
-  "mf": {
-    "scopes": ['_id', 'name'],
-    "id_ranks": ['go', 'name'],
-    "type": "MolecularFunction",
-    "add": " AND type:mf",
-    "method": "get",
-    "url": "http://pending.biothings.io/geneset/query",
-    "fields":{
-      'name': 'name',
-      'go': 'go'
-    }
-  },
-  "cc": {
-    "scopes": ['_id', 'name'],
-    "id_ranks": ['go', 'umls', 'name'],
-    "type": "CellularComponent",
-    "method": "get",
-    "add": " AND type:cc",
-    "url": "http://pending.biothings.io/geneset/query",
-    "fields":{
-      'name': 'name',
-      'go': 'go',
-      'umls': 'umls'
-    }
-  },
-  "bp": {
-    "scopes": ['_id', 'name'],
-    "id_ranks": ['go', 'umls', 'name'],
-    "type": "BiologicalProcess",
-    "add": " AND type:bp",
-    "method": "get",
-    "url": "http://pending.biothings.io/geneset/query",
-    "fields": {
-      'name': 'name',
-      'go': 'go',
-      'umls': 'umls'
-    }
-  },
-  "anatomy": {
-    "scopes": ['umls', 'name'],
-    "id_ranks": ['umls', 'name'],
-    "type": "Anatomy",
-    "url": "http://pending.biothings.io/semmed_anatomy/query",
-    "method": "post",
-    "fields": {
-      "name": "name",
-      "umls": "umls"
-    }
-  },
-  "phenotype": {
-    "scopes": ['umls', 'name'],
-    "id_ranks": ['umls', 'name'],
-    "type": "PhenotypicFeature",
-    "url": "http://pending.biothings.io/semmedphenotype/query",
-    "method": "post",
-    "fields": {
-      "name": "name",
-      "umls": "umls"
-    }
-  },
-  "umlschem": {
-    "scopes": ['umls', 'name'],
-    "id_ranks": ['umls', 'name'],
-    "type": "ChemicalSubstance",
-    "url": "http://pending.biothings.io/umlschem/query",
-    "method": "post",
-    "fields": {
-      "name": "name",
-      "umls": "umls"
-    }
-  }
-}
+from .config import metadata
 
 
 class Hint():
-    def __init__(self):
+    def __init__(self, size=5):
+        """Guess appropriate bio-entity based on user input
+
+        params
+        ------
+        size: the max number of documents returned for each bioentity type
+        """
         self.clients = []
         self.types = []
         self.post_apis = []
         self.get_apis = []
         self.id_ranks = []
+        self.size = size
 
     def get_primary_id(self, client, json_doc, _type):
+        """Get the primary id of a biological entity"""
+        # parse the id rank info from metadata
         ranks = metadata[client]['id_ranks']
         res = {}
+        # loop through the id rank list, e.g. ['chembl', 'drugbank', ...]
+        # the id rank list is ranked based on priorirty
         for _id in ranks:
+            # if an id of higher priority is found, set it as the primary id
             if _id in json_doc:
                 res['identifier'] = _id
                 res['cls'] = _type
@@ -173,6 +35,13 @@ class Hint():
         return res
 
     async def call_api(self, _input, session):
+        """make asynchronous API calls
+
+        params
+        ------
+        _input: str, user specified input
+        session: aiohttp session object
+        """
         if _input['api'] in self.post_apis:
             async with session.post(_input['url'], data=_input['data']) as res:
                 return await res.json()
@@ -181,26 +50,35 @@ class Hint():
                 return await res.json()
 
     async def run(self, _input):
+        """run API call tasks
+
+        params
+        ------
+        _input: str, user typed text
+        """
         inputs = []
         for k, v in metadata.items():
-            self.clients.append(k)
-            self.types.append(v['type'])
-            if v['method'] == 'get':
-                self.get_apis.append(k)
-            elif v['method'] == 'post':
-                self.post_apis.append(k)
-            _item = {'url': v['url'],
-                     'api': k,
-                     'data': {'q': ["'" + _input + "'"],
-                              'scopes': ','.join(v['scopes']),
-                              'fields': ','.join(v['fields']),
-                              'size': 5,
-                              'dotfield': 1
-                             }
-                     }
-            if 'add' in v:
-                _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
-            inputs.append(_item)
+            # check if an API can be used for hint
+            if v.get('hint'):
+                self.clients.append(k)
+                self.types.append(v['doc_type'])
+                if v['method'] == 'get':
+                    self.get_apis.append(k)
+                elif v['method'] == 'post':
+                    self.post_apis.append(k)
+                _item = {'url': v['url'],
+                         'api': k,
+                         'data': {'q': ["'" + _input + "'"],
+                                  'scopes': ','.join(v['scopes']),
+                                  'fields': ','.join(v['fields']),
+                                  'size': self.size,
+                                  'dotfield': 1
+                                 }
+                         }
+                if 'add' in v:
+                    _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
+                inputs.append(_item)
+        print(inputs)
         tasks = []
         timeout = ClientTimeout(total=20)
         async with ClientSession(timeout=timeout) as session:
@@ -212,6 +90,7 @@ class Hint():
             for j in self.types:
                 final_res[j] = []
             for (k, v, j) in zip(self.clients, responses, self.types):
+                print(k, v, j)
                 # response could be from GET or POST, need to restructure
                 if 'hits' in v:
                     v = v['hits']
@@ -234,6 +113,12 @@ class Hint():
             return final_res
 
     def query(self, _input):
+        """Query APIs based on user input
+
+        params
+        ------
+        _input: str, user specified input
+        """
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(_input))
         return loop.run_until_complete(future)
