@@ -10,6 +10,8 @@ import asyncio
 from aiohttp import ClientSession, ClientTimeout
 from .config import metadata
 
+BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
+
 
 class Hint():
     def __init__(self, size=5):
@@ -52,10 +54,16 @@ class Hint():
         """
         if _input['api'] in self.post_apis:
             async with session.post(_input['url'], data=_input['data']) as res:
-                return await res.json()
+                try:
+                    return await res.json()
+                except:
+                    return {}
         else:
             async with session.get(_input['url'], params=_input['data']) as res:
-                return await res.json()
+                try:
+                    return await res.json()
+                except:
+                    return {}
 
     async def run(self, _input):
         """run API call tasks
