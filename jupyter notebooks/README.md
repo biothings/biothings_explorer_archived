@@ -3,7 +3,7 @@ BioThings Explorer Jupyter Notebook
 
 ## Prerequisite
 
-1. Set up your python virtual environment [instructions](https://virtualenv.pypa.io/en/latest/)
+1. Set up your python virtual environment [instructions](https://virtualenv.pypa.io/en/latest/). Please use Python version higher than 3.6.
 2. Install Jupyter `pip install jupyter`
 3. Downgrade Notebook `pip install notebook==5.7.5`
 4. Downgrade tornado `pip install tornado==4.5.3`
