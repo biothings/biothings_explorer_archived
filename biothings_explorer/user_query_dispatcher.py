@@ -4,7 +4,7 @@
 biothings_explorer.user_query_dispatcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Convert User Query Into Actual API Calls
+Accept user query and return results as a graph
 """
 from collections import defaultdict
 import networkx as nx
@@ -24,6 +24,19 @@ ID_RANK = {'Gene': 'bts:entrez',
 
 
 class SingleEdgeQueryDispatcher():
+    """Query from one bio-entity to other type(s) of bio-entities
+
+    params
+    ------
+    input_cls: str or list, the semantic type(s) of the input, e.g. Gene
+    input_id: str, the identifier type of the input, e.g. bts:entrez
+    values: str or list, the actual value of the input, e.g. CDK7
+    output_cls: str or list or None, the semantic type(s) of the output, e.g. Gene. If None, search for all semantic type(s) which connect from the input
+    output_id: str, optional, the identifier type in which output ids will be, e.g. bts:chembl
+    pred: str or list or None, the relationship between input and output. If None, search for all relationships between input and output
+    input_obj: optional, a representation of the input from Hint Module
+    registry: optional, the Registry object in BioThings Explorer
+    """
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
                  equivalent_ids=None, input_obj=None, registry=None):
@@ -69,14 +82,23 @@ class SingleEdgeQueryDispatcher():
         self.G = nx.MultiDiGraph()
 
     def group_edges_by_input_id(self, edges):
+        """ group edges based on the input identifier
+
+        Params
+        ------
+        edges: list of dicts, edges filtered based on input/output/pred
+        """
+        if not edges:
+            return edges
         grouped_edges = defaultdict(list)
         for _edge in edges:
+            # need to convert to tuple to make it immutable
             grouped_edges[_edge['input_id']].append(dict2tuple(_edge))
         return grouped_edges
 
     def merge_equivalent_nodes(self):
         """Merge equivalent nodes together
-        
+
         nodes will be merged based on their equivalent ids
         edges will be added to the merged node
         """
@@ -84,10 +106,16 @@ class SingleEdgeQueryDispatcher():
             nodes_to_remove = set()
             nodes_to_add = []
             edges_to_add = []
+            # loop through all edges
+            # n1 is the subject node, n2 is the object node
             for n1, n2, data in self.G.edges(data=True):
+                # get the id type of the object node
                 identifier = self.G.nodes[n2]['identifier']
+                # check if the identifier matches the id type specified by the
+                # user or the default id type
                 if self.output_id and self.output_id != identifier:
                     equivalent_ids = self.G.nodes[n2]['equivalent_ids']
+                    # find the corresponding id from the equivalent id dict
                     new_vals = equivalent_ids.get(self.output_id)
                     if new_vals:
                         # get n2's node info
@@ -97,12 +125,15 @@ class SingleEdgeQueryDispatcher():
                         for _val in new_vals:
                             # add new edge
                             edges_to_add.append((n1, _val, data))
+                            # set the original node to be removed
                             nodes_to_remove.add(n2)
-                            # add new node
+                            # if this node is not in graph, add this node
                             if _val not in self.G.nodes():
                                 nodes_to_add.append((_val, node_info))
-            for n in nodes_to_remove:  # remove the merged nodes
+            # remove duplicate nodes
+            for n in nodes_to_remove:
                 self.G.remove_node(n)
+            # add new nodes and edges
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
 
@@ -115,9 +146,9 @@ class SingleEdgeQueryDispatcher():
             # print("No edges found for the <input, pred, output> you specified")
             return
         grouped_edges = self.group_edges_by_input_id(edges)
-        t1 = time.time()
+        # t1 = time.time()
         # print("equivalent_ids", self.equivalent_ids)
-        t2 = time.time()
+        # t2 = time.time()
         # print('time to find equivalent ids {}'.format(t2-t1))
         input_edges = []
         mapping_keys = []
@@ -149,7 +180,7 @@ class SingleEdgeQueryDispatcher():
             return
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges)
-        t3 = time.time()
+        # t3 = time.time()
         # print('time to make API calls {}'.format(t3 - t2))
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
@@ -157,13 +188,14 @@ class SingleEdgeQueryDispatcher():
         # annotate nodes with its equivalent ids
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
         self.equivalent_ids.update(out_equ_ids)
-        t4 = time.time()
+        # t4 = time.time()
         # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
+        # first check if the graph is empty
         if self.G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.G)
             return res
