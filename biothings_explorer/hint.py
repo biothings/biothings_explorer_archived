@@ -95,7 +95,7 @@ class Hint():
                     _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
                 inputs.append(_item)
         tasks = []
-        timeout = ClientTimeout(total=20)
+        timeout = ClientTimeout(total=3)
         async with ClientSession(timeout=timeout) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_api(i, session))
