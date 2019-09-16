@@ -12,8 +12,6 @@ BioThings Explorer Jupyter Notebook
 
 **Important: In order for biothings explorer to work with jupyter notebooks, you must downgrade Notebook to 5.7.5 and tornado to 4.5.3 (these two packages will have conflict with Python's aysncio module)**
 
-**Note: There might be warning or error during installation of biothings-explorer or biothings-schema. Don't worry. As long as it "shows Successfully built biothings-explorer" in the end, you will be fine**
-
 
 ## Notebooks
 
