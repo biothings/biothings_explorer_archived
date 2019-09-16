@@ -80,20 +80,29 @@ class BioThingsCaller():
             if not _input['batch_mode']:
                 async with session.get(metadata[_input['api']]['url'],
                                        params=params) as res:
-                    return await res.json()
+                    try:
+                        return await res.json()
+                    except:
+                        return {}
             # handle cases for API call using POST HTTP method
             else:
                 headers = {'content-type': 'application/x-www-form-urlencoded'}
                 async with session.post(metadata[_input['api']]['url'],
                                         data=params,
                                         headers=headers) as res:
-                    return await res.json()
+                    try:
+                        return await res.json()
+                    except:
+                        return {}
         else:
             api_url = metadata[_input['api']]['url']
             api_param = metadata[_input['api']]['path']
             path = self.construct_path(api_url, api_param, _input['values'])
             async with session.get(path) as res:
-                return await res.json()
+                try:
+                    return await res.json()
+                except:
+                    return {}
 
     async def run(self, inputs, size):
         """asynchronous make one API call
