@@ -83,6 +83,7 @@ class BioThingsCaller():
                     try:
                         return await res.json()
                     except:
+                        print("Unable to fetch results from {}".format(_input['api']))
                         return {}
             # handle cases for API call using POST HTTP method
             else:
@@ -93,6 +94,7 @@ class BioThingsCaller():
                     try:
                         return await res.json()
                     except:
+                        print("Unable to fetch results from {}".format(_input['api']))
                         return {}
         else:
             api_url = metadata[_input['api']]['url']
@@ -118,7 +120,7 @@ class BioThingsCaller():
             api: str
         """
         tasks = []
-        timeout = ClientTimeout(total=120)
+        timeout = ClientTimeout(total=15)
         async with ClientSession(timeout=timeout) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
