@@ -1,10 +1,18 @@
 from collections import defaultdict
 from .utils import find_common_path, get_dict_values
 
-from jsonpath_rw import jsonpath, parse
+from jsonpath_rw import parse
 
 
 class Transformer():
+    """Transform the JSON output from API response into schema format
+
+    params
+    ------
+    json_doc: dict, the json document
+    mapping: dict, the schema mapping file which the transformation will
+             be based on
+    """
     def __init__(self, json_doc, mapping):
         self.json_doc = json_doc
         self.mapping = mapping
@@ -12,19 +20,24 @@ class Transformer():
     @staticmethod
     def generate_parser(path):
         """create path for jsonpath_rw
+
         example: ensembl.gene -> ensembl[*].gene[*]
         """
-        return parse(('.').join([(_item + '[*]') for _item in path.split('.')]))
+        return parse(('.').join([(i + '[*]') for i in path.split('.')]))
 
     @staticmethod
-    def fetch_all_paths_from_dict(python_dict):
+    def fetch_all_paths_from_mapping_file(mapping_file):
         paths = []
-        for k, v in python_dict.items():
+        if not mapping_file or type(mapping_file) != dict:
+            return []
+        for k, v in mapping_file.items():
             if k not in ["@type", '$input', '$source']:
                 if type(v) == list:
                     paths += v
-                else:
+                elif type(v) == str:
                     paths.append(v)
+                else:
+                    raise ValueError("The data type of each path should be either list or str")
         return paths
 
     @staticmethod
@@ -41,8 +54,8 @@ class Transformer():
         return dict(result)
 
     @staticmethod
-    def fetch_value_by_jsonpath(json_dict, jsonpath):
-        path_elements = jsonpath.split('.')
+    def fetch_value_by_jsonpath(json_dict, json_path):
+        path_elements = json_path.split('.')
         result = json_dict
         for _ele in path_elements:
             if not _ele.startswith('['):
@@ -77,7 +90,7 @@ class Transformer():
         common_path = find_common_path(dict_values)
         common_path
         if common_path:
-            all_paths = self.fetch_all_paths_from_dict(mapping_dict)
+            all_paths = self.fetch_all_paths_from_mapping_file(mapping_dict)
             paths_jsonpaths_dict = {}
             jsonpaths_values_dict = {}
             for path in all_paths:
