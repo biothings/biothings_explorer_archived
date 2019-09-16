@@ -57,12 +57,14 @@ class Hint():
                 try:
                     return await res.json()
                 except:
+                    print("Unable to fetch results from {}".format(_input['api']))
                     return {}
         else:
             async with session.get(_input['url'], params=_input['data']) as res:
                 try:
                     return await res.json()
                 except:
+                    print("Unable to fetch results from {}".format(_input['api']))
                     return {}
 
     async def run(self, _input):
