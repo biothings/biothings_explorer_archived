@@ -7,7 +7,7 @@ This is the development repo for the python client of BioThings Explorer. This t
 ### Revelant Concepts
 
 1. BioLink Model
----
+
 [The BioLink Model](https://biolink.github.io/biolink-model/) defines a high level datamodel of biological entities (genes, diseases, phenotypes, pathways, individuals, substances, etc) and their associations. BioThings Explorer restructures outputs from different APIs into the data model defined by BioLink, so that they can be easily connected and queried.
 ---
 2. Schema.org
