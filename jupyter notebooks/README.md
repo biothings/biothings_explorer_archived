@@ -7,7 +7,7 @@ BioThings Explorer Jupyter Notebook
 2. Install Jupyter `pip install jupyter`
 3. Downgrade Notebook `pip install notebook==5.7.5`
 4. Downgrade tornado `pip install tornado==4.5.3`
-5. Install biothings-explorer `pip install git+https://github.com/kevinxin90/bte_schema#egg=bte_schema`
+5. Install biothings-explorer `pip install git+https://github.com/kevinxin90/bte_schema#egg=biothings_explorer`
 6. Install biothings-schema `pip install git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema.py`
 
 **Important: In order for biothings explorer to work with jupyter notebooks, you must downgrade Notebook to 5.7.5 and tornado to 4.5.3 (these two packages will have conflict with Python's aysncio module)**
