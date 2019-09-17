@@ -15,6 +15,7 @@ from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 from .config import metadata
 from .utils import restructure_biolink_response
+from .config import metadata
 
 BIOTHINGS_APIs = ['mygene.info', 'myvariant.info', 'mychem.info',
                   'mydisease.info', 'semmeddisease', 'semmedanatomy',
@@ -136,7 +137,7 @@ class Dispatcher():
                         if k1 in ["@context", "@type"]:
                             results[val][k1] = v
                         else:
-                            if len(edges) == 1 and edges[0]['label'] != edges[0]['mapping_key']:
+                            if edges[0]['label'] != edges[0]['mapping_key']:
                                 k1 = edges[0]['label']
                             # if key is not present in final res, create a list
                             if k1 not in results[val]:
@@ -169,7 +170,7 @@ class Dispatcher():
                             if k1 in ["@context", "@type"]:
                                 results[m][k1] = v
                             else:
-                                if len(edges) == 1 and edges[0]['label'] != edges[0]['mapping_key']:
+                                if edges[0]['label'] != edges[0]['mapping_key']:
                                     k1 = edges[0]['label']
                                 if k1 not in results[m]:
                                     results[m][k1] = []
@@ -189,4 +190,5 @@ class Dispatcher():
                                             edges[0]['output_id']: [v],
                                             "$source": edges[0]['api']}
                                     results[val][k1].append(item)
+        # print(results)
         return dict(results)
