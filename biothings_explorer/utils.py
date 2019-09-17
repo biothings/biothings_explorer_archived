@@ -154,6 +154,7 @@ def dict2tuple(_dict):
         result.append((k, v))
     return tuple(result)
 
+
 def tuple2dict(_tuple):
     result = {}
     for _item in _tuple:
