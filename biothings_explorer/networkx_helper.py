@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+from graphviz import Digraph
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
     """Load restructured API response into a networkx MultiDiGraph
@@ -76,8 +76,11 @@ def add_equivalent_ids_to_nodes(G, IDConverter):
         idc_inputs.append((v, input_id, input_cls))
     # find equivalent ids
     equivalent_ids = IDConverter.convert_ids(idc_inputs)
+    # print("equivalent_ids", equivalent_ids)
     # populate nodes with equivalent ids
     for m, n in equivalent_ids.items():
+        # if m.startswith("umls"):
+            # print(m, n)
         G.node[m.split(':', 1)[-1]]['equivalent_ids'] = n
     return (G, equivalent_ids)
 
@@ -97,6 +100,13 @@ def merge_two_networkx_graphs(G1, G2):
     G1.add_nodes_from(nodes_to_add)
     G1.add_edges_from(G2.edges(data=True))
     return G1
+
+
+def networkx_to_graphvis(G):
+    f = Digraph()
+    for k, v, j in G.edges(data=True):
+        f.edge(k, v, j['label'])
+    return f
 
 
 def networkx_json_to_visjs(res):
