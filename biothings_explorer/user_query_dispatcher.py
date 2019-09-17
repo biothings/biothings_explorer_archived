@@ -13,7 +13,7 @@ import time
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
+from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis
 from .utils import dict2tuple, tuple2dict
 from .metadata import Metadata
 
@@ -186,7 +186,10 @@ class SingleEdgeQueryDispatcher():
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
+        # print("about to add equivalent ids")
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
+        # print(self.G.nodes(data=True))
+        # print("equivalent ids added")
         self.equivalent_ids.update(out_equ_ids)
         # t4 = time.time()
         # print("time to generate equivalent ids for output {}".format(t4-t3))
@@ -341,6 +344,107 @@ class Connect():
             print("Find connection")
         else:
             print("Connction not found!")
+
+    def show_all_nodes(self):
+        """show all nodes in the graph"""
+        return list(self.G.nodes())
+
+    def show_all_edges(self):
+        """show all edges in the graph"""
+        return list(self.G.edges())
+
+    def display_node_info(self, node):
+        """show detailed node information
+
+        Params
+        ------
+        node: str, node id
+        """
+        if node not in self.G:
+            raise Exception("{} is not in the graph".format(node))
+        return self.G.nodes[node]
+
+    def display_edge_info(self, start_node, end_node):
+        """display detailed edge info between start node and end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        if start_node not in self.G:
+            raise Exception("{} is not in the graph".format(start_node))
+        if end_node not in self.G:
+            raise Exception("{} is not in the graph".format(end_node))
+        if not self.G.has_edge(start_node, end_node):
+            raise Exception("No edge exists between {} and {}".format(start_node, end_node))
+        return dict(self.G[start_node][end_node])
+
+
+class FindConnection():
+    def __init__(self, input_obj, output_obj, registry=None):
+        if not registry:
+            self.registry = Registry()
+        else:
+            self.registry = registry
+        self.input_obj = input_obj
+        self.output_obj = output_obj
+        self.G = nx.MultiDiGraph()
+
+    def connect(self):
+        print("start to query from {}:{}".format(self.input_obj.get("primary").get("identifier"), self.input_obj.get("primary").get("value")))
+        seqd1 = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+                                          registry=self.registry)
+        seqd1.query()
+        self.G = seqd1.G
+        print("1st query completed")
+        print("start to query from {}:{}".format(self.output_obj.get("primary").get("identifier"), self.output_obj.get("primary").get("value")))
+        seqd2 = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
+                                          registry=self.registry)
+        seqd2.query()
+        seqd2.G = seqd2.G.reverse()
+        print("2nd query completed")
+        self.G = merge_two_networkx_graphs(self.G, seqd2.G)
+        print("completed!")
+
+    def show_path(self):
+        input_node = self.input_obj.get("primary").get("value")
+        output_node = self.output_obj.get("primary").get("value")
+        paths = []
+        for path in nx.all_simple_paths(self.G,
+                                        source=input_node,
+                                        target=output_node):
+
+            paths.append(path)
+        return paths
+
+    def sub_graph(self):
+        paths = self.show_path()
+        nodes = set()
+        for _path in paths:
+            if _path:
+                nodes = nodes | set(_path)
+        return self.G.subgraph(nodes)
+
+    def visualize(self):
+        H = self.sub_graph()
+        return networkx_to_graphvis(H)
+
+    def check_output_in_graph(self):
+        values = self.output_obj.get("primary").get("value")
+        if values in self.G:
+            return True
+        else:
+            return False
+
+    def to_json(self):
+        """convert the graph into JSON through networkx"""
+        sub_G = self.sub_graph()
+        if sub_G.number_of_nodes() > 0:
+            res = nx.json_graph.node_link_data(sub_G)
+            return res
+        else:
+            return {}
 
     def show_all_nodes(self):
         """show all nodes in the graph"""
