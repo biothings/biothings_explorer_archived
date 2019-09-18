@@ -72,10 +72,8 @@ class IDConverter():
             else:
                 mapping_file = self.fetch_schema_mapping_file(api)
                 mapping_file = self.subset_mapping_file(mapping_file)
-                print(mapping_file)
                 if self.get_input_fields(mapping_file, _type):
                     if type(ids) == list and len(ids) > 1000:
-                        print("Yes")
                         for i in range(0, len(ids), 1000):
                             api_call_inputs.append({"api": api,
                                                 "input": self.get_input_fields(mapping_file, _type),
