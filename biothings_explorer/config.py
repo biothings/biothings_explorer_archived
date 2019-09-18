@@ -35,7 +35,7 @@ metadata = {
   "mychem.info": {
     "scopes": ['chembl.molecule_chembl_id', 'drugbank.id',
                'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
-               'unii.unii', 'ginas.preferred_name'],
+               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui'],
     "id_ranks": ['chembl', 'drugbank', 'pubchem', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
@@ -47,7 +47,8 @@ metadata = {
       'chembl.molecule_chembl_id': 'chembl',
       'drugbank.id': 'drugbank',
       'chembl.pref_name': 'name',
-      'pubchem.cid': 'pubchem'
+      'pubchem.cid': 'pubchem',
+      'drugcentral.xrefs.umlscui': 'umls'
     }
   },
   "mydisease.info": {
@@ -122,7 +123,7 @@ metadata = {
   "mf": {
     "scopes": ['_id', 'name'],
     "id_ranks": ['go', 'name'],
-    "doc_type": "MolecularFunction",
+    "doc_type": "MolecularActivity",
     "api_type": "biothings",
     "add": " AND type:mf",
     "method": "get",
