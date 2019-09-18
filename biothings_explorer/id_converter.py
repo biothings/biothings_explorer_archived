@@ -30,16 +30,15 @@ class IDConverter():
         return self.registry.registry[api]['mapping']
 
     def subset_mapping_file(self, mapping_file):
-        return {k:v for (k,v) in mapping_file.items() if k in (["@context", "@type"] + self.registry.mp.id_list)}
+        return {k:v for (k,v) in mapping_file.items() if k in (["@context", "@type"] + self.registry.mp.id_list + ["bts:name"])}
 
     def get_output_fields(self, mapping_file):
         fields = []
         for k, v in mapping_file.items():
-            if k in self.registry.mp.id_list:
-                if isinstance(v, list):
-                    fields += v
-                elif isinstance(v, str):
-                    fields.append(v)
+            if isinstance(v, list):
+                fields += v
+            elif isinstance(v, str):
+                fields.append(v)
         return ','.join(fields)
 
     def get_input_fields(self, mapping_file, _type):
@@ -73,6 +72,7 @@ class IDConverter():
             else:
                 mapping_file = self.fetch_schema_mapping_file(api)
                 mapping_file = self.subset_mapping_file(mapping_file)
+                print(mapping_file)
                 if self.get_input_fields(mapping_file, _type):
                     if type(ids) == list and len(ids) > 1000:
                         print("Yes")
