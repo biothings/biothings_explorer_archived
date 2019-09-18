@@ -121,7 +121,6 @@ class SingleEdgeQueryDispatcher():
                         # get n2's node info
                         node_info = self.G.nodes[n2]
                         # change n2's identifier
-                        node_info['identifier'] = self.output_id
                         for _val in new_vals:
                             # add new edge
                             edges_to_add.append((n1, _val, data))
@@ -133,6 +132,9 @@ class SingleEdgeQueryDispatcher():
             # remove duplicate nodes
             for n in nodes_to_remove:
                 self.G.remove_node(n)
+            # update identifier type
+            for n in nodes_to_add:
+                n[1]['identifier'] = self.output_id
             # add new nodes and edges
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
@@ -175,7 +177,6 @@ class SingleEdgeQueryDispatcher():
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
                         id_mapping[_id] = k.split(':', 1)[-1]
-            # print(input_edges)
         if not input_edges:
             return
         # make API calls and restructure API outputs
