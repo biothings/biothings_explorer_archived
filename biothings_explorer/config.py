@@ -35,7 +35,7 @@ metadata = {
   "mychem.info": {
     "scopes": ['chembl.molecule_chembl_id', 'drugbank.id',
                'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
-               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui'],
+               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", "ginas.name_list", "drugcentral.xrefs.chebi"],
     "id_ranks": ['chembl', 'drugbank', 'pubchem', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
