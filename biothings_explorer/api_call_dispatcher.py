@@ -145,18 +145,21 @@ class Dispatcher():
                             if type(v) == list:
                                 for _v in v:
                                     if type(_v) == dict:
+                                        _v.update({"$api": edges[0]['api']})
                                         results[val][k1].append(_v)
                                     else:
                                         item = {"@type": edges[0]['output_type'],
                                             edges[0]['output_id']: [_v],
-                                            "$source": edges[0]['api']}
+                                            "$source": edges[0]['api'], "$api": edges[0]['api']}
                                         results[val][k1].append(item)
                             elif type(v) == dict:
+                                v.update({"$api": edges[0]['api']})
                                 results[val][k1].append(v)
                             else:
                                 item = {"@type": edges[0]['output_type'],
                                         edges[0]['output_id']: [v],
-                                        "$source": edges[0]['api']}
+                                        "$source": edges[0]['api'],
+                                        "$api": edges[0]['api']}
                                 results[val][k1].append(item)
             else:
                 if not _res:
@@ -177,18 +180,21 @@ class Dispatcher():
                                 if type(v) == list:
                                     for _v in v:
                                         if type(_v) == dict:
+                                            _v.update({"$api": edges[0]['api']})
                                             results[m][k1].append(_v)
                                         else:
                                             item = {"@type": edges[0]['output_type'],
                                                 edges[0]['output_id']: [_v],
-                                                "$source": edges[0]['api']}
+                                                "$source": edges[0]['api'],
+                                                "$api": edges[0]['api']}
                                             results[m][k1].append(item)
                                 elif type(v) == dict:
+                                    v.update({'$api': edges[0]['api']})
                                     results[m][k1].append(v)
                                 else:
                                     item = {"@type": edges[0]['output_type'],
                                             edges[0]['output_id']: [v],
-                                            "$source": edges[0]['api']}
+                                            "$source": edges[0]['api'],
+                                            "$api": edges[0]['api']}
                                     results[val][k1].append(item)
-        # print(results)
         return dict(results)
