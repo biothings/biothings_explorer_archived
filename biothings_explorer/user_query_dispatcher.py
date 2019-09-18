@@ -411,13 +411,17 @@ class FindConnection():
     def show_path(self):
         input_node = self.input_obj.get("primary").get("value")
         output_node = self.output_obj.get("primary").get("value")
-        paths = []
+        paths = set()
         for path in nx.all_simple_paths(self.G,
                                         source=input_node,
                                         target=output_node):
 
-            paths.append(path)
-        return paths
+            path = ",".join(path)
+            paths.add(path)
+        new_paths = []
+        for _path in paths:
+            new_paths.append(_path.split(','))
+        return new_paths
 
     def sub_graph(self):
         paths = self.show_path()
