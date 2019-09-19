@@ -16,6 +16,12 @@ import graphviz
 
 
 def restructure_biolink_response(json_doc):
+    """
+    ANATOMY: UBERON, CL, FBbt
+    DISEASE: MONDO
+    GENE: HGNC, NCBIGene, MGI， ZFIN，FlyBase
+    PHENOTYPE: EFO, HP, MONDO
+    """
     if json_doc and 'associations' in json_doc:
         for _doc in json_doc['associations']:
             # remove prefix
@@ -24,8 +30,10 @@ def restructure_biolink_response(json_doc):
                 try:
                     prefix, value = object_id.split(':')
                     # these IDs have prefix by nature
-                    if prefix not in ['MONDO', 'GO', 'HP', 'UBERON']:
-                        _doc['object']['id'] = value
+                    if prefix in ['HGNC', 'NCBIGene']:
+                        _doc['object'][prefix] = value
+                    else:
+                        _doc['object'][prefix] = object_id
                 except:
                     pass
             # remove empty value
@@ -36,6 +44,9 @@ def restructure_biolink_response(json_doc):
                     _item['id'] = _item['id'].split(':')[-1]
             if not _doc['provided_by']:
                 _doc.pop('provided_by')
+            else:
+                for i, _item in enumerate(_doc['provided_by']):
+                    _doc['provided_by'][i] = _item.split(".")[-2].split("/")[-1]
     return json_doc
 
 
