@@ -1,5 +1,9 @@
 from collections import defaultdict
 from graphviz import Digraph
+import pandas as pd
+import networkx as nx
+import itertools
+
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
     """Load restructured API response into a networkx MultiDiGraph
@@ -107,6 +111,55 @@ def networkx_to_graphvis(G):
     for k, v, j in G.edges(data=True):
         f.edge(k, v, j['label'])
     return f
+
+
+def networkx_to_pandas_df(G):
+    data = []
+    if len(G.nodes()) > 1:
+        for k, v, j in G.edges(data=True):
+            info = j.get("info")
+            pubmed = None
+            if info:
+                pubmed = info.get("bts:pubmed")
+            source = j.get('source')
+            label = j.get('label')
+            data.append({'n1': k, 'n1_type': G.nodes[k]['type'],
+                         'n2': v, 'n2_type': G.nodes[v]['type'],
+                         'predicate': label,
+                         'datasource': source,
+                         'pubmed': pubmed})
+    return pd.DataFrame(data)
+
+
+def connect_networkx_to_pandas_df(G, paths):
+    data = []
+    for _path in paths:
+        if len(_path) == 3:
+            start_edges = dict(G[_path[0]][_path[1]]).values()
+            end_edges = dict(G[_path[1]][_path[2]]).values()
+            for k, v in itertools.product(start_edges, end_edges):
+                data.append({'n1': _path[0],
+                             'n1_type': G.nodes[_path[0]]['type'],
+                             'pred1': k['label'],
+                             'n2': _path[1],
+                             'n2_type': G.nodes[_path[1]]['type'],
+                             'pred2': v['label'],
+                             'n3': _path[2],
+                             'n3_type': G.nodes[_path[2]]['type']})
+        else:
+            edges = G[_path[0]][_path[1]]
+            for _edge in edges:
+                data.append({'n1': _path[0],
+                             'n1_type': G.nodes[_path[0]]['type'],
+                             'pred1': _edge['label'],
+                             'n2': _path[1],
+                             'n2_type': G.nodes[_path[1]]['type'],
+                             })
+    return pd.DataFrame(data)
+
+
+
+
 
 
 def networkx_json_to_visjs(res):
