@@ -142,7 +142,6 @@ class Dispatcher():
                             results[val][k1] = []
                         if type(v) == list:
                             for _v in v:
-                                print(_v)
                                 if type(_v) == dict:
                                     _v.update({"$api": edges[0]['api']})
                                     results[val][k1].append(_v)
@@ -152,7 +151,6 @@ class Dispatcher():
                                         "$source": edges[0]['api'], "$api": edges[0]['api']}
                                     results[val][k1].append(item)
                         elif type(v) == dict:
-                            print(v)
                             v.update({"$api": edges[0]['api']})
                             results[val][k1].append(v)
                         else:
