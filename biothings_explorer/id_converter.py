@@ -23,14 +23,21 @@ class IDConverter():
         self.semantic_type_api_mapping = {'Gene': 'mygene.info',
                                           'Variant': 'myvariant.info',
                                           'ChemicalSubstance': 'mychem.info',
-                                          'DiseaseOrPhenotypicFeature': "mydisease.info"}
+                                          'DiseaseOrPhenotypicFeature': "mydisease.info",
+                                          "AnatomicalEntity": "semmedanatomy",
+                                          "PhenotypicFeature": "semmedphenotype",
+                                          "Pathway": "pathway",
+                                          "MolecularActivity": "mf",
+                                          "CellularComponent": "cc",
+                                          "BiologicalProcess": "bp",
+                                          }
 
     def fetch_schema_mapping_file(self, api):
         """Fetch schema mapping file from the registry"""
         return self.registry.registry[api]['mapping']
 
     def subset_mapping_file(self, mapping_file):
-        return {k:v for (k,v) in mapping_file.items() if k in (["@context", "@type"] + self.registry.mp.id_list + ["bts:name"])}
+        return {k:v for (k,v) in mapping_file.items() if k in (self.registry.mp.id_list + ["bts:name"])}
 
     def get_output_fields(self, mapping_file):
         fields = []

@@ -109,6 +109,7 @@ metadata = {
     "api_type": "biothings",
     "method": "get",
     "url": "http://pending.biothings.io/geneset/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/pathway_schema.json",
     "add": " AND type:pathway",
     "hint": True,
     "fields": {
@@ -129,6 +130,7 @@ metadata = {
     "method": "get",
     "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/mf_schema.json",
     "fields":{
       'name': 'name',
       'go': 'go'
@@ -143,6 +145,7 @@ metadata = {
     "add": " AND type:cc",
     "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/cc_schema.json",
     "fields":{
       'name': 'name',
       'go': 'go',
@@ -158,6 +161,7 @@ metadata = {
     "method": "get",
     "hint": True,
     "url": "http://pending.biothings.io/geneset/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/bp_schema.json",
     "fields": {
       'name': 'name',
       'go': 'go',

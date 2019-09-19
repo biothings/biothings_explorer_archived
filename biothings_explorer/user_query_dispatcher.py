@@ -18,9 +18,9 @@ from .utils import dict2tuple, tuple2dict
 from .metadata import Metadata
 
 
-ID_RANK = {'Gene': 'bts:entrez',
-           'ChemicalSubstance': 'bts:chembl',
-           'DiseaseOrPhenotypicFeature': 'bts:mondo'}
+ID_RANK = {'Gene': 'bts:symbol',
+           'ChemicalSubstance': 'bts:name',
+           'DiseaseOrPhenotypicFeature': 'bts:name'}
 
 
 class SingleEdgeQueryDispatcher():
@@ -54,7 +54,12 @@ class SingleEdgeQueryDispatcher():
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
-            self.output_id = ID_RANK.get(self.output_cls)
+            if self.output_cls and self.output_cls in ID_RANK:
+                self.output_id = [ID_RANK.get(self.output_cls)]
+            else:
+                self.output_id = ["bts:symbol", "bts:name"]
+        if type(self.output_id) != list:
+            self.output_id = [self.output_id]
         self.pred = pred
         self.values = values
         self.equivalent_ids = equivalent_ids
@@ -113,10 +118,16 @@ class SingleEdgeQueryDispatcher():
                 identifier = self.G.nodes[n2]['identifier']
                 # check if the identifier matches the id type specified by the
                 # user or the default id type
-                if self.output_id and self.output_id != identifier:
+                print(self.output_id, identifier)
+                if self.output_id and identifier not in self.output_id:
                     equivalent_ids = self.G.nodes[n2]['equivalent_ids']
+                    print('equivalent_ids', equivalent_ids)
                     # find the corresponding id from the equivalent id dict
-                    new_vals = equivalent_ids.get(self.output_id)
+                    new_vals = None
+                    for _id in self.output_id:
+                        if equivalent_ids.get(_id):
+                            new_vals = equivalent_ids.get(_id)
+                            break
                     if new_vals:
                         # get n2's node info
                         node_info = self.G.nodes[n2]
@@ -167,7 +178,7 @@ class SingleEdgeQueryDispatcher():
                         m = _edge
                         m = tuple2dict(m)
                         m['value'] = v[p]
-                        mapping_keys.append(m['mapping_key'])
+                        mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
                     self.G.add_node(k.split(':', 1)[-1],
