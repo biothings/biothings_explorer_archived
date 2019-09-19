@@ -13,7 +13,7 @@ import time
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis
+from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
 from .utils import dict2tuple, tuple2dict
 from .metadata import Metadata
 
@@ -111,6 +111,7 @@ class SingleEdgeQueryDispatcher():
             nodes_to_remove = set()
             nodes_to_add = []
             edges_to_add = []
+            identifiers = []
             # loop through all edges
             # n1 is the subject node, n2 is the object node
             for n1, n2, data in self.G.edges(data=True):
@@ -118,10 +119,8 @@ class SingleEdgeQueryDispatcher():
                 identifier = self.G.nodes[n2]['identifier']
                 # check if the identifier matches the id type specified by the
                 # user or the default id type
-                print(self.output_id, identifier)
                 if self.output_id and identifier not in self.output_id:
                     equivalent_ids = self.G.nodes[n2]['equivalent_ids']
-                    print('equivalent_ids', equivalent_ids)
                     # find the corresponding id from the equivalent id dict
                     new_vals = None
                     for _id in self.output_id:
@@ -140,12 +139,13 @@ class SingleEdgeQueryDispatcher():
                             # if this node is not in graph, add this node
                             if _val not in self.G.nodes():
                                 nodes_to_add.append((_val, node_info))
+                                identifiers.append(_id)
             # remove duplicate nodes
             for n in nodes_to_remove:
                 self.G.remove_node(n)
             # update identifier type
-            for n in nodes_to_add:
-                n[1]['identifier'] = self.output_id
+            for k, n in zip(identifiers, nodes_to_add):
+                n[1]['identifier'] = k
             # add new nodes and edges
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
@@ -268,6 +268,9 @@ class SingleEdgeQueryDispatcher():
         if not self.G.has_edge(start_node, end_node):
             raise Exception("No edge exists between {} and {}".format(start_node, end_node))
         return dict(self.G[start_node][end_node])
+
+    def display_table_view(self):
+        return networkx_to_pandas_df(self.G)
 
 
 class Connect():
@@ -394,24 +397,30 @@ class Connect():
 
 
 class FindConnection():
-    def __init__(self, input_obj, output_obj, registry=None):
+    def __init__(self, input_obj, output_obj,
+                 intermediate_cls=None, registry=None):
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
+        self.intermediate_cls = intermediate_cls
         self.input_obj = input_obj
+        self.starts = input_obj['primary']['value']
         self.output_obj = output_obj
+        self.ends = output_obj['primary']['value']
         self.G = nx.MultiDiGraph()
 
     def connect(self):
         print("start to query from {}:{}".format(self.input_obj.get("primary").get("identifier"), self.input_obj.get("primary").get("value")))
         seqd1 = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+                                          output_cls=self.intermediate_cls,
                                           registry=self.registry)
         seqd1.query()
         self.G = seqd1.G
         print("1st query completed")
         print("start to query from {}:{}".format(self.output_obj.get("primary").get("identifier"), self.output_obj.get("primary").get("value")))
         seqd2 = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
+                                          output_cls=self.intermediate_cls,
                                           registry=self.registry)
         seqd2.query()
         seqd2.G = seqd2.G.reverse()
@@ -419,20 +428,28 @@ class FindConnection():
         self.G = merge_two_networkx_graphs(self.G, seqd2.G)
         print("completed!")
 
-    def show_path(self):
+    def show_path(self, remove_duplicate=True):
         input_node = self.input_obj.get("primary").get("value")
         output_node = self.output_obj.get("primary").get("value")
-        paths = set()
-        for path in nx.all_simple_paths(self.G,
-                                        source=input_node,
-                                        target=output_node):
+        if remove_duplicate:
+            paths = set()
+            for path in nx.all_simple_paths(self.G,
+                                            source=input_node,
+                                            target=output_node):
 
-            path = ",".join(path)
-            paths.add(path)
-        new_paths = []
-        for _path in paths:
-            new_paths.append(_path.split(','))
-        return new_paths
+                path = "||".join(path)
+                paths.add(path)
+            new_paths = []
+            for _path in paths:
+                new_paths.append(_path.split('||'))
+            return new_paths
+        else:
+            paths = []
+            for path in nx.all_simple_paths(self.G,
+                                            source=input_node,
+                                            target=output_node):
+                paths.append(path)
+        return paths
 
     def sub_graph(self):
         paths = self.show_path()
@@ -496,6 +513,10 @@ class FindConnection():
         if not self.G.has_edge(start_node, end_node):
             raise Exception("No edge exists between {} and {}".format(start_node, end_node))
         return dict(self.G[start_node][end_node])
+
+    def display_table_view(self):
+        paths = self.show_path()
+        return connect_networkx_to_pandas_df(self.G, paths)
 
 
 class ConnectTwoConcepts():
