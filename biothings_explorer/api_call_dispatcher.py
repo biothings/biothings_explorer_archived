@@ -124,77 +124,76 @@ class Dispatcher():
             if not batch:
                 # preprocess biolink results
                 # if val is not present in results dict and _res is not empty
-                if val not in results and _res:
-                    results[val] = _res
-                else:
-                    # if result is empty
-                    if not _res:
-                        continue
-                    # loop through API call response
-                    for k, v in _res.items():
+                if not _res:
+                    continue
+                if val not in results:
+                    results[val] = {}
+                # loop through API call response
+                for k, v in _res.items():
+                    k1 = k
+                    # if key is "@context", "@type", keep the value
+                    if k1 in ["@context", "@type"]:
+                        results[val][k1] = v
+                    else:
+                        if edges[0]['label'] != edges[0]['mapping_key']:
+                            k1 = edges[0]['label']
+                        # if key is not present in final res, create a list
+                        if k1 not in results[val]:
+                            results[val][k1] = []
+                        if type(v) == list:
+                            for _v in v:
+                                print(_v)
+                                if type(_v) == dict:
+                                    _v.update({"$api": edges[0]['api']})
+                                    results[val][k1].append(_v)
+                                else:
+                                    item = {"@type": edges[0]['output_type'],
+                                        edges[0]['output_id']: [_v],
+                                        "$source": edges[0]['api'], "$api": edges[0]['api']}
+                                    results[val][k1].append(item)
+                        elif type(v) == dict:
+                            print(v)
+                            v.update({"$api": edges[0]['api']})
+                            results[val][k1].append(v)
+                        else:
+                            item = {"@type": edges[0]['output_type'],
+                                    edges[0]['output_id']: [v],
+                                    "$source": edges[0]['api'],
+                                    "$api": edges[0]['api']}
+                            results[val][k1].append(item)
+            else:
+                if not _res:
+                    continue
+                for m, n in _res.items():
+                    if m not in results:
+                        results[m] = {}
+                    for k, v in n.items():
                         k1 = k
-                        # if key is "@context", "@type", keep the value
                         if k1 in ["@context", "@type"]:
-                            results[val][k1] = v
+                            results[m][k1] = v
                         else:
                             if edges[0]['label'] != edges[0]['mapping_key']:
                                 k1 = edges[0]['label']
-                            # if key is not present in final res, create a list
-                            if k1 not in results[val]:
-                                results[val][k1] = []
+                            if k1 not in results[m]:
+                                results[m][k1] = []
                             if type(v) == list:
                                 for _v in v:
                                     if type(_v) == dict:
                                         _v.update({"$api": edges[0]['api']})
-                                        results[val][k1].append(_v)
+                                        results[m][k1].append(_v)
                                     else:
                                         item = {"@type": edges[0]['output_type'],
                                             edges[0]['output_id']: [_v],
-                                            "$source": edges[0]['api'], "$api": edges[0]['api']}
-                                        results[val][k1].append(item)
+                                            "$source": edges[0]['api'],
+                                            "$api": edges[0]['api']}
+                                        results[m][k1].append(item)
                             elif type(v) == dict:
-                                v.update({"$api": edges[0]['api']})
-                                results[val][k1].append(v)
+                                v.update({'$api': edges[0]['api']})
+                                results[m][k1].append(v)
                             else:
                                 item = {"@type": edges[0]['output_type'],
                                         edges[0]['output_id']: [v],
                                         "$source": edges[0]['api'],
                                         "$api": edges[0]['api']}
                                 results[val][k1].append(item)
-            else:
-                if not _res:
-                    continue
-                for m, n in _res.items():
-                    if m not in results:
-                        results[m] = n
-                    else:
-                        for k, v in n.items():
-                            k1 = k
-                            if k1 in ["@context", "@type"]:
-                                results[m][k1] = v
-                            else:
-                                if edges[0]['label'] != edges[0]['mapping_key']:
-                                    k1 = edges[0]['label']
-                                if k1 not in results[m]:
-                                    results[m][k1] = []
-                                if type(v) == list:
-                                    for _v in v:
-                                        if type(_v) == dict:
-                                            _v.update({"$api": edges[0]['api']})
-                                            results[m][k1].append(_v)
-                                        else:
-                                            item = {"@type": edges[0]['output_type'],
-                                                edges[0]['output_id']: [_v],
-                                                "$source": edges[0]['api'],
-                                                "$api": edges[0]['api']}
-                                            results[m][k1].append(item)
-                                elif type(v) == dict:
-                                    v.update({'$api': edges[0]['api']})
-                                    results[m][k1].append(v)
-                                else:
-                                    item = {"@type": edges[0]['output_type'],
-                                            edges[0]['output_id']: [v],
-                                            "$source": edges[0]['api'],
-                                            "$api": edges[0]['api']}
-                                    results[val][k1].append(item)
         return dict(results)
