@@ -119,14 +119,17 @@ def networkx_to_pandas_df(G):
         for k, v, j in G.edges(data=True):
             info = j.get("info")
             pubmed = None
+            api = None
             if info:
                 pubmed = info.get("bts:pubmed")
+                api = info.get("$api")
             source = j.get('source')
             label = j.get('label')
             data.append({'n1': k, 'n1_type': G.nodes[k]['type'],
                          'n2': v, 'n2_type': G.nodes[v]['type'],
                          'predicate': label,
                          'datasource': source,
+                         'api': api,
                          'pubmed': pubmed})
     return pd.DataFrame(data)
 
