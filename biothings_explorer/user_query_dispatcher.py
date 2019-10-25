@@ -54,7 +54,7 @@ class SingleEdgeQueryDispatcher():
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
-            if self.output_cls and self.output_cls in ID_RANK:
+            if self.output_cls and type(self.output_cls) != list and self.output_cls in ID_RANK:
                 self.output_id = [ID_RANK.get(self.output_cls)]
             else:
                 self.output_id = ["bts:symbol", "bts:name"]
@@ -150,14 +150,27 @@ class SingleEdgeQueryDispatcher():
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
 
-    def query(self):
+    def query(self, verbose=False):
         """Query APIs and organize outputs into networkx graph"""
+        if verbose:
+            print("Your input ID has been converted to all equivalent IDs")
+            print("========================================================")
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
+
+
         if not edges:
             # print("No edges found for the <input, pred, output> you specified")
+            if verbose:
+                print("We are sorry! We couln't find any APIs which can do the type of query for you! Please refine your search")
             return
+        if verbose:
+            apis = set([_edge['api'] for _edge in edges if _edge])
+            print("We found {} apis which can perform the query for you!".format(len(apis)))
+            print("These APIs are {}".format(', '.join(apis)))
+            print("========================================================")
+            print("We are making these API calls for you now!")
         grouped_edges = self.group_edges_by_input_id(edges)
         # t1 = time.time()
         # print("equivalent_ids", self.equivalent_ids)
@@ -191,7 +204,7 @@ class SingleEdgeQueryDispatcher():
         if not input_edges:
             return
         # make API calls and restructure API outputs
-        _res = self.dp.dispatch(input_edges)
+        _res = self.dp.dispatch(input_edges, verbose=verbose)
         # t3 = time.time()
         # print('time to make API calls {}'.format(t3 - t2))
         # load API outputs into the MultiDiGraph
@@ -199,7 +212,10 @@ class SingleEdgeQueryDispatcher():
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
         # print("about to add equivalent ids")
+        print("We are beginning to add equivalent identifiers to all outputs")
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
+        print("Add equivalent identifiers to all output nodes!")
+        print("========================================================")
         # print(self.G.nodes(data=True))
         # print("equivalent ids added")
         self.equivalent_ids.update(out_equ_ids)
@@ -207,6 +223,8 @@ class SingleEdgeQueryDispatcher():
         # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
+        print("Output nodes merged!")
+        print("Done!")
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -398,7 +416,7 @@ class Connect():
 
 class FindConnection():
     def __init__(self, input_obj, output_obj,
-                 intermediate_cls=None, registry=None):
+                 intermediate_cls=None, steps=1, registry=None):
         if not registry:
             self.registry = Registry()
         else:
@@ -410,23 +428,29 @@ class FindConnection():
         self.ends = output_obj['primary']['value']
         self.G = nx.MultiDiGraph()
 
-    def connect(self):
-        print("start to query from {}:{}".format(self.input_obj.get("primary").get("identifier"), self.input_obj.get("primary").get("value")))
+    def connect(self, verbose=False):
+        print("We are performing the first query for you now!")
+        print("The first query will fetch all bio-entities directly linked to {}:{}".format(self.input_obj.get("primary").get("identifier"), self.input_obj.get("primary").get("value")))
         seqd1 = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
                                           output_cls=self.intermediate_cls,
                                           registry=self.registry)
-        seqd1.query()
+        seqd1.query(verbose=verbose)
         self.G = seqd1.G
-        print("1st query completed")
-        print("start to query from {}:{}".format(self.output_obj.get("primary").get("identifier"), self.output_obj.get("primary").get("value")))
+        print("The first query has completed!")
+        print("========================================================")
+        print("We are performing the second query for you now!")
+        print("The second query will fetch all bio-entities directly linked to {}:{}".format(self.output_obj.get("primary").get("identifier"), self.output_obj.get("primary").get("value")))
         seqd2 = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
                                           output_cls=self.intermediate_cls,
                                           registry=self.registry)
-        seqd2.query()
+        seqd2.query(verbose=verbose)
         seqd2.G = seqd2.G.reverse()
-        print("2nd query completed")
+        print("The second query has completed!")
+        print("========================================================")
+        print("We are merging the results from both queries for you!")
         self.G = merge_two_networkx_graphs(self.G, seqd2.G)
-        print("completed!")
+        print("Query merge done!")
+        print("Use 'show_path' or 'display_table_view' function to visualize the connections.")
 
     def show_path(self, remove_duplicate=True):
         input_node = self.input_obj.get("primary").get("value")
