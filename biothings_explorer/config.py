@@ -37,8 +37,8 @@ metadata = {
   "mychem.info": {
     "scopes": ['chembl.molecule_chembl_id', 'drugbank.id',
                'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
-               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", "ginas.name_list", "drugcentral.xrefs.chebi"],
-    "id_ranks": ['chembl', 'drugbank', 'pubchem', 'name'],
+               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
+    "id_ranks": ['chembl', 'drugbank', 'pubchem', 'mesh', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
     "hint": True,
@@ -50,7 +50,8 @@ metadata = {
       'drugbank.id': 'drugbank',
       'chembl.pref_name': 'name',
       'pubchem.cid': 'pubchem',
-      'drugcentral.xrefs.umlscui': 'umls'
+      'drugcentral.xrefs.umlscui': 'umls',
+      'drugcentral.xrefs.mesh_descriptor_ui': 'mesh'
     },
     'api_name': "mychem.info"
   },
