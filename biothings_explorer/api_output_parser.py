@@ -20,7 +20,7 @@ class OutputParser():
                           'semmeddisease', 'semmedanatomy',
                           'semmedbp', 'semmedchemical',
                           'semmedgene', 'semmedphenotype', 'bp',
-                          'cc', 'mf', 'pathway', 'umlschem']
+                          'cc', 'mf', 'pathway', 'umlschem', 'gwascatalog']
 
     def parse_biothings_get_res(self):
         """Parse the API response from biothings API using GET method"""
