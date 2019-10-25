@@ -64,7 +64,7 @@ class Dispatcher():
         # loop through each edge group
         for grp in edge_groups:
             outputs = set()
-            values = []
+            values = set()
             # loop through edges in each edge group
             for _item in grp:
                 api = _item['api']
@@ -77,9 +77,9 @@ class Dispatcher():
                     outputs.add(_item['output_field'])
                 # add values
                 if type(_item['value']) == list:
-                    values += _item['value']
+                    values |= set(_item['value'])
                 else:
-                    values.append(_item['value'])
+                    values.add(_item['value'])
             # if API is BioThings API, use batch query feature
             if api in BIOTHINGS_APIs:
                 # construct API call inputs for each edge group
@@ -108,13 +108,17 @@ class Dispatcher():
                     edges.append(grp)
         return (apis, api_call_inputs, batch_modes, input_values, edges)
 
-    def dispatch(self, edges):
+    def dispatch(self, edges, verbose=False):
         """send request to and parse response from API"""
         results = {}
         grped_edges = self.group_edges(edges)
-        # print('grped_edges', grped_edges)
         apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
-        responses = self.caller.call_apis(inputs)
+        # print(apis, inputs, modes, vals, grped_edges)
+        responses = self.caller.call_apis(inputs, verbose=verbose)
+        if verbose:
+            print("All API responses have been fetched!")
+            print("========================================================")
+            print("We are beginning to organizing the outpus from different APIs for you now!")
         for api, _res, batch, val, edges in zip(apis, responses, modes, vals, grped_edges):
             if metadata[api]['api_type'] == 'biolink':
                 _res = restructure_biolink_response(_res)
@@ -125,10 +129,13 @@ class Dispatcher():
                 # preprocess biolink results
                 # if val is not present in results dict and _res is not empty
                 if not _res:
+                    if verbose:
+                        print("No hits was found from a query to {}".format(api))
                     continue
                 if val not in results:
                     results[val] = {}
                 # loop through API call response
+                hits_cnt = 0
                 for k, v in _res.items():
                     k1 = k
                     # if key is "@context", "@type", keep the value
@@ -141,6 +148,7 @@ class Dispatcher():
                         if k1 not in results[val]:
                             results[val][k1] = []
                         if type(v) == list:
+                            hits_cnt += len(v)
                             for _v in v:
                                 if type(_v) == dict:
                                     _v.update({"$api": edges[0]['api']})
@@ -151,17 +159,27 @@ class Dispatcher():
                                         "$source": edges[0]['api'], "$api": edges[0]['api']}
                                     results[val][k1].append(item)
                         elif type(v) == dict:
+                            hits_cnt += 1
                             v.update({"$api": edges[0]['api']})
                             results[val][k1].append(v)
                         else:
+                            hits_cnt += 1
                             item = {"@type": edges[0]['output_type'],
                                     edges[0]['output_id']: [v],
                                     "$source": edges[0]['api'],
                                     "$api": edges[0]['api']}
                             results[val][k1].append(item)
+                if verbose:
+                    if hits_cnt > 0:
+                        print("We found {} hits from a query to {}".format(hits_cnt, api))
+                    else:
+                        print("No hits was found from a query to {}".format(api))
             else:
                 if not _res:
+                    if verbose:
+                        print("No hits was found from a query to {}".format(api))
                     continue
+                hits_cnt = 0
                 for m, n in _res.items():
                     if m not in results:
                         results[m] = {}
@@ -175,6 +193,7 @@ class Dispatcher():
                             if k1 not in results[m]:
                                 results[m][k1] = []
                             if type(v) == list:
+                                hits_cnt += len(v)
                                 for _v in v:
                                     if type(_v) == dict:
                                         _v.update({"$api": edges[0]['api']})
@@ -186,12 +205,22 @@ class Dispatcher():
                                             "$api": edges[0]['api']}
                                         results[m][k1].append(item)
                             elif type(v) == dict:
+                                hits_cnt += len(v)
                                 v.update({'$api': edges[0]['api']})
                                 results[m][k1].append(v)
                             else:
+                                hits_cnt += len(v)
                                 item = {"@type": edges[0]['output_type'],
                                         edges[0]['output_id']: [v],
                                         "$source": edges[0]['api'],
                                         "$api": edges[0]['api']}
                                 results[val][k1].append(item)
+                if verbose:
+                    if hits_cnt > 0:
+                        print("We found {} hits from a query to {}".format(hits_cnt, api))
+                    else:
+                        print("No hits was found from a query to {}".format(api))
+        if verbose:
+            print("API outputs have been organized!")
+            print("========================================================")
         return dict(results)
