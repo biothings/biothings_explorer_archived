@@ -67,8 +67,13 @@ class IDConverter():
             if isinstance(ids, str):
                 ids = [ids]
             # make sure all ids in id list is str
+            for _id in ids:
+                if ' ' in str(_id):
+                    results[_type[4:] + ':' + str(_id)] = {_type: [str(_id)]}
             if isinstance(ids, list):
-                ids = [str(i) for i in ids]
+                ids = [str(i) for i in ids if ' ' not in str(i)]
+            if _type == 'bts:efo':
+                ids = [i.split(':')[-1] for i in ids]
             api = self.semantic_type_api_mapping.get(semantic_type)
             # if id can not be converted, the equivalent id is itself
             if not api:
@@ -115,6 +120,8 @@ class IDConverter():
             new_res = OutputParser(_res, _map, True, _api).parse()
             # remove "@context" and "@type" from result
             for k, v in new_res.items():
+                if _type == 'bts:efo' or _type == 'efo':
+                    k = 'EFO:' + k
                 if '@context' in v:
                     v.pop("@context")
                 if '@type' in v:
