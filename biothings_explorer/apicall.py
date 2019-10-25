@@ -53,7 +53,16 @@ class BioThingsCaller():
                                  data=params,
                                  headers=headers).json()
 
-    async def call_one_api(self, _input, session, size):
+    def requests_to_curl(self, method, url, params):
+        if method == "GET":
+            if params:
+                params = '?' + params
+            return "curl '" + url + params + "'"
+        elif method == "POST":
+            return "curl -d '" + str(params) + "' -H 'Content-Type: application/x-www-form-urlencoded' -X POST " + url
+
+
+    async def call_one_api(self, _input, session, size, verbose=False):
         """asynchronous make one API call
 
         ...
@@ -80,6 +89,8 @@ class BioThingsCaller():
             if not _input['batch_mode']:
                 async with session.get(metadata[_input['api']]['url'],
                                        params=params) as res:
+                    if verbose:
+                        print("Making API call: {}".format(self.requests_to_curl('GET', metadata[_input['api']]['url'], params)))
                     try:
                         return await res.json()
                     except:
@@ -91,6 +102,8 @@ class BioThingsCaller():
                 async with session.post(metadata[_input['api']]['url'],
                                         data=params,
                                         headers=headers) as res:
+                    if verbose:
+                        print("Make API call: {}".format(self.requests_to_curl("POST", metadata[_input['api']]['url'], params)))
                     try:
                         return await res.json()
                     except:
@@ -101,12 +114,14 @@ class BioThingsCaller():
             api_param = metadata[_input['api']]['path']
             path = self.construct_path(api_url, api_param, _input['values'])
             async with session.get(path) as res:
+                if verbose:
+                    print("Making API call: {}".format(path))
                 try:
                     return await res.json()
                 except:
                     return {}
 
-    async def run(self, inputs, size):
+    async def run(self, inputs, size, verbose=False):
         """asynchronous make one API call
 
         ...
@@ -124,13 +139,14 @@ class BioThingsCaller():
         async with ClientSession() as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
-                                                               size=size))
+                                                               size=size,
+                                                               verbose=verbose))
                 tasks.append(task)
             responses = await asyncio.gather(*tasks)
             # print(responses)
             return responses
 
-    def call_apis(self, inputs, size=100):
+    def call_apis(self, inputs, size=100, verbose=False):
         loop = asyncio.get_event_loop()
-        future = asyncio.ensure_future(self.run(inputs, size=size))
+        future = asyncio.ensure_future(self.run(inputs, size=size, verbose=verbose))
         return loop.run_until_complete(future)
