@@ -14,6 +14,19 @@ from os.path import commonprefix
 import requests
 import graphviz
 
+def restructure_gwascatalog(json_doc):
+    """restructure gwascatalog"""
+    if json_doc:
+        associations = json_doc.get('gwascatalog').get("associations")
+        if type(associations) == dict:
+            associations = [associations]
+        for _assoc in associaitons:
+            efo = _assoc.get("efo")
+            if efo:
+                efo_id = efo.get("id")
+                if efo_id:
+                    efo_id = efo_id.split(':')[-1]
+        return json_doc
 
 def restructure_biolink_response(json_doc):
     """
@@ -108,13 +121,19 @@ def get_dict_values(python_dict):
 
 
 def unlist(d):
-    for key, val in d.items():
-        if isinstance(val, list):
-            if len(val) == 1:
-                d[key] = val[0]
-        elif isinstance(val, dict):
-            unlist(val)
-    return d
+    if type(d) == list:
+        if len(d) == 1:
+            return d[0]
+        else:
+            return d
+    else:
+        for key, val in d.items():
+            if isinstance(val, list):
+                if len(val) == 1:
+                    d[key] = val[0]
+            elif isinstance(val, dict):
+                unlist(val)
+        return d
 
 
 def restructure_equivalent_ids_dict(id_dict):
