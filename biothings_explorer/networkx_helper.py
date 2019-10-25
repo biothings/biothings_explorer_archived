@@ -3,6 +3,7 @@ from graphviz import Digraph
 import pandas as pd
 import networkx as nx
 import itertools
+from .utils import unlist
 
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
@@ -133,32 +134,85 @@ def networkx_to_pandas_df(G):
                          'pubmed': pubmed})
     return pd.DataFrame(data)
 
+def retrieve_prop_from_edge(G, prop, sub_node, obj_node):
+    edge_info = G[sub_node][obj_node]
+    if prop == 'api':
+        data = [_item['info'].get('$api') for _item in edge_info.values()]
+        return ','.join(list(set(data)))
+    elif prop == 'source':
+        data = [_item['info'].get('$source') for _item in edge_info.values()]
+        return ','.join(list(set(data)))
+    elif prop == 'pubmed':
+        data = []
+        for _item in edge_info.values():
+            pubmed = _item['info'].get('bts:pubmed')
+            if pubmed:
+                data += pubmed
+        return ','.join(list(set(data)))
 
-def connect_networkx_to_pandas_df(G, paths):
+
+def connect_networkx_to_pandas_df(G, paths, pred1=None,
+                                  intermediate=None,
+                                  intermediate_type=None,
+                                  pred2=None):
     data = []
     for _path in paths:
         if len(_path) == 3:
             start_edges = dict(G[_path[0]][_path[1]]).values()
             end_edges = dict(G[_path[1]][_path[2]]).values()
             for k, v in itertools.product(start_edges, end_edges):
-                data.append({'n1': _path[0],
-                             'n1_type': G.nodes[_path[0]]['type'],
+                data.append({'input': _path[0],
+                             'input_type': G.nodes[_path[0]]['type'],
                              'pred1': k['label'],
-                             'n2': _path[1],
-                             'n2_type': G.nodes[_path[1]]['type'],
+                             'source1': retrieve_prop_from_edge(G, 'source',
+                                                                _path[0],
+                                                                _path[1]),
+                             'api1': retrieve_prop_from_edge(G, 'api',
+                                                                _path[0],
+                                                                _path[1]),
+                             'pubmed1': retrieve_prop_from_edge(G, 'pubmed',
+                                                                _path[0],
+                                                                _path[1]),
+                             'intermediate': _path[1],
+                             'intermediate_type': G.nodes[_path[1]]['type'],
                              'pred2': v['label'],
-                             'n3': _path[2],
-                             'n3_type': G.nodes[_path[2]]['type']})
+                             'source2': retrieve_prop_from_edge(G, 'source',
+                                                                _path[1],
+                                                                _path[2]),
+                             'api2': retrieve_prop_from_edge(G, 'api',
+                                                                _path[1],
+                                                                _path[2]),
+                             'pubmed2': retrieve_prop_from_edge(G, 'pubmed',
+                                                                _path[1],
+                                                                _path[2]),
+                             'output': _path[2],
+                             'output_type': G.nodes[_path[2]]['type']})
         else:
             edges = G[_path[0]][_path[1]]
             for _edge in edges:
-                data.append({'n1': _path[0],
-                             'n1_type': G.nodes[_path[0]]['type'],
+                data.append({'input': _path[0],
+                             'input_type': G.nodes[_path[0]]['type'],
                              'pred1': _edge['label'],
-                             'n2': _path[1],
-                             'n2_type': G.nodes[_path[1]]['type'],
+                             'source1': retrieve_prop_from_edge(G, 'source',
+                                                                _path[0],
+                                                                _path[1]),
+                             'api1': retrieve_prop_from_edge(G, 'api',
+                                                                _path[0],
+                                                                _path[1]),
+                             'output': _path[1],
+                             'output_type': G.nodes[_path[1]]['type'],
                              })
-    return pd.DataFrame(data)
+    df = pd.DataFrame(data)
+    if pred1:
+        df = df[(df['pred1'] == pred1)]
+    if intermediate:
+        df = df[(df['intermediate'] == intermediate)]
+    if intermediate_type:
+        df = df[(df['intermediate_type'] == intermediate_type)]
+    if pred2:
+        df = df[(df['pred2'] == pred2)]
+    return df
+
 
 
 
