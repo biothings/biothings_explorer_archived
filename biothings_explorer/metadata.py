@@ -1,4 +1,6 @@
 from .registry import Registry
+from .config import metadata
+from collections import defaultdict
 
 
 class Metadata():
@@ -34,3 +36,84 @@ class Metadata():
             s, p, o = _assoc.split('|')
             results.append((s, p, o))
         return results
+
+    def semantic_network_graph(self, edge="pred"):
+        """"""
+        _id = 1
+        id_dict = {}
+        edges = set()
+        edges_dict = defaultdict(list)
+        result = {'nodes': [], 'edges': []}
+        for p, o, info in self.registry.G.edges(data=True):
+            input_type = info['input_type']
+            output_type = info['output_type']
+            predicate = info['label'][4:]
+            if input_type not in id_dict:
+                id_dict[input_type] = _id
+                result['nodes'].append({'id': _id,
+                                        'group': _id,
+                                        'label': input_type})
+                _id += 1
+            if output_type not in id_dict:
+                id_dict[output_type] = _id
+                result['nodes'].append({'id': _id,
+                                        'group': _id,
+                                        'label': output_type})
+                _id += 1
+            if edge == 'pred':
+                _edge = str(id_dict[input_type]) + predicate + str(id_dict[output_type])
+                if _edge not in edges:
+                    result['edges'].append({'from': id_dict[input_type],
+                                        'to': id_dict[output_type],
+                                        'label': predicate})
+                    edges.add(_edge)
+            else:
+                edge_key = [id_dict[input_type], id_dict[output_type]]
+                edge_key.sort()
+                edge_key = '|'.join([str(i) for i in edge_key])
+                edges_dict[edge_key].append(metadata[info['api']]['api_name'])
+        if edge != 'pred':
+            for k, v in edges_dict.items():
+                _input_type, _output_type = k.split('|')
+                v = list(set(v))
+                result['edges'].append({'from': int(_input_type),
+                                        'to': int(_output_type),
+                                        'label': '\n'.join(v)})
+        return result
+
+    def id_network_graph(self, edge="pred"):
+        _id = 1
+        id_dict = {}
+        edges = set()
+        result = {'nodes': [], 'edges': []}
+        for p, o, info in self.registry.G.edges(data=True):
+            input_type = info['input_id'][4:]
+            output_type = info['output_id'][4:]
+            predicate = info['label'][4:]
+            if input_type not in id_dict:
+                id_dict[input_type] = _id
+                result['nodes'].append({'id': _id,
+                                        'group': _id,
+                                        'label': input_type})
+                _id += 1
+            if output_type not in id_dict:
+                id_dict[output_type] = _id
+                result['nodes'].append({'id': _id,
+                                        'group': _id,
+                                        'label': output_type})
+                _id += 1
+            if edge == 'pred':
+                _edge = str(id_dict[input_type]) + predicate + str(id_dict[output_type])
+                if _edge not in edges:
+                    result['edges'].append({'from': id_dict[input_type],
+                                        'to': id_dict[output_type],
+                                        'label': predicate})
+                    edges.add(_edge)
+            else:
+                _edge = str(id_dict[input_type]) + metadata[info['api']]['api_name'] + str(id_dict[output_type])
+                if _edge not in edges:
+                    result['edges'].append({'from': id_dict[input_type],
+                                            'to': id_dict[output_type],
+                                            'label': metadata[info['api']]['api_name']})
+                    edges.add(_edge)
+        return result
