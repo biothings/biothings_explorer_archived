@@ -53,6 +53,7 @@ class Hint():
         session: aiohttp session object
         """
         if _input['api'] in self.post_apis:
+            print(_input)
             async with session.post(_input['url'], data=_input['data']) as res:
                 try:
                     return await res.json()
@@ -60,6 +61,7 @@ class Hint():
                     print("Unable to fetch results from {}".format(_input['api']))
                     return {}
         else:
+            print(_input)
             async with session.get(_input['url'], params=_input['data']) as res:
                 try:
                     return await res.json()
@@ -94,7 +96,7 @@ class Hint():
                                  }
                          }
                 if 'add' in v:
-                    _item['data']['q'] = "_id:" + _input + " OR name:" + _input + v["add"]
+                    _item['data']['q'] = '(_id:"' + _input + '" OR name:"' + _input + '")' + v["add"]
                 inputs.append(_item)
         tasks = []
         async with ClientSession( ) as session:
@@ -106,6 +108,7 @@ class Hint():
             for j in self.types:
                 final_res[j] = []
             for (k, v, j) in zip(self.clients, responses, self.types):
+                print(k, v, j)
                 # response could be from GET or POST, need to restructure
                 if 'hits' in v:
                     v = v['hits']
