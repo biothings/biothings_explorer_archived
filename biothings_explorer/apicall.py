@@ -42,17 +42,6 @@ class BioThingsCaller():
         url = url.replace(param, value)
         return url
 
-    def call_api(self, api, _input, _output, value, api_type):
-        """make api calls"""
-        params = self.construct_query_param(_input, _output, value, self._batch_mode)
-        if not self._batch_mode:
-            return requests.get(metadata[api]['url'], params=params).json()
-        else:
-            headers = {'content-type': 'application/x-www-form-urlencoded'}
-            return requests.post(metadata[api]['url'],
-                                 data=params,
-                                 headers=headers).json()
-
     def requests_to_curl(self, method, url, params):
         if method == "GET":
             if params:
@@ -60,6 +49,14 @@ class BioThingsCaller():
             return "curl '" + url + params + "'"
         elif method == "POST":
             return "curl -d '" + str(params) + "' -H 'Content-Type: application/x-www-form-urlencoded' -X POST " + url
+
+    def print_request(self, method, url, params):
+        if method == "GET":
+            if params:
+                params = '?' + params
+            return url + params
+        elif method == "POST":
+            return url + ' (POST "' + params + '")'
 
 
     async def call_one_api(self, _input, session, size, verbose=False):
@@ -90,7 +87,7 @@ class BioThingsCaller():
                 async with session.get(metadata[_input['api']]['url'],
                                        params=params) as res:
                     if verbose:
-                        print("Making API call: {}".format(self.requests_to_curl('GET', metadata[_input['api']]['url'], params)))
+                        print("{}. {}".format(_input['query_id'], self.print_request('GET', metadata[_input['api']]['url'], params)))
                     try:
                         return await res.json()
                     except:
@@ -103,7 +100,7 @@ class BioThingsCaller():
                                         data=params,
                                         headers=headers) as res:
                     if verbose:
-                        print("Make API call: {}".format(self.requests_to_curl("POST", metadata[_input['api']]['url'], params)))
+                        print("{}. {}".format(_input['query_id'], self.print_request("POST", metadata[_input['api']]['url'], params)))
                     try:
                         return await res.json()
                     except:
@@ -115,7 +112,7 @@ class BioThingsCaller():
             path = self.construct_path(api_url, api_param, _input['values'])
             async with session.get(path) as res:
                 if verbose:
-                    print("Making API call: {}".format(path))
+                    print("{}. {}".format(_input['query_id'], path))
                 try:
                     return await res.json()
                 except:
@@ -147,6 +144,8 @@ class BioThingsCaller():
             return responses
 
     def call_apis(self, inputs, size=100, verbose=False):
+        if verbose:
+            print("\n\n==== Step #2: Query path execution ====")
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(inputs, size=size, verbose=verbose))
         return loop.run_until_complete(future)
