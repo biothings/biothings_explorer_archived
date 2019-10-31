@@ -8,6 +8,7 @@ This module contains code that biothings_explorer use to communicate to
 and receive from APIs. It serves as a glue between "apicall" module and
  "api_output_parser" module.
 """
+import string
 from itertools import groupby
 from operator import itemgetter
 from .registry import Registry
@@ -17,10 +18,7 @@ from .config import metadata
 from .utils import restructure_biolink_response
 from .config import metadata
 
-BIOTHINGS_APIs = ['mygene.info', 'myvariant.info', 'mychem.info',
-                  'mydisease.info', 'semmeddisease', 'semmedanatomy',
-                  'semmedbp', 'semmedchemical', 'semmedgene',
-                  'semmedphenotype']
+BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 
 class Dispatcher():
@@ -87,7 +85,8 @@ class Dispatcher():
                                         "input": input_field,
                                         "output": ','.join(outputs),
                                         "values": ','.join(set(values)),
-                                        "batch_mode": True
+                                        "batch_mode": True,
+                                        "query_id": self.api_dict[api]['num'] + self.api_dict[api]['alphas'].pop(0)
                                         })
                 apis.append(api)
                 batch_modes.append(True)
@@ -100,7 +99,8 @@ class Dispatcher():
                                             "input": input_field,
                                             "output": ','.join(set(outputs)),
                                             "values": _value,
-                                            "batch_mode": False
+                                            "batch_mode": False,
+                                            "query_id": self.api_dict[api]['num'] + self.api_dict[api]['alphas'].pop(0)
                                             })
                     apis.append(api)
                     batch_modes.append(False)
@@ -111,15 +111,21 @@ class Dispatcher():
     def dispatch(self, edges, verbose=False):
         """send request to and parse response from API"""
         results = {}
+        self.unique_apis = set([_edge['api'] for _edge in edges if _edge])
+        if verbose:
+            print("\nBTE found {} apis:\n".format(len(self.unique_apis)))
+            for i, _api in enumerate(self.unique_apis):
+                print("{}. {}".format(i + 1, _api))
+        self.api_dict = {}
+        for i, _api in enumerate(list(self.unique_apis)):
+            self.api_dict[_api] = {'alphas': list(string.ascii_uppercase), 'num': str(i + 1)}
         grped_edges = self.group_edges(edges)
         apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
         # print(apis, inputs, modes, vals, grped_edges)
         responses = self.caller.call_apis(inputs, verbose=verbose)
         if verbose:
-            print("All API responses have been fetched!")
-            print("========================================================")
-            print("We are beginning to organizing the outpus from different APIs for you now!")
-        for api, _res, batch, val, edges in zip(apis, responses, modes, vals, grped_edges):
+            print("\n\n==== Step #3: Output normalization ====\n")
+        for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
             if metadata[api]['api_type'] == 'biolink':
                 _res = restructure_biolink_response(_res)
             mapping = self.fetch_schema_mapping_file(api)
@@ -130,7 +136,7 @@ class Dispatcher():
                 # if val is not present in results dict and _res is not empty
                 if not _res:
                     if verbose:
-                        print("No hits was found from a query to {}".format(api))
+                        print("{}. {}: No hits".format(_input['query_id'], api))
                     continue
                 if val not in results:
                     results[val] = {}
@@ -171,13 +177,13 @@ class Dispatcher():
                             results[val][k1].append(item)
                 if verbose:
                     if hits_cnt > 0:
-                        print("We found {} hits from a query to {}".format(hits_cnt, api))
+                        print("{}. {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
-                        print("No hits was found from a query to {}".format(api))
+                        print("{}. {}: No hits".format(_input['query_id'], api))
             else:
                 if not _res:
                     if verbose:
-                        print("No hits was found from a query to {}".format(api))
+                        print("{}. {}: No hits".format(_input['query_id'], api))
                     continue
                 hits_cnt = 0
                 for m, n in _res.items():
@@ -217,10 +223,7 @@ class Dispatcher():
                                 results[val][k1].append(item)
                 if verbose:
                     if hits_cnt > 0:
-                        print("We found {} hits from a query to {}".format(hits_cnt, api))
+                        print("{}. {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
-                        print("No hits was found from a query to {}".format(api))
-        if verbose:
-            print("API outputs have been organized!")
-            print("========================================================")
+                        print("{}. {}: No hits".format(_input['query_id'], api))
         return dict(results)
