@@ -4,6 +4,8 @@ from collections import defaultdict
 
 
 class Metadata():
+    """ Metadata Info for the Meta Knowledge Graph stored in BTE
+    """
     def __init__(self, reg=None):
         if not reg:
             self.registry = Registry()
@@ -11,6 +13,7 @@ class Metadata():
             self.registry = reg
 
     def list_all_semantic_types(self):
+        """List all semantic types used in BTE"""
         semmantic_types = set()
         for p, o, info in self.registry.G.edges(data=True):
             semmantic_types.add(info['input_type'])
@@ -18,15 +21,20 @@ class Metadata():
         return list(semmantic_types)
 
     def list_all_predicates(self):
+        """List all predicates used in BTE"""
         predicates = set()
         for p, o, info in self.registry.G.edges(data=True):
             predicates.add(info['label'])
         return list(predicates)
 
     def list_all_id_types(self):
+        """List all identifiers used in BTE"""
         return list(set(self.registry.G.nodes()))
 
     def list_all_associations(self):
+        """List all associations used in BTE
+        Each association is a triple with subject, predicate and object
+        """
         associations = set()
         for p, o, info in self.registry.G.edges(data=True):
             _assoc = info['input_type'] + '|' + info['label'] + '|' + info['output_type']
@@ -38,7 +46,7 @@ class Metadata():
         return results
 
     def semantic_network_graph(self, edge="pred"):
-        """"""
+        """Convert the meta knowledge graph into a semantic graph"""
         _id = 1
         id_dict = {}
         edges = set()
