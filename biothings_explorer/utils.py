@@ -13,6 +13,53 @@ from os.path import commonprefix
 
 import requests
 import graphviz
+from .config import id_ranks
+
+
+def add_s(num):
+    """Add 's' if num is more than one"""
+    assert isinstance(num, int)
+    if num <= 1:
+        return ''
+    else:
+        return 's'
+        
+
+def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
+    """find primary id from equivalent id dict
+    
+    params
+    ------
+    equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
+    _type: the type of the bio-entity
+    """
+    if not equivalent_ids:
+        return None
+    id_rank = [('bts:' + _item) for _item in id_ranks.get(_type)]
+    # loop through id_rank, if the id is found in equivalent ids, return it
+    for _item in id_rank:
+        if equivalent_ids.get(_item):
+            return (_item[4:] + ':' + equivalent_ids[_item][0])
+    # if no id found, return a random one from equivalent ids
+    for k, v in equivalent_ids.items():
+        if v:
+            return (k[4:] + ':' + v[0])
+    
+def get_name_from_equivalent_ids(equivalent_ids):
+    """find name from equivalent id dict
+    
+    params
+    ------
+    equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
+    """
+    if not equivalent_ids:
+        return None
+    if equivalent_ids.get('bts:symbol'):
+        return equivalent_ids.get('bts:symbol')[0]
+    elif equivalent_ids.get('bts:name'):
+        return equivalent_ids.get('bts:name')[0]
+    else:
+        return None
 
 def restructure_gwascatalog(json_doc):
     """restructure gwascatalog"""
