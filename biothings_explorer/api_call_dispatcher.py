@@ -86,7 +86,7 @@ class Dispatcher():
                                         "output": ','.join(outputs),
                                         "values": ','.join(set(values)),
                                         "batch_mode": True,
-                                        "query_id": self.api_dict[api]['num'] + self.api_dict[api]['alphas'].pop(0)
+                                        "query_id": 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
                                         })
                 apis.append(api)
                 batch_modes.append(True)
@@ -100,7 +100,7 @@ class Dispatcher():
                                             "output": ','.join(set(outputs)),
                                             "values": _value,
                                             "batch_mode": False,
-                                            "query_id": self.api_dict[api]['num'] + self.api_dict[api]['alphas'].pop(0)
+                                            "query_id": 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
                                             })
                     apis.append(api)
                     batch_modes.append(False)
@@ -112,13 +112,9 @@ class Dispatcher():
         """send request to and parse response from API"""
         results = {}
         self.unique_apis = set([_edge['api'] for _edge in edges if _edge])
-        if verbose:
-            print("\nBTE found {} apis:\n".format(len(self.unique_apis)))
-            for i, _api in enumerate(self.unique_apis):
-                print("{}. {}".format(i + 1, _api))
         self.api_dict = {}
         for i, _api in enumerate(list(self.unique_apis)):
-            self.api_dict[_api] = {'alphas': list(string.ascii_uppercase), 'num': str(i + 1)}
+            self.api_dict[_api] = {'alphas': list(range(1, 10000)), 'num': str(i + 1)}
         grped_edges = self.group_edges(edges)
         apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
         # print(apis, inputs, modes, vals, grped_edges)
@@ -136,7 +132,7 @@ class Dispatcher():
                 # if val is not present in results dict and _res is not empty
                 if not _res:
                     if verbose:
-                        print("{}. {}: No hits".format(_input['query_id'], api))
+                        print("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 if val not in results:
                     results[val] = {}
@@ -177,13 +173,13 @@ class Dispatcher():
                             results[val][k1].append(item)
                 if verbose:
                     if hits_cnt > 0:
-                        print("{}. {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                        print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
-                        print("{}. {}: No hits".format(_input['query_id'], api))
+                        print("{} {}: No hits".format(_input['query_id'], api))
             else:
                 if not _res:
                     if verbose:
-                        print("{}. {}: No hits".format(_input['query_id'], api))
+                        print("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 hits_cnt = 0
                 for m, n in _res.items():
@@ -223,7 +219,7 @@ class Dispatcher():
                                 results[val][k1].append(item)
                 if verbose:
                     if hits_cnt > 0:
-                        print("{}. {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                        print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
-                        print("{}. {}: No hits".format(_input['query_id'], api))
+                        print("{} {}: No hits".format(_input['query_id'], api))
         return dict(results)
