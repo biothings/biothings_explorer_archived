@@ -2,8 +2,9 @@ from collections import defaultdict
 from graphviz import Digraph
 import pandas as pd
 import networkx as nx
+import copy
 import itertools
-from .utils import unlist
+from .utils import unlist, get_primary_id_from_equivalent_ids, get_name_from_equivalent_ids
 
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
@@ -134,21 +135,25 @@ def networkx_to_pandas_df(G):
                          'pubmed': pubmed})
     return pd.DataFrame(data)
 
-def retrieve_prop_from_edge(G, prop, sub_node, obj_node):
-    edge_info = G[sub_node][obj_node]
+def retrieve_prop_from_edge(edge_info, prop):
     if prop == 'api':
-        data = [_item['info'].get('$api') for _item in edge_info.values()]
-        return ','.join(list(set(data)))
+        data = edge_info['info'].get('$api')
+        if data:
+            if type(data) != list:
+                data = [data]
+            return ','.join(data)
     elif prop == 'source':
-        data = [_item['info'].get('$source') for _item in edge_info.values()]
-        return ','.join(list(set(data)))
+        data = edge_info['info'].get('$source')
+        if data:
+            if type(data) != list:
+                data = [data]
+            return ','.join(data)
     elif prop == 'pubmed':
-        data = []
-        for _item in edge_info.values():
-            pubmed = _item['info'].get('bts:pubmed')
-            if pubmed:
-                data += pubmed
-        return ','.join(list(set(data)))
+        data = edge_info['info'].get('bts:pubmed')
+        if data:
+            if type(data) != list:
+                data = [data]
+            return ','.join(data)
 
 
 def connect_networkx_to_pandas_df(G, paths, pred1=None,
@@ -158,31 +163,98 @@ def connect_networkx_to_pandas_df(G, paths, pred1=None,
     data = []
     for _path in paths:
         if len(_path) == 3:
+            node1_id = get_primary_id_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), G.nodes[_path[1]]['type'])
+            node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'))
             start_edges = dict(G[_path[0]][_path[1]]).values()
             end_edges = dict(G[_path[1]][_path[2]]).values()
             for k, v in itertools.product(start_edges, end_edges):
                 data.append({'input': _path[0],
                              'input_type': G.nodes[_path[0]]['type'],
-                             'pred1': k['label'],
-                             'source1': retrieve_prop_from_edge(G, 'source',
+                             'pred1': k['label'][4:],
+                             'pred1_source': retrieve_prop_from_edge(k, 'source'),
+                             'pred1_api': retrieve_prop_from_edge(k, 'api'),
+                             'pred1_pubmed': retrieve_prop_from_edge(k, 'pubmed'),
+                             'node1_id': node1_id,
+                             'node1_name': node1_name,
+                             'node1_type': G.nodes[_path[1]]['type'],
+                             'pred2': v['label'][4:],
+                             'pred2_source': retrieve_prop_from_edge(v, 'source'),
+                             'pred2_api': retrieve_prop_from_edge(v, 'api'),
+                             'pred2_pubmed': retrieve_prop_from_edge(v, 'pubmed'),
+                             'output': _path[2],
+                             'output_type': G.nodes[_path[2]]['type']})
+        else:
+            edges = G[_path[0]][_path[1]]
+            for _edge in edges.values():
+                data.append({'input': _path[0],
+                             'input_type': G.nodes[_path[0]]['type'],
+                             'pred1': _edge['label'],
+                             'pred1_source': retrieve_prop_from_edge(_edge, 'source'),
+                             'pred1_api': retrieve_prop_from_edge(_edge, 'api'),
+                             'pred1_pubmed': retrieve_prop_from_edge(_edge, 'pubmed'),
+                             'output': _path[1],
+                             'output_type': G.nodes[_path[1]]['type'],
+                             })
+    df = pd.DataFrame(data)
+    if pred1:
+        df = df[(df['pred1'] == pred1)]
+    if intermediate:
+        df = df[(df['intermediate'] == intermediate)]
+    if intermediate_type:
+        df = df[(df['intermediate_type'] == intermediate_type)]
+    if pred2:
+        df = df[(df['pred2'] == pred2)]
+    return df
+
+
+def predict_networkx_to_pandas_df(G, paths, path_length):
+    """Convert the networkx graph from the predict query into pandas table
+    
+    params
+    ------
+    G: the networkx multidigraph from the query
+    paths: all paths connecting from start to end
+    path_length: the length of the query path
+    """
+    data = []
+    for _path in paths:
+        info = {'input': _path[0],
+                'input_type': G.nodes[_path[0]]['type'],
+                'output': _path[-1],
+                'output_type': G.nodes[_path[-1]]['type']}
+        for i in range(1, len(_path) - 1):
+            start_edges = dict(G[_path[i-1]][_path[i]]).values()
+            end_edges = dict(G[_path[1]][_path[2]]).values()
+
+        if len(_path) == 3:
+            node1_id = get_primary_id_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), G.nodes[_path[1]]['type'])
+            node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'))
+            start_edges = dict(G[_path[0]][_path[1]]).values()
+            end_edges = dict(G[_path[1]][_path[2]]).values()
+            for k, v in itertools.product(start_edges, end_edges):
+                data.append({'input': _path[0],
+                             'input_type': G.nodes[_path[0]]['type'],
+                             'pred1': k['label'][4:],
+                             'pred1_source': retrieve_prop_from_edge(G, 'source',
                                                                 _path[0],
                                                                 _path[1]),
-                             'api1': retrieve_prop_from_edge(G, 'api',
+                             'pred1_api': retrieve_prop_from_edge(G, 'api',
                                                                 _path[0],
                                                                 _path[1]),
-                             'pubmed1': retrieve_prop_from_edge(G, 'pubmed',
+                             'pred1_pubmed': retrieve_prop_from_edge(G, 'pubmed',
                                                                 _path[0],
                                                                 _path[1]),
-                             'intermediate': _path[1],
-                             'intermediate_type': G.nodes[_path[1]]['type'],
-                             'pred2': v['label'],
-                             'source2': retrieve_prop_from_edge(G, 'source',
+                             'node1_id': node1_id,
+                             'node1_name': node1_name,
+                             'node1_type': G.nodes[_path[1]]['type'],
+                             'pred2': v['label'][4:],
+                             'pred2_source': retrieve_prop_from_edge(G, 'source',
                                                                 _path[1],
                                                                 _path[2]),
-                             'api2': retrieve_prop_from_edge(G, 'api',
+                             'pred2_api': retrieve_prop_from_edge(G, 'api',
                                                                 _path[1],
                                                                 _path[2]),
-                             'pubmed2': retrieve_prop_from_edge(G, 'pubmed',
+                             'pred2_pubmed': retrieve_prop_from_edge(G, 'pubmed',
                                                                 _path[1],
                                                                 _path[2]),
                              'output': _path[2],
@@ -212,9 +284,6 @@ def connect_networkx_to_pandas_df(G, paths, pred1=None,
     if pred2:
         df = df[(df['pred2'] == pred2)]
     return df
-
-
-
 
 
 
