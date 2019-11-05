@@ -9,12 +9,13 @@ Accept user query and return results as a graph
 from collections import defaultdict
 import networkx as nx
 import time
+import copy
 
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
-from .utils import dict2tuple, tuple2dict
+from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
 
 
@@ -50,7 +51,10 @@ class SingleEdgeQueryDispatcher():
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
-        self.output_cls = output_cls
+        if output_cls == [None]:
+            self.output_cls = None
+        else:
+            self.output_cls = output_cls
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
@@ -74,16 +78,14 @@ class SingleEdgeQueryDispatcher():
                 self.input_label = input_obj.get("name")
             else:
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
+        else:
+            self.input_label = 'the inputs'
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
         # check if input_id is valid
         if not self.equivalent_ids and self.input_id not in id_types:
             raise Exception("The input_id is not valid. Valid input id types are {}".format(id_types))
-        # check if output_cls is valid
-        if self.output_cls[0] and self.output_cls[0] not in semantic_types:
-            raise Exception("The output_cls is not valid. Valid output classes are {}".format(semantic_types))
-        self.output_cls = self.output_cls[0]
         if not self.equivalent_ids:
             # find equivalent ids for the input value
             equivalent_ids = self.idc.convert_ids([(self.values,
@@ -169,8 +171,6 @@ class SingleEdgeQueryDispatcher():
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
-
-
         if not edges:
             # print("No edges found for the <input, pred, output> you specified")
             if verbose:
@@ -178,7 +178,7 @@ class SingleEdgeQueryDispatcher():
             return
         if verbose:
             print("==== Step #1: Query path planning ====")
-            print("\nBecause '{}' is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
         grouped_edges = self.group_edges_by_input_id(edges)
         # t1 = time.time()
         # print("equivalent_ids", self.equivalent_ids)
@@ -202,13 +202,13 @@ class SingleEdgeQueryDispatcher():
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
-                    self.G.add_node(k.split(':', 1)[-1],
+                    self.G.add_node(get_name_from_equivalent_ids(v),
                                     type=self.input_cls,
                                     identifier="bts:" + k.split(':', 1)[0],
                                     level=1,
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
-                        id_mapping[_id] = k.split(':', 1)[-1]
+                        id_mapping[_id] = get_name_from_equivalent_ids(v)
         if not input_edges:
             return
         # make API calls and restructure API outputs
@@ -292,68 +292,109 @@ class SingleEdgeQueryDispatcher():
         return networkx_to_pandas_df(self.G)
 
 
-class FindConnection():
+class Explain:
+    """Find intermediate node(s) that connect input and output
+    
+    There might not be direct evidence showing connection between A and B. The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
+
+    Parameters
+    ----------
+    input_obj: the input object returned from Hint, required
+    output_obj: the output object returned from Hint, required
+    intermediate_nodes: the semantic type(s) of the intermediate node
+        could be None, which represents any semantic type, or a list of semantic types
+    
+    Examples
+    --------
+    Find all possible intermediate node(s) connecting asthama and imatinib
+    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
+    >>> fc.connect()
+
+    Find all Gene(s) which could connect asthma and imatinib
+    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene'])
+    >>> fc.connect()
+
+    Finall all Gene(s) or ChemicalSubstance(s) which could connect asthma and imatinib
+    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
+    >>> fc.connect()
+    """
     def __init__(self, input_obj, output_obj,
-                 intermediate_nodes=None, steps=1, registry=None):
+                 intermediate_nodes=None, registry=None):
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
+        # convert intermediate_cls into a list if not
         if type(intermediate_nodes) == list:
             self.intermediate_cls = intermediate_nodes
         else: 
             self.intermediate_cls = [intermediate_nodes]
         self.input_obj = input_obj
-        if 'name' in input_obj:
+        # self.starts represents the display label of the input, 
+        if 'symbol' in input_obj:
+            self.starts = input_obj['symbol']
+        elif 'name' in input_obj:
             self.starts = input_obj['name']
         else:
             self.starts = self.input_obj.get("primary").get("identifier") + self.input_obj.get("primary").get("value")
         self.output_obj = output_obj
-        if 'name' in output_obj:
+        # self.ends represents the display label of the output
+        if 'symbol' in output_obj:
+            self.ends = output_obj['symbol']
+        elif 'name' in output_obj:
             self.ends = output_obj['name']
         else:
             self.ends = self.output_obj.get("primary").get("identifier") + self.output_obj.get("primary").get("value")
         self.G = nx.MultiDiGraph()
+        self.seqd = {}
 
     def connect(self, verbose=False):
-        print("==========")
-        print("========== QUERY PARAMETER SUMMARY ==========")
-        print("==========\n")
-
-        print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_cls)))
-        for i, item in enumerate(self.intermediate_cls):
-            print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
-        print("==========")
-        print("========== QUERY #1 -- fetch all bioentities linked to '{}' ==========".format(self.starts))
-        print("==========\n")
-        seqd1 = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+        if verbose:
+            print("==========")
+            print("========== QUERY PARAMETER SUMMARY ==========")
+            print("==========\n")
+            print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_cls)))
+            for i, item in enumerate(self.intermediate_cls):
+                print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
+            print("==========")
+        if self.intermediate_cls == [None]:
+            output_cls = 'bioentities'
+        else:
+            output_cls = ' AND '.join(self.intermediate_cls) + ' entities'
+            if verbose:
+                print("========== QUERY #1 -- fetch all {} linked to '{}' ==========".format(output_cls, self.starts))
+                print("==========\n")
+        self.seqd[1] = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
                                           output_cls=self.intermediate_cls,
                                           registry=self.registry)
-        seqd1.query(verbose=verbose)
-        self.G = seqd1.G
-        print("\n\n==========")
-        print("========== QUERY #2 -- fetch all bioentities linked to '{}' ==========".format(self.ends))
-        print("==========\n")
-        seqd2 = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
+        self.seqd[1].query(verbose=verbose)
+        self.G = copy.deepcopy(self.seqd[1].G)
+        if verbose:
+            print("\n\n==========")
+            print("========== QUERY #2 -- fetch all bioentities linked to '{}' ==========".format(self.ends))
+            print("==========\n")
+        self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
                                           output_cls=self.intermediate_cls,
                                           registry=self.registry)
-        seqd2.query(verbose=verbose)
-        seqd2.G = seqd2.G.reverse()
-        self.G = merge_two_networkx_graphs(self.G, seqd2.G)
+        self.seqd[2].query(verbose=verbose)
+        self.seqd[2].G = self.seqd[2].G.reverse()
+        self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
         self.sub_G = self.sub_graph()
-        print("\n==========")
-        print("========== Final assembly of results ==========")
-        print("==========\n\n")
-        print("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
+        if verbose:
+            print("\n==========")
+            print("========== Final assembly of results ==========")
+            print("==========\n\n")
+            print("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
+    
+    def summary(self, attr):
+        """"""
 
     def show_path(self, remove_duplicate=True):
-        input_node = self.input_obj.get("primary").get("value")
-        output_node = self.output_obj.get("primary").get("value")
         if remove_duplicate:
             paths = set()
             for path in nx.all_simple_paths(self.G,
-                                            source=input_node,
-                                            target=output_node):
+                                            source=self.starts,
+                                            target=self.ends):
 
                 path = "||".join(path)
                 paths.add(path)
@@ -364,8 +405,8 @@ class FindConnection():
         else:
             paths = []
             for path in nx.all_simple_paths(self.G,
-                                            source=input_node,
-                                            target=output_node):
+                                            source=self.starts,
+                                            target=self.ends):
                 paths.append(path)
         return paths
 
@@ -378,32 +419,24 @@ class FindConnection():
         return self.G.subgraph(nodes)
 
     def visualize(self):
-        H = self.sub_graph()
-        return networkx_to_graphvis(H)
-
-    def check_output_in_graph(self):
-        values = self.output_obj.get("primary").get("value")
-        if values in self.G:
-            return True
-        else:
-            return False
+        """Convert the graph to visjs JSON format"""
+        return networkx_to_graphvis(self.sub_G)
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
-        sub_G = self.sub_graph()
-        if sub_G.number_of_nodes() > 0:
-            res = nx.json_graph.node_link_data(sub_G)
+        if self.sub_G.number_of_nodes() > 0:
+            res = nx.json_graph.node_link_data(self.sub_G)
             return res
         else:
             return {}
 
     def show_all_nodes(self):
         """show all nodes in the graph"""
-        return list(self.G.nodes())
+        return list(self.sub_G.nodes())
 
     def show_all_edges(self):
         """show all edges in the graph"""
-        return list(self.G.edges())
+        return list(self.sub_G.edges())
 
     def display_node_info(self, node):
         """show detailed node information
@@ -433,146 +466,121 @@ class FindConnection():
         return dict(self.G[start_node][end_node])
 
     def display_table_view(self):
+        """Display the query results as a pandas table
+        
+        Examples
+        --------
+        >>> df = fc.display_table_view()
+        >>> df
+        """
         paths = self.show_path()
         return connect_networkx_to_pandas_df(self.G, paths)
 
 
-class ConnectTwoConcepts():
-    def __init__(self, start_point, end_point, edge1, edge2, registry=None):
-        self.input_id = start_point['identifier']
-        self.input_cls = start_point['type']
-        self.input_values = start_point['values']
-        self.output_id = end_point['identifier']
-        self.output_cls = end_point['type']
-        self.output_values = end_point['values']
-        self.edge1 = edge1
-        self.edge2 = edge2
-        if not registry:
-            self.registry = Registry()
-        else:
-            self.registry = registry
-        self.idc = IDConverter(registry=self.registry)
-        self.dp = Dispatcher(registry=self.registry)
-        self.G = nx.MultiDiGraph()
-
-    def group_edges_by_input_id(self, edges):
-        grouped_edges = defaultdict(list)
-        for _edge in edges:
-            grouped_edges[_edge['input_id']].append(_edge)
-        return grouped_edges
-
-    def connect(self):
-        idc_inputs = []
-        # filter input edges based on subject, object, predicate
-        input_edges = self.registry.filter_edges(self.input_cls,
-                                                 None,
-                                                 self.edge1)
-        # group input edges based on identifier
-        grouped_input_edges = self.group_edges_by_input_id(input_edges)
-        # populate to id converter input list
-        idc_inputs.append((self.input_values,
-                           self.input_id,
-                           self.input_cls))
-        # filter output edges based on subject, object, predicate
-        output_edges = self.registry.filter_edges(self.output_cls,
-                                                  None,
-                                                  self.edge2)
-        # group output edges based on identifier
-        grouped_output_edges = self.group_edges_by_input_id(output_edges)
-        # populate to id converter input list
-        idc_inputs.append((self.output_values,
-                           self.output_id,
-                           self.output_cls))
-        # find equivalent ids for inputs and outputs
-        equivalent_ids = self.idc.convert_ids(idc_inputs)
-        input_edges = []
-        mapping_keys = []
-        output_id_types = []
-        id_mapping = {}
-        # populate edge with corresponding input value
-        # k is the source id, v is the equivalent ids
-        for k, v in equivalent_ids.items():
-            id_type, _id = k.split(':', 1)
-            if not id_type.startswith("bts:"):
-                id_type = "bts:" + id_type
-            if id_type == self.input_id and _id == self.input_values:
-                # p is the input id, q is the edges from the source id
-                for p, q in grouped_input_edges.items():
-                    # check if input id is in equivalent ids
-                    if p in v and v[p]:
-                        for _edge in q:
-                            _edge['value'] = v[p]
-                            mapping_keys.append(_edge['mapping_key'])
-                            input_edges.append(_edge)
-                            output_id_types.append(_edge['output_id'])
-                        self.G.add_node(k.split(':', 1)[-1],
-                                        type=q[0]['input_type'],
-                                        identifier=q[0]['input_id'],
-                                        level=1,
-                                        equivalent_ids=equivalent_ids[k])
-                        for _id in v[p]:
-                            id_mapping[_id] = k.split(':', 1)[-1]
-            if id_type == self.output_id and _id == self.output_values:
-                for m, n in grouped_output_edges.items():
-                    # check if input id is in equivalent ids
-                    if m in v and v[m]:
-                        for _edge in n:
-                            _edge['value'] = v[m]
-                            mapping_keys.append(_edge['mapping_key'])
-                            input_edges.append(_edge)
-                            output_id_types.append(_edge['output_id'])
-                        self.G.add_node(k.split(':', 1)[-1],
-                                        type=n[0]['input_type'],
-                                        identifier=n[0]['input_id'],
-                                        level=1,
-                                        equivalent_ids=equivalent_ids[k])
-                        for _id in v[m]:
-                            id_mapping[_id] = k.split(':', 1)[-1]
-        # make API calls and restructure API outputs
-        _res = self.dp.dispatch(input_edges)
-        # load API outputs into the MultiDiGraph
-        self.G = load_res_to_networkx(_res, self.G, mapping_keys,
-                                      id_mapping, output_id_types)
-        # annotate nodes with its equivalent ids
-        self.G, _ = add_equivalent_ids_to_nodes(self.G, self.idc)
-
-
-class MultiEdgeQueryDispatcher():
-    def __init__(self, input_obj, edges, registry=None):
+class Predict:
+    """find relationships between one specific entity and a class of entity types
+    
+    params
+    ------
+    input_obj: the input object returned from Hint, required
+    output_obj: the class of entities as output, required
+        could be None, str, or a list of entity classes
+    intermediate_nodes: the semantic type(s) of the intermediate node
+        could be None, which represents any semantic type, or a list of semantic types
+    
+    """
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
         """
-        edges: [(sub_cls, pred, obj_cls), (sub_cls, pred, obj_cls)
+        params
+        ------
+        input_obj: the input object returned from Hint, required
+        output_obj: the class of entities as output, required
+            could be None, str, or a list of entity classes
+        intermediate_nodes: the semantic type(s) of the intermediate node
+            could be None, which represents any semantic type, or a list of semantic types
+        
         """
-        self.edges = edges
+        if not intermediate_nodes:
+            intermediate_nodes = []
+        if type(intermediate_nodes) != list:
+            intermediate_nodes = [intermediate_nodes]
+        self.intermediate_nodes = copy.deepcopy(intermediate_nodes)
+        self.paths = copy.deepcopy(intermediate_nodes)
+        # append output_obj to the path
+        self.paths.append(output_obj)
         self.input_obj = input_obj
+        if 'symbol' in input_obj:
+            self.starts = input_obj['symbol']
+        elif 'name' in input_obj:
+            self.starts = input_obj['name']
+        else:
+            self.starts = self.input_obj.get("primary").get("identifier") + self.input_obj.get("primary").get("value")
+        self.ends = output_obj
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
-        self.idc = IDConverter(registry=self.registry)
-        self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
+        self.seqd = {}
 
-    def query(self):
-        for i, edge in enumerate(self.edges):
-            input_cls, pred, output_cls = edge
-            print("start to query for associations between {} and {}...".format(input_cls, output_cls))
+    def connect(self, verbose=False):
+        """Make the query
+        
+        params
+        ------
+        verbose: boolean, if True, print the progress and the summary
+        """
+        if verbose:
+            print("==========")
+            print("========== QUERY PARAMETER SUMMARY ==========")
+            print("==========\n")
+            print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_nodes)))
+            for i, item in enumerate(self.intermediate_nodes):
+                print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_nodes])))
+        for i, output_cls in enumerate(self.paths):
             if i == 0:
+                # if it's the first element in the path
+                # the input should be the user provided input
                 equivalent_ids = None
+                input_obj = self.input_obj
+                input_cls = input_obj['type']
             else:
-                if input_cls != self.edges[i - 1][-1]:
-                    raise Exception('The subject of edge {} does not match the object of edge {}'.format(i, i-1))
-                equivalent_ids = seqd.output_ids[input_cls]
-                self.input_obj = None
+                # if it's not the first element in the path
+                # the input should be the results from the previous query
+                input_cls = self.paths[i - 1]
+                equivalent_ids = self.seqd[i].output_ids[input_cls]
+                input_obj = None
             if (i > 0 and equivalent_ids != {}) or i == 0:
-                seqd = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
+                if verbose:
+                    if input_obj:
+                        _input = copy.copy(self.starts)
+                    else:
+                        _input = input_cls + ' entities'
+                    if output_cls == None:
+                        _output = 'bioentities'
+                    else:
+                        if type(output_cls) != list:
+                            output_cls = [output_cls]
+                        _output = ' AND '.join(output_cls) + ' entities'
+                    print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
+                    print("==========\n")
+                self.seqd[i+1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
                                                  equivalent_ids=equivalent_ids,
                                                  input_cls=input_cls,
                                                  output_cls=output_cls,
-                                                 pred=pred)
-                seqd.query()
-                print("finished! Find {} hits.".format(seqd.G.number_of_nodes()))
+                                                 pred=None)
+                self.seqd[i+1].query(verbose=verbose)
                 # print(seqd.G.nodes())
-                self.G = merge_two_networkx_graphs(self.G, seqd.G)
+                self.G = merge_two_networkx_graphs(self.G, self.seqd[i+1].G)
+        else:
+            pass
+        if verbose:
+            print("\n==========")
+            print("========== Final assembly of results ==========")
+            print("==========\n\n")
+            for i in range(len(self.paths)):
+                if (i+1) in self.seqd:
+                    print("In the #{} query, BTE found {} unique {} nodes".format(i+1, len(self.seqd[i+1].G), self.paths[i]))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -582,25 +590,45 @@ class MultiEdgeQueryDispatcher():
         else:
             return {}
 
-    def show_path(self, start_node, end_node):
-        """show paths which can connect from the start node to end node
+    def show_path(self, remove_duplicate=True):
+        # if the last query was not performed, return
+        if len(self.paths) not in self.seqd:
+            return 
+        # gather all outputs from the last query
+        final_outputs = set()
+        if self.seqd[len(self.paths)].G.number_of_nodes() > 0:
+            for x, y in self.seqd[len(self.paths)].G.nodes(data=True):
+                if y['level'] and y['level'] == 2:
+                    final_outputs.add(x)
+        # if the last query returns no results, return 
+        if len(final_outputs) == 0:
+            return
+        if len(self.paths) == 1:
+            paths = []
+            for _node in final_outputs:
+                paths.append([self.starts, _node])
+            return paths
+        if remove_duplicate:
+            paths = set()
+            for _node in final_outputs:
+                for path in nx.all_simple_paths(self.G,
+                                                source=self.starts,
+                                                target=_node):
 
-        Params
-        ------
-        start_node: str, start node id
-        end_node: str, end node id
-        """
-        if start_node not in self.G:
-            raise Exception("{} is not in the graph".format(start_node))
-        if end_node not in self.G:
-            raise Exception("{} is not in the graph".format(end_node))
-        paths = []
-        for path in nx.all_simple_paths(self.G,
-                                        source=start_node,
-                                        target=end_node):
-
-            paths.append(path)
-        return paths
+                    path = "||".join(path)
+                    paths.add(path)
+                new_paths = []
+                for _path in paths:
+                    new_paths.append(_path.split('||'))
+            return new_paths
+        else:
+            paths = []
+            for _node in final_outputs:
+                for path in nx.all_simple_paths(self.G,
+                                                source=self.starts,
+                                                target=self.ends):
+                    paths.append(path)
+            return paths
 
     def display_node_info(self, node):
         """show detailed node information
@@ -636,3 +664,90 @@ class MultiEdgeQueryDispatcher():
     def show_all_edges(self):
         """show all edges in the graph"""
         return list(self.G.edges())
+
+    def display_table_view(self):
+        """Display the query results as a pandas table
+        
+        Examples
+        --------
+        >>> df = fc.display_table_view()
+        >>> df
+        """
+        paths = self.show_path()
+        return connect_networkx_to_pandas_df(self.G, paths)
+
+class FindConnection:
+    """find relationships between one specific entity and another specific entity or other classes of entity types
+    
+    params
+    ------
+    input_obj: the input object returned from Hint, required
+    output_obj: the class of entities as output, required
+        could be None, str, or a list of entity classes
+    intermediate_nodes: the semantic type(s) of the intermediate node
+        could be None, which represents any semantic type, or a list of semantic types
+    
+    """
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
+        """find relationships between one specific entity and another specific entity or other classes of entity types
+        
+        params
+        ------
+        input_obj: the input object returned from Hint, required
+        output_obj: the class of entities as output, required
+            could be None, str, or a list of entity classes
+        intermediate_nodes: the semantic type(s) of the intermediate node
+            could be None, which represents any semantic type, or a list of semantic types
+        
+        """
+        if type(output_obj) == dict:
+            self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
+        else:
+            self.fc = Predict(input_obj, output_obj, intermediate_nodes, registry=registry)
+
+    def connect(self, verbose=False):
+        self.fc.connect(verbose=verbose)
+
+    def to_json(self):
+        """convert the graph into JSON through networkx"""
+        return self.fc.to_json()
+
+    def show_path(self, remove_duplicate=True):
+        return self.fc.show_path(remove_duplicate=remove_duplicate)
+
+    def display_node_info(self, node):
+        """show detailed node information
+
+        Params
+        ------
+        node: str, node id
+        """
+        return self.fc.display_node_info(node)
+
+    def display_edge_info(self, start_node, end_node):
+        """display detailed edge info between start node and end node
+
+        Params
+        ------
+        start_node: str, start node id
+        end_node: str, end node id
+        """
+        return self.fc.display_edge_info(start_node, end_node)
+
+    def show_all_nodes(self):
+        """show all nodes in the graph"""
+        return self.fc.show_all_nodes()
+
+    def show_all_edges(self):
+        """show all edges in the graph"""
+        return self.fc.show_all_edges()
+
+    def display_table_view(self):
+        """Display the query results as a pandas table
+        
+        Examples
+        --------
+        >>> df = fc.display_table_view()
+        >>> df
+        """
+        return self.fc.display_table_view()
