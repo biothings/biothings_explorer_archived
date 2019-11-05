@@ -15,7 +15,7 @@ BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 class Hint():
     def __init__(self, size=5):
-        """Guess appropriate bio-entity based on user input
+        """Guess appropriate bio-entities based on user input
 
         params
         ------
