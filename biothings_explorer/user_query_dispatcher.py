@@ -371,7 +371,7 @@ class Explain:
         self.G = copy.deepcopy(self.seqd[1].G)
         if verbose:
             print("\n\n==========")
-            print("========== QUERY #2 -- fetch all bioentities linked to '{}' ==========".format(self.ends))
+            print("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
             print("==========\n")
         self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
                                           output_cls=self.intermediate_cls,
