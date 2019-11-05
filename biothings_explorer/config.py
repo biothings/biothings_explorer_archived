@@ -1,3 +1,15 @@
+id_ranks = {
+  'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
+  'SequenceVariant': ['dbsnp', 'hgvs'],
+  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'name'],
+  'pathway': ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
+  'mf': ['go'],
+  'cc': ['go', 'umls'],
+  'bp': ['go', 'umls'],
+  'anatomy': ['umls'],
+  'phenotype': ['umls']
+}
+
 metadata = {
   "mygene.info": {
     "scopes": ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
