@@ -706,12 +706,14 @@ class FindConnection:
                 ['Gene','ChemicalSubstance']
 
         intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
-                None                     : no intermediate node, find direct connections only
-                [None]                   : one intermediate node of any semantic type
-                ['Gene']                 : one intermediate node that must be a Gene
-                ['Gene','Pathway']       : one intermediate node that must be a Gene or a Pathway
-                [['Gene'],['Pathway']]   : two intermediate nodes, first must be a Gene, second must be a Pathway.
-                                           NOTE: queries with more than one intermediate node are currently not supported
+                None                         : no intermediate node, find direct connections only
+                []                           : no intermediate node, find direct connections only
+                ['BiologicalEntity']         : one intermediate node of any semantic type
+                ['Gene']                     : one intermediate node that must be a Gene
+                [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                  **NOTE**: queries with more than one intermediate node are currently not supported
         """
         if type(output_obj) == dict:
             self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
