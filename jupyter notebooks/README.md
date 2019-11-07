@@ -4,7 +4,7 @@ BioThings Explorer Jupyter Notebook
 ## Prerequisite
 
 1. Set up your python virtual environment [instructions](https://virtualenv.pypa.io/en/latest/). Please use Python version higher than 3.6.
-2. Install biothings-explorer `pip install git+https://github.com/kevinxin90/bte_schema#egg=biothings_explorer`
+2. Install biothings-explorer `pip install git+https://github.com/biothings/bte_schema#egg=biothings_explorer`
 3. Install biothings-schema `pip install git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema`
 
 **Important: In order for biothings explorer to work with jupyter notebooks, we use Notebook version 5.7.5 and tornado version 4.5.3 (these two packages will have conflict with Python's aysncio module). These packages are already added as dependency for biothings-explorer. If you accidentally upgraded these packages, please downgrade to the version specified above.**
