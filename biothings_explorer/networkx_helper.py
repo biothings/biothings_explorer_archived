@@ -164,11 +164,11 @@ def connect_networkx_to_pandas_df(G, paths, pred1=None,
                                   pred2=None):
     data = []
     for _path in paths:
+        output_id = get_primary_id_from_equivalent_ids(G.nodes[_path[-1]].get('equivalent_ids'), G.nodes[_path[-1]]['type'])
+        output_name = get_name_from_equivalent_ids(G.nodes[_path[-1]].get('equivalent_ids'))
         if len(_path) == 3:
             node1_id = get_primary_id_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), G.nodes[_path[1]]['type'])
             node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'))
-            output_id = get_primary_id_from_equivalent_ids(G.nodes[_path[2]].get('equivalent_ids'), G.nodes[_path[2]]['type'])
-            output_name = get_name_from_equivalent_ids(G.nodes[_path[2]].get('equivalent_ids'))
             start_edges = dict(G[_path[0]][_path[1]]).values()
             end_edges = dict(G[_path[1]][_path[2]]).values()
             for k, v in itertools.product(start_edges, end_edges):
