@@ -5,7 +5,7 @@ BioThings Explorer Jupyter Notebook
 
 BioThings Explorer is an engine for autonomously querying a distributed knowledge graph. The distributed knowledge graph is made up of biomedical APIs that have been annotated with semantically-precise descriptions of their inputs and outputs.  The knowledge graph is currently comprised by the APIs in this figure:
 
-![BTE Metagraph](img/smartapi_metagraph.png "BioThings Explorer Metagraph")
+![BTE Metagraph](img/smartapi_metagraph.png "BioThings Explorer Metagraph" =500x)
 
 
 ## Prerequisite
