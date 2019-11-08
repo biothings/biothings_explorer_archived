@@ -3,7 +3,7 @@ from setuptools import setup
 
 install_requires = [
     'jupyter',
-    'notebook==5.7.5',
+    'notebook==5.7.8',
     'tornado==4.5.3',
     'jsonschema>=3.0.1',
     'networkx==2.3',
