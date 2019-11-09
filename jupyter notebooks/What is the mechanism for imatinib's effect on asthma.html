@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13271,15 +13232,31 @@ div#notebook {
 <pre>Help on function __init__ in module biothings_explorer.user_query_dispatcher:
 
 __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
-    find relationships between one specific entity and another specific entity or other classes of entity types
+    Find relationships in the Knowledge Graph between an Input Object and an Output Object.
     
     params
     ------
-    input_obj: the input object returned from Hint, required
-    output_obj: the class of entities as output, required
-        could be None, str, or a list of entity classes
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
+    input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                          Examples: 
+            Hint().query(&#34;Fanconi anemia&#34;)[&#39;DiseaseOrPhenotypicFeature&#39;][0]
+            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+    
+    output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                           entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                           Examples:
+            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+            &#39;Gene&#39;
+            [&#39;Gene&#39;,&#39;ChemicalSubstance&#39;]
+    
+    intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+            None                         : no intermediate node, find direct connections only
+            []                           : no intermediate node, find direct connections only
+            [&#39;BiologicalEntity&#39;]         : one intermediate node of any semantic type
+            [&#39;Gene&#39;]                     : one intermediate node that must be a Gene
+            [(&#39;Gene&#39;,&#39;Pathway&#39;)]         : one intermediate node that must be a Gene or a Pathway
+            [&#39;Gene&#39;,&#39;Pathway&#39;]           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+            [&#39;Gene&#39;,(&#39;Pathway&#39;,&#39;Gene&#39;)]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                              **NOTE**: queries with more than one intermediate node are currently not supported
 
 </pre>
 </div>
@@ -13344,16 +13321,16 @@ Because asthma is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE will query o
 
 BTE found 3 apis:
 
-API 1. mydisease.info(1 API call)
+API 1. biolink_disease2gene(1 API call)
 API 2. semmeddisease(1 API call)
-API 3. biolink_disease2gene(1 API call)
+API 3. mydisease.info(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
 API 3.1: http://mydisease.info/v1/query (POST &#34;q=C0004096&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 2.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0004096&amp;scopes=umls&amp;fields=AFFECTS_reverse.protein,AFFECTS_reverse.gene,ASSOCIATED_WITH.gene,AFFECTS.gene,CAUSES_reverse.gene,AFFECTS.protein&amp;species=human&amp;size=100&#34;)
+API 2.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0004096&amp;scopes=umls&amp;fields=AFFECTS.gene,AFFECTS_reverse.protein,CAUSES_reverse.gene,AFFECTS_reverse.gene,AFFECTS.protein,ASSOCIATED_WITH.gene&amp;species=human&amp;size=100&#34;)
 API 1.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004979/genes?rows=100
 
 
@@ -13376,36 +13353,36 @@ Because IMATINIB is of type &#39;ChemicalSubstance&#39;, BTE will query our meta
 
 BTE found 3 apis:
 
-API 1. dgidb_chemical2gene(1 API call)
+API 1. semmedgene(6 API calls)
 API 2. mychem.info(2 API calls)
-API 3. semmedgene(6 API calls)
+API 3. dgidb_chemical2gene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 2.2: http://mychem.info/v1/query (POST &#34;q=DB00619&amp;scopes=drugbank.id&amp;fields=drugbank.targets,drugbank.enzymes&amp;species=human&amp;size=100&#34;)
+API 2.2: http://mychem.info/v1/query (POST &#34;q=DB00619&amp;scopes=drugbank.id&amp;fields=drugbank.enzymes,drugbank.targets&amp;species=human&amp;size=100&#34;)
 API 2.1: http://mychem.info/v1/query (POST &#34;q=CHEMBL941&amp;scopes=chembl.molecule_chembl_id&amp;fields=drugcentral.bioactivity&amp;species=human&amp;size=100&#34;)
-API 3.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 3.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 1.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
-API 3.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 3.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 3.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 3.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
+API 1.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
 
 
 ==== Step #3: Output normalization ====
 
-API 1.1 dgidb_chemical2gene: 34 hits
+API 3.1 dgidb_chemical2gene: 34 hits
 API 2.1 mychem.info: 77 hits
 API 2.2 mychem.info: 18 hits
-API 3.1 semmedgene: No hits
-API 3.2 semmedgene: No hits
-API 3.3 semmedgene: No hits
-API 3.4 semmedgene: No hits
-API 3.5 semmedgene: 100 hits
-API 3.6 semmedgene: 100 hits
+API 1.1 semmedgene: No hits
+API 1.2 semmedgene: No hits
+API 1.3 semmedgene: No hits
+API 1.4 semmedgene: No hits
+API 1.5 semmedgene: 100 hits
+API 1.6 semmedgene: 100 hits
 
 After id-to-object translation, BTE retrieved 245 unique objects.
 
@@ -13497,181 +13474,153 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <th>pred2_source</th>
       <th>pred2_api</th>
       <th>pred2_pubmed</th>
-      <th>output</th>
+      <th>output_id</th>
+      <th>output_name</th>
       <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>11943720</td>
-      <td>entrez:7852</td>
-      <td>CXCR4</td>
+      <td></td>
+      <td>entrez:613</td>
+      <td>BCR</td>
       <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>1</td>
+      <th>1</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>11943720</td>
-      <td>entrez:7852</td>
-      <td>CXCR4</td>
+      <td></td>
+      <td>entrez:613</td>
+      <td>BCR</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>2</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:613</td>
+      <td>BCR</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2gene</td>
+      <td></td>
+      <td>entrez:4088</td>
+      <td>SMAD3</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2gene</td>
+      <td></td>
+      <td>entrez:4088</td>
+      <td>SMAD3</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5154</td>
+      <td>PDGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5154</td>
+      <td>PDGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>7</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>23307299</td>
-      <td>entrez:133482</td>
-      <td>SLCO6A1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>17619555</td>
-      <td>entrez:133482</td>
-      <td>SLCO6A1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>umls:C1704799</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>umls:C1704799</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21646800</td>
-      <td>umls:C3889436</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>1882540,12777405,12777405</td>
-      <td>entrez:760</td>
-      <td>CA2</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25113532</td>
-      <td>entrez:6850</td>
-      <td>SYK</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16322752</td>
+      <td></td>
       <td>umls:C0031727</td>
       <td>None</td>
       <td>Gene</td>
@@ -13679,17 +13628,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>10</td>
+      <th>8</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>16322752</td>
+      <td></td>
       <td>umls:C0031727</td>
       <td>None</td>
       <td>Gene</td>
@@ -13697,107 +13647,56 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>11</td>
+      <th>9</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>10957684,11665340,15715950,15744455,16217591,1...</td>
-      <td>umls:C0017337</td>
+      <td></td>
+      <td>umls:C1705325</td>
       <td>None</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>12</td>
+      <th>10</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>8711779,9351591,16088626,12225254,11665340,175...</td>
-      <td>umls:C0017337</td>
+      <td></td>
+      <td>umls:C1705325</td>
       <td>None</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>13</td>
+      <th>11</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>20523070</td>
-      <td>umls:C3540585</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>14</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>23307299</td>
-      <td>entrez:373156</td>
-      <td>GSTK1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>15</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>17619555</td>
-      <td>entrez:373156</td>
-      <td>GSTK1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>16</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>22452921</td>
+      <td></td>
       <td>umls:C1367471</td>
       <td>None</td>
       <td>Gene</td>
@@ -13805,17 +13704,151 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>17</td>
+      <th>12</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>18683785</td>
+      <td></td>
+      <td>umls:C3540585</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1706005</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1706005</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:3932</td>
       <td>LCK</td>
       <td>Gene</td>
@@ -13823,17 +13856,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>drugcentral</td>
       <td>mychem.info</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>18</td>
+      <th>20</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>18683785</td>
+      <td></td>
       <td>entrez:3932</td>
       <td>LCK</td>
       <td>Gene</td>
@@ -13841,17 +13875,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>19</td>
+      <th>21</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>18683785</td>
+      <td></td>
       <td>entrez:3932</td>
       <td>LCK</td>
       <td>Gene</td>
@@ -13859,137 +13894,12 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>20</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20880147</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>21</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20880147</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>22</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19246655</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>23</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19246655</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>24</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27442134</td>
-      <td>umls:C3714973</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>25</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703</td>
-      <td>umls:C3714973</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>26</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>22452921</td>
-      <td>umls:C1706438</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>27</td>
+      <th>22</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -14003,17 +13913,246 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>28</td>
+      <th>23</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>18514752,9309799,17572010,24937476,17572010,16...</td>
+      <td></td>
+      <td>entrez:7852</td>
+      <td>CXCR4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7852</td>
+      <td>CXCR4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:6850</td>
+      <td>SYK</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1706438</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1704799</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1704799</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:146</td>
+      <td>ADRA1D</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:146</td>
+      <td>ADRA1D</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:947</td>
+      <td>CD34</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:947</td>
+      <td>CD34</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:947</td>
+      <td>CD34</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:947</td>
+      <td>CD34</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:3439</td>
       <td>IFNA1</td>
       <td>Gene</td>
@@ -14021,557 +14160,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>29</td>
+      <th>36</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>21189606,21189606</td>
-      <td>umls:C0538674</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>30</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16804324</td>
-      <td>entrez:5154</td>
-      <td>PDGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>31</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16804324</td>
-      <td>entrez:5154</td>
-      <td>PDGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>32</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27442134</td>
-      <td>umls:C1705325</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>33</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703,20523070</td>
-      <td>umls:C1705325</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>34</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703</td>
-      <td>entrez:5290</td>
-      <td>PIK3CA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>35</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19155479</td>
-      <td>entrez:5805</td>
-      <td>PTS</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>36</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>entrez:7422</td>
-      <td>VEGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>37</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27453339,25862459,22900522,19787077</td>
-      <td>entrez:7422</td>
-      <td>VEGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>38</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>12324676,12324676,12324676,12373263,12373263,1...</td>
-      <td>entrez:7422</td>
-      <td>VEGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>39</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>1721608</td>
-      <td>umls:C1706005</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>40</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>6459694</td>
-      <td>umls:C1706005</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>41</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14968124,21170080,9847290</td>
-      <td>entrez:7076</td>
-      <td>TIMP1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>42</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9847290</td>
-      <td>entrez:7076</td>
-      <td>TIMP1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>43</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>27182965,29273806,24388013,29785011,20860503,3...</td>
-      <td>entrez:4088</td>
-      <td>SMAD3</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>44</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>31036433,30929738</td>
-      <td>entrez:4088</td>
-      <td>SMAD3</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>45</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18480254</td>
-      <td>entrez:146</td>
-      <td>ADRA1D</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>46</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18480254</td>
-      <td>entrez:146</td>
-      <td>ADRA1D</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>47</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>entrez:7124</td>
-      <td>TNF</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>48</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>1323298,25862459</td>
-      <td>entrez:7124</td>
-      <td>TNF</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>49</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>15660518,22387292,9120022,19533439,17950015</td>
-      <td>entrez:7124</td>
-      <td>TNF</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>50</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21270400</td>
-      <td>entrez:10899</td>
-      <td>JTB</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>51</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21270400</td>
-      <td>entrez:10899</td>
-      <td>JTB</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>52</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>entrez:613</td>
-      <td>BCR</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>53</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>entrez:613</td>
-      <td>BCR</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>54</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>entrez:613</td>
-      <td>BCR</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>55</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14630618,14630618</td>
-      <td>entrez:947</td>
-      <td>CD34</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>56</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14630618,14630618</td>
-      <td>entrez:947</td>
-      <td>CD34</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>57</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14630618,14630618</td>
-      <td>entrez:947</td>
-      <td>CD34</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>58</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14630618,14630618</td>
-      <td>entrez:947</td>
-      <td>CD34</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>59</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>11224726,11836685,16931638,18558635</td>
+      <td></td>
       <td>umls:C1335671</td>
       <td>None</td>
       <td>Gene</td>
@@ -14579,6 +14179,444 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:760</td>
+      <td>CA2</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5290</td>
+      <td>PIK3CA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C0017337</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C0017337</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:10899</td>
+      <td>JTB</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:10899</td>
+      <td>JTB</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:373156</td>
+      <td>GSTK1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:373156</td>
+      <td>GSTK1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:7422</td>
+      <td>VEGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7422</td>
+      <td>VEGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7422</td>
+      <td>VEGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:7124</td>
+      <td>TNF</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7124</td>
+      <td>TNF</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7124</td>
+      <td>TNF</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3714973</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3714973</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C0538674</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7076</td>
+      <td>TIMP1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7076</td>
+      <td>TIMP1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3889436</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:133482</td>
+      <td>SLCO6A1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:133482</td>
+      <td>SLCO6A1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
@@ -14602,7 +14640,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pred1&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;causedBy&#39;</span><span class="p">]</span>
@@ -14618,7 +14656,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -14654,631 +14692,20 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <th>pred2_source</th>
       <th>pred2_api</th>
       <th>pred2_pubmed</th>
-      <th>output</th>
+      <th>output_id</th>
+      <th>output_name</th>
       <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>11943720</td>
-      <td>entrez:7852</td>
-      <td>CXCR4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>11943720</td>
-      <td>entrez:7852</td>
-      <td>CXCR4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>17619555</td>
-      <td>entrez:133482</td>
-      <td>SLCO6A1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>umls:C1704799</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
-      <td>umls:C1704799</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21646800</td>
-      <td>umls:C3889436</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>1882540,12777405,12777405</td>
-      <td>entrez:760</td>
-      <td>CA2</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25113532</td>
-      <td>entrez:6850</td>
-      <td>SYK</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>8711779,9351591,16088626,12225254,11665340,175...</td>
-      <td>umls:C0017337</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>13</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20523070</td>
-      <td>umls:C3540585</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>15</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>17619555</td>
-      <td>entrez:373156</td>
-      <td>GSTK1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>16</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>22452921</td>
-      <td>umls:C1367471</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>17</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18683785</td>
-      <td>entrez:3932</td>
-      <td>LCK</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>18</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18683785</td>
-      <td>entrez:3932</td>
-      <td>LCK</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>19</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18683785</td>
-      <td>entrez:3932</td>
-      <td>LCK</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>22</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19246655</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>23</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19246655</td>
-      <td>umls:C1705556</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>25</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703</td>
-      <td>umls:C3714973</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>26</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>22452921</td>
-      <td>umls:C1706438</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>28</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18514752,9309799,17572010,24937476,17572010,16...</td>
-      <td>entrez:3439</td>
-      <td>IFNA1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>30</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16804324</td>
-      <td>entrez:5154</td>
-      <td>PDGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>31</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16804324</td>
-      <td>entrez:5154</td>
-      <td>PDGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>33</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703,20523070</td>
-      <td>umls:C1705325</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>34</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19232703</td>
-      <td>entrez:5290</td>
-      <td>PIK3CA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>35</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>19155479</td>
-      <td>entrez:5805</td>
-      <td>PTS</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>38</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>12324676,12324676,12324676,12373263,12373263,1...</td>
-      <td>entrez:7422</td>
-      <td>VEGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>40</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>6459694</td>
-      <td>umls:C1706005</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>41</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>14968124,21170080,9847290</td>
-      <td>entrez:7076</td>
-      <td>TIMP1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>42</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9847290</td>
-      <td>entrez:7076</td>
-      <td>TIMP1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>45</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18480254</td>
-      <td>entrez:146</td>
-      <td>ADRA1D</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>46</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18480254</td>
-      <td>entrez:146</td>
-      <td>ADRA1D</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>49</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>15660518,22387292,9120022,19533439,17950015</td>
-      <td>entrez:7124</td>
-      <td>TNF</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>50</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21270400</td>
-      <td>entrez:10899</td>
-      <td>JTB</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>51</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>21270400</td>
-      <td>entrez:10899</td>
-      <td>JTB</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>52</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
+      <td></td>
       <td>entrez:613</td>
       <td>BCR</td>
       <td>Gene</td>
@@ -15286,17 +14713,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>dgidb</td>
       <td>dgidb_chemical2gene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>53</td>
+      <th>1</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>20528593</td>
+      <td></td>
       <td>entrez:613</td>
       <td>BCR</td>
       <td>Gene</td>
@@ -15304,17 +14732,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>54</td>
+      <th>2</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>20528593</td>
+      <td></td>
       <td>entrez:613</td>
       <td>BCR</td>
       <td>Gene</td>
@@ -15322,17 +14751,379 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>55</td>
+      <th>5</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>14630618,14630618</td>
+      <td></td>
+      <td>entrez:5154</td>
+      <td>PDGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5154</td>
+      <td>PDGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705325</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1367471</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3540585</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1706005</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1705556</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3932</td>
+      <td>LCK</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3932</td>
+      <td>LCK</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3932</td>
+      <td>LCK</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7852</td>
+      <td>CXCR4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7852</td>
+      <td>CXCR4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:6850</td>
+      <td>SYK</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1706438</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1704799</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C1704799</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:146</td>
+      <td>ADRA1D</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:146</td>
+      <td>ADRA1D</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:947</td>
       <td>CD34</td>
       <td>Gene</td>
@@ -15340,17 +15131,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>56</td>
+      <th>32</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>14630618,14630618</td>
+      <td></td>
       <td>entrez:947</td>
       <td>CD34</td>
       <td>Gene</td>
@@ -15358,17 +15150,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>57</td>
+      <th>33</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>14630618,14630618</td>
+      <td></td>
       <td>entrez:947</td>
       <td>CD34</td>
       <td>Gene</td>
@@ -15376,17 +15169,18 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>58</td>
+      <th>34</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>14630618,14630618</td>
+      <td></td>
       <td>entrez:947</td>
       <td>CD34</td>
       <td>Gene</td>
@@ -15394,6 +15188,292 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>semmedgene</td>
       <td>semmedgene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3439</td>
+      <td>IFNA1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:760</td>
+      <td>CA2</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5290</td>
+      <td>PIK3CA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C0017337</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:10899</td>
+      <td>JTB</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:10899</td>
+      <td>JTB</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:373156</td>
+      <td>GSTK1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7422</td>
+      <td>VEGFA</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7124</td>
+      <td>TNF</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3714973</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7076</td>
+      <td>TIMP1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7076</td>
+      <td>TIMP1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>umls:C3889436</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:133482</td>
+      <td>SLCO6A1</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
@@ -15417,7 +15497,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pred2&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;target&#39;</span><span class="p">]</span>
@@ -15433,7 +15513,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[13]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -15469,73 +15549,20 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <th>pred2_source</th>
       <th>pred2_api</th>
       <th>pred2_pubmed</th>
-      <th>output</th>
+      <th>output_id</th>
+      <th>output_name</th>
       <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>7</td>
+      <th>0</th>
       <td>asthma</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>1882540,12777405,12777405</td>
-      <td>entrez:760</td>
-      <td>CA2</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25113532</td>
-      <td>entrez:6850</td>
-      <td>SYK</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>17</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>18683785</td>
-      <td>entrez:3932</td>
-      <td>LCK</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>52</td>
-      <td>asthma</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>20528593</td>
+      <td></td>
       <td>entrez:613</td>
       <td>BCR</td>
       <td>Gene</td>
@@ -15543,6 +15570,64 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
       <td>dgidb</td>
       <td>dgidb_chemical2gene</td>
       <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3932</td>
+      <td>LCK</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:6850</td>
+      <td>SYK</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>asthma</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:760</td>
+      <td>CA2</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
@@ -15566,7 +15651,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span><span class="o">.</span><span class="n">display_edge_info</span><span class="p">(</span><span class="s1">&#39;LCK&#39;</span><span class="p">,</span> <span class="s1">&#39;IMATINIB&#39;</span><span class="p">)</span>
@@ -15582,7 +15667,7 @@ BTE found 34 unique intermediate nodes connecting &#39;asthma&#39; and &#39;IMAT
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 

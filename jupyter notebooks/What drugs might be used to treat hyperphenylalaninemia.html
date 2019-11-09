@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13221,15 +13182,31 @@ div#notebook {
 <pre>Help on function __init__ in module biothings_explorer.user_query_dispatcher:
 
 __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
-    find relationships between one specific entity and another specific entity or other classes of entity types
+    Find relationships in the Knowledge Graph between an Input Object and an Output Object.
     
     params
     ------
-    input_obj: the input object returned from Hint, required
-    output_obj: the class of entities as output, required
-        could be None, str, or a list of entity classes
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
+    input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                          Examples: 
+            Hint().query(&#34;Fanconi anemia&#34;)[&#39;DiseaseOrPhenotypicFeature&#39;][0]
+            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+    
+    output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                           entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                           Examples:
+            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+            &#39;Gene&#39;
+            [&#39;Gene&#39;,&#39;ChemicalSubstance&#39;]
+    
+    intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+            None                         : no intermediate node, find direct connections only
+            []                           : no intermediate node, find direct connections only
+            [&#39;BiologicalEntity&#39;]         : one intermediate node of any semantic type
+            [&#39;Gene&#39;]                     : one intermediate node that must be a Gene
+            [(&#39;Gene&#39;,&#39;Pathway&#39;)]         : one intermediate node that must be a Gene or a Pathway
+            [&#39;Gene&#39;,&#39;Pathway&#39;]           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+            [&#39;Gene&#39;,(&#39;Pathway&#39;,&#39;Gene&#39;)]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                              **NOTE**: queries with more than one intermediate node are currently not supported
 
 </pre>
 </div>
@@ -13295,23 +13272,23 @@ Because hyperphenylalaninemia is of type &#39;DiseaseOrPhenotypicFeature&#39;, B
 BTE found 3 apis:
 
 API 1. biolink_disease2gene(1 API call)
-API 2. semmeddisease(1 API call)
-API 3. mydisease.info(1 API call)
+API 2. mydisease.info(1 API call)
+API 3. semmeddisease(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 3.1: http://mydisease.info/v1/query (POST &#34;q=C0751436,C0751435&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 2.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0751436,C0751435&amp;scopes=umls&amp;fields=AFFECTS.protein,AFFECTS.gene,CAUSES_reverse.gene,AFFECTS_reverse.gene,ASSOCIATED_WITH.gene,AFFECTS_reverse.protein&amp;species=human&amp;size=100&#34;)
+API 2.1: http://mydisease.info/v1/query (POST &#34;q=C0751435,C0751436&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
+API 3.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0751435,C0751436&amp;scopes=umls&amp;fields=AFFECTS.protein,ASSOCIATED_WITH.gene,CAUSES_reverse.gene,AFFECTS_reverse.gene,AFFECTS.gene,AFFECTS_reverse.protein&amp;species=human&amp;size=100&#34;)
 API 1.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=100
 
 
 ==== Step #3: Output normalization ====
 
 API 1.1 biolink_disease2gene: 4 hits
-API 3.1 mydisease.info: 10 hits
-API 2.1 semmeddisease: 11 hits
+API 2.1 mydisease.info: 10 hits
+API 3.1 semmeddisease: 11 hits
 
 After id-to-object translation, BTE retrieved 12 unique objects.
 
@@ -13333,36 +13310,36 @@ API 3. mychem.info(3 API calls)
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 3.1: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
-API 3.2: http://www.dgidb.org/api/v2/interactions.json?genes=CACNA1A
-API 3.7: http://www.dgidb.org/api/v2/interactions.json?genes=HAL
+API 3.2: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
+API 3.3: http://www.dgidb.org/api/v2/interactions.json?genes=HAL
+API 3.5: http://www.dgidb.org/api/v2/interactions.json?genes=PTS
+API 3.1: http://www.dgidb.org/api/v2/interactions.json?genes=PCBD1
+API 3.4: http://www.dgidb.org/api/v2/interactions.json?genes=CACNA1A
+API 3.6: http://www.dgidb.org/api/v2/interactions.json?genes=QDPR
+API 1.1: http://mychem.info/v1/query (POST &#34;q=PCBD1,GCH1,HAL,CACNA1A,PTS,QDPR,PAH,HSPA4,AKR1B10&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
 API 3.9: http://www.dgidb.org/api/v2/interactions.json?genes=AKR1B10
-API 3.6: http://www.dgidb.org/api/v2/interactions.json?genes=PCBD1
-API 3.8: http://www.dgidb.org/api/v2/interactions.json?genes=PTS
-API 3.3: http://www.dgidb.org/api/v2/interactions.json?genes=QDPR
-API 3.4: http://www.dgidb.org/api/v2/interactions.json?genes=PAH
-API 2.1: http://mychem.info/v1/query (POST &#34;q=GCH1,CACNA1A,QDPR,PAH,HSPA4,PCBD1,HAL,PTS,AKR1B10&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 3.5: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
-API 2.2: http://mychem.info/v1/query (POST &#34;q=GCH1,CACNA1A,QDPR,PAH,HSPA4,PCBD1,HAL,PTS,AKR1B10&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 2.3: http://mychem.info/v1/query (POST &#34;q=GCH1,CACNA1A,QDPR,PAH,HSPA4,PCBD1,HAL,PTS,AKR1B10&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
-API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1415760,C1415465,C1412323,C1456413,C0017361,C1418251,C1418296,C1415012,C1419182,C1419129,C0017337&amp;scopes=umls&amp;fields=interacts_with_reverse.chemical_substance,associated_with.chemical_substance,affects.chemical_substance,affects_reverse.chemical_substance,associated_with_reverse.chemical_substance,interacts_with.chemical_substance&amp;species=human&amp;size=100&#34;)
+API 3.8: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
+API 3.7: http://www.dgidb.org/api/v2/interactions.json?genes=PAH
+API 1.2: http://mychem.info/v1/query (POST &#34;q=PCBD1,GCH1,HAL,CACNA1A,PTS,QDPR,PAH,HSPA4,AKR1B10&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 1.3: http://mychem.info/v1/query (POST &#34;q=PCBD1,GCH1,HAL,CACNA1A,PTS,QDPR,PAH,HSPA4,AKR1B10&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
+API 2.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1412323,C1415465,C1415760,C1419129,C0017337,C1456413,C1415012,C1419182,C1418251,C1418296,C0017361&amp;scopes=umls&amp;fields=affects.chemical_substance,interacts_with.chemical_substance,interacts_with_reverse.chemical_substance,associated_with_reverse.chemical_substance,affects_reverse.chemical_substance,associated_with.chemical_substance&amp;species=human&amp;size=100&#34;)
 
 
 ==== Step #3: Output normalization ====
 
 API 3.1 dgidb_gene2chemical: 1 hits
-API 3.2 dgidb_gene2chemical: 11 hits
+API 3.2 dgidb_gene2chemical: 1 hits
 API 3.3 dgidb_gene2chemical: 1 hits
-API 3.4 dgidb_gene2chemical: 8 hits
-API 3.5 dgidb_gene2chemical: 35 hits
+API 3.4 dgidb_gene2chemical: 11 hits
+API 3.5 dgidb_gene2chemical: No hits
 API 3.6 dgidb_gene2chemical: 1 hits
-API 3.7 dgidb_gene2chemical: 1 hits
-API 3.8 dgidb_gene2chemical: No hits
+API 3.7 dgidb_gene2chemical: 8 hits
+API 3.8 dgidb_gene2chemical: 35 hits
 API 3.9 dgidb_gene2chemical: 3 hits
-API 2.1 mychem.info: 2 hits
-API 2.2 mychem.info: 27 hits
-API 2.3 mychem.info: 11 hits
-API 1.1 semmedgene: 3700 hits
+API 1.1 mychem.info: 2 hits
+API 1.2 mychem.info: 27 hits
+API 1.3 mychem.info: 11 hits
+API 2.1 semmedgene: 3700 hits
 
 After id-to-object translation, BTE retrieved 2545 unique objects.
 
@@ -13390,7 +13367,7 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -13403,7 +13380,7 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
@@ -13419,7 +13396,7 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13455,19 +13432,39 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
       <th>pred2_source</th>
       <th>pred2_api</th>
       <th>pred2_pubmed</th>
-      <th>output</th>
+      <th>output_id</th>
+      <th>output_name</th>
       <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>0</td>
+      <th>0</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>28794131</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>chembl:CHEMBL135</td>
+      <td>ESTRADIOL</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:3308</td>
       <td>HSPA4</td>
       <td>Gene</td>
@@ -13475,82 +13472,69 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
       <td>dgidb</td>
       <td>dgidb_gene2chemical</td>
       <td>None</td>
-      <td>ZALCITABINE</td>
+      <td>chembl:CHEMBL276832</td>
+      <td>HYDRALAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>1</td>
+      <th>2</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>28794131</td>
+      <td></td>
       <td>entrez:3308</td>
       <td>HSPA4</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>16884692</td>
-      <td>C0284559</td>
+      <td></td>
+      <td>chembl:CHEMBL131</td>
+      <td>PREDNISOLONE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>2</td>
+      <th>3</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>28794131</td>
+      <td></td>
       <td>entrez:3308</td>
       <td>HSPA4</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>18686015</td>
-      <td>C0284559</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>7766952</td>
-      <td>entrez:773</td>
-      <td>CACNA1A</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
+      <td></td>
+      <td>umls:C0014417</td>
       <td>None</td>
-      <td>NISOLDIPINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>4</td>
+      <th>4</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>7766952</td>
-      <td>entrez:773</td>
-      <td>CACNA1A</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
       <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0142812</td>
       <td>None</td>
-      <td>NISOLDIPINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
+      <th>...</th>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -13569,98 +13553,103 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
       <td>...</td>
     </tr>
     <tr>
-      <td>1077</td>
+      <th>1077</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2gene</td>
+      <td></td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>25460538</td>
-      <td>C0026549</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1078</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20519062,18601975,25460538</td>
-      <td>C0026549</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1079</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>11599577,23893657</td>
-      <td>C0599786</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1080</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>25811625</td>
-      <td>C0053622</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1081</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
+      <td></td>
+      <td>umls:C0684179</td>
       <td>None</td>
-      <td>NIMESULIDE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1078</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0684179</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1079</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0684179</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1080</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0684179</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1081</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0006632</td>
+      <td>None</td>
       <td>ChemicalSubstance</td>
     </tr>
   </tbody>
 </table>
-<p>1082 rows × 15 columns</p>
+<p>1082 rows × 16 columns</p>
 </div>
 </div>
 
@@ -13672,7 +13661,7 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pred1&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;causedBy&#39;</span><span class="p">]</span>
@@ -13688,7 +13677,7 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[8]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -13724,212 +13713,224 @@ In the #2 query, BTE found 2545 unique ChemicalSubstance nodes
       <th>pred2_source</th>
       <th>pred2_api</th>
       <th>pred2_pubmed</th>
-      <th>output</th>
+      <th>output_id</th>
+      <th>output_name</th>
       <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>2</td>
+      <th>0</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>1867197,2742800,12443929,14743689,1301201,8892...</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>chembl:CHEMBL135</td>
+      <td>ESTRADIOL</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL276832</td>
+      <td>HYDRALAZINE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>chembl:CHEMBL131</td>
+      <td>PREDNISOLONE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0014417</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0142812</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1072</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:3308</td>
+      <td>HSPA4</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>chembl:CHEMBL405</td>
+      <td>AMPHETAMINE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1075</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:5053</td>
       <td>PAH</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>6487579</td>
-      <td>C0031676</td>
+      <td></td>
+      <td>chembl:CHEMBL59</td>
+      <td>DOPAMINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>3</td>
+      <th>1076</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>1301201,8892014,10495930,10495930</td>
+      <td></td>
       <td>entrez:5053</td>
       <td>PAH</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>6487579</td>
-      <td>C0031676</td>
+      <td></td>
+      <td>chembl:CHEMBL59</td>
+      <td>DOPAMINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>4</td>
+      <th>1080</th>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td>28794131</td>
+      <td></td>
+      <td>entrez:5805</td>
+      <td>PTS</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmed</td>
+      <td>semmedgene</td>
+      <td></td>
+      <td>umls:C0684179</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>1081</th>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
       <td>entrez:3308</td>
       <td>HSPA4</td>
       <td>Gene</td>
       <td>molecularlyInteractsWith</td>
       <td>semmed</td>
       <td>semmedgene</td>
-      <td>25917970,25917970</td>
-      <td>C0013328</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19195901</td>
-      <td>C0002482</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>15574805</td>
-      <td>C0076172</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <td>1071</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8706913</td>
-      <td>NITRIC OXIDE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1072</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>22288105,27264883</td>
-      <td>NITRIC OXIDE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1079</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19359608</td>
-      <td>C0014939</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1080</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19836443,19359608</td>
-      <td>C0014939</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>1081</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>entrez:3308</td>
-      <td>HSPA4</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8168496</td>
-      <td>C0035191</td>
+      <td></td>
+      <td>umls:C0006632</td>
+      <td>None</td>
       <td>ChemicalSubstance</td>
     </tr>
   </tbody>
 </table>
-<p>624 rows × 15 columns</p>
+<p>624 rows × 16 columns</p>
 </div>
 </div>
 

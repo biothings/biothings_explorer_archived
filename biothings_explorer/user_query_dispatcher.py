@@ -689,16 +689,31 @@ class FindConnection:
     
     """
     def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
-        """find relationships between one specific entity and another specific entity or other classes of entity types
+        """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
         
         params
         ------
-        input_obj: the input object returned from Hint, required
-        output_obj: the class of entities as output, required
-            could be None, str, or a list of entity classes
-        intermediate_nodes: the semantic type(s) of the intermediate node
-            could be None, which represents any semantic type, or a list of semantic types
-        
+        input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                              Examples: 
+                Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
+                Hint().query("acetaminophen")['ChemicalSubstance'][0]
+
+        output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                               entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                               Examples:
+                Hint().query("acetaminophen")['ChemicalSubstance'][0]
+                'Gene'
+                ['Gene','ChemicalSubstance']
+
+        intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                None                         : no intermediate node, find direct connections only
+                []                           : no intermediate node, find direct connections only
+                ['BiologicalEntity']         : one intermediate node of any semantic type
+                ['Gene']                     : one intermediate node that must be a Gene
+                [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                  **NOTE**: queries with more than one intermediate node are currently not supported
         """
         if type(output_obj) == dict:
             self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
