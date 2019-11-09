@@ -8,7 +8,7 @@ BioThings Explorer is an engine for autonomously querying a distributed knowledg
 ![BTE Metagraph](img/smartapi_metagraph.png "BioThings Explorer metagraph")
 
 
-## Prerequisite
+## Installation
 
 1. Set up your python virtual environment [instructions](https://virtualenv.pypa.io/en/latest/). Please use Python version higher than 3.6.
 2. Install biothings-explorer `pip install git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer`
