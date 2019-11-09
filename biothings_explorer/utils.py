@@ -39,11 +39,11 @@ def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
     # loop through id_rank, if the id is found in equivalent ids, return it
     for _item in id_rank:
         if equivalent_ids.get(_item):
-            return (_item[4:] + ':' + equivalent_ids[_item][0])
+            return (_item[4:] + ':' + str(equivalent_ids[_item][0]))
     # if no id found, return a random one from equivalent ids
     for k, v in equivalent_ids.items():
         if v:
-            return (k[4:] + ':' + v[0])
+            return (k[4:] + ':' + str(v[0]))
     
 def get_name_from_equivalent_ids(equivalent_ids):
     """find name from equivalent id dict
