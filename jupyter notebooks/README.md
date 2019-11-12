@@ -22,13 +22,13 @@ BioThings Explorer can answer two classes of queries -- "PREDICT" and "EXPLAIN".
 
 ### EXPLAIN queries
 
-EXPLAIN queries are designed to **identify plausible reasoning chains to explain the relationship between two entities**.  For example, in [EXPLAIN_demo.ipynb](EXPLAIN_demo.ipynb) we explore the question:  
+EXPLAIN queries are designed to **identify plausible reasoning chains to explain the relationship between two entities**.  For example, in [EXPLAIN_demo.ipynb](EXPLAIN_demo.ipynb) ([colab version](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/EXPLAIN_demo.ipynb)), we explore the question:  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*Why does imatinib have an effect on the treatment of chronic myelogenous leukemia (CML)?*"
 
 ### PREDICT queries
 
-PREDICT queries are designed to **predict plausible relationships between one entity and an entity class**.  For example, in [PREDICT_demo.ipynb](PREDICT_demo.ipynb), we explore the question:  
+PREDICT queries are designed to **predict plausible relationships between one entity and an entity class**.  For example, in [PREDICT_demo.ipynb](PREDICT_demo.ipynb) ([colab version](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb)), we explore the question:  
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*"What drugs might be used to treat hyperphenylalaninemia?"*
 
