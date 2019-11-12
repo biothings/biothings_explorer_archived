@@ -647,10 +647,10 @@ class Predict:
         final_outputs = set()
         for output_cls, output_ids in self.output_ids.get(str(len(self.paths))).items():
             for k, item in output_ids.items():
-                if 'bts:symbol' in item:
-                    final_outputs.add(item['bts:symbol'])
-                elif 'bts:name' in item:
-                    final_outputs.add(item['bts:name'])
+                if item.get('bts:symbol'):
+                    final_outputs.add(item['bts:symbol'][0])
+                elif item.get('bts:name'):
+                    final_outputs.add(item['bts:name'][0])
                 else:
                     splitted = k.split(':')
                     if len(splitted) == 2:
