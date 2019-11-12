@@ -51,7 +51,7 @@ class SingleEdgeQueryDispatcher():
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
-        if output_cls == [None]:
+        if output_cls == ['BiologicalEntity'] or output_cls == 'BiologicalEntity':
             self.output_cls = None
         else:
             self.output_cls = output_cls
@@ -168,17 +168,18 @@ class SingleEdgeQueryDispatcher():
             print("Your input ID has been converted to all equivalent IDs")
             print("========================================================")
         """
+        if verbose:
+            print("==== Step #1: Query path planning ====")
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
         if not edges:
             # print("No edges found for the <input, pred, output> you specified")
             if verbose:
-                print("We are sorry! We couln't find any APIs which can do the type of query for you! Please refine your search")
+                print("We are sorry! We couln't find any APIs which can do the type of query for you!")
             return
-        if verbose:
-            print("==== Step #1: Query path planning ====")
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
+        
         grouped_edges = self.group_edges_by_input_id(edges)
         # t1 = time.time()
         # print("equivalent_ids", self.equivalent_ids)
@@ -210,6 +211,8 @@ class SingleEdgeQueryDispatcher():
                     for _id in v[p]:
                         id_mapping[_id] = get_name_from_equivalent_ids(v)
         if not input_edges:
+            if verbose:
+                print("We are sorry! We couln't find any APIs which can do the type of query for you!")
             return
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges, verbose=verbose)
@@ -325,10 +328,15 @@ class Explain:
         else:
             self.registry = registry
         # convert intermediate_cls into a list if not
-        if type(intermediate_nodes) == list:
+        if not intermediate_nodes:
+            self.intermediate_cls = output_obj['type']
+            self.intermediate_cls_cnt = 0
+        elif type(intermediate_nodes) == list:
             self.intermediate_cls = intermediate_nodes
+            self.intermediate_cls_cnt = len(self.intermediate_cls)
         else: 
             self.intermediate_cls = [intermediate_nodes]
+            self.intermediate_cls_cnt = len(self.intermediate_cls)
         self.input_obj = input_obj
         # self.starts represents the display label of the input, 
         if 'symbol' in input_obj:
@@ -353,38 +361,52 @@ class Explain:
             print("==========")
             print("========== QUERY PARAMETER SUMMARY ==========")
             print("==========\n")
-            print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_cls)))
-            for i, item in enumerate(self.intermediate_cls):
-                print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
+            print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, self.intermediate_cls_cnt))
+            if self.intermediate_cls_cnt > 0:
+                for i, item in enumerate(self.intermediate_cls):
+                    print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
             print("==========")
-        if self.intermediate_cls == [None]:
-            output_cls = 'bioentities'
+        if self.intermediate_cls_cnt == 0:
+            output_cls = self.intermediate_cls            
+        elif self.intermediate_cls == ['BiologicalEntity']:
+            output_cls = 'Biological Entities'
         else:
             output_cls = ' AND '.join(self.intermediate_cls) + ' entities'
-            if verbose:
-                print("========== QUERY #1 -- fetch all {} linked to '{}' ==========".format(output_cls, self.starts))
-                print("==========\n")
+        if verbose:
+            print("========== QUERY #1 -- fetch all {} linked to '{}' ==========".format(output_cls, self.starts))
+            print("==========\n")
         self.seqd[1] = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
                                           output_cls=self.intermediate_cls,
                                           registry=self.registry)
         self.seqd[1].query(verbose=verbose)
         self.G = copy.deepcopy(self.seqd[1].G)
-        if verbose:
-            print("\n\n==========")
-            print("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
-            print("==========\n")
-        self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
-                                          output_cls=self.intermediate_cls,
-                                          registry=self.registry)
-        self.seqd[2].query(verbose=verbose)
-        self.seqd[2].G = self.seqd[2].G.reverse()
-        self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
-        self.sub_G = self.sub_graph()
-        if verbose:
-            print("\n==========")
-            print("========== Final assembly of results ==========")
-            print("==========\n\n")
-            print("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
+        if self.intermediate_cls_cnt == 0:
+            if verbose:
+                if self.ends in self.G:
+                    found = ''
+                else:
+                    found = 'did not '
+                print("\n==========")
+                print("========== Final assembly of results ==========")
+                print("==========\n\n")
+                print("BTE {}found direct connection between '{}' and '{}'".format(found, self.starts, self.ends))
+        else:
+            if verbose:
+                print("\n\n==========")
+                print("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
+                print("==========\n")
+            self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
+                                            output_cls=self.intermediate_cls,
+                                            registry=self.registry)
+            self.seqd[2].query(verbose=verbose)
+            self.seqd[2].G = self.seqd[2].G.reverse()
+            self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
+            self.sub_G = self.sub_graph()
+            if verbose:
+                print("\n==========")
+                print("========== Final assembly of results ==========")
+                print("==========\n\n")
+                print("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
     
     def summary(self, attr):
         """"""
@@ -502,7 +524,7 @@ class Predict:
         """
         if not intermediate_nodes:
             intermediate_nodes = []
-        if type(intermediate_nodes) != list:
+        elif type(intermediate_nodes) != list:
             intermediate_nodes = [intermediate_nodes]
         self.intermediate_nodes = copy.deepcopy(intermediate_nodes)
         self.paths = copy.deepcopy(intermediate_nodes)
@@ -522,6 +544,16 @@ class Predict:
             self.registry = registry
         self.G = nx.MultiDiGraph()
         self.seqd = {}
+        # aggregate output_ids from different queries
+        self.output_ids = {}
+
+    def merge_output_ids(self, query_id, output_ids):
+        level = query_id.split('.')[0]
+        for _type, _ids in output_ids.items():
+            if _type in self.output_ids[level]:
+                self.output_ids[level][_type].update(_ids)
+            else:
+                self.output_ids[level][_type] = _ids
 
     def connect(self, verbose=False):
         """Make the query
@@ -548,30 +580,46 @@ class Predict:
                 # if it's not the first element in the path
                 # the input should be the results from the previous query
                 input_cls = self.paths[i - 1]
-                equivalent_ids = self.seqd[i].output_ids[input_cls]
+                equivalent_ids = self.output_ids[str(i)]
                 input_obj = None
             if (i > 0 and equivalent_ids != {}) or i == 0:
                 if verbose:
                     if input_obj:
                         _input = copy.copy(self.starts)
+                    if output_cls == 'BiologicalEntity':
+                        _output = 'Biological Entities'
                     else:
-                        _input = input_cls + ' entities'
-                    if output_cls == None:
-                        _output = 'bioentities'
-                    else:
-                        if type(output_cls) != list:
+                        if type(output_cls) not in [list, tuple]:
                             output_cls = [output_cls]
                         _output = ' AND '.join(output_cls) + ' entities'
-                    print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
-                    print("==========\n")
-                self.seqd[i+1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
-                                                 equivalent_ids=equivalent_ids,
-                                                 input_cls=input_cls,
-                                                 output_cls=output_cls,
-                                                 pred=None)
-                self.seqd[i+1].query(verbose=verbose)
-                # print(seqd.G.nodes())
-                self.G = merge_two_networkx_graphs(self.G, self.seqd[i+1].G)
+                self.output_ids[str(i + 1)] = {}
+                if equivalent_ids:
+                    for j, input_cls in enumerate(equivalent_ids.keys()):
+                        query_id = str(i + 1) + '.' + str(j + 1)
+                        if verbose:
+                            print("\n\n========== QUERY #{} -- fetch all {} linked to {} entites ==========".format(query_id, _output, input_cls))
+                            print("==========\n")
+                        self.seqd[query_id] = SingleEdgeQueryDispatcher(input_obj=input_obj,
+                                                        equivalent_ids=equivalent_ids[input_cls],
+                                                        input_cls=input_cls,
+                                                        output_cls=output_cls,
+                                                        pred=None)
+                        self.seqd[query_id].query(verbose=verbose)
+                        # print(seqd.G.nodes())
+                        self.G = merge_two_networkx_graphs(self.G, self.seqd[query_id].G)
+                        self.merge_output_ids(query_id, self.seqd[query_id].output_ids)
+                else:
+                    if verbose:
+                        print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
+                        print("==========\n")
+                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
+                                                                     input_cls=input_cls,
+                                                                     output_cls=output_cls,
+                                                                     pred=None)
+                        self.seqd[i + 1].query(verbose=verbose)
+                        self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
+                        self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
+
         else:
             pass
         if verbose:
@@ -579,8 +627,9 @@ class Predict:
             print("========== Final assembly of results ==========")
             print("==========\n\n")
             for i in range(len(self.paths)):
-                if (i+1) in self.seqd:
-                    print("In the #{} query, BTE found {} unique {} nodes".format(i+1, len(self.seqd[i+1].G), self.paths[i]))
+                if self.output_ids.get(str(i + 1)):
+                    for output_cls, _ids in self.output_ids[str(i+1)].items():
+                        print("In the #{} query, BTE found {} unique {} nodes".format(i+1, len(_ids), output_cls))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -592,14 +641,22 @@ class Predict:
 
     def show_path(self, remove_duplicate=True):
         # if the last query was not performed, return
-        if len(self.paths) not in self.seqd:
+        if not self.output_ids.get(str(len(self.paths))):
             return 
         # gather all outputs from the last query
         final_outputs = set()
-        if self.seqd[len(self.paths)].G.number_of_nodes() > 0:
-            for x, y in self.seqd[len(self.paths)].G.nodes(data=True):
-                if y['level'] and y['level'] == 2:
-                    final_outputs.add(x)
+        for output_cls, output_ids in self.output_ids.get(str(len(self.paths))).items():
+            for k, item in output_ids.items():
+                if 'bts:symbol' in item:
+                    final_outputs.add(item['bts:symbol'])
+                elif 'bts:name' in item:
+                    final_outputs.add(item['bts:name'])
+                else:
+                    splitted = k.split(':')
+                    if len(splitted) == 2:
+                        final_outputs.add(splitted[-1])
+                    elif len(splitted) == 3:
+                        final_outputs.add(':'.join(splitted[1:]))
         # if the last query returns no results, return 
         if len(final_outputs) == 0:
             return
