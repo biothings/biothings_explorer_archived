@@ -214,6 +214,7 @@ class SingleEdgeQueryDispatcher():
             if verbose:
                 print("We are sorry! We couln't find any APIs which can do the type of query for you!")
             return
+        source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges, verbose=verbose)
         # t3 = time.time()
@@ -228,7 +229,7 @@ class SingleEdgeQueryDispatcher():
         # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
-        print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G)))
+        print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -580,7 +581,7 @@ class Predict:
                 # if it's not the first element in the path
                 # the input should be the results from the previous query
                 input_cls = self.paths[i - 1]
-                equivalent_ids = self.output_ids[str(i)]
+                equivalent_ids = copy.deepcopy(self.output_ids[str(i)])
                 input_obj = None
             if (i > 0 and equivalent_ids != {}) or i == 0:
                 if verbose:
