@@ -12,8 +12,8 @@ id_ranks = {
 
 metadata = {
   "mygene.info": {
-    "scopes": ['entrezgene', 'symbol', 'name', 'hgnc', 'umls.cui'],
-    "id_ranks": ['entrez', 'symbol', 'umls', 'name'],
+    "scopes": ['entrezgene', 'symbol', 'name', 'HGNC', 'umls.cui', 'uniprot.Swiss-Prot'],
+    "id_ranks": ['entrez', 'symbol', 'hgnc', 'umls', 'uniprot', 'name'],
     "doc_type": "Gene",
     "api_type": "biothings",
     "method": "post",
@@ -25,7 +25,9 @@ metadata = {
       'name': 'name',
       'symbol': 'symbol',
       'taxid': 'taxonomy',
-      'umls.cui': 'umls'
+      'umls.cui': 'umls',
+      'uniprot.Swiss-Prot': 'uniprot',
+      'HGNC': 'hgnc'
     },
     'api_name': "mygene.info"
   },
