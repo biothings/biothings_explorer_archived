@@ -16,7 +16,6 @@ from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 from .config import metadata
 from .utils import restructure_biolink_response
-from .config import metadata
 
 BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
