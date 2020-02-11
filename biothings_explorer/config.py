@@ -342,6 +342,14 @@ metadata = {
     'api_type': "biolink",
     'api_name': "biolink"
   },
+  "robokop_gene2genefamily": {
+    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/gene_family/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2genefamily.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
   "dgidb_gene2chemical": {
     "url": "http://www.dgidb.org/api/v2/interactions.json?genes={gene_id}",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/dgidb/schema/dgidb_gene2chemical.json",
