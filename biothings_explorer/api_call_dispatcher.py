@@ -15,8 +15,7 @@ from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 from .config import metadata
-from .utils import restructure_biolink_response
-from .config import metadata
+from .preprocess_api import APIPreprocess
 
 BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
@@ -122,8 +121,7 @@ class Dispatcher():
         if verbose:
             print("\n\n==== Step #3: Output normalization ====\n")
         for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
-            if metadata[api]['api_type'] == 'biolink':
-                _res = restructure_biolink_response(_res)
+            _res = APIPreprocess(_res, metadata[api]['api_type'], api).restructure()
             mapping = self.fetch_schema_mapping_file(api)
             subset_mapping = self.subset_mapping_file(edges, mapping)
             _res = OutputParser(_res, subset_mapping, batch, api).parse()

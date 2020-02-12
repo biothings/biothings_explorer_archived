@@ -17,6 +17,7 @@ from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
 from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
+from .bte2reasoner import ReasonerConverter
 
 
 ID_RANK = {'Gene': 'bts:symbol',
@@ -773,6 +774,9 @@ class FindConnection:
                 ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
                                                   **NOTE**: queries with more than one intermediate node are currently not supported
         """
+        self.input_obj = input_obj
+        self.output_obj = output_obj
+        self.intermediate_nodes = intermediate_nodes
         if type(output_obj) == dict:
             self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
         else:
@@ -824,3 +828,15 @@ class FindConnection:
         >>> df
         """
         return self.fc.display_table_view()
+
+    def to_reasoner_std(self):
+        """convert the output to reasoner api standard
+        """
+        rc = ReasonerConverter()
+        rc.load_bte_query_path(start=self.input_obj,
+                               intermediate=self.intermediate_nodes,
+                               end=self.output_obj)
+        rc.load_bte_output(self.fc.G)
+        return rc.generate_reasoner_response()
+
+
