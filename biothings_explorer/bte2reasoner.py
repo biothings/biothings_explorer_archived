@@ -3,14 +3,24 @@ import hashlib
 
 class ReasonerConverter():
 
-    def load_bte_query_path(self, path):
+    def load_bte_query_path(self, start, intermediate, end):
         """Load bte input query in the form of path
         
         params
         ======
-        path: the path of user input query
+        start: the input of user query
+        intermediate: the intermediate nodes connecting input and output
+        end: the output of user query
         """
-        self.path = path
+        self.path = [start.get('type')]
+        if intermediate:
+            self.path += intermediate
+        if type(end) == str:
+            self.path.append(end)
+        elif type(end) == list:
+            self.path.append(tuple(end))
+        elif type(end) == dict:
+            self.path.append(end.get('type'))
 
     def load_bte_output(self, G):
         """Load bte output in the format of networkx graph into class
@@ -29,6 +39,8 @@ class ReasonerConverter():
         ======
         node: the node id in networkx graph
         """
+        if not node:
+            return str(node)
         node_info = self.nodes[node]
         if "identifier" in node_info:
             prefix = node_info["identifier"][4:]
@@ -127,5 +139,5 @@ class ReasonerConverter():
     
     def generate_reasoner_response(self):
         """generate reasoner response"""
-        return {"question_graph": self.generate_question_graph,
-                "knowledge_graph": self.generate_knowledge_graph}
+        return {"question_graph": self.generate_question_graph(),
+                "knowledge_graph": self.generate_knowledge_graph()}
