@@ -18,6 +18,7 @@ from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, 
 from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
 from .bte2reasoner import ReasonerConverter
+from .bte2graphml import GraphmlConverter
 
 
 ID_RANK = {'Gene': 'bts:symbol',
@@ -838,5 +839,18 @@ class FindConnection:
                                end=self.output_obj)
         rc.load_bte_output(self.fc.G)
         return rc.generate_reasoner_response()
+    
+    def to_graphml(self, path):
+        """convert the output to graphml format
+        
+        params
+        ======
+        path: the file path to store the graphml file
+        """
+        rc = GraphmlConverter()
+        rc.load_bte_output(self.fc.G)
+        rc.generate_graphml_output(path)
+        print('graphml file has been saved at {}'.format(path))
+
 
 
