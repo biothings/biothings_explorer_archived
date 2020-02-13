@@ -1,4 +1,5 @@
 import hashlib
+from collections import defaultdict
 
 
 class ReasonerConverter():
@@ -65,13 +66,20 @@ class ReasonerConverter():
     def fetch_edges(self):
         """reorganize the edges into reasonerSTd format
         """
+        self.result = defaultdict(list)
         edges = []
         for k, v, o in self.G.edges(data=True):
-            edge = {"source_id": self.get_curie(k),
-                    "target_id": self.get_curie(v),
-                    "edge_source": o['info'].get('$api'),
-                    "id": self.hash_id(self.get_curie(k) + self.get_curie(v)),
-                    "type": o.get('label')[4:]}
+            source_id = self.get_curie(k)
+            target_id = self.get_curie(v)
+            edge_source = o['info'].get('$api')
+            _type = o.get('label')[4:]
+            _id = self.hash_id(source_id + target_id + edge_source + _type)
+            edge = {"source_id": source_id,
+                    "target_id": target_id,
+                    "edge_source": edge_source,
+                    "id": _id,
+                    "type": _type}
+            self.result[source_id + '|||' + target_id].append(_id)
             edges.append(edge)
         return edges
 
@@ -140,7 +148,23 @@ class ReasonerConverter():
         return {"edges": edges,
                 "nodes": nodes}
     
+    def generate_result(self):
+        result = []
+        for k, v in self.result.items():
+            source_id, target_id = k.split('|||')
+            result.append({'node_bindings': {
+                             "n0": [source_id],
+                             "n1": [target_id]
+                            },
+                            'edge_bindings': {
+                                'e0': v
+                            }
+                            })
+        return result
+    
     def generate_reasoner_response(self):
         """generate reasoner response"""
-        return {"question_graph": self.generate_question_graph(),
-                "knowledge_graph": self.generate_knowledge_graph()}
+        response = {"question_graph": self.generate_question_graph(),
+                    "knowledge_graph": self.generate_knowledge_graph()}
+        response['results'] = self.generate_result()
+        return response
