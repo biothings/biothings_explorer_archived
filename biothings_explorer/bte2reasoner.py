@@ -14,7 +14,10 @@ class ReasonerConverter():
         """
         self.path = [start.get('type')]
         if intermediate:
-            self.path += intermediate
+            if type(intermediate) == list:
+                self.path += intermediate
+            else:
+                self.path.append(intermediate)
         if type(end) == str:
             self.path.append(end)
         elif type(end) == list:
