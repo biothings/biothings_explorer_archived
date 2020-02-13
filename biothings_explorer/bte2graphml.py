@@ -23,7 +23,7 @@ class GraphmlConverter():
         for k, v in self.G.nodes(data=True):
             for m, n in v.items():
                 if type(n) == list:
-                    v[m] = ','.join(n)
+                    v[m] = ','.join(str(n))
     
     def restructure_edge_info(self):
         """restructure edge info
@@ -35,8 +35,7 @@ class GraphmlConverter():
                 del o['info']
             for m, n in o.items():
                 if type(n) == list:
-                    o[m] = ','.join(n)
-        
+                    o[m] = ','.join(str(n))        
     def generate_graphml_output(self, path):
         """return the graphml representation of bte output
         
