@@ -16,16 +16,16 @@ class TestSingleHopQuery(unittest.TestCase):
         res = requests.post("http://transltr.io:7071/validate_result",
                             headers={"accept": "text/plain", "content-type": "application/json"},
                             data=json.dumps(self.response["results"])).json()
-        self.assertEqual(res, "Successfullly validated")
+        self.assertEqual(res, "Successfully validated")
 
     def test_query_graph_section(self):
         res = requests.post("http://transltr.io:7071/validate_querygraph",
                             headers={"accept": "text/plain", "content-type": "application/json"},
                             data=json.dumps(self.response["query_graph"])).json()
-        self.assertEqual(res, "Successfullly validated")
+        self.assertEqual(res, "Successfully validated")
 
     def test_knowledge_graph_section(self):
         res = requests.post("http://transltr.io:7071/validate_knowledgegraph",
                             headers={"accept": "text/plain", "content-type": "application/json"},
                             data=json.dumps(self.response["knowledge_graph"])).json()
-        self.assertEqual(res, "Successfullly validated")
+        self.assertEqual(res, "Successfully validated")
