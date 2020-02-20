@@ -165,7 +165,7 @@ class ReasonerConverter():
     
     def generate_reasoner_response(self):
         """generate reasoner response"""
-        response = {"question_graph": self.generate_question_graph(),
+        response = {"query_graph": self.generate_question_graph(),
                     "knowledge_graph": self.generate_knowledge_graph()}
         response['results'] = self.generate_result()
         return response
