@@ -45,7 +45,7 @@ class APIPreprocess():
                     try:
                         prefix, value = object_id.split(':')
                         # these IDs have prefix by nature
-                        if prefix in ['HGNC', 'NCBIGene']:
+                        if prefix in ['HGNC', 'NCBIGene', 'REACT']:
                             _doc['object'][prefix] = value
                         else:
                             _doc['object'][prefix] = object_id
