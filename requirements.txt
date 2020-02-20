@@ -9,4 +9,4 @@ pytest
 
 # biothings_schema
 -e git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema.py
-
+-e git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer
