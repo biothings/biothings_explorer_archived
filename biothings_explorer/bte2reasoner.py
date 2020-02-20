@@ -14,6 +14,7 @@ class ReasonerConverter():
         end: the output of user query
         """
         self.path = [start.get('type')]
+        self.start = start
         if intermediate:
             if type(intermediate) == list:
                 self.path += intermediate
@@ -88,8 +89,13 @@ class ReasonerConverter():
         """
         nodes = []
         for k, v in self.nodes:
+            name = v['equivalent_ids'].get("bts:name")
+            if name and type(name) == list:
+                name = str(name[0])
+            else:
+                name = str(self.get_curie(k))
             node = {"id": self.get_curie(k),
-                    "name": v['equivalent_ids'].get("bts:name"),
+                    "name": name,
                     "type": v["type"],
                     "equivalent_identifiers": v['equivalent_ids']}
             nodes.append(node)
@@ -127,6 +133,7 @@ class ReasonerConverter():
                                   "type": _n})
                     node2idmapping[str(i) + '-' + _n + '-' + str(j)] = "n" + str(node_id)
                     node_id += 1
+            nodes[0]['curie'] = [self.start['primary']['identifier'] + ':' + self.start['primary']['value']]
 
 
         for i in range(0, len(self.path) - 1):
@@ -149,17 +156,11 @@ class ReasonerConverter():
                 "nodes": nodes}
     
     def generate_result(self):
-        result = []
+        result = {"node_bindings": [], "edge_bindings": []}
         for k, v in self.result.items():
             source_id, target_id = k.split('|||')
-            result.append({'node_bindings': {
-                             "n0": [source_id],
-                             "n1": [target_id]
-                            },
-                            'edge_bindings': {
-                                'e0': v
-                            }
-                            })
+            result["node_bindings"].append({"qg_id": "n1", "kg_id": target_id})
+            result["edge_bindings"].append({"qg_id": "e1", "kg_id": v})
         return result
     
     def generate_reasoner_response(self):
