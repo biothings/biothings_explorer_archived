@@ -1,3 +1,4 @@
+import unittest
 from biothings_explorer.user_query_dispatcher import FindConnection
 from biothings_explorer.hint import Hint
 import requests
