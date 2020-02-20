@@ -45,11 +45,20 @@ query
     :members: display_node_info
 
 
-Documentation
-=============
+The API Documentation / Guide
+-----------------------------
+
+If you are looking for information on a specific function, class, or method,
+this part of the documentation is for you.
+
 .. toctree::
-    :maxdepth: 3
-    :caption: Documentation
+   :maxdepth: 2
+
+   api
+
+
+The Contributor Guide
+---------------------
 
 
 
