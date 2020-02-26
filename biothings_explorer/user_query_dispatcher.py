@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
-biothings_explorer.user_query_dispatcher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""Accept user query and return results as a graph
 
-Accept user query and return results as a graph
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
 """
 from collections import defaultdict
 import networkx as nx
@@ -205,13 +204,13 @@ class SingleEdgeQueryDispatcher():
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
-                    self.G.add_node(get_name_from_equivalent_ids(v),
+                    self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
                                     identifier="bts:" + k.split(':', 1)[0],
                                     level=1,
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
-                        id_mapping[_id] = get_name_from_equivalent_ids(v)
+                        id_mapping[_id] = get_name_from_equivalent_ids(v, self.input_label)
         if not input_edges:
             if verbose:
                 print("We are sorry! We couln't find any APIs which can do the type of query for you!")
@@ -738,42 +737,56 @@ class Predict:
 
 class FindConnection:
     """find relationships between one specific entity and another specific entity or other classes of entity types
-    
-    params
-    ------
-    input_obj: the input object returned from Hint, required
-    output_obj: the class of entities as output, required
-        could be None, str, or a list of entity classes
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
+        
+        Args:
+            input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                                Examples: 
+                    Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+
+            output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                                entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                                Examples:
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+                    'Gene'
+                    ['Gene','ChemicalSubstance']
+
+            intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                    None                         : no intermediate node, find direct connections only
+                    []                           : no intermediate node, find direct connections only
+                    ['BiologicalEntity']         : one intermediate node of any semantic type
+                    ['Gene']                     : one intermediate node that must be a Gene
+                    [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                    ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                    ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                    **NOTE**: queries with more than one intermediate node are currently not supported
     
     """
     def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
         """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
         
-        params
-        ------
-        input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                              Examples: 
-                Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
-                Hint().query("acetaminophen")['ChemicalSubstance'][0]
+        Args:
+            input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                                Examples: 
+                    Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
 
-        output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
-                               entity, OR be a string or list of strings corresponding to Biolink Entity classes.
-                               Examples:
-                Hint().query("acetaminophen")['ChemicalSubstance'][0]
-                'Gene'
-                ['Gene','ChemicalSubstance']
+            output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                                entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                                Examples:
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+                    'Gene'
+                    ['Gene','ChemicalSubstance']
 
-        intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
-                None                         : no intermediate node, find direct connections only
-                []                           : no intermediate node, find direct connections only
-                ['BiologicalEntity']         : one intermediate node of any semantic type
-                ['Gene']                     : one intermediate node that must be a Gene
-                [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
-                ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
-                ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
-                                                  **NOTE**: queries with more than one intermediate node are currently not supported
+            intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                    None                         : no intermediate node, find direct connections only
+                    []                           : no intermediate node, find direct connections only
+                    ['BiologicalEntity']         : one intermediate node of any semantic type
+                    ['Gene']                     : one intermediate node that must be a Gene
+                    [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                    ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                    ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                    **NOTE**: queries with more than one intermediate node are currently not supported
         """
         self.input_obj = input_obj
         self.output_obj = output_obj
