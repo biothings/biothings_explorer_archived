@@ -47,13 +47,16 @@ def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
         if v:
             return (k[4:] + ':' + str(v[0]))
     
-def get_name_from_equivalent_ids(equivalent_ids):
+def get_name_from_equivalent_ids(equivalent_ids, input_label):
     """find name from equivalent id dict
     
     params
     ------
     equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
+    input_label: desginated input_label
     """
+    if input_label:
+        return input_label
     if not equivalent_ids:
         return None
     if equivalent_ids.get('bts:symbol'):
@@ -61,7 +64,8 @@ def get_name_from_equivalent_ids(equivalent_ids):
     elif equivalent_ids.get('bts:name'):
         return equivalent_ids.get('bts:name')[0]
     else:
-        return None
+        for k, v in equivalent_ids.items():
+            return v[0]
 
 
 def visualize(edges, size=None):
