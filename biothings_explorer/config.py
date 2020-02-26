@@ -1,7 +1,7 @@
 id_ranks = {
   'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
   'SequenceVariant': ['dbsnp', 'hgvs'],
-  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'name'],
+  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'name', 'umls'],
   'pathway': ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
   'mf': ['go'],
   'cc': ['go', 'umls'],
