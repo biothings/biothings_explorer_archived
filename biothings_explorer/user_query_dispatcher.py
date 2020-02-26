@@ -80,7 +80,7 @@ class SingleEdgeQueryDispatcher():
             else:
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
         else:
-            self.input_label = 'the inputs'
+            self.input_label = None
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
