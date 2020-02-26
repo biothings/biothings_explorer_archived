@@ -46,11 +46,12 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                                                          identifier=i,
                                                          type=output_type,
                                                          level=2)
-                                        G.add_edge(id_mapping[m],
-                                                   str(j[0]),
-                                                   info=_b,
-                                                   label=a,
-                                                   source=source)
+                                        for _j in j:
+                                            G.add_edge(id_mapping[m],
+                                                       _j,
+                                                       info=_b,
+                                                       label=a,
+                                                       source=source)
     return G
 
 
