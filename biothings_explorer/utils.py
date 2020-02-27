@@ -58,14 +58,19 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label):
     if input_label:
         return input_label
     if not equivalent_ids:
-        return None
+        return "unknown"
     if equivalent_ids.get('bts:symbol'):
         return equivalent_ids.get('bts:symbol')[0]
     elif equivalent_ids.get('bts:name'):
         return equivalent_ids.get('bts:name')[0]
     else:
         for k, v in equivalent_ids.items():
-            return v[0]
+            if v:
+                if type(v) == list:
+                    return v[0]
+                else:
+                    return v
+        return "unknown"
 
 
 def visualize(edges, size=None):
