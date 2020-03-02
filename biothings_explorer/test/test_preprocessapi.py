@@ -3,7 +3,7 @@ import requests
 
 @fixture
 def ap():
-    from biothings_explorer.preprocess_api import APIPreprocess
+    from biothings_explorer.api_preprocess import APIPreprocess
     return APIPreprocess
 
 def test_preprocess_reasoner(ap):

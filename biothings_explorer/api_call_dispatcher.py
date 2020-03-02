@@ -15,7 +15,7 @@ from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
 from .config import metadata
-from .preprocess_api import APIPreprocess
+from .api_preprocess import APIPreprocess
 
 BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
