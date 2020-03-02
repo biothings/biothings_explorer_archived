@@ -3,11 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+################################
 BioThings Explorer Documentation
-************************************************
+################################
 
+************
 Introduction
-================
+************
 BioThings Explorer is an engine for autonomously querying a distributed knowledge graph. The distributed knowledge graph is made up of biomedical APIs that have been annotated with semantically-precise descriptions of their inputs and outputs. The knowledge graph is currently comprised by the APIs in this figure:
 
 .. image:: images/smartapi_metagraph.png
@@ -15,38 +17,25 @@ BioThings Explorer is an engine for autonomously querying a distributed knowledg
   :alt: BioThings Explorer Meta Knowledge graph
   :align: center
 
+************
 Installation
-================
+************
 
 Install using pip::
 
     pip install git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer
 
-Documentation for the Code
-**************************
-.. automodule:: biothings_explorer
+*****************************
+QuickStart
+*****************************
+.. toctree::
+   :maxdepth: 2
 
-Hint
-=========================
+   quickstart
 
-
-.. automodule:: biothings_explorer.hint
-   :members:
-
-.. autoclass:: Hint
-    :members: query
-
-query
-==========================
-.. automodule:: biothings_explorer.user_query_dispatcher
-    :members:
-
-.. autoclass:: biothings_explorer.user_query_dispatcher.FindConnection
-    :members: display_node_info
-
-
+*****************************
 The API Documentation / Guide
------------------------------
+*****************************
 
 If you are looking for information on a specific function, class, or method,
 this part of the documentation is for you.
@@ -57,13 +46,11 @@ this part of the documentation is for you.
    api
 
 
-The Contributor Guide
----------------------
 
 
-
+******************
 Indices and tables
-==================
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`
