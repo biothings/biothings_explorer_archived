@@ -16,8 +16,8 @@ from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
 from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
-from .bte2reasoner import ReasonerConverter
-from .bte2graphml import GraphmlConverter
+from .extensions.reasoner import ReasonerConverter
+from .extensions.graphml import GraphmlConverter
 
 
 ID_RANK = {'Gene': 'bts:symbol',
