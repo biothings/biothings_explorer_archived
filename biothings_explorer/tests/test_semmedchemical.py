@@ -18,15 +18,6 @@ class TestSingleHopQuery(unittest.TestCase):
                                          registry=self.reg)
         seqd.query()
         self.assertTrue('C0233929' in seqd.G)
-        seqd = SingleEdgeQueryDispatcher(input_cls='AnatomicalEntity',
-                                         input_id='bts:umls',
-                                         output_cls='ChemicalSubstance',
-                                         output_id='bts:umls',
-                                         pred='bts:associatedWith',
-                                         values='C0233929',
-                                         registry=self.reg)
-        seqd.query()
-        self.assertTrue('C0076241' in seqd.G)
         # test <chemical, interactswith, anatomy>
         seqd = SingleEdgeQueryDispatcher(input_cls='ChemicalSubstance',
                                          input_id='bts:umls',
@@ -75,12 +66,3 @@ class TestSingleHopQuery(unittest.TestCase):
                                          registry=self.reg)
         seqd.query()
         self.assertTrue('C1158226' in seqd.G)
-        seqd = SingleEdgeQueryDispatcher(input_cls='AnatomicalEntity',
-                                         input_id='bts:umls',
-                                         output_cls='ChemicalSubstance',
-                                         output_id='bts:umls',
-                                         pred='bts:associatedWith',
-                                         values='C1158226',
-                                         registry=self.reg)
-        seqd.query()
-        self.assertTrue('C0885444' in seqd.G)

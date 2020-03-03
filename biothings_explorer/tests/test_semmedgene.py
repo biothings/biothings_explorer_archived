@@ -432,7 +432,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          values='C1413043',
                                          registry=self.reg)
         seqd.query()
-        self.assertTrue('C0257495' in seqd.G)
+        self.assertTrue('C0012177' in seqd.G)
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
                                          input_id='bts:umls',
                                          output_cls='Gene',
