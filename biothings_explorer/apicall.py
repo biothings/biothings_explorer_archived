@@ -139,7 +139,7 @@ class BioThingsCaller():
                             print("Unable to fetch results from {}".format(_input['api']))
                             return {}
                     raise ValueError('Communication failure with API endpoint:{}'.format(_input['api']))
-                except: 
+                except:
                     uri_retry_count+=1
                     if verbose:
                         print('{} has failed {} time(s)'.format(_input['api'], uri_retry_count))
@@ -185,4 +185,3 @@ class BioThingsCaller():
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(inputs, size=size, verbose=verbose))
         return loop.run_until_complete(future)
-        
