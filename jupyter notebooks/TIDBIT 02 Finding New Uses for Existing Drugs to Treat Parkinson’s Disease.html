@@ -13017,45 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13139,7 +13100,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.hint</span> <span class="k">import</span> <span class="n">Hint</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.hint</span> <span class="kn">import</span> <span class="n">Hint</span>
 <span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
 <span class="n">parkDis</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Parkinson disease&quot;</span><span class="p">)[</span><span class="s1">&#39;DiseaseOrPhenotypicFeature&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
@@ -13194,7 +13155,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="k">import</span> <span class="n">FindConnection</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="kn">import</span> <span class="n">FindConnection</span>
 
 <span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">parkDis</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">])</span>
 <span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -13234,26 +13195,26 @@ Because Parkinson disease is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE w
 
 BTE found 3 apis:
 
-API 1. mydisease.info(1 API call)
-API 2. biolink_disease2gene(1 API call)
-API 3. semmeddisease(1 API call)
+API 1. semmeddisease(1 API call)
+API 2. mydisease.info(1 API call)
+API 3. biolink_disease2gene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
 API 2.1: http://mydisease.info/v1/query (POST &#34;q=C0030567&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 3.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0030567&amp;scopes=umls&amp;fields=AFFECTS_reverse.gene,CAUSES_reverse.gene,AFFECTS_reverse.protein,AFFECTS.gene,AFFECTS.protein,ASSOCIATED_WITH.gene&amp;species=human&amp;size=100&#34;)
-API 1.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005180/genes?rows=100
+API 1.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0030567&amp;scopes=umls&amp;fields=ASSOCIATED_WITH.gene,AFFECTS_reverse.protein,CAUSES_reverse.gene,AFFECTS_reverse.gene,AFFECTS.gene,AFFECTS.protein&amp;species=human&amp;size=100&#34;)
+API 3.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005180/genes?rows=100
 
 
 ==== Step #3: Output normalization ====
 
-API 1.1 biolink_disease2gene: 100 hits
+API 3.1 biolink_disease2gene: 100 hits
 API 2.1 mydisease.info: 63 hits
-API 3.1 semmeddisease: 432 hits
+API 1.1 semmeddisease: 432 hits
 
-After id-to-object translation, BTE retrieved 475 unique objects.
+After id-to-object translation, BTE retrieved 470 unique objects.
 
 
 ========== QUERY #2.1 -- fetch all ChemicalSubstance entities linked to Gene entites ==========
@@ -13266,460 +13227,455 @@ Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that
 BTE found 3 apis:
 
 API 1. semmedgene(1 API call)
-API 2. dgidb_gene2chemical(338 API calls)
+API 2. dgidb_gene2chemical(333 API calls)
 API 3. mychem.info(3 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 2.3: http://www.dgidb.org/api/v2/interactions.json?genes=RAB39B
-API 2.17: http://www.dgidb.org/api/v2/interactions.json?genes=BIN3
-API 2.14: http://www.dgidb.org/api/v2/interactions.json?genes=HEXIM2
-dgidb_gene2chemical failed
-API 2.11: http://www.dgidb.org/api/v2/interactions.json?genes=CASC16
-dgidb_gene2chemical failed
-API 2.32: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP2
-API 2.31: http://www.dgidb.org/api/v2/interactions.json?genes=PAK1
-dgidb_gene2chemical failed
-API 2.6: http://www.dgidb.org/api/v2/interactions.json?genes=INSR
-dgidb_gene2chemical failed
-API 2.1: http://www.dgidb.org/api/v2/interactions.json?genes=CCDC82
+API 2.7: http://www.dgidb.org/api/v2/interactions.json?genes=PARL
+API 2.26: http://www.dgidb.org/api/v2/interactions.json?genes=XK
+API 2.32: http://www.dgidb.org/api/v2/interactions.json?genes=DLG2
+API 2.6: http://www.dgidb.org/api/v2/interactions.json?genes=AGAP1
+API 2.16: http://www.dgidb.org/api/v2/interactions.json?genes=FBXO7
+API 2.5: http://www.dgidb.org/api/v2/interactions.json?genes=WASHC1
+API 2.2: http://www.dgidb.org/api/v2/interactions.json?genes=STAP1
+API 2.33: http://www.dgidb.org/api/v2/interactions.json?genes=PLEKHM1
 dgidb_gene2chemical failed
 dgidb_gene2chemical failed
-API 2.4: http://www.dgidb.org/api/v2/interactions.json?genes=DAPK2
-dgidb_gene2chemical failed
-API 2.18: http://www.dgidb.org/api/v2/interactions.json?genes=FAM47E
-API 2.27: http://www.dgidb.org/api/v2/interactions.json?genes=NAT2
-dgidb_gene2chemical failed
-dgidb_gene2chemical failed
-API 2.5: http://www.dgidb.org/api/v2/interactions.json?genes=TGFA
-dgidb_gene2chemical failed
-API 2.34: http://www.dgidb.org/api/v2/interactions.json?genes=ATP13A2
-API 2.13: http://www.dgidb.org/api/v2/interactions.json?genes=IREB2
-API 2.33: http://www.dgidb.org/api/v2/interactions.json?genes=TXNIP
-dgidb_gene2chemical failed
-API 2.39: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN2
-dgidb_gene2chemical failed
-API 2.22: http://www.dgidb.org/api/v2/interactions.json?genes=FXN
-dgidb_gene2chemical failed
-API 2.19: http://www.dgidb.org/api/v2/interactions.json?genes=ZCWPW2
-dgidb_gene2chemical failed
-API 2.7: http://www.dgidb.org/api/v2/interactions.json?genes=PLPPR1
-API 2.35: http://www.dgidb.org/api/v2/interactions.json?genes=MSX1
-API 2.10: http://www.dgidb.org/api/v2/interactions.json?genes=ADORA1
-API 2.55: http://www.dgidb.org/api/v2/interactions.json?genes=RPL14
-dgidb_gene2chemical failed
-API 2.15: http://www.dgidb.org/api/v2/interactions.json?genes=GFAP
-API 2.30: http://www.dgidb.org/api/v2/interactions.json?genes=CYBB
-dgidb_gene2chemical failed
-API 2.2: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
-API 2.16: http://www.dgidb.org/api/v2/interactions.json?genes=EGF
-API 2.37: http://www.dgidb.org/api/v2/interactions.json?genes=GFPT1
-dgidb_gene2chemical failed
-API 2.28: http://www.dgidb.org/api/v2/interactions.json?genes=CCDC62
-API 2.23: http://www.dgidb.org/api/v2/interactions.json?genes=HMOX1
-API 2.29: http://www.dgidb.org/api/v2/interactions.json?genes=WASHC1
-API 2.20: http://www.dgidb.org/api/v2/interactions.json?genes=LCN2
-API 2.36: http://www.dgidb.org/api/v2/interactions.json?genes=TNF
-API 2.41: http://www.dgidb.org/api/v2/interactions.json?genes=BRINP1
-API 2.21: http://www.dgidb.org/api/v2/interactions.json?genes=SPTSSB
-API 2.45: http://www.dgidb.org/api/v2/interactions.json?genes=ABCB6
-API 2.84: http://www.dgidb.org/api/v2/interactions.json?genes=DSG3
-API 2.83: http://www.dgidb.org/api/v2/interactions.json?genes=CLRN3
-API 2.24: http://www.dgidb.org/api/v2/interactions.json?genes=COL5A2
-API 2.51: http://www.dgidb.org/api/v2/interactions.json?genes=CDC42
-API 2.91: http://www.dgidb.org/api/v2/interactions.json?genes=MSMB
-API 2.48: http://www.dgidb.org/api/v2/interactions.json?genes=ITGA8
+API 2.29: http://www.dgidb.org/api/v2/interactions.json?genes=SLC18A2
+API 2.31: http://www.dgidb.org/api/v2/interactions.json?genes=SCARB2
+API 2.18: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC6
 dgidb_gene2chemical failed
 dgidb_gene2chemical failed
 dgidb_gene2chemical failed
-API 2.40: http://www.dgidb.org/api/v2/interactions.json?genes=COPS5
-API 2.26: http://www.dgidb.org/api/v2/interactions.json?genes=NFE2L2
-API 2.25: http://www.dgidb.org/api/v2/interactions.json?genes=SIRT1
-API 2.54: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP1
-API 2.52: http://www.dgidb.org/api/v2/interactions.json?genes=VPS13C
-API 2.38: http://www.dgidb.org/api/v2/interactions.json?genes=SKP1
-API 2.44: http://www.dgidb.org/api/v2/interactions.json?genes=BDNF
-API 2.86: http://www.dgidb.org/api/v2/interactions.json?genes=SYNJ1
-API 2.53: http://www.dgidb.org/api/v2/interactions.json?genes=BST1
-API 2.56: http://www.dgidb.org/api/v2/interactions.json?genes=PRSS53
-API 2.100: http://www.dgidb.org/api/v2/interactions.json?genes=GRN
-API 2.49: http://www.dgidb.org/api/v2/interactions.json?genes=IGBP1
 dgidb_gene2chemical failed
-API 2.42: http://www.dgidb.org/api/v2/interactions.json?genes=RPL3
-API 2.80: http://www.dgidb.org/api/v2/interactions.json?genes=ND2
-API 2.96: http://www.dgidb.org/api/v2/interactions.json?genes=TRIB3
-API 2.87: http://www.dgidb.org/api/v2/interactions.json?genes=ALDH1A1
-API 2.94: http://www.dgidb.org/api/v2/interactions.json?genes=SLC18A2
-API 2.46: http://www.dgidb.org/api/v2/interactions.json?genes=MIR185
-API 2.43: http://www.dgidb.org/api/v2/interactions.json?genes=TPPP
-API 2.47: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJA3
-API 2.59: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP3
-API 2.98: http://www.dgidb.org/api/v2/interactions.json?genes=XK
-API 2.97: http://www.dgidb.org/api/v2/interactions.json?genes=TMC3-AS1
-API 2.93: http://www.dgidb.org/api/v2/interactions.json?genes=SCARB2
-API 2.57: http://www.dgidb.org/api/v2/interactions.json?genes=KITLG
-API 2.50: http://www.dgidb.org/api/v2/interactions.json?genes=MFN1
-API 2.12: http://www.dgidb.org/api/v2/interactions.json?genes=UTRN
-API 2.60: http://www.dgidb.org/api/v2/interactions.json?genes=TIRAP
-API 2.68: http://www.dgidb.org/api/v2/interactions.json?genes=DNAH8
-API 2.9: http://www.dgidb.org/api/v2/interactions.json?genes=FTL
-API 2.65: http://www.dgidb.org/api/v2/interactions.json?genes=FGB
-API 2.73: http://www.dgidb.org/api/v2/interactions.json?genes=RNF41
-API 2.8: http://www.dgidb.org/api/v2/interactions.json?genes=RPS8
-API 2.62: http://www.dgidb.org/api/v2/interactions.json?genes=ATF4
-API 2.79: http://www.dgidb.org/api/v2/interactions.json?genes=KCNJ4
-API 2.101: http://www.dgidb.org/api/v2/interactions.json?genes=VCP
-API 2.63: http://www.dgidb.org/api/v2/interactions.json?genes=CTSB
+API 2.3: http://www.dgidb.org/api/v2/interactions.json?genes=TWSG1
 dgidb_gene2chemical failed
 dgidb_gene2chemical failed
-API 2.61: http://www.dgidb.org/api/v2/interactions.json?genes=MDGA2
-API 2.66: http://www.dgidb.org/api/v2/interactions.json?genes=WASH6P
-API 2.89: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02331
-API 2.85: http://www.dgidb.org/api/v2/interactions.json?genes=SEMA5A
-API 2.72: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX2
-API 2.64: http://www.dgidb.org/api/v2/interactions.json?genes=ARHGAP24
-API 2.71: http://www.dgidb.org/api/v2/interactions.json?genes=APP
-API 2.69: http://www.dgidb.org/api/v2/interactions.json?genes=UCN2
-API 2.74: http://www.dgidb.org/api/v2/interactions.json?genes=ZNF646
-API 2.78: http://www.dgidb.org/api/v2/interactions.json?genes=SOD1
-API 2.88: http://www.dgidb.org/api/v2/interactions.json?genes=RIT2
-API 2.95: http://www.dgidb.org/api/v2/interactions.json?genes=SLC11A2
-API 2.58: http://www.dgidb.org/api/v2/interactions.json?genes=ABCB1
-API 2.81: http://www.dgidb.org/api/v2/interactions.json?genes=HLA-DRA
-API 2.92: http://www.dgidb.org/api/v2/interactions.json?genes=APOE
 dgidb_gene2chemical failed
-API 2.77: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN8OS
-API 2.67: http://www.dgidb.org/api/v2/interactions.json?genes=PTEN
-API 2.76: http://www.dgidb.org/api/v2/interactions.json?genes=CYP2E1
-API 2.70: http://www.dgidb.org/api/v2/interactions.json?genes=RET
-API 2.90: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02451
-API 2.99: http://www.dgidb.org/api/v2/interactions.json?genes=TMED9
-API 2.117: http://www.dgidb.org/api/v2/interactions.json?genes=TWSG1
-API 2.110: http://www.dgidb.org/api/v2/interactions.json?genes=MOG
-API 2.109: http://www.dgidb.org/api/v2/interactions.json?genes=SMAD3
-API 2.82: http://www.dgidb.org/api/v2/interactions.json?genes=CXCR4
-API 2.75: http://www.dgidb.org/api/v2/interactions.json?genes=CYP2D6
-API 2.112: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM230
+API 2.14: http://www.dgidb.org/api/v2/interactions.json?genes=LRRK2-DT
+API 2.28: http://www.dgidb.org/api/v2/interactions.json?genes=LOC100287944
+API 2.34: http://www.dgidb.org/api/v2/interactions.json?genes=PINK1
+API 2.4: http://www.dgidb.org/api/v2/interactions.json?genes=MSX1
 dgidb_gene2chemical failed
-API 2.115: http://www.dgidb.org/api/v2/interactions.json?genes=MIR30E
-API 2.123: http://www.dgidb.org/api/v2/interactions.json?genes=GBF1
-API 2.120: http://www.dgidb.org/api/v2/interactions.json?genes=MT2A
-API 2.116: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA8
-API 2.122: http://www.dgidb.org/api/v2/interactions.json?genes=TBC1D5
-API 2.118: http://www.dgidb.org/api/v2/interactions.json?genes=HDAC6
-API 2.126: http://www.dgidb.org/api/v2/interactions.json?genes=MAP3K5
-API 2.130: http://www.dgidb.org/api/v2/interactions.json?genes=DCTN4
-API 2.124: http://www.dgidb.org/api/v2/interactions.json?genes=FBP1
-API 2.136: http://www.dgidb.org/api/v2/interactions.json?genes=TMPRSS9
-API 2.138: http://www.dgidb.org/api/v2/interactions.json?genes=PARK7
-API 2.139: http://www.dgidb.org/api/v2/interactions.json?genes=HTRA2
-API 2.128: http://www.dgidb.org/api/v2/interactions.json?genes=COMT
-API 2.133: http://www.dgidb.org/api/v2/interactions.json?genes=MTNR1B
-API 2.137: http://www.dgidb.org/api/v2/interactions.json?genes=TH
-API 2.132: http://www.dgidb.org/api/v2/interactions.json?genes=INS
+API 2.13: http://www.dgidb.org/api/v2/interactions.json?genes=CCNT2-AS1
+API 2.11: http://www.dgidb.org/api/v2/interactions.json?genes=DDIT4
 dgidb_gene2chemical failed
-API 2.141: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC6
-API 2.142: http://www.dgidb.org/api/v2/interactions.json?genes=LRRK2
-API 2.143: http://www.dgidb.org/api/v2/interactions.json?genes=COX6A1
-API 2.144: http://www.dgidb.org/api/v2/interactions.json?genes=SREBF1
-API 2.140: http://www.dgidb.org/api/v2/interactions.json?genes=AAK1
-API 2.135: http://www.dgidb.org/api/v2/interactions.json?genes=P2RX7
-API 2.146: http://www.dgidb.org/api/v2/interactions.json?genes=PSMC1
-API 2.147: http://www.dgidb.org/api/v2/interactions.json?genes=CNKSR3
-API 2.145: http://www.dgidb.org/api/v2/interactions.json?genes=PDE10A
-API 2.151: http://www.dgidb.org/api/v2/interactions.json?genes=MAPT
-API 2.152: http://www.dgidb.org/api/v2/interactions.json?genes=CRK
-API 2.160: http://www.dgidb.org/api/v2/interactions.json?genes=NEDD4
-API 2.157: http://www.dgidb.org/api/v2/interactions.json?genes=GSTO2
-API 2.158: http://www.dgidb.org/api/v2/interactions.json?genes=FGF18
-API 2.159: http://www.dgidb.org/api/v2/interactions.json?genes=GRM4
-API 2.161: http://www.dgidb.org/api/v2/interactions.json?genes=CERS2
-API 2.163: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP4
 dgidb_gene2chemical failed
-API 2.153: http://www.dgidb.org/api/v2/interactions.json?genes=MAOB
-API 2.156: http://www.dgidb.org/api/v2/interactions.json?genes=ASPRV1
-API 2.155: http://www.dgidb.org/api/v2/interactions.json?genes=IGF2R
-API 2.164: http://www.dgidb.org/api/v2/interactions.json?genes=FUS
-API 2.165: http://www.dgidb.org/api/v2/interactions.json?genes=ZP3
-API 2.166: http://www.dgidb.org/api/v2/interactions.json?genes=PARL
-API 2.167: http://www.dgidb.org/api/v2/interactions.json?genes=PNPLA8
-API 2.171: http://www.dgidb.org/api/v2/interactions.json?genes=TCEANC2
-API 2.173: http://www.dgidb.org/api/v2/interactions.json?genes=WBP1L
-API 2.168: http://www.dgidb.org/api/v2/interactions.json?genes=TAT
-API 2.174: http://www.dgidb.org/api/v2/interactions.json?genes=RPL23A
-API 2.175: http://www.dgidb.org/api/v2/interactions.json?genes=SCG3
-API 2.172: http://www.dgidb.org/api/v2/interactions.json?genes=MAOA
-API 2.176: http://www.dgidb.org/api/v2/interactions.json?genes=GSN
-API 2.177: http://www.dgidb.org/api/v2/interactions.json?genes=SP1
-API 2.170: http://www.dgidb.org/api/v2/interactions.json?genes=EIF4G1
-API 2.179: http://www.dgidb.org/api/v2/interactions.json?genes=STAP1
-API 2.182: http://www.dgidb.org/api/v2/interactions.json?genes=PGAM5
-API 2.162: http://www.dgidb.org/api/v2/interactions.json?genes=TP53
-API 2.180: http://www.dgidb.org/api/v2/interactions.json?genes=NPS
-API 2.183: http://www.dgidb.org/api/v2/interactions.json?genes=FMR1
-API 2.185: http://www.dgidb.org/api/v2/interactions.json?genes=LY6E
-API 2.184: http://www.dgidb.org/api/v2/interactions.json?genes=GRK6
-API 2.186: http://www.dgidb.org/api/v2/interactions.json?genes=TFEB
-API 2.187: http://www.dgidb.org/api/v2/interactions.json?genes=ANO5
-API 2.189: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC10
-API 2.178: http://www.dgidb.org/api/v2/interactions.json?genes=SCN2A
-API 2.188: http://www.dgidb.org/api/v2/interactions.json?genes=SOD2
-API 2.190: http://www.dgidb.org/api/v2/interactions.json?genes=LHX1
-API 2.149: http://www.dgidb.org/api/v2/interactions.json?genes=DRD2
-API 2.191: http://www.dgidb.org/api/v2/interactions.json?genes=FAF1
-API 2.194: http://www.dgidb.org/api/v2/interactions.json?genes=PITX3
-API 2.195: http://www.dgidb.org/api/v2/interactions.json?genes=EEF1A2
-API 2.199: http://www.dgidb.org/api/v2/interactions.json?genes=NR4A2
-API 2.200: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM229B
-API 2.198: http://www.dgidb.org/api/v2/interactions.json?genes=MCCC1
-API 2.181: http://www.dgidb.org/api/v2/interactions.json?genes=DRD1
-API 2.196: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA5
-API 2.197: http://www.dgidb.org/api/v2/interactions.json?genes=LRPPRC
-API 2.201: http://www.dgidb.org/api/v2/interactions.json?genes=FBXO7
-API 2.202: http://www.dgidb.org/api/v2/interactions.json?genes=CCNT2-AS1
-API 2.204: http://www.dgidb.org/api/v2/interactions.json?genes=CRMP1
-API 2.206: http://www.dgidb.org/api/v2/interactions.json?genes=CAB39L
-API 2.203: http://www.dgidb.org/api/v2/interactions.json?genes=DDC
-API 2.205: http://www.dgidb.org/api/v2/interactions.json?genes=MAPT-AS1
-API 2.207: http://www.dgidb.org/api/v2/interactions.json?genes=GIGYF2
-API 2.210: http://www.dgidb.org/api/v2/interactions.json?genes=WNT3
+API 2.35: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02210-CRHR1
+API 2.40: http://www.dgidb.org/api/v2/interactions.json?genes=FGB
 dgidb_gene2chemical failed
-API 2.209: http://www.dgidb.org/api/v2/interactions.json?genes=MZB1
-API 2.208: http://www.dgidb.org/api/v2/interactions.json?genes=SLC30A10
-API 2.211: http://www.dgidb.org/api/v2/interactions.json?genes=BCKDK
-API 2.214: http://www.dgidb.org/api/v2/interactions.json?genes=GPX1
-API 2.215: http://www.dgidb.org/api/v2/interactions.json?genes=NGF
-API 2.217: http://www.dgidb.org/api/v2/interactions.json?genes=ODAPH
-API 2.219: http://www.dgidb.org/api/v2/interactions.json?genes=COX17
-API 2.218: http://www.dgidb.org/api/v2/interactions.json?genes=RGS10
-API 2.213: http://www.dgidb.org/api/v2/interactions.json?genes=MAG
-API 2.221: http://www.dgidb.org/api/v2/interactions.json?genes=COX4I1
-API 2.216: http://www.dgidb.org/api/v2/interactions.json?genes=CP
-API 2.224: http://www.dgidb.org/api/v2/interactions.json?genes=INPP5F
-API 2.223: http://www.dgidb.org/api/v2/interactions.json?genes=SNCA-AS1
-API 2.220: http://www.dgidb.org/api/v2/interactions.json?genes=MC1R
-API 2.227: http://www.dgidb.org/api/v2/interactions.json?genes=IGKV2-14
-API 2.228: http://www.dgidb.org/api/v2/interactions.json?genes=SIPA1L2
-API 2.229: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN3
-API 2.231: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA9
-API 2.230: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02210
-API 2.225: http://www.dgidb.org/api/v2/interactions.json?genes=SH3GL2
-API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1413858,C1415764,C0919453,C1538216,C1421409,C0812303,C1418412,C1413714,C1415012,C0031727,C1417014,C1415275,C0678933,C0017768,C1419858,C1415331,C1366527,C1332823,C0132555,C3538797,C1825549,C1422017,C1416485,C1428775,C1367731,C0077678,C1825553,C1413555,C1705387,C1333250,C1413043,C3274848,C1413844,C1416969,C0164786,C1424222,C1367466,C3541418,C1415323,C1439306,C0007054,C1538945,C1332804,C1415002,C0376622,C1420580,C1334064,C1419641,C0694888,C1538166,C1417719,C2830002,C1413658,C3538853,C1708031,C1510464,C1417857,C1420556,C2699841,C1826561,C3538849,C1420115,C0812198,C1424111,C1420398,C1421143,C1823167,C1333669,C1417061,C0285558,C1416490,C1334087,C1539295,C1412617,C1422081,C1336620,C1823638,C1426463,C1705456,C1705620,C1334122,C0812309,C1538428,C0026741,C3539697,C0872189,C0969119,C3273837,C1333253,C1414593,C1413244,C0214599,C0030956,C1418259,C2987244,C0001044,C3147642,C4084873,C1414544,C1413915,C1705411,C0079419,C0023689,C1418597,C1423510,C1414064,C0208355,C1822757,C1415311,C1707116,C0911469,C1332447,C3541328,C1537819,C0001156,C1412668,C1418880,C0002085,C3539783,C1415249,C1426329,C1333282,C1708157,C1425644,C3539645,C3470097,C1540055,C1970252,C1421289,C1334043,C3813060,C1413285,C0812252,C1442521,C1539990,C1424894,C1415046,C1538299,C1415761,C2829403,C1537741,C1416806,C1428430,C1364818,C1426057,C1414944,C1416989,C1413102,C1414170,C1417066,C1417659,C1415042,C1425498,C1421437,C0026456,C1334088,C1421412,C0074350,C0041491,C1705433,C1414356,C2987131,C1446659,C1413404,C1332830,C0919451,C1334090,C1422392,C1413588,C1415760,C1539115,C0919426,C1420418,C3542967,C1709384,C0061505,C3273340,C1826486,C2829402,C1537990,C0249586,C1837441,C4085181,C1824586,C1428268,C1538301,C1826639,C1428142,C1540215,C1824607,C1412798,C1826392,C3889748,C1415308,C2239905,C1413633,C0033634,C1424331,C1417002,C1414103,C1334133,C1418458,C1419368,C1305923,C1705751,C0061355,C1414905,C1366441,C1708119,C0678941,C1415205,C1428652,C1412730,C0919428,C1414236,C1418270,C1428476,C1414860,C3813713,C0033551,C0051844,C1412333,C1425830,C1420699,C1334353,C1864636,C1422771,C1416586,C1428929,C1420733,C0010763,C2985367,C1705507,C1419631,C1427670,C1825464,C1334337,C1706384,C0001473,C3889436,C1424712,C1413559,C3538735,C1425650,C1417836,C0007367,C1413138,C0017337,C0077397,C1710326,C1424661,C1706879,C1420276,C1420081,C0014442,C0068355,C1563761,C1414998,C1420089,C1413943,C1823460,C0207262,C1136177,C1424637,C1367721,C1417387,C3816097,C1824153,C1419388,C0164005,C0029016,C1413051,C1413979,C1423062,C1412830,C1425402,C3538756,C3642141,C1420307,C1418215,C1421175,C1414433,C1335144,C1421356,C1414812,C0597298,C1413212,C3538835,C1333895,C1415575,C1420718,C2240171,C1413573,C1705893,C0072402,C1420872,C1456357,C1414260,C2240173,C1414273,C1420006,C1413614,C1415231,C1412688,C1418754,C2984593,C1366537,C1366480,C0796518,C1415809,C3889148,C1425322,C1420212,C1428113,C1333700,C1442506,C1417402,C3889709,C1705581,C1706871,C1705395,C1709820,C1705371,C1705225,C1337112,C2829405,C1412517,C1706109,C1417701,C4084905,C0017361,C1538319,C1419954,C1420552,C0008407,C1421245,C1415251,C1417895,C1442498,C3469899,C1826827,C0018296,C1428360,C1512488,C1705632,C1412299,C0074993,C1367453,C1419385,C1705543,C1415619,C1836172,C1419685,C1420393,C1419020,C0217310,C1420588,C1412228,C1135159,C1419655,C1825850,C1413394,C1421866,C3539674,C1709127,C1332001,C0812228,C1826571,C1337001,C1412622,C1836075,C1422154,C1706645,C3813043,C0694890,C0812246,C1334091,C1417001,C1710313,C1419752,C1421654,C1826318,C1413634,C3889169,C1413907,C1415755,C1366490,C2829404,C1826764,C1426714,C1414524,C2828056,C0872053,C3540632,C1417759,C1423548,C1412481,C1842308,C1134446,C1336636,C1414036,C1420026,C1426462,C1426238,C1420306,C1416219,C1705458,C1824169,C1420213,C1413646,C1427412,C1420838,C1537989,C1823703,C0068704,C4085760,C0623362,C1413571,C2986657,C1334863,C1335858,C0919432,C1825683,C1332838,C1417228,C0012515,C4084798,C1424810,C1412245,C1414602,C1336578,C4284183,C1706573,C1425398,C1540159,C1824460,C1428931,C1824461,C1423860,C1422360,C1414852,C1413393,C0248868,C1427885,C3814151,C1427845,C1414649,C1423677,C1421537,C3470936,C1384665,C1428964,C1823439,C0919534,C1537461,C2681472,C1538931,C0538135,C1413219,C3273633,C0243839,C0669368,C1705526,C1705443,C2697829,C1705744,C0017342,C1332408,C1420590,C1707161,C1824758&amp;scopes=umls&amp;fields=associated_with_reverse.chemical_substance,interacts_with.chemical_substance,affects_reverse.chemical_substance,interacts_with_reverse.chemical_substance,affects.chemical_substance,associated_with.chemical_substance&amp;species=human&amp;size=100&#34;)
-API 2.234: http://www.dgidb.org/api/v2/interactions.json?genes=SLC41A1
-API 2.232: http://www.dgidb.org/api/v2/interactions.json?genes=IL6
-API 2.238: http://www.dgidb.org/api/v2/interactions.json?genes=CHCHD2
-API 2.239: http://www.dgidb.org/api/v2/interactions.json?genes=IP6K2
-API 2.235: http://www.dgidb.org/api/v2/interactions.json?genes=ATP5PF
-API 2.240: http://www.dgidb.org/api/v2/interactions.json?genes=DLG2
-API 2.226: http://www.dgidb.org/api/v2/interactions.json?genes=NOS1
-API 2.241: http://www.dgidb.org/api/v2/interactions.json?genes=KHDRBS1
+API 2.27: http://www.dgidb.org/api/v2/interactions.json?genes=LRRK2
+API 2.36: http://www.dgidb.org/api/v2/interactions.json?genes=MAOB
+API 2.22: http://www.dgidb.org/api/v2/interactions.json?genes=GIGYF2
+API 2.42: http://www.dgidb.org/api/v2/interactions.json?genes=DGKQ
 dgidb_gene2chemical failed
-API 2.242: http://www.dgidb.org/api/v2/interactions.json?genes=COX7B
-API 2.246: http://www.dgidb.org/api/v2/interactions.json?genes=PARK16
-API 2.245: http://www.dgidb.org/api/v2/interactions.json?genes=TRPS1
-API 2.244: http://www.dgidb.org/api/v2/interactions.json?genes=EDN1
-API 2.248: http://www.dgidb.org/api/v2/interactions.json?genes=CNTN1
-API 2.247: http://www.dgidb.org/api/v2/interactions.json?genes=CEBPZ
-API 2.236: http://www.dgidb.org/api/v2/interactions.json?genes=SLC6A2
-API 2.243: http://www.dgidb.org/api/v2/interactions.json?genes=TALDO1
-API 2.233: http://www.dgidb.org/api/v2/interactions.json?genes=CA2
-API 2.249: http://www.dgidb.org/api/v2/interactions.json?genes=GPR65
-API 2.250: http://www.dgidb.org/api/v2/interactions.json?genes=CD24
-API 2.251: http://www.dgidb.org/api/v2/interactions.json?genes=CAT
-API 2.254: http://www.dgidb.org/api/v2/interactions.json?genes=EPHX1
-API 2.253: http://www.dgidb.org/api/v2/interactions.json?genes=TARDBP
-API 2.252: http://www.dgidb.org/api/v2/interactions.json?genes=CDK5R1
-API 2.255: http://www.dgidb.org/api/v2/interactions.json?genes=GABPA
+API 2.10: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA5
+API 2.8: http://www.dgidb.org/api/v2/interactions.json?genes=BAG2
+API 2.25: http://www.dgidb.org/api/v2/interactions.json?genes=BAX
+API 2.60: http://www.dgidb.org/api/v2/interactions.json?genes=UCN2
+dgidb_gene2chemical failed
+API 2.41: http://www.dgidb.org/api/v2/interactions.json?genes=HGF
+API 2.30: http://www.dgidb.org/api/v2/interactions.json?genes=SLC30A10
+API 2.15: http://www.dgidb.org/api/v2/interactions.json?genes=IGKV2-14
+API 2.17: http://www.dgidb.org/api/v2/interactions.json?genes=MC1R
+API 2.9: http://www.dgidb.org/api/v2/interactions.json?genes=MOG
+API 2.19: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN3
+API 2.48: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP1
+dgidb_gene2chemical failed
+dgidb_gene2chemical failed
+API 2.1: http://www.dgidb.org/api/v2/interactions.json?genes=NR4A1
+API 2.53: http://www.dgidb.org/api/v2/interactions.json?genes=ARL6IP5
+API 2.23: http://www.dgidb.org/api/v2/interactions.json?genes=VPS26A
+API 2.46: http://www.dgidb.org/api/v2/interactions.json?genes=SLC6A3
+API 2.37: http://www.dgidb.org/api/v2/interactions.json?genes=RPL6
+API 2.39: http://www.dgidb.org/api/v2/interactions.json?genes=GPR37
+API 2.21: http://www.dgidb.org/api/v2/interactions.json?genes=UTRN
+API 2.38: http://www.dgidb.org/api/v2/interactions.json?genes=PDSS2
+API 2.49: http://www.dgidb.org/api/v2/interactions.json?genes=EIF4G1
+API 2.20: http://www.dgidb.org/api/v2/interactions.json?genes=PRSS53
+API 2.12: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC13
+API 2.50: http://www.dgidb.org/api/v2/interactions.json?genes=BCKDK
+API 2.62: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJA3
+API 2.44: http://www.dgidb.org/api/v2/interactions.json?genes=TWNK
+dgidb_gene2chemical failed
+API 2.51: http://www.dgidb.org/api/v2/interactions.json?genes=GSTO2
+API 2.24: http://www.dgidb.org/api/v2/interactions.json?genes=RHO
+API 2.43: http://www.dgidb.org/api/v2/interactions.json?genes=EPHX1
+API 2.47: http://www.dgidb.org/api/v2/interactions.json?genes=IREB2
+API 2.45: http://www.dgidb.org/api/v2/interactions.json?genes=IGBP1
+API 2.54: http://www.dgidb.org/api/v2/interactions.json?genes=TAT
+API 2.65: http://www.dgidb.org/api/v2/interactions.json?genes=CASC16
+API 2.55: http://www.dgidb.org/api/v2/interactions.json?genes=HMOX1
+API 2.59: http://www.dgidb.org/api/v2/interactions.json?genes=COL13A1
+API 2.61: http://www.dgidb.org/api/v2/interactions.json?genes=CDNF
+API 2.52: http://www.dgidb.org/api/v2/interactions.json?genes=RPL3
+API 2.56: http://www.dgidb.org/api/v2/interactions.json?genes=INSR
+API 2.58: http://www.dgidb.org/api/v2/interactions.json?genes=NR4A2
+dgidb_gene2chemical failed
+API 2.63: http://www.dgidb.org/api/v2/interactions.json?genes=VCP
+API 2.57: http://www.dgidb.org/api/v2/interactions.json?genes=ASPRV1
+API 2.64: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM189
+API 2.69: http://www.dgidb.org/api/v2/interactions.json?genes=CXCR4
+API 2.68: http://www.dgidb.org/api/v2/interactions.json?genes=TNS1
+API 2.66: http://www.dgidb.org/api/v2/interactions.json?genes=FBP1
+dgidb_gene2chemical failed
+API 2.74: http://www.dgidb.org/api/v2/interactions.json?genes=NUP62
+API 2.71: http://www.dgidb.org/api/v2/interactions.json?genes=ITGA2B
+API 2.73: http://www.dgidb.org/api/v2/interactions.json?genes=ATF4
+API 2.67: http://www.dgidb.org/api/v2/interactions.json?genes=DNAH8
+API 2.72: http://www.dgidb.org/api/v2/interactions.json?genes=MIPOL1
+API 2.70: http://www.dgidb.org/api/v2/interactions.json?genes=CA2
+API 2.82: http://www.dgidb.org/api/v2/interactions.json?genes=LOC101927745
+API 2.80: http://www.dgidb.org/api/v2/interactions.json?genes=NUCKS1
+API 2.78: http://www.dgidb.org/api/v2/interactions.json?genes=HFE
+API 2.84: http://www.dgidb.org/api/v2/interactions.json?genes=P2RX7
+API 2.79: http://www.dgidb.org/api/v2/interactions.json?genes=HLA-DRA
+API 2.83: http://www.dgidb.org/api/v2/interactions.json?genes=TARDBP
+dgidb_gene2chemical failed
+dgidb_gene2chemical failed
+API 2.76: http://www.dgidb.org/api/v2/interactions.json?genes=COX4I1
+API 2.92: http://www.dgidb.org/api/v2/interactions.json?genes=RPL23A
+API 2.75: http://www.dgidb.org/api/v2/interactions.json?genes=SLC6A2
+API 2.81: http://www.dgidb.org/api/v2/interactions.json?genes=MAP4K4
+API 2.86: http://www.dgidb.org/api/v2/interactions.json?genes=SETD1A
+API 2.77: http://www.dgidb.org/api/v2/interactions.json?genes=TRH
+API 2.90: http://www.dgidb.org/api/v2/interactions.json?genes=CHM
+API 2.88: http://www.dgidb.org/api/v2/interactions.json?genes=MAP3K5
+API 2.85: http://www.dgidb.org/api/v2/interactions.json?genes=ATP13A2
+API 2.93: http://www.dgidb.org/api/v2/interactions.json?genes=BRINP1
+API 2.91: http://www.dgidb.org/api/v2/interactions.json?genes=CRLS1
+API 2.87: http://www.dgidb.org/api/v2/interactions.json?genes=CYP17A1
+API 2.95: http://www.dgidb.org/api/v2/interactions.json?genes=DENR
+API 2.97: http://www.dgidb.org/api/v2/interactions.json?genes=VPS35
+API 2.94: http://www.dgidb.org/api/v2/interactions.json?genes=TRIM40
+API 2.89: http://www.dgidb.org/api/v2/interactions.json?genes=BDNF
+API 2.98: http://www.dgidb.org/api/v2/interactions.json?genes=PON1
+API 2.96: http://www.dgidb.org/api/v2/interactions.json?genes=CAT
+API 2.99: http://www.dgidb.org/api/v2/interactions.json?genes=COX17
+API 2.103: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM175
+dgidb_gene2chemical failed
+API 2.105: http://www.dgidb.org/api/v2/interactions.json?genes=ITGA8
+API 2.104: http://www.dgidb.org/api/v2/interactions.json?genes=KCNIP3
+API 2.112: http://www.dgidb.org/api/v2/interactions.json?genes=SPTSSB
+API 2.113: http://www.dgidb.org/api/v2/interactions.json?genes=CHCHD2
+API 2.115: http://www.dgidb.org/api/v2/interactions.json?genes=TXNIP
+API 2.116: http://www.dgidb.org/api/v2/interactions.json?genes=VPS13C
+dgidb_gene2chemical failed
+API 2.118: http://www.dgidb.org/api/v2/interactions.json?genes=GPNMB
+API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1414260,C1334122,C0919453,C1417759,C1334091,C0079419,C1826571,C0033634,C1705443,C2239906,C1416506,C1412617,C1416485,C3538835,C1332804,C1707116,C1705620,C1414098,C1415275,C1416586,C0001044,C1419752,C1426057,C3147642,C1420699,C1422154,C1417228,C1414524,C1705507,C1824153,C1367466,C3540632,C1710326,C1418259,C1420026,C0074350,C1428775,C1423860,C0248868,C1413588,C1419218,C1413658,C1366527,C3813060,C1337001,C1428360,C2697829,C1420213,C1427885,C1415764,C1334064,C1413646,C0074993,C1705543,C1412299,C1413943,C1970252,C1428964,C1417895,C1334087,C3539783,C1422360,C0812309,C1836172,C4085181,C1836075,C1416989,C1420089,C3538735,C0208355,C0812198,C0812252,C1414593,C1419388,C1366490,C1417836,C1418215,C1824586,C1414812,C1428268,C1420556,C1822684,C1414860,C1428430,C1422771,C0029016,C1414170,C1826392,C2829402,C0694888,C3273837,C1421412,C1414852,C1705632,C4084905,C0796518,C1333253,C1414356,C1418754,C0812246,C1422081,C1705751,C1540055,C1705744,C1510464,C1826318,C1366480,C1414204,C1415761,C1332823,C1413244,C1825374,C1412245,C1538931,C1415575,C2829404,C1417001,C0017361,C0018296,C1424331,C3538853,C1708119,C1415308,C1537990,C1425322,C2239905,C1413394,C0031727,C1705581,C0243839,C0538135,C1334043,C1420115,C1414433,C1417659,C1420590,C1366441,C1428929,C0164786,C2987244,C1420838,C2829405,C0969119,C1705225,C1413212,C1333250,C1413559,C1705371,C1420393,C1135159,C1333895,C1563761,C1420081,C1414036,C1413219,C1336620,C1415042,C0061505,C1420552,C0010763,C1334337,C1424894,C1427374,C1333282,C1332830,C1412830,C1336636,C1707161,C3538849,C1414273,C1822757,C1537989,C1538166,C1418695,C1416219,C1537678,C1418597,C1705411,C1826561,C0872189,C1337112,C1413138,C1538319,C1422017,C1416846,C1333700,C1823167,C1710313,C3539697,C1413634,C1706645,C1442498,C1538945,C1421409,C1134446,C1824461,C1418458,C1412730,C0017337,C1705387,C1425398,C1367731,C1705456,C1417066,C1417719,C1412228,C1413043,C1426958,C2985367,C0012515,C1367453,C1413633,C1705893,C1419685,C1416806,C1414544,C1421986,C3538756,C3539674,C1415002,C1413285,C1418270,C0919426,C1419641,C1540159,C1442506,C0023689,C0061355,C1413571,C1366537,C1421437,C0026741,C1420306,C3274848,C2681472,C0812303,C1426714,C1706384,C1415323,C1415619,C1421245,C0217310,C1416699,C0041491,C1420580,C1417701,C1540215,C1421866,C1425830,C1709384,C1413452,C0872053,C1336578,C1413844,C1419368,C1423062,C1706879,C3814151,C4284183,C0285558,C1413555,C1334353,C1416490,C0001473,C3642141,C1456357,C1413404,C1425498,C1367671,C1424661,C3542967,C2830002,C1413102,C1414064,C1417014,C1706573,C1415205,C1423677,C1825553,C1421289,C1413573,C2986657,C0678933,C1367721,C1333669,C1420733,C1427412,C1416517,C1418880,C1425650,C1412798,C1427563,C1335144,C1416969,C1539990,C0597298,C1428142,C1419385,C1412333,C1425644,C1837441,C1415755,C1420588,C1417061,C2240171,C0911469,C1136177,C1364818,C1415331,C1826486,C0072402,C1823439,C1414103,C1822761,C1706109,C1419655,C3538797,C3813043,C1334090,C1414998,C0669368,C1422392,C1421537,C0033551,C1413915,C1419631,C1415760,C1415231,C1423548,C1420307,C1512488,C0812228,C0017342,C1415012,C1334088,C1825464,C0008407,C3541418,C1424222,C1428476,C1414905,C1425747,C0017768,C0164005,C1708031,C1414602,C3889436,C0051844,C1420276,C0030956,C1709127,C1424712,C1412517,C1864636,C1413907,C0694890,C1426786,C0007054,C4084798,C1332001,C1537461,C1538428,C1537819,C3541328,C1823638,C1413979,C1332408,C1425402,C3470776,C1439306,C1422336,C3273633,C1417857,C1423510,C2987131,C3470936,C0068704,C0376622,C0207262,C0623362,C0026456,C0919428,C1706871,C1384665,C1418412,C1825850,C1413614,C1825683,C3470097,C0007367,C3273340,C1705433,C1825549,C1416620,C1823460,C1424810,C3816097,C1421143,C1420718,C1705526,C3469899,C1414649,C1709820,C1826827,C1334863,C1420212,C1412688,C1424111,C1417002,C0919451,C1332838,C0002085,C1826639,C1538299,C0077397,C1705458,C1446659,C1415249,C2828056,C0919534,C1334133,C2829403,C1413858,C1413714,C1419020,C0077678,C2240173,C0249586,C2699841,C1415046,C0132555,C1305923,C3539645,C0001156,C1412668,C0014442,C1538301,C1539295,C3889148,C2984593,C0678941,C1825475,C0919432,C3813713,C1537741,C1538216,C3889709,C1427670,C4084873,C1420006,C0068355,C0214599,C1824758,C1442521,C1417387,C1825644,C1417402,C1420418,C1705395,C1414236,C1424637,C1708157,C1415311,C1414944,C1824795,C1332447&amp;scopes=umls&amp;fields=affects.chemical_substance,interacts_with_reverse.chemical_substance,associated_with_reverse.chemical_substance,associated_with.chemical_substance,interacts_with.chemical_substance,affects_reverse.chemical_substance&amp;species=human&amp;size=100&#34;)
+API 2.119: http://www.dgidb.org/api/v2/interactions.json?genes=SRY
+API 2.117: http://www.dgidb.org/api/v2/interactions.json?genes=SGCB
+dgidb_gene2chemical failed
+API 2.120: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX2
+API 2.122: http://www.dgidb.org/api/v2/interactions.json?genes=COX7B
+API 2.125: http://www.dgidb.org/api/v2/interactions.json?genes=MAPT-AS1
+dgidb_gene2chemical failed
+API 2.128: http://www.dgidb.org/api/v2/interactions.json?genes=PRKN
+API 2.100: http://www.dgidb.org/api/v2/interactions.json?genes=DRD2
+API 2.130: http://www.dgidb.org/api/v2/interactions.json?genes=COX6A1
+API 2.131: http://www.dgidb.org/api/v2/interactions.json?genes=SQSTM1
+API 2.129: http://www.dgidb.org/api/v2/interactions.json?genes=DAPK2
+API 2.133: http://www.dgidb.org/api/v2/interactions.json?genes=ZCWPW2
+API 2.135: http://www.dgidb.org/api/v2/interactions.json?genes=RHOD
+API 2.126: http://www.dgidb.org/api/v2/interactions.json?genes=TNF
+API 2.134: http://www.dgidb.org/api/v2/interactions.json?genes=BIN3
+API 2.136: http://www.dgidb.org/api/v2/interactions.json?genes=HDAC6
+API 2.138: http://www.dgidb.org/api/v2/interactions.json?genes=IGF2R
+API 2.140: http://www.dgidb.org/api/v2/interactions.json?genes=ARHGAP24
+API 2.141: http://www.dgidb.org/api/v2/interactions.json?genes=LTB
+dgidb_gene2chemical failed
+dgidb_gene2chemical failed
+API 2.139: http://www.dgidb.org/api/v2/interactions.json?genes=MTERF4
+API 2.142: http://www.dgidb.org/api/v2/interactions.json?genes=CTSB
+API 2.144: http://www.dgidb.org/api/v2/interactions.json?genes=MIR30E
+API 2.143: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA8
+API 2.147: http://www.dgidb.org/api/v2/interactions.json?genes=LHFPL2
+dgidb_gene2chemical failed
+API 2.149: http://www.dgidb.org/api/v2/interactions.json?genes=NAT2
+API 2.151: http://www.dgidb.org/api/v2/interactions.json?genes=FMR1
+API 2.152: http://www.dgidb.org/api/v2/interactions.json?genes=DSG3
+API 2.150: http://www.dgidb.org/api/v2/interactions.json?genes=COMT
+dgidb_gene2chemical failed
+API 2.154: http://www.dgidb.org/api/v2/interactions.json?genes=FXN
+dgidb_gene2chemical failed
+API 2.148: http://www.dgidb.org/api/v2/interactions.json?genes=CAMK2G
+dgidb_gene2chemical failed
+API 2.157: http://www.dgidb.org/api/v2/interactions.json?genes=PAK1
+API 2.158: http://www.dgidb.org/api/v2/interactions.json?genes=KIAA1109
+API 2.161: http://www.dgidb.org/api/v2/interactions.json?genes=SH3GL2
+dgidb_gene2chemical failed
+API 2.159: http://www.dgidb.org/api/v2/interactions.json?genes=MAG
+API 2.156: http://www.dgidb.org/api/v2/interactions.json?genes=TFEB
+API 2.165: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP2
+API 2.155: http://www.dgidb.org/api/v2/interactions.json?genes=NOS1
+dgidb_gene2chemical failed
+API 2.166: http://www.dgidb.org/api/v2/interactions.json?genes=SYT17
+API 2.163: http://www.dgidb.org/api/v2/interactions.json?genes=ASXL3
+API 2.167: http://www.dgidb.org/api/v2/interactions.json?genes=ZNF646
+API 2.153: http://www.dgidb.org/api/v2/interactions.json?genes=GSTP1
+API 2.168: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA1A
+API 2.170: http://www.dgidb.org/api/v2/interactions.json?genes=SOD2
+API 2.171: http://www.dgidb.org/api/v2/interactions.json?genes=PITX3
+API 2.162: http://www.dgidb.org/api/v2/interactions.json?genes=FTL
+API 2.172: http://www.dgidb.org/api/v2/interactions.json?genes=ATP7A
+API 2.173: http://www.dgidb.org/api/v2/interactions.json?genes=BST1
+API 2.169: http://www.dgidb.org/api/v2/interactions.json?genes=MAPT
+dgidb_gene2chemical failed
+API 2.178: http://www.dgidb.org/api/v2/interactions.json?genes=LCN2
+API 2.164: http://www.dgidb.org/api/v2/interactions.json?genes=CYP2D6
+API 2.177: http://www.dgidb.org/api/v2/interactions.json?genes=KHDRBS1
+API 2.179: http://www.dgidb.org/api/v2/interactions.json?genes=RGS10
+API 2.182: http://www.dgidb.org/api/v2/interactions.json?genes=LINC00476
+dgidb_gene2chemical failed
+API 2.175: http://www.dgidb.org/api/v2/interactions.json?genes=MAOA
+API 2.183: http://www.dgidb.org/api/v2/interactions.json?genes=FAF1
+API 2.185: http://www.dgidb.org/api/v2/interactions.json?genes=CERS2
+API 2.176: http://www.dgidb.org/api/v2/interactions.json?genes=AKT1
+dgidb_gene2chemical failed
+API 2.184: http://www.dgidb.org/api/v2/interactions.json?genes=TBC1D5
+dgidb_gene2chemical failed
+API 2.188: http://www.dgidb.org/api/v2/interactions.json?genes=CD8A
+API 2.189: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN8OS
+API 2.190: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC10
+dgidb_gene2chemical failed
+API 2.191: http://www.dgidb.org/api/v2/interactions.json?genes=CLRN3
+API 2.192: http://www.dgidb.org/api/v2/interactions.json?genes=CLCN3
+API 2.193: http://www.dgidb.org/api/v2/interactions.json?genes=TIRAP
+API 2.186: http://www.dgidb.org/api/v2/interactions.json?genes=IGF1R
+API 2.199: http://www.dgidb.org/api/v2/interactions.json?genes=HTR2A-AS1
+dgidb_gene2chemical failed
+dgidb_gene2chemical failed
+API 2.194: http://www.dgidb.org/api/v2/interactions.json?genes=CNR2
+API 2.198: http://www.dgidb.org/api/v2/interactions.json?genes=ALDH1A1
+API 2.200: http://www.dgidb.org/api/v2/interactions.json?genes=NGF
+API 2.187: http://www.dgidb.org/api/v2/interactions.json?genes=RET
+API 2.201: http://www.dgidb.org/api/v2/interactions.json?genes=CDK5R1
+API 2.197: http://www.dgidb.org/api/v2/interactions.json?genes=MAPK8
+API 2.180: http://www.dgidb.org/api/v2/interactions.json?genes=PTEN
+API 2.203: http://www.dgidb.org/api/v2/interactions.json?genes=CEBPZ
+API 2.202: http://www.dgidb.org/api/v2/interactions.json?genes=SLC2A13
+API 2.205: http://www.dgidb.org/api/v2/interactions.json?genes=RAB39B
+dgidb_gene2chemical failed
+API 2.204: http://www.dgidb.org/api/v2/interactions.json?genes=SLC44A4
+API 2.207: http://www.dgidb.org/api/v2/interactions.json?genes=LY6E
+API 2.206: http://www.dgidb.org/api/v2/interactions.json?genes=GSTA4
+API 2.209: http://www.dgidb.org/api/v2/interactions.json?genes=SYT1
+API 2.211: http://www.dgidb.org/api/v2/interactions.json?genes=FKBP1AP4
+API 2.208: http://www.dgidb.org/api/v2/interactions.json?genes=EDN1
+API 2.213: http://www.dgidb.org/api/v2/interactions.json?genes=MED12L
+API 2.210: http://www.dgidb.org/api/v2/interactions.json?genes=EPHX2
+API 2.212: http://www.dgidb.org/api/v2/interactions.json?genes=PRDM15
+API 2.214: http://www.dgidb.org/api/v2/interactions.json?genes=KCNS3
+API 2.215: http://www.dgidb.org/api/v2/interactions.json?genes=RNF41
+API 2.220: http://www.dgidb.org/api/v2/interactions.json?genes=KITLG
+API 2.217: http://www.dgidb.org/api/v2/interactions.json?genes=TRIB3
+API 2.219: http://www.dgidb.org/api/v2/interactions.json?genes=LRPPRC
+API 2.218: http://www.dgidb.org/api/v2/interactions.json?genes=PSMC1
+API 2.221: http://www.dgidb.org/api/v2/interactions.json?genes=RPS8
+API 2.222: http://www.dgidb.org/api/v2/interactions.json?genes=TALDO1
+API 2.223: http://www.dgidb.org/api/v2/interactions.json?genes=EEF1A2
+API 2.227: http://www.dgidb.org/api/v2/interactions.json?genes=CNTN1
+API 2.228: http://www.dgidb.org/api/v2/interactions.json?genes=UBE2M
+API 2.231: http://www.dgidb.org/api/v2/interactions.json?genes=GRK6
+API 2.225: http://www.dgidb.org/api/v2/interactions.json?genes=NQO1
+API 2.233: http://www.dgidb.org/api/v2/interactions.json?genes=GXYLT1
+API 2.230: http://www.dgidb.org/api/v2/interactions.json?genes=CDC42
+API 2.235: http://www.dgidb.org/api/v2/interactions.json?genes=PMVK
+API 2.234: http://www.dgidb.org/api/v2/interactions.json?genes=CRK
+API 2.236: http://www.dgidb.org/api/v2/interactions.json?genes=PNPLA8
+API 2.226: http://www.dgidb.org/api/v2/interactions.json?genes=NFE2L2
+API 2.245: http://www.dgidb.org/api/v2/interactions.json?genes=EGF
+API 2.244: http://www.dgidb.org/api/v2/interactions.json?genes=PGAM5
+API 2.246: http://www.dgidb.org/api/v2/interactions.json?genes=SNCA
+API 2.241: http://www.dgidb.org/api/v2/interactions.json?genes=EBP
+API 2.243: http://www.dgidb.org/api/v2/interactions.json?genes=INPP5F
+API 2.248: http://www.dgidb.org/api/v2/interactions.json?genes=MAL
+API 2.247: http://www.dgidb.org/api/v2/interactions.json?genes=MCCC1
+API 2.239: http://www.dgidb.org/api/v2/interactions.json?genes=GFAP
+API 2.237: http://www.dgidb.org/api/v2/interactions.json?genes=TMED9
+API 2.251: http://www.dgidb.org/api/v2/interactions.json?genes=GAK
+API 2.240: http://www.dgidb.org/api/v2/interactions.json?genes=CYP2E1
+API 2.252: http://www.dgidb.org/api/v2/interactions.json?genes=CHL1-AS1
+API 2.257: http://www.dgidb.org/api/v2/interactions.json?genes=HTRA2
+API 2.250: http://www.dgidb.org/api/v2/interactions.json?genes=FGF18
+API 2.255: http://www.dgidb.org/api/v2/interactions.json?genes=NCAM1
 API 2.256: http://www.dgidb.org/api/v2/interactions.json?genes=LRRK1
-API 2.258: http://www.dgidb.org/api/v2/interactions.json?genes=KCNIP4
-API 2.259: http://www.dgidb.org/api/v2/interactions.json?genes=TPM1
-API 2.262: http://www.dgidb.org/api/v2/interactions.json?genes=CD8A
-API 2.260: http://www.dgidb.org/api/v2/interactions.json?genes=SPPL2C
-API 2.265: http://www.dgidb.org/api/v2/interactions.json?genes=DGKQ
-API 2.264: http://www.dgidb.org/api/v2/interactions.json?genes=DDIT4
-API 2.261: http://www.dgidb.org/api/v2/interactions.json?genes=GPR6
-API 2.267: http://www.dgidb.org/api/v2/interactions.json?genes=SQSTM1
-API 2.263: http://www.dgidb.org/api/v2/interactions.json?genes=TLR4
-API 2.266: http://www.dgidb.org/api/v2/interactions.json?genes=ATP7A
-API 2.269: http://www.dgidb.org/api/v2/interactions.json?genes=RHOD
-API 2.268: http://www.dgidb.org/api/v2/interactions.json?genes=VPS35
-API 2.270: http://www.dgidb.org/api/v2/interactions.json?genes=GAK
-API 2.273: http://www.dgidb.org/api/v2/interactions.json?genes=PON1
-API 2.271: http://www.dgidb.org/api/v2/interactions.json?genes=PLEKHM1
-API 2.272: http://www.dgidb.org/api/v2/interactions.json?genes=SRY
-API 2.276: http://www.dgidb.org/api/v2/interactions.json?genes=SGCB
-API 2.278: http://www.dgidb.org/api/v2/interactions.json?genes=CYP17A1
-API 2.277: http://www.dgidb.org/api/v2/interactions.json?genes=EPHX2
-API 2.279: http://www.dgidb.org/api/v2/interactions.json?genes=SNCA
-API 2.280: http://www.dgidb.org/api/v2/interactions.json?genes=SLC2A13
+API 2.259: http://www.dgidb.org/api/v2/interactions.json?genes=GFPT1
+API 2.253: http://www.dgidb.org/api/v2/interactions.json?genes=GRM4
+API 2.258: http://www.dgidb.org/api/v2/interactions.json?genes=RPL14
+API 2.249: http://www.dgidb.org/api/v2/interactions.json?genes=TH
+API 2.268: http://www.dgidb.org/api/v2/interactions.json?genes=PARK16
+API 2.264: http://www.dgidb.org/api/v2/interactions.json?genes=SYNJ1
+API 2.265: http://www.dgidb.org/api/v2/interactions.json?genes=FUS
+API 2.261: http://www.dgidb.org/api/v2/interactions.json?genes=SIPA1L2
+API 2.266: http://www.dgidb.org/api/v2/interactions.json?genes=NPS
+API 2.270: http://www.dgidb.org/api/v2/interactions.json?genes=TMPRSS9
+API 2.269: http://www.dgidb.org/api/v2/interactions.json?genes=RPS6KL1
+API 2.275: http://www.dgidb.org/api/v2/interactions.json?genes=GBF1
+API 2.272: http://www.dgidb.org/api/v2/interactions.json?genes=RNF141
+API 2.273: http://www.dgidb.org/api/v2/interactions.json?genes=SKP1
+API 2.276: http://www.dgidb.org/api/v2/interactions.json?genes=GSN
+API 2.277: http://www.dgidb.org/api/v2/interactions.json?genes=MFN1
+API 2.281: http://www.dgidb.org/api/v2/interactions.json?genes=CYBB
+API 2.278: http://www.dgidb.org/api/v2/interactions.json?genes=RIC3
+API 2.279: http://www.dgidb.org/api/v2/interactions.json?genes=MIR185
+API 2.274: http://www.dgidb.org/api/v2/interactions.json?genes=ADCYAP1
+API 2.284: http://www.dgidb.org/api/v2/interactions.json?genes=RAB29
 API 2.283: http://www.dgidb.org/api/v2/interactions.json?genes=NDUFAF2
-API 2.281: http://www.dgidb.org/api/v2/interactions.json?genes=SYT1
-API 2.282: http://www.dgidb.org/api/v2/interactions.json?genes=EPHB1
-API 2.284: http://www.dgidb.org/api/v2/interactions.json?genes=FAM47E-STBD1
-API 2.275: http://www.dgidb.org/api/v2/interactions.json?genes=ND1
-API 2.285: http://www.dgidb.org/api/v2/interactions.json?genes=HFE
-API 2.288: http://www.dgidb.org/api/v2/interactions.json?genes=CSMD1
-API 2.287: http://www.dgidb.org/api/v2/interactions.json?genes=TAZ
-API 2.289: http://www.dgidb.org/api/v2/interactions.json?genes=PDSS2
-API 2.286: http://www.dgidb.org/api/v2/interactions.json?genes=MAPK8
-API 2.290: http://www.dgidb.org/api/v2/interactions.json?genes=CAMK2G
-API 2.292: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC5
-API 2.291: http://www.dgidb.org/api/v2/interactions.json?genes=SPHK2
-API 2.293: http://www.dgidb.org/api/v2/interactions.json?genes=MAL
-API 2.295: http://www.dgidb.org/api/v2/interactions.json?genes=TWNK
-API 2.294: http://www.dgidb.org/api/v2/interactions.json?genes=CHM
-API 2.296: http://www.dgidb.org/api/v2/interactions.json?genes=KIAA1109
-API 2.297: http://www.dgidb.org/api/v2/interactions.json?genes=NUP62
-API 2.298: http://www.dgidb.org/api/v2/interactions.json?genes=CHL1
-API 2.299: http://www.dgidb.org/api/v2/interactions.json?genes=ADCYAP1
-API 2.301: http://www.dgidb.org/api/v2/interactions.json?genes=TMC3
-API 2.300: http://www.dgidb.org/api/v2/interactions.json?genes=ATF6
-API 2.303: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM175
-API 2.304: http://www.dgidb.org/api/v2/interactions.json?genes=AIF1
-API 2.305: http://www.dgidb.org/api/v2/interactions.json?genes=LINGO1
-API 2.306: http://www.dgidb.org/api/v2/interactions.json?genes=SLC50A1
-API 2.307: http://www.dgidb.org/api/v2/interactions.json?genes=TNS1
-API 2.310: http://www.dgidb.org/api/v2/interactions.json?genes=RPL6
-API 2.312: http://www.dgidb.org/api/v2/interactions.json?genes=USP9X
-API 2.311: http://www.dgidb.org/api/v2/interactions.json?genes=RIC3
-API 2.313: http://www.dgidb.org/api/v2/interactions.json?genes=NUCKS1
-API 2.308: http://www.dgidb.org/api/v2/interactions.json?genes=CNR2
-API 2.314: http://www.dgidb.org/api/v2/interactions.json?genes=CDNF
-API 2.315: http://www.dgidb.org/api/v2/interactions.json?genes=DENR
-API 2.316: http://www.dgidb.org/api/v2/interactions.json?genes=NCAM1
-API 2.317: http://www.dgidb.org/api/v2/interactions.json?genes=RHO
-API 2.318: http://www.dgidb.org/api/v2/interactions.json?genes=GSTA4
-API 2.319: http://www.dgidb.org/api/v2/interactions.json?genes=ARL6IP5
-API 2.321: http://www.dgidb.org/api/v2/interactions.json?genes=GPR37
-API 2.320: http://www.dgidb.org/api/v2/interactions.json?genes=CHL1-AS1
-API 2.323: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC13
-API 2.322: http://www.dgidb.org/api/v2/interactions.json?genes=LTB
-API 2.309: http://www.dgidb.org/api/v2/interactions.json?genes=GSTP1
-API 2.324: http://www.dgidb.org/api/v2/interactions.json?genes=CA8
-API 2.326: http://www.dgidb.org/api/v2/interactions.json?genes=BAG2
-API 2.325: http://www.dgidb.org/api/v2/interactions.json?genes=NR4A1
-API 2.274: http://www.dgidb.org/api/v2/interactions.json?genes=HTR2A
-API 2.328: http://www.dgidb.org/api/v2/interactions.json?genes=PINK1
-API 2.330: http://www.dgidb.org/api/v2/interactions.json?genes=NSF
-API 2.329: http://www.dgidb.org/api/v2/interactions.json?genes=TRH
-API 2.331: http://www.dgidb.org/api/v2/interactions.json?genes=EBP
-API 2.332: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02210-CRHR1
-API 2.334: http://www.dgidb.org/api/v2/interactions.json?genes=PRKN
-API 2.335: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
-API 2.337: http://www.dgidb.org/api/v2/interactions.json?genes=GBA
-API 2.327: http://www.dgidb.org/api/v2/interactions.json?genes=IGF1R
-API 2.336: http://www.dgidb.org/api/v2/interactions.json?genes=COL11A2
-API 2.338: http://www.dgidb.org/api/v2/interactions.json?genes=NQO1
-API 3.1: http://mychem.info/v1/query (POST &#34;q=CCDC82,HSPA4,RAB39B,DAPK2,TGFA,INSR,PLPPR1,RPS8,FTL,ADORA1,CASC16,UTRN,IREB2,HEXIM2,GFAP,EGF,BIN3,FAM47E,ZCWPW2,LCN2,SPTSSB,FXN,HMOX1,COL5A2,SIRT1,NFE2L2,NAT2,CCDC62,WASHC1,CYBB,PAK1,FKBP1AP2,TXNIP,ATP13A2,MSX1,TNF,GFPT1,SKP1,ATXN2,COPS5,BRINP1,RPL3,TPPP,BDNF,ABCB6,MIR185,DNAJA3,ITGA8,IGBP1,MFN1,CDC42,VPS13C,BST1,FKBP1AP1,RPL14,PRSS53,KITLG,ABCB1,FKBP1AP3,TIRAP,MDGA2,ATF4,CTSB,ARHGAP24,FGB,WASH6P,PTEN,DNAH8,UCN2,RET,APP,PRDX2,RNF41,ZNF646,CYP2D6,CYP2E1,ATXN8OS,SOD1,KCNJ4,ND2,HLA-DRA,CXCR4,CLRN3,DSG3,SEMA5A,SYNJ1,ALDH1A1,RIT2,LINC02331,LINC02451,MSMB,APOE,SCARB2,SLC18A2,SLC11A2,TRIB3,TMC3-AS1,XK,TMED9,GRN,VCP,CTC1,SLC6A3,HTR2A-AS1,BAX,ITGA2B,FYN,COL13A1,SMAD3,MOG,KLHDC1,TMEM230,ZNF165,TMEM189,MIR30E,HSPA8,TWSG1,HDAC6,CHRNA4,MT2A,GPNMB,TBC1D5,GBF1,FBP1,RTN4,MAP3K5,GRK2,COMT,MTERF4,DCTN4,LRRK2-DT,INS,MTNR1B,VPS26A,P2RX7,TMPRSS9,TH,PARK7,HTRA2,AAK1,DNAJC6,LRRK2,COX6A1,SREBF1,PDE10A,PSMC1,CNKSR3,HSPA1A,DRD2,AKT1,MAPT,CRK,MAOB,UNC13B,IGF2R,ASPRV1,GSTO2,FGF18,GRM4,NEDD4,CERS2,TP53,FKBP1AP4,FUS,ZP3,PARL,PNPLA8,TAT,KANSL1,EIF4G1,TCEANC2,MAOA,WBP1L,RPL23A,SCG3,GSN,SP1,SCN2A,STAP1,NPS,DRD1,PGAM5,FMR1,GRK6,LY6E,TFEB,ANO5,SOD2,DNAJC10,LHX1,FAF1,GSTM1,GDNF,PITX3,EEF1A2,HSPA5,LRPPRC,MCCC1,NR4A2,TMEM229B,FBXO7,CCNT2-AS1,DDC,CRMP1,MAPT-AS1,CAB39L,GIGYF2,SLC30A10,MZB1,WNT3,BCKDK,SYT17,MAG,GPX1,NGF,CP,ODAPH,RGS10,COX17,MC1R,COX4I1,AGAP1,SNCA-AS1,INPP5F,SH3GL2,NOS1,IGKV2-14,SIPA1L2,ATXN3,LINC02210,HSPA9,IL6,CA2,SLC41A1,ATP5PF,SLC6A2,PAM,CHCHD2,IP6K2,DLG2,KHDRBS1,COX7B,TALDO1,EDN1,TRPS1,PARK16,CEBPZ,CNTN1,GPR65,CD24,CAT,CDK5R1,TARDBP,EPHX1,GABPA,LRRK1,HGF,KCNIP4,TPM1,SPPL2C,GPR6,CD8A,TLR4,DDIT4,DGKQ,ATP7A,SQSTM1,VPS35,RHOD,GAK,PLEKHM1,SRY,PON1,HTR2A,ND1,SGCB,EPHX2,CYP17A1,SNCA,SLC2A13,SYT1,EPHB1,NDUFAF2,FAM47E-STBD1,HFE,MAPK8,TAZ,CSMD1,PDSS2,CAMK2G,SPHK2,DNAJC5,MAL,CHM,TWNK,KIAA1109,NUP62,CHL1,ADCYAP1,ATF6,TMC3,UBE2M,TMEM175,AIF1,LINGO1,SLC50A1,TNS1,CNR2,GSTP1,RPL6,RIC3,USP9X,NUCKS1,CDNF,DENR,NCAM1,RHO,GSTA4,ARL6IP5,CHL1-AS1,GPR37,LTB,DNAJC13,CA8,NR4A1,BAG2,IGF1R,PINK1,TRH,NSF,EBP,LINC02210-CRHR1,IGF2,PRKN,GCH1,COL11A2,GBA,NQO1&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 3.3: http://mychem.info/v1/query (POST &#34;q=CCDC82,HSPA4,RAB39B,DAPK2,TGFA,INSR,PLPPR1,RPS8,FTL,ADORA1,CASC16,UTRN,IREB2,HEXIM2,GFAP,EGF,BIN3,FAM47E,ZCWPW2,LCN2,SPTSSB,FXN,HMOX1,COL5A2,SIRT1,NFE2L2,NAT2,CCDC62,WASHC1,CYBB,PAK1,FKBP1AP2,TXNIP,ATP13A2,MSX1,TNF,GFPT1,SKP1,ATXN2,COPS5,BRINP1,RPL3,TPPP,BDNF,ABCB6,MIR185,DNAJA3,ITGA8,IGBP1,MFN1,CDC42,VPS13C,BST1,FKBP1AP1,RPL14,PRSS53,KITLG,ABCB1,FKBP1AP3,TIRAP,MDGA2,ATF4,CTSB,ARHGAP24,FGB,WASH6P,PTEN,DNAH8,UCN2,RET,APP,PRDX2,RNF41,ZNF646,CYP2D6,CYP2E1,ATXN8OS,SOD1,KCNJ4,ND2,HLA-DRA,CXCR4,CLRN3,DSG3,SEMA5A,SYNJ1,ALDH1A1,RIT2,LINC02331,LINC02451,MSMB,APOE,SCARB2,SLC18A2,SLC11A2,TRIB3,TMC3-AS1,XK,TMED9,GRN,VCP,CTC1,SLC6A3,HTR2A-AS1,BAX,ITGA2B,FYN,COL13A1,SMAD3,MOG,KLHDC1,TMEM230,ZNF165,TMEM189,MIR30E,HSPA8,TWSG1,HDAC6,CHRNA4,MT2A,GPNMB,TBC1D5,GBF1,FBP1,RTN4,MAP3K5,GRK2,COMT,MTERF4,DCTN4,LRRK2-DT,INS,MTNR1B,VPS26A,P2RX7,TMPRSS9,TH,PARK7,HTRA2,AAK1,DNAJC6,LRRK2,COX6A1,SREBF1,PDE10A,PSMC1,CNKSR3,HSPA1A,DRD2,AKT1,MAPT,CRK,MAOB,UNC13B,IGF2R,ASPRV1,GSTO2,FGF18,GRM4,NEDD4,CERS2,TP53,FKBP1AP4,FUS,ZP3,PARL,PNPLA8,TAT,KANSL1,EIF4G1,TCEANC2,MAOA,WBP1L,RPL23A,SCG3,GSN,SP1,SCN2A,STAP1,NPS,DRD1,PGAM5,FMR1,GRK6,LY6E,TFEB,ANO5,SOD2,DNAJC10,LHX1,FAF1,GSTM1,GDNF,PITX3,EEF1A2,HSPA5,LRPPRC,MCCC1,NR4A2,TMEM229B,FBXO7,CCNT2-AS1,DDC,CRMP1,MAPT-AS1,CAB39L,GIGYF2,SLC30A10,MZB1,WNT3,BCKDK,SYT17,MAG,GPX1,NGF,CP,ODAPH,RGS10,COX17,MC1R,COX4I1,AGAP1,SNCA-AS1,INPP5F,SH3GL2,NOS1,IGKV2-14,SIPA1L2,ATXN3,LINC02210,HSPA9,IL6,CA2,SLC41A1,ATP5PF,SLC6A2,PAM,CHCHD2,IP6K2,DLG2,KHDRBS1,COX7B,TALDO1,EDN1,TRPS1,PARK16,CEBPZ,CNTN1,GPR65,CD24,CAT,CDK5R1,TARDBP,EPHX1,GABPA,LRRK1,HGF,KCNIP4,TPM1,SPPL2C,GPR6,CD8A,TLR4,DDIT4,DGKQ,ATP7A,SQSTM1,VPS35,RHOD,GAK,PLEKHM1,SRY,PON1,HTR2A,ND1,SGCB,EPHX2,CYP17A1,SNCA,SLC2A13,SYT1,EPHB1,NDUFAF2,FAM47E-STBD1,HFE,MAPK8,TAZ,CSMD1,PDSS2,CAMK2G,SPHK2,DNAJC5,MAL,CHM,TWNK,KIAA1109,NUP62,CHL1,ADCYAP1,ATF6,TMC3,UBE2M,TMEM175,AIF1,LINGO1,SLC50A1,TNS1,CNR2,GSTP1,RPL6,RIC3,USP9X,NUCKS1,CDNF,DENR,NCAM1,RHO,GSTA4,ARL6IP5,CHL1-AS1,GPR37,LTB,DNAJC13,CA8,NR4A1,BAG2,IGF1R,PINK1,TRH,NSF,EBP,LINC02210-CRHR1,IGF2,PRKN,GCH1,COL11A2,GBA,NQO1&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
-API 3.2: http://mychem.info/v1/query (POST &#34;q=CCDC82,HSPA4,RAB39B,DAPK2,TGFA,INSR,PLPPR1,RPS8,FTL,ADORA1,CASC16,UTRN,IREB2,HEXIM2,GFAP,EGF,BIN3,FAM47E,ZCWPW2,LCN2,SPTSSB,FXN,HMOX1,COL5A2,SIRT1,NFE2L2,NAT2,CCDC62,WASHC1,CYBB,PAK1,FKBP1AP2,TXNIP,ATP13A2,MSX1,TNF,GFPT1,SKP1,ATXN2,COPS5,BRINP1,RPL3,TPPP,BDNF,ABCB6,MIR185,DNAJA3,ITGA8,IGBP1,MFN1,CDC42,VPS13C,BST1,FKBP1AP1,RPL14,PRSS53,KITLG,ABCB1,FKBP1AP3,TIRAP,MDGA2,ATF4,CTSB,ARHGAP24,FGB,WASH6P,PTEN,DNAH8,UCN2,RET,APP,PRDX2,RNF41,ZNF646,CYP2D6,CYP2E1,ATXN8OS,SOD1,KCNJ4,ND2,HLA-DRA,CXCR4,CLRN3,DSG3,SEMA5A,SYNJ1,ALDH1A1,RIT2,LINC02331,LINC02451,MSMB,APOE,SCARB2,SLC18A2,SLC11A2,TRIB3,TMC3-AS1,XK,TMED9,GRN,VCP,CTC1,SLC6A3,HTR2A-AS1,BAX,ITGA2B,FYN,COL13A1,SMAD3,MOG,KLHDC1,TMEM230,ZNF165,TMEM189,MIR30E,HSPA8,TWSG1,HDAC6,CHRNA4,MT2A,GPNMB,TBC1D5,GBF1,FBP1,RTN4,MAP3K5,GRK2,COMT,MTERF4,DCTN4,LRRK2-DT,INS,MTNR1B,VPS26A,P2RX7,TMPRSS9,TH,PARK7,HTRA2,AAK1,DNAJC6,LRRK2,COX6A1,SREBF1,PDE10A,PSMC1,CNKSR3,HSPA1A,DRD2,AKT1,MAPT,CRK,MAOB,UNC13B,IGF2R,ASPRV1,GSTO2,FGF18,GRM4,NEDD4,CERS2,TP53,FKBP1AP4,FUS,ZP3,PARL,PNPLA8,TAT,KANSL1,EIF4G1,TCEANC2,MAOA,WBP1L,RPL23A,SCG3,GSN,SP1,SCN2A,STAP1,NPS,DRD1,PGAM5,FMR1,GRK6,LY6E,TFEB,ANO5,SOD2,DNAJC10,LHX1,FAF1,GSTM1,GDNF,PITX3,EEF1A2,HSPA5,LRPPRC,MCCC1,NR4A2,TMEM229B,FBXO7,CCNT2-AS1,DDC,CRMP1,MAPT-AS1,CAB39L,GIGYF2,SLC30A10,MZB1,WNT3,BCKDK,SYT17,MAG,GPX1,NGF,CP,ODAPH,RGS10,COX17,MC1R,COX4I1,AGAP1,SNCA-AS1,INPP5F,SH3GL2,NOS1,IGKV2-14,SIPA1L2,ATXN3,LINC02210,HSPA9,IL6,CA2,SLC41A1,ATP5PF,SLC6A2,PAM,CHCHD2,IP6K2,DLG2,KHDRBS1,COX7B,TALDO1,EDN1,TRPS1,PARK16,CEBPZ,CNTN1,GPR65,CD24,CAT,CDK5R1,TARDBP,EPHX1,GABPA,LRRK1,HGF,KCNIP4,TPM1,SPPL2C,GPR6,CD8A,TLR4,DDIT4,DGKQ,ATP7A,SQSTM1,VPS35,RHOD,GAK,PLEKHM1,SRY,PON1,HTR2A,ND1,SGCB,EPHX2,CYP17A1,SNCA,SLC2A13,SYT1,EPHB1,NDUFAF2,FAM47E-STBD1,HFE,MAPK8,TAZ,CSMD1,PDSS2,CAMK2G,SPHK2,DNAJC5,MAL,CHM,TWNK,KIAA1109,NUP62,CHL1,ADCYAP1,ATF6,TMC3,UBE2M,TMEM175,AIF1,LINGO1,SLC50A1,TNS1,CNR2,GSTP1,RPL6,RIC3,USP9X,NUCKS1,CDNF,DENR,NCAM1,RHO,GSTA4,ARL6IP5,CHL1-AS1,GPR37,LTB,DNAJC13,CA8,NR4A1,BAG2,IGF1R,PINK1,TRH,NSF,EBP,LINC02210-CRHR1,IGF2,PRKN,GCH1,COL11A2,GBA,NQO1&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 2.285: http://www.dgidb.org/api/v2/interactions.json?genes=CSMD1
+API 2.288: http://www.dgidb.org/api/v2/interactions.json?genes=IP6K2
+API 2.289: http://www.dgidb.org/api/v2/interactions.json?genes=GDNF
+API 2.286: http://www.dgidb.org/api/v2/interactions.json?genes=MSMB
+API 2.290: http://www.dgidb.org/api/v2/interactions.json?genes=DYRK1A
+API 2.293: http://www.dgidb.org/api/v2/interactions.json?genes=EPHB1
+API 2.296: http://www.dgidb.org/api/v2/interactions.json?genes=GRN
+API 2.280: http://www.dgidb.org/api/v2/interactions.json?genes=CHRNA4
+API 2.291: http://www.dgidb.org/api/v2/interactions.json?genes=COL11A2
+API 2.298: http://www.dgidb.org/api/v2/interactions.json?genes=TAZ
+API 2.295: http://www.dgidb.org/api/v2/interactions.json?genes=FYN
+API 2.297: http://www.dgidb.org/api/v2/interactions.json?genes=NSF
+API 2.304: http://www.dgidb.org/api/v2/interactions.json?genes=SCG3
+API 2.306: http://www.dgidb.org/api/v2/interactions.json?genes=TPPP
+API 2.301: http://www.dgidb.org/api/v2/interactions.json?genes=IL6
+API 2.302: http://www.dgidb.org/api/v2/interactions.json?genes=CP
+API 2.303: http://www.dgidb.org/api/v2/interactions.json?genes=ITIH1
+API 2.307: http://www.dgidb.org/api/v2/interactions.json?genes=DNAJC5
+API 2.311: http://www.dgidb.org/api/v2/interactions.json?genes=WNT3
+API 2.312: http://www.dgidb.org/api/v2/interactions.json?genes=SPHK2
+API 2.299: http://www.dgidb.org/api/v2/interactions.json?genes=ATP5PF
+API 2.310: http://www.dgidb.org/api/v2/interactions.json?genes=CRMP1
+API 2.313: http://www.dgidb.org/api/v2/interactions.json?genes=CAB39L
+API 2.309: http://www.dgidb.org/api/v2/interactions.json?genes=IGF2
+API 2.316: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
+API 2.317: http://www.dgidb.org/api/v2/interactions.json?genes=GBA
+API 2.318: http://www.dgidb.org/api/v2/interactions.json?genes=GPX1
+API 2.319: http://www.dgidb.org/api/v2/interactions.json?genes=NEDD4
+API 2.322: http://www.dgidb.org/api/v2/interactions.json?genes=INS
+API 2.323: http://www.dgidb.org/api/v2/interactions.json?genes=ATXN2
+API 2.324: http://www.dgidb.org/api/v2/interactions.json?genes=MZB1
+API 2.325: http://www.dgidb.org/api/v2/interactions.json?genes=SIRT1
+API 2.320: http://www.dgidb.org/api/v2/interactions.json?genes=TMEM229B
+API 2.321: http://www.dgidb.org/api/v2/interactions.json?genes=MTNR1B
+API 2.326: http://www.dgidb.org/api/v2/interactions.json?genes=KANSL1
+API 2.328: http://www.dgidb.org/api/v2/interactions.json?genes=GRK2
+API 2.329: http://www.dgidb.org/api/v2/interactions.json?genes=FAM47E-STBD1
+API 2.327: http://www.dgidb.org/api/v2/interactions.json?genes=PDE10A
+API 2.330: http://www.dgidb.org/api/v2/interactions.json?genes=SOD1
+API 2.332: http://www.dgidb.org/api/v2/interactions.json?genes=RBMS3
+API 2.333: http://www.dgidb.org/api/v2/interactions.json?genes=LINC02210
+API 2.331: http://www.dgidb.org/api/v2/interactions.json?genes=GSTM1
+API 2.315: http://www.dgidb.org/api/v2/interactions.json?genes=ADORA1
+API 3.1: http://mychem.info/v1/query (POST &#34;q=TWSG1,BAG2,WASHC1,AGAP1,HSPA5,DDIT4,CCNT2-AS1,LRRK2-DT,MC1R,DNAJC6,ATXN3,GIGYF2,VPS26A,RHO,XK,LRRK2,LOC100287944,PLEKHM1,RPL6,PDSS2,MAOB,FGB,HGF,TWNK,SLC6A3,FKBP1AP1,EIF4G1,CDNF,DNAJA3,VCP,TMEM189,CASC16,FBP1,TNS1,MIPOL1,SLC6A2,SCG3,TARDBP,MAP4K4,ATP13A2,BDNF,CRLS1,RPL23A,TRIM40,PON1,TMEM175,ITGA8,DRD1,GPR6,ITPKB,TXNIP,DDC,SPTSSB,FKBP1AP3,KPNA1,FAM47E,MAPT-AS1,DAPK2,PRKN,HIP1R,ZCWPW2,BIN3,RHOD,DCTN4,ARHGAP24,CTSB,HSPA8,WASH6P,NAT2,KIAA1109,SH3GL2,FTL,ASXL3,CYP2D6,FKBP1AP2,SYT17,SOD2,PITX3,ATP7A,BRIP1,MAOA,KHDRBS1,CSMD1,IGF1R,RET,ATXN8OS,SGCB,DNAJC10,CLRN3,CLCN3,TIRAP,CNR2,TP53,COPS5,MAPK8,ALDH1A1,SLC2A13,LY6E,SLC44A4,GSTA4,EDN1,SYT1,USP9X,KITLG,TALDO1,TGFA,HSPA9,HSPA4,GXYLT1,CRK,PMVK,EBP,INPP5F,PGAM5,SNCA,MCCC1,TH,FGF18,CHL1-AS1,LRRK1,RPL14,GFPT1,SIPA1L2,PAM,ND1,SYNJ1,FUS,NPS,PARK16,RPS6KL1,TMPRSS9,MFN1,GBF1,RIC3,RAB29,MSMB,ND2,IP6K2,GDNF,EPHB1,SLC11A2,NSF,ATP5PF,PARK7,IL6,CP,COL5A2,TPPP,DNAJC5,MT2A,IGF2,CRMP1,WNT3,CAB39L,ADORA1,GCH1,GPX1,MTNR1B,MZB1,KANSL1,PDE10A,GRK6,GRK2,SOD1,CD8A,NR4A1,STAP1,MSX1,PARL,MOG,DNAJC13,IGKV2-14,FBXO7,PRSS53,BAX,SLC18A2,SLC30A10,SCARB2,DLG2,PINK1,LINC02210-CRHR1,GPR37,DGKQ,EPHX1,IGBP1,IREB2,BCKDK,GSTO2,RPL3,ARL6IP5,TAT,HMOX1,INSR,ASPRV1,NR4A2,COL13A1,UCN2,DNAH8,CXCR4,ITGA2B,ATF4,NUP62,COX4I1,HFE,HLA-DRA,NUCKS1,LOC101927745,P2RX7,CYP17A1,SETD1A,MAP3K5,CHM,BRINP1,DENR,CAT,VPS35,COX17,DRD2,SMAD3,AIF1,KCNIP3,TLR4,UTRN,TRH,RTN4,CHCHD2,VPS13C,LHX1,GPNMB,COX7B,TNF,LINGO1,COX6A1,SQSTM1,HDAC6,IGF2R,MTERF4,LTB,MIR30E,SRY,DNAH17,LHFPL2,CAMK2G,COMT,FMR1,DSG3,GSTP1,FXN,NOS1,TFEB,PAK1,MAG,APP,FAM47E-STBD1,ZNF646,HSPA1A,MAPT,BST1,AKT1,LCN2,RGS10,PTEN,CD24,LINC00476,FAF1,TBC1D5,HTR2A-AS1,NGF,CDK5R1,CEBPZ,RAB39B,EPHX2,FKBP1AP4,PRDM15,MED12L,KCNS3,RNF41,TRIB3,PSMC1,LRPPRC,RPS8,EEF1A2,NFE2L2,NQO1,CNTN1,UBE2M,CDC42,PNPLA8,TMED9,ABCB1,GFAP,CYP2E1,ABCB6,EGF,MAL,GAK,GRM4,HEXIM2,NCAM1,HTRA2,KCNJ4,CCDC62,GSN,TMEM230,RNF141,SKP1,ADCYAP1,MIR185,CHRNA4,CYBB,RIT2,NDUFAF2,DYRK1A,COL11A2,ZP3,FYN,GRN,TAZ,ITIH1,PRDX2,GABPA,SPHK2,GBA,NEDD4,TMEM229B,INS,ATXN2,SIRT1,CA2,CERS2,GSTM1,RBMS3,LINC02210&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 3.2: http://mychem.info/v1/query (POST &#34;q=TWSG1,BAG2,WASHC1,AGAP1,HSPA5,DDIT4,CCNT2-AS1,LRRK2-DT,MC1R,DNAJC6,ATXN3,GIGYF2,VPS26A,RHO,XK,LRRK2,LOC100287944,PLEKHM1,RPL6,PDSS2,MAOB,FGB,HGF,TWNK,SLC6A3,FKBP1AP1,EIF4G1,CDNF,DNAJA3,VCP,TMEM189,CASC16,FBP1,TNS1,MIPOL1,SLC6A2,SCG3,TARDBP,MAP4K4,ATP13A2,BDNF,CRLS1,RPL23A,TRIM40,PON1,TMEM175,ITGA8,DRD1,GPR6,ITPKB,TXNIP,DDC,SPTSSB,FKBP1AP3,KPNA1,FAM47E,MAPT-AS1,DAPK2,PRKN,HIP1R,ZCWPW2,BIN3,RHOD,DCTN4,ARHGAP24,CTSB,HSPA8,WASH6P,NAT2,KIAA1109,SH3GL2,FTL,ASXL3,CYP2D6,FKBP1AP2,SYT17,SOD2,PITX3,ATP7A,BRIP1,MAOA,KHDRBS1,CSMD1,IGF1R,RET,ATXN8OS,SGCB,DNAJC10,CLRN3,CLCN3,TIRAP,CNR2,TP53,COPS5,MAPK8,ALDH1A1,SLC2A13,LY6E,SLC44A4,GSTA4,EDN1,SYT1,USP9X,KITLG,TALDO1,TGFA,HSPA9,HSPA4,GXYLT1,CRK,PMVK,EBP,INPP5F,PGAM5,SNCA,MCCC1,TH,FGF18,CHL1-AS1,LRRK1,RPL14,GFPT1,SIPA1L2,PAM,ND1,SYNJ1,FUS,NPS,PARK16,RPS6KL1,TMPRSS9,MFN1,GBF1,RIC3,RAB29,MSMB,ND2,IP6K2,GDNF,EPHB1,SLC11A2,NSF,ATP5PF,PARK7,IL6,CP,COL5A2,TPPP,DNAJC5,MT2A,IGF2,CRMP1,WNT3,CAB39L,ADORA1,GCH1,GPX1,MTNR1B,MZB1,KANSL1,PDE10A,GRK6,GRK2,SOD1,CD8A,NR4A1,STAP1,MSX1,PARL,MOG,DNAJC13,IGKV2-14,FBXO7,PRSS53,BAX,SLC18A2,SLC30A10,SCARB2,DLG2,PINK1,LINC02210-CRHR1,GPR37,DGKQ,EPHX1,IGBP1,IREB2,BCKDK,GSTO2,RPL3,ARL6IP5,TAT,HMOX1,INSR,ASPRV1,NR4A2,COL13A1,UCN2,DNAH8,CXCR4,ITGA2B,ATF4,NUP62,COX4I1,HFE,HLA-DRA,NUCKS1,LOC101927745,P2RX7,CYP17A1,SETD1A,MAP3K5,CHM,BRINP1,DENR,CAT,VPS35,COX17,DRD2,SMAD3,AIF1,KCNIP3,TLR4,UTRN,TRH,RTN4,CHCHD2,VPS13C,LHX1,GPNMB,COX7B,TNF,LINGO1,COX6A1,SQSTM1,HDAC6,IGF2R,MTERF4,LTB,MIR30E,SRY,DNAH17,LHFPL2,CAMK2G,COMT,FMR1,DSG3,GSTP1,FXN,NOS1,TFEB,PAK1,MAG,APP,FAM47E-STBD1,ZNF646,HSPA1A,MAPT,BST1,AKT1,LCN2,RGS10,PTEN,CD24,LINC00476,FAF1,TBC1D5,HTR2A-AS1,NGF,CDK5R1,CEBPZ,RAB39B,EPHX2,FKBP1AP4,PRDM15,MED12L,KCNS3,RNF41,TRIB3,PSMC1,LRPPRC,RPS8,EEF1A2,NFE2L2,NQO1,CNTN1,UBE2M,CDC42,PNPLA8,TMED9,ABCB1,GFAP,CYP2E1,ABCB6,EGF,MAL,GAK,GRM4,HEXIM2,NCAM1,HTRA2,KCNJ4,CCDC62,GSN,TMEM230,RNF141,SKP1,ADCYAP1,MIR185,CHRNA4,CYBB,RIT2,NDUFAF2,DYRK1A,COL11A2,ZP3,FYN,GRN,TAZ,ITIH1,PRDX2,GABPA,SPHK2,GBA,NEDD4,TMEM229B,INS,ATXN2,SIRT1,CA2,CERS2,GSTM1,RBMS3,LINC02210&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 3.3: http://mychem.info/v1/query (POST &#34;q=TWSG1,BAG2,WASHC1,AGAP1,HSPA5,DDIT4,CCNT2-AS1,LRRK2-DT,MC1R,DNAJC6,ATXN3,GIGYF2,VPS26A,RHO,XK,LRRK2,LOC100287944,PLEKHM1,RPL6,PDSS2,MAOB,FGB,HGF,TWNK,SLC6A3,FKBP1AP1,EIF4G1,CDNF,DNAJA3,VCP,TMEM189,CASC16,FBP1,TNS1,MIPOL1,SLC6A2,SCG3,TARDBP,MAP4K4,ATP13A2,BDNF,CRLS1,RPL23A,TRIM40,PON1,TMEM175,ITGA8,DRD1,GPR6,ITPKB,TXNIP,DDC,SPTSSB,FKBP1AP3,KPNA1,FAM47E,MAPT-AS1,DAPK2,PRKN,HIP1R,ZCWPW2,BIN3,RHOD,DCTN4,ARHGAP24,CTSB,HSPA8,WASH6P,NAT2,KIAA1109,SH3GL2,FTL,ASXL3,CYP2D6,FKBP1AP2,SYT17,SOD2,PITX3,ATP7A,BRIP1,MAOA,KHDRBS1,CSMD1,IGF1R,RET,ATXN8OS,SGCB,DNAJC10,CLRN3,CLCN3,TIRAP,CNR2,TP53,COPS5,MAPK8,ALDH1A1,SLC2A13,LY6E,SLC44A4,GSTA4,EDN1,SYT1,USP9X,KITLG,TALDO1,TGFA,HSPA9,HSPA4,GXYLT1,CRK,PMVK,EBP,INPP5F,PGAM5,SNCA,MCCC1,TH,FGF18,CHL1-AS1,LRRK1,RPL14,GFPT1,SIPA1L2,PAM,ND1,SYNJ1,FUS,NPS,PARK16,RPS6KL1,TMPRSS9,MFN1,GBF1,RIC3,RAB29,MSMB,ND2,IP6K2,GDNF,EPHB1,SLC11A2,NSF,ATP5PF,PARK7,IL6,CP,COL5A2,TPPP,DNAJC5,MT2A,IGF2,CRMP1,WNT3,CAB39L,ADORA1,GCH1,GPX1,MTNR1B,MZB1,KANSL1,PDE10A,GRK6,GRK2,SOD1,CD8A,NR4A1,STAP1,MSX1,PARL,MOG,DNAJC13,IGKV2-14,FBXO7,PRSS53,BAX,SLC18A2,SLC30A10,SCARB2,DLG2,PINK1,LINC02210-CRHR1,GPR37,DGKQ,EPHX1,IGBP1,IREB2,BCKDK,GSTO2,RPL3,ARL6IP5,TAT,HMOX1,INSR,ASPRV1,NR4A2,COL13A1,UCN2,DNAH8,CXCR4,ITGA2B,ATF4,NUP62,COX4I1,HFE,HLA-DRA,NUCKS1,LOC101927745,P2RX7,CYP17A1,SETD1A,MAP3K5,CHM,BRINP1,DENR,CAT,VPS35,COX17,DRD2,SMAD3,AIF1,KCNIP3,TLR4,UTRN,TRH,RTN4,CHCHD2,VPS13C,LHX1,GPNMB,COX7B,TNF,LINGO1,COX6A1,SQSTM1,HDAC6,IGF2R,MTERF4,LTB,MIR30E,SRY,DNAH17,LHFPL2,CAMK2G,COMT,FMR1,DSG3,GSTP1,FXN,NOS1,TFEB,PAK1,MAG,APP,FAM47E-STBD1,ZNF646,HSPA1A,MAPT,BST1,AKT1,LCN2,RGS10,PTEN,CD24,LINC00476,FAF1,TBC1D5,HTR2A-AS1,NGF,CDK5R1,CEBPZ,RAB39B,EPHX2,FKBP1AP4,PRDM15,MED12L,KCNS3,RNF41,TRIB3,PSMC1,LRPPRC,RPS8,EEF1A2,NFE2L2,NQO1,CNTN1,UBE2M,CDC42,PNPLA8,TMED9,ABCB1,GFAP,CYP2E1,ABCB6,EGF,MAL,GAK,GRM4,HEXIM2,NCAM1,HTRA2,KCNJ4,CCDC62,GSN,TMEM230,RNF141,SKP1,ADCYAP1,MIR185,CHRNA4,CYBB,RIT2,NDUFAF2,DYRK1A,COL11A2,ZP3,FYN,GRN,TAZ,ITIH1,PRDX2,GABPA,SPHK2,GBA,NEDD4,TMEM229B,INS,ATXN2,SIRT1,CA2,CERS2,GSTM1,RBMS3,LINC02210&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
 
 
 ==== Step #3: Output normalization ====
 
-API 2.1 dgidb_gene2chemical: No hits
-API 2.2 dgidb_gene2chemical: 35 hits
+API 2.1 dgidb_gene2chemical: 11 hits
+API 2.2 dgidb_gene2chemical: No hits
 API 2.3 dgidb_gene2chemical: No hits
 API 2.4 dgidb_gene2chemical: No hits
 API 2.5 dgidb_gene2chemical: No hits
-API 2.6 dgidb_gene2chemical: 46 hits
+API 2.6 dgidb_gene2chemical: No hits
 API 2.7 dgidb_gene2chemical: No hits
 API 2.8 dgidb_gene2chemical: No hits
-API 2.9 dgidb_gene2chemical: 2 hits
-API 2.10 dgidb_gene2chemical: 71 hits
-API 2.11 dgidb_gene2chemical: No hits
+API 2.9 dgidb_gene2chemical: No hits
+API 2.10 dgidb_gene2chemical: 2 hits
+API 2.11 dgidb_gene2chemical: 1 hits
 API 2.12 dgidb_gene2chemical: No hits
 API 2.13 dgidb_gene2chemical: No hits
 API 2.14 dgidb_gene2chemical: No hits
-API 2.15 dgidb_gene2chemical: 28 hits
-API 2.16 dgidb_gene2chemical: 4 hits
-API 2.17 dgidb_gene2chemical: No hits
+API 2.15 dgidb_gene2chemical: No hits
+API 2.16 dgidb_gene2chemical: No hits
+API 2.17 dgidb_gene2chemical: 9 hits
 API 2.18 dgidb_gene2chemical: No hits
 API 2.19 dgidb_gene2chemical: No hits
-API 2.20 dgidb_gene2chemical: 1 hits
+API 2.20 dgidb_gene2chemical: 2 hits
 API 2.21 dgidb_gene2chemical: No hits
-API 2.22 dgidb_gene2chemical: 1 hits
-API 2.23 dgidb_gene2chemical: 7 hits
-API 2.24 dgidb_gene2chemical: 2 hits
-API 2.25 dgidb_gene2chemical: 5 hits
-API 2.26 dgidb_gene2chemical: 29 hits
-API 2.27 dgidb_gene2chemical: 13 hits
+API 2.22 dgidb_gene2chemical: No hits
+API 2.23 dgidb_gene2chemical: No hits
+API 2.24 dgidb_gene2chemical: 6 hits
+API 2.25 dgidb_gene2chemical: 54 hits
+API 2.26 dgidb_gene2chemical: No hits
+API 2.27 dgidb_gene2chemical: 1 hits
 API 2.28 dgidb_gene2chemical: No hits
-API 2.29 dgidb_gene2chemical: No hits
+API 2.29 dgidb_gene2chemical: 25 hits
 API 2.30 dgidb_gene2chemical: No hits
 API 2.31 dgidb_gene2chemical: No hits
 API 2.32 dgidb_gene2chemical: No hits
-API 2.33 dgidb_gene2chemical: 1 hits
+API 2.33 dgidb_gene2chemical: No hits
 API 2.34 dgidb_gene2chemical: No hits
 API 2.35 dgidb_gene2chemical: No hits
-API 2.36 dgidb_gene2chemical: 72 hits
+API 2.36 dgidb_gene2chemical: 41 hits
 API 2.37 dgidb_gene2chemical: No hits
-API 2.38 dgidb_gene2chemical: 2 hits
+API 2.38 dgidb_gene2chemical: No hits
 API 2.39 dgidb_gene2chemical: No hits
-API 2.40 dgidb_gene2chemical: No hits
-API 2.41 dgidb_gene2chemical: No hits
-API 2.42 dgidb_gene2chemical: 4 hits
-API 2.43 dgidb_gene2chemical: No hits
-API 2.44 dgidb_gene2chemical: 68 hits
+API 2.40 dgidb_gene2chemical: 6 hits
+API 2.41 dgidb_gene2chemical: 16 hits
+API 2.42 dgidb_gene2chemical: No hits
+API 2.43 dgidb_gene2chemical: 2 hits
+API 2.44 dgidb_gene2chemical: No hits
 API 2.45 dgidb_gene2chemical: No hits
-API 2.46 dgidb_gene2chemical: No hits
+API 2.46 dgidb_gene2chemical: 66 hits
 API 2.47 dgidb_gene2chemical: No hits
 API 2.48 dgidb_gene2chemical: No hits
 API 2.49 dgidb_gene2chemical: No hits
-API 2.50 dgidb_gene2chemical: No hits
-API 2.51 dgidb_gene2chemical: 2 hits
-API 2.52 dgidb_gene2chemical: No hits
-API 2.53 dgidb_gene2chemical: 3 hits
-API 2.54 dgidb_gene2chemical: No hits
-API 2.55 dgidb_gene2chemical: No hits
-API 2.56 dgidb_gene2chemical: 2 hits
+API 2.50 dgidb_gene2chemical: 1 hits
+API 2.51 dgidb_gene2chemical: 1 hits
+API 2.52 dgidb_gene2chemical: 4 hits
+API 2.53 dgidb_gene2chemical: No hits
+API 2.54 dgidb_gene2chemical: 16 hits
+API 2.55 dgidb_gene2chemical: 7 hits
+API 2.56 dgidb_gene2chemical: 46 hits
 API 2.57 dgidb_gene2chemical: No hits
-API 2.58 dgidb_gene2chemical: 139 hits
+API 2.58 dgidb_gene2chemical: No hits
 API 2.59 dgidb_gene2chemical: No hits
 API 2.60 dgidb_gene2chemical: No hits
 API 2.61 dgidb_gene2chemical: No hits
-API 2.62 dgidb_gene2chemical: 1 hits
-API 2.63 dgidb_gene2chemical: 9 hits
+API 2.62 dgidb_gene2chemical: No hits
+API 2.63 dgidb_gene2chemical: 1 hits
 API 2.64 dgidb_gene2chemical: No hits
-API 2.65 dgidb_gene2chemical: 6 hits
-API 2.66 dgidb_gene2chemical: No hits
-API 2.67 dgidb_gene2chemical: 104 hits
+API 2.65 dgidb_gene2chemical: No hits
+API 2.66 dgidb_gene2chemical: 6 hits
+API 2.67 dgidb_gene2chemical: No hits
 API 2.68 dgidb_gene2chemical: No hits
-API 2.69 dgidb_gene2chemical: No hits
-API 2.70 dgidb_gene2chemical: 39 hits
-API 2.71 dgidb_gene2chemical: 22 hits
-API 2.72 dgidb_gene2chemical: 1 hits
-API 2.73 dgidb_gene2chemical: No hits
+API 2.69 dgidb_gene2chemical: 15 hits
+API 2.70 dgidb_gene2chemical: 69 hits
+API 2.71 dgidb_gene2chemical: 11 hits
+API 2.72 dgidb_gene2chemical: No hits
+API 2.73 dgidb_gene2chemical: 1 hits
 API 2.74 dgidb_gene2chemical: No hits
-API 2.75 dgidb_gene2chemical: 82 hits
-API 2.76 dgidb_gene2chemical: 11 hits
-API 2.77 dgidb_gene2chemical: No hits
-API 2.78 dgidb_gene2chemical: 2 hits
-API 2.79 dgidb_gene2chemical: 10 hits
-API 2.80 dgidb_gene2chemical: 4 hits
-API 2.81 dgidb_gene2chemical: 3 hits
-API 2.82 dgidb_gene2chemical: 15 hits
+API 2.75 dgidb_gene2chemical: 66 hits
+API 2.76 dgidb_gene2chemical: 1 hits
+API 2.77 dgidb_gene2chemical: 4 hits
+API 2.78 dgidb_gene2chemical: 1 hits
+API 2.79 dgidb_gene2chemical: 3 hits
+API 2.80 dgidb_gene2chemical: No hits
+API 2.81 dgidb_gene2chemical: No hits
+API 2.82 dgidb_gene2chemical: No hits
 API 2.83 dgidb_gene2chemical: No hits
-API 2.84 dgidb_gene2chemical: No hits
+API 2.84 dgidb_gene2chemical: 17 hits
 API 2.85 dgidb_gene2chemical: No hits
 API 2.86 dgidb_gene2chemical: No hits
-API 2.87 dgidb_gene2chemical: 6 hits
-API 2.88 dgidb_gene2chemical: No hits
-API 2.89 dgidb_gene2chemical: No hits
+API 2.87 dgidb_gene2chemical: 7 hits
+API 2.88 dgidb_gene2chemical: 2 hits
+API 2.89 dgidb_gene2chemical: 68 hits
 API 2.90 dgidb_gene2chemical: No hits
 API 2.91 dgidb_gene2chemical: No hits
-API 2.92 dgidb_gene2chemical: 18 hits
+API 2.92 dgidb_gene2chemical: 3 hits
 API 2.93 dgidb_gene2chemical: No hits
-API 2.94 dgidb_gene2chemical: 25 hits
-API 2.95 dgidb_gene2chemical: 1 hits
-API 2.96 dgidb_gene2chemical: No hits
+API 2.94 dgidb_gene2chemical: No hits
+API 2.95 dgidb_gene2chemical: No hits
+API 2.96 dgidb_gene2chemical: 1 hits
 API 2.97 dgidb_gene2chemical: No hits
 API 2.98 dgidb_gene2chemical: No hits
 API 2.99 dgidb_gene2chemical: No hits
-API 2.100 dgidb_gene2chemical: No hits
-API 2.101 dgidb_gene2chemical: 1 hits
+API 2.100 dgidb_gene2chemical: 188 hits
+API 2.101 dgidb_gene2chemical: No hits
 API 2.102 dgidb_gene2chemical: No hits
 API 2.103 dgidb_gene2chemical: No hits
 API 2.104 dgidb_gene2chemical: No hits
@@ -13727,152 +13683,152 @@ API 2.105 dgidb_gene2chemical: No hits
 API 2.106 dgidb_gene2chemical: No hits
 API 2.107 dgidb_gene2chemical: No hits
 API 2.108 dgidb_gene2chemical: No hits
-API 2.109 dgidb_gene2chemical: 4 hits
+API 2.109 dgidb_gene2chemical: No hits
 API 2.110 dgidb_gene2chemical: No hits
 API 2.111 dgidb_gene2chemical: No hits
 API 2.112 dgidb_gene2chemical: No hits
 API 2.113 dgidb_gene2chemical: No hits
 API 2.114 dgidb_gene2chemical: No hits
-API 2.115 dgidb_gene2chemical: No hits
-API 2.116 dgidb_gene2chemical: 8 hits
+API 2.115 dgidb_gene2chemical: 1 hits
+API 2.116 dgidb_gene2chemical: No hits
 API 2.117 dgidb_gene2chemical: No hits
-API 2.118 dgidb_gene2chemical: 24 hits
+API 2.118 dgidb_gene2chemical: 1 hits
 API 2.119 dgidb_gene2chemical: No hits
-API 2.120 dgidb_gene2chemical: 2 hits
+API 2.120 dgidb_gene2chemical: 1 hits
 API 2.121 dgidb_gene2chemical: No hits
-API 2.122 dgidb_gene2chemical: No hits
+API 2.122 dgidb_gene2chemical: 1 hits
 API 2.123 dgidb_gene2chemical: No hits
-API 2.124 dgidb_gene2chemical: 6 hits
+API 2.124 dgidb_gene2chemical: No hits
 API 2.125 dgidb_gene2chemical: No hits
-API 2.126 dgidb_gene2chemical: 2 hits
+API 2.126 dgidb_gene2chemical: 72 hits
 API 2.127 dgidb_gene2chemical: No hits
-API 2.128 dgidb_gene2chemical: 14 hits
+API 2.128 dgidb_gene2chemical: No hits
 API 2.129 dgidb_gene2chemical: No hits
 API 2.130 dgidb_gene2chemical: No hits
 API 2.131 dgidb_gene2chemical: No hits
-API 2.132 dgidb_gene2chemical: 2 hits
-API 2.133 dgidb_gene2chemical: 26 hits
+API 2.132 dgidb_gene2chemical: No hits
+API 2.133 dgidb_gene2chemical: No hits
 API 2.134 dgidb_gene2chemical: No hits
-API 2.135 dgidb_gene2chemical: 17 hits
-API 2.136 dgidb_gene2chemical: No hits
-API 2.137 dgidb_gene2chemical: 17 hits
-API 2.138 dgidb_gene2chemical: No hits
+API 2.135 dgidb_gene2chemical: No hits
+API 2.136 dgidb_gene2chemical: 24 hits
+API 2.137 dgidb_gene2chemical: No hits
+API 2.138 dgidb_gene2chemical: 1 hits
 API 2.139 dgidb_gene2chemical: No hits
 API 2.140 dgidb_gene2chemical: No hits
-API 2.141 dgidb_gene2chemical: No hits
-API 2.142 dgidb_gene2chemical: 1 hits
-API 2.143 dgidb_gene2chemical: No hits
+API 2.141 dgidb_gene2chemical: 2 hits
+API 2.142 dgidb_gene2chemical: 9 hits
+API 2.143 dgidb_gene2chemical: 8 hits
 API 2.144 dgidb_gene2chemical: No hits
-API 2.145 dgidb_gene2chemical: 14 hits
-API 2.146 dgidb_gene2chemical: 4 hits
+API 2.145 dgidb_gene2chemical: No hits
+API 2.146 dgidb_gene2chemical: No hits
 API 2.147 dgidb_gene2chemical: No hits
-API 2.148 dgidb_gene2chemical: No hits
-API 2.149 dgidb_gene2chemical: 188 hits
-API 2.150 dgidb_gene2chemical: No hits
-API 2.151 dgidb_gene2chemical: 2 hits
+API 2.148 dgidb_gene2chemical: 4 hits
+API 2.149 dgidb_gene2chemical: 13 hits
+API 2.150 dgidb_gene2chemical: 14 hits
+API 2.151 dgidb_gene2chemical: No hits
 API 2.152 dgidb_gene2chemical: No hits
-API 2.153 dgidb_gene2chemical: 41 hits
-API 2.154 dgidb_gene2chemical: No hits
-API 2.155 dgidb_gene2chemical: 1 hits
+API 2.153 dgidb_gene2chemical: 50 hits
+API 2.154 dgidb_gene2chemical: 1 hits
+API 2.155 dgidb_gene2chemical: 61 hits
 API 2.156 dgidb_gene2chemical: No hits
-API 2.157 dgidb_gene2chemical: 1 hits
+API 2.157 dgidb_gene2chemical: No hits
 API 2.158 dgidb_gene2chemical: No hits
-API 2.159 dgidb_gene2chemical: 17 hits
+API 2.159 dgidb_gene2chemical: 1 hits
 API 2.160 dgidb_gene2chemical: No hits
 API 2.161 dgidb_gene2chemical: No hits
-API 2.162 dgidb_gene2chemical: 108 hits
+API 2.162 dgidb_gene2chemical: 2 hits
 API 2.163 dgidb_gene2chemical: No hits
-API 2.164 dgidb_gene2chemical: 1 hits
+API 2.164 dgidb_gene2chemical: 82 hits
 API 2.165 dgidb_gene2chemical: No hits
 API 2.166 dgidb_gene2chemical: No hits
 API 2.167 dgidb_gene2chemical: No hits
-API 2.168 dgidb_gene2chemical: 16 hits
-API 2.169 dgidb_gene2chemical: No hits
-API 2.170 dgidb_gene2chemical: No hits
+API 2.168 dgidb_gene2chemical: 1 hits
+API 2.169 dgidb_gene2chemical: 2 hits
+API 2.170 dgidb_gene2chemical: 2 hits
 API 2.171 dgidb_gene2chemical: No hits
-API 2.172 dgidb_gene2chemical: 27 hits
-API 2.173 dgidb_gene2chemical: No hits
-API 2.174 dgidb_gene2chemical: 3 hits
-API 2.175 dgidb_gene2chemical: No hits
-API 2.176 dgidb_gene2chemical: 1 hits
+API 2.172 dgidb_gene2chemical: 5 hits
+API 2.173 dgidb_gene2chemical: 3 hits
+API 2.174 dgidb_gene2chemical: No hits
+API 2.175 dgidb_gene2chemical: 27 hits
+API 2.176 dgidb_gene2chemical: 43 hits
 API 2.177 dgidb_gene2chemical: No hits
-API 2.178 dgidb_gene2chemical: 60 hits
+API 2.178 dgidb_gene2chemical: 1 hits
 API 2.179 dgidb_gene2chemical: No hits
-API 2.180 dgidb_gene2chemical: No hits
-API 2.181 dgidb_gene2chemical: 77 hits
+API 2.180 dgidb_gene2chemical: 104 hits
+API 2.181 dgidb_gene2chemical: No hits
 API 2.182 dgidb_gene2chemical: No hits
 API 2.183 dgidb_gene2chemical: No hits
-API 2.184 dgidb_gene2chemical: 1 hits
+API 2.184 dgidb_gene2chemical: No hits
 API 2.185 dgidb_gene2chemical: No hits
-API 2.186 dgidb_gene2chemical: No hits
-API 2.187 dgidb_gene2chemical: No hits
-API 2.188 dgidb_gene2chemical: 2 hits
+API 2.186 dgidb_gene2chemical: 37 hits
+API 2.187 dgidb_gene2chemical: 39 hits
+API 2.188 dgidb_gene2chemical: No hits
 API 2.189 dgidb_gene2chemical: No hits
 API 2.190 dgidb_gene2chemical: No hits
 API 2.191 dgidb_gene2chemical: No hits
-API 2.192 dgidb_gene2chemical: No hits
+API 2.192 dgidb_gene2chemical: 1 hits
 API 2.193 dgidb_gene2chemical: No hits
-API 2.194 dgidb_gene2chemical: No hits
+API 2.194 dgidb_gene2chemical: 10 hits
 API 2.195 dgidb_gene2chemical: No hits
-API 2.196 dgidb_gene2chemical: 2 hits
-API 2.197 dgidb_gene2chemical: No hits
-API 2.198 dgidb_gene2chemical: 1 hits
+API 2.196 dgidb_gene2chemical: No hits
+API 2.197 dgidb_gene2chemical: 24 hits
+API 2.198 dgidb_gene2chemical: 6 hits
 API 2.199 dgidb_gene2chemical: No hits
-API 2.200 dgidb_gene2chemical: No hits
-API 2.201 dgidb_gene2chemical: No hits
+API 2.200 dgidb_gene2chemical: 6 hits
+API 2.201 dgidb_gene2chemical: 2 hits
 API 2.202 dgidb_gene2chemical: No hits
-API 2.203 dgidb_gene2chemical: 5 hits
+API 2.203 dgidb_gene2chemical: No hits
 API 2.204 dgidb_gene2chemical: 1 hits
 API 2.205 dgidb_gene2chemical: No hits
-API 2.206 dgidb_gene2chemical: No hits
+API 2.206 dgidb_gene2chemical: 1 hits
 API 2.207 dgidb_gene2chemical: No hits
-API 2.208 dgidb_gene2chemical: No hits
+API 2.208 dgidb_gene2chemical: 11 hits
 API 2.209 dgidb_gene2chemical: No hits
-API 2.210 dgidb_gene2chemical: No hits
-API 2.211 dgidb_gene2chemical: 1 hits
+API 2.210 dgidb_gene2chemical: 7 hits
+API 2.211 dgidb_gene2chemical: No hits
 API 2.212 dgidb_gene2chemical: No hits
-API 2.213 dgidb_gene2chemical: 1 hits
-API 2.214 dgidb_gene2chemical: 1 hits
-API 2.215 dgidb_gene2chemical: 6 hits
-API 2.216 dgidb_gene2chemical: 19 hits
+API 2.213 dgidb_gene2chemical: No hits
+API 2.214 dgidb_gene2chemical: 4 hits
+API 2.215 dgidb_gene2chemical: No hits
+API 2.216 dgidb_gene2chemical: No hits
 API 2.217 dgidb_gene2chemical: No hits
-API 2.218 dgidb_gene2chemical: No hits
+API 2.218 dgidb_gene2chemical: 4 hits
 API 2.219 dgidb_gene2chemical: No hits
-API 2.220 dgidb_gene2chemical: 9 hits
-API 2.221 dgidb_gene2chemical: 1 hits
+API 2.220 dgidb_gene2chemical: No hits
+API 2.221 dgidb_gene2chemical: No hits
 API 2.222 dgidb_gene2chemical: No hits
 API 2.223 dgidb_gene2chemical: No hits
 API 2.224 dgidb_gene2chemical: No hits
-API 2.225 dgidb_gene2chemical: No hits
-API 2.226 dgidb_gene2chemical: 61 hits
-API 2.227 dgidb_gene2chemical: No hits
+API 2.225 dgidb_gene2chemical: 19 hits
+API 2.226 dgidb_gene2chemical: 29 hits
+API 2.227 dgidb_gene2chemical: 1 hits
 API 2.228 dgidb_gene2chemical: No hits
 API 2.229 dgidb_gene2chemical: No hits
-API 2.230 dgidb_gene2chemical: No hits
+API 2.230 dgidb_gene2chemical: 2 hits
 API 2.231 dgidb_gene2chemical: 1 hits
-API 2.232 dgidb_gene2chemical: 24 hits
-API 2.233 dgidb_gene2chemical: 69 hits
+API 2.232 dgidb_gene2chemical: No hits
+API 2.233 dgidb_gene2chemical: No hits
 API 2.234 dgidb_gene2chemical: No hits
-API 2.235 dgidb_gene2chemical: No hits
-API 2.236 dgidb_gene2chemical: 66 hits
+API 2.235 dgidb_gene2chemical: 1 hits
+API 2.236 dgidb_gene2chemical: No hits
 API 2.237 dgidb_gene2chemical: No hits
 API 2.238 dgidb_gene2chemical: No hits
-API 2.239 dgidb_gene2chemical: No hits
-API 2.240 dgidb_gene2chemical: No hits
-API 2.241 dgidb_gene2chemical: No hits
-API 2.242 dgidb_gene2chemical: 1 hits
+API 2.239 dgidb_gene2chemical: 28 hits
+API 2.240 dgidb_gene2chemical: 11 hits
+API 2.241 dgidb_gene2chemical: 1 hits
+API 2.242 dgidb_gene2chemical: No hits
 API 2.243 dgidb_gene2chemical: No hits
-API 2.244 dgidb_gene2chemical: 11 hits
-API 2.245 dgidb_gene2chemical: No hits
-API 2.246 dgidb_gene2chemical: No hits
-API 2.247 dgidb_gene2chemical: No hits
-API 2.248 dgidb_gene2chemical: 1 hits
-API 2.249 dgidb_gene2chemical: No hits
+API 2.244 dgidb_gene2chemical: No hits
+API 2.245 dgidb_gene2chemical: 4 hits
+API 2.246 dgidb_gene2chemical: 1 hits
+API 2.247 dgidb_gene2chemical: 1 hits
+API 2.248 dgidb_gene2chemical: No hits
+API 2.249 dgidb_gene2chemical: 17 hits
 API 2.250 dgidb_gene2chemical: No hits
 API 2.251 dgidb_gene2chemical: 1 hits
-API 2.252 dgidb_gene2chemical: 2 hits
-API 2.253 dgidb_gene2chemical: No hits
-API 2.254 dgidb_gene2chemical: 2 hits
+API 2.252 dgidb_gene2chemical: No hits
+API 2.253 dgidb_gene2chemical: 17 hits
+API 2.254 dgidb_gene2chemical: No hits
 API 2.255 dgidb_gene2chemical: 2 hits
 API 2.256 dgidb_gene2chemical: No hits
 API 2.257 dgidb_gene2chemical: No hits
@@ -13881,96 +13837,91 @@ API 2.259 dgidb_gene2chemical: No hits
 API 2.260 dgidb_gene2chemical: No hits
 API 2.261 dgidb_gene2chemical: No hits
 API 2.262 dgidb_gene2chemical: No hits
-API 2.263 dgidb_gene2chemical: 13 hits
-API 2.264 dgidb_gene2chemical: 1 hits
-API 2.265 dgidb_gene2chemical: No hits
-API 2.266 dgidb_gene2chemical: 5 hits
+API 2.263 dgidb_gene2chemical: No hits
+API 2.264 dgidb_gene2chemical: No hits
+API 2.265 dgidb_gene2chemical: 1 hits
+API 2.266 dgidb_gene2chemical: No hits
 API 2.267 dgidb_gene2chemical: No hits
 API 2.268 dgidb_gene2chemical: No hits
 API 2.269 dgidb_gene2chemical: No hits
-API 2.270 dgidb_gene2chemical: 1 hits
+API 2.270 dgidb_gene2chemical: No hits
 API 2.271 dgidb_gene2chemical: No hits
 API 2.272 dgidb_gene2chemical: No hits
-API 2.273 dgidb_gene2chemical: No hits
-API 2.274 dgidb_gene2chemical: 198 hits
+API 2.273 dgidb_gene2chemical: 2 hits
+API 2.274 dgidb_gene2chemical: 3 hits
 API 2.275 dgidb_gene2chemical: No hits
-API 2.276 dgidb_gene2chemical: No hits
-API 2.277 dgidb_gene2chemical: 7 hits
-API 2.278 dgidb_gene2chemical: 7 hits
-API 2.279 dgidb_gene2chemical: 1 hits
-API 2.280 dgidb_gene2chemical: No hits
+API 2.276 dgidb_gene2chemical: 1 hits
+API 2.277 dgidb_gene2chemical: No hits
+API 2.278 dgidb_gene2chemical: No hits
+API 2.279 dgidb_gene2chemical: No hits
+API 2.280 dgidb_gene2chemical: 50 hits
 API 2.281 dgidb_gene2chemical: No hits
-API 2.282 dgidb_gene2chemical: 2 hits
+API 2.282 dgidb_gene2chemical: No hits
 API 2.283 dgidb_gene2chemical: 3 hits
 API 2.284 dgidb_gene2chemical: No hits
-API 2.285 dgidb_gene2chemical: 1 hits
-API 2.286 dgidb_gene2chemical: 24 hits
+API 2.285 dgidb_gene2chemical: No hits
+API 2.286 dgidb_gene2chemical: No hits
 API 2.287 dgidb_gene2chemical: No hits
 API 2.288 dgidb_gene2chemical: No hits
-API 2.289 dgidb_gene2chemical: No hits
-API 2.290 dgidb_gene2chemical: 4 hits
-API 2.291 dgidb_gene2chemical: 3 hits
+API 2.289 dgidb_gene2chemical: 5 hits
+API 2.290 dgidb_gene2chemical: 1 hits
+API 2.291 dgidb_gene2chemical: 2 hits
 API 2.292 dgidb_gene2chemical: No hits
-API 2.293 dgidb_gene2chemical: No hits
+API 2.293 dgidb_gene2chemical: 2 hits
 API 2.294 dgidb_gene2chemical: No hits
-API 2.295 dgidb_gene2chemical: No hits
+API 2.295 dgidb_gene2chemical: 15 hits
 API 2.296 dgidb_gene2chemical: No hits
-API 2.297 dgidb_gene2chemical: No hits
+API 2.297 dgidb_gene2chemical: 1 hits
 API 2.298 dgidb_gene2chemical: No hits
-API 2.299 dgidb_gene2chemical: 3 hits
+API 2.299 dgidb_gene2chemical: No hits
 API 2.300 dgidb_gene2chemical: No hits
-API 2.301 dgidb_gene2chemical: No hits
-API 2.302 dgidb_gene2chemical: No hits
+API 2.301 dgidb_gene2chemical: 24 hits
+API 2.302 dgidb_gene2chemical: 19 hits
 API 2.303 dgidb_gene2chemical: No hits
 API 2.304 dgidb_gene2chemical: No hits
-API 2.305 dgidb_gene2chemical: 1 hits
+API 2.305 dgidb_gene2chemical: No hits
 API 2.306 dgidb_gene2chemical: No hits
 API 2.307 dgidb_gene2chemical: No hits
-API 2.308 dgidb_gene2chemical: 10 hits
-API 2.309 dgidb_gene2chemical: 50 hits
-API 2.310 dgidb_gene2chemical: No hits
+API 2.308 dgidb_gene2chemical: No hits
+API 2.309 dgidb_gene2chemical: 12 hits
+API 2.310 dgidb_gene2chemical: 1 hits
 API 2.311 dgidb_gene2chemical: No hits
-API 2.312 dgidb_gene2chemical: No hits
+API 2.312 dgidb_gene2chemical: 3 hits
 API 2.313 dgidb_gene2chemical: No hits
 API 2.314 dgidb_gene2chemical: No hits
-API 2.315 dgidb_gene2chemical: No hits
-API 2.316 dgidb_gene2chemical: 2 hits
-API 2.317 dgidb_gene2chemical: 6 hits
+API 2.315 dgidb_gene2chemical: 71 hits
+API 2.316 dgidb_gene2chemical: 1 hits
+API 2.317 dgidb_gene2chemical: 5 hits
 API 2.318 dgidb_gene2chemical: 1 hits
 API 2.319 dgidb_gene2chemical: No hits
 API 2.320 dgidb_gene2chemical: No hits
-API 2.321 dgidb_gene2chemical: No hits
+API 2.321 dgidb_gene2chemical: 26 hits
 API 2.322 dgidb_gene2chemical: 2 hits
 API 2.323 dgidb_gene2chemical: No hits
-API 2.324 dgidb_gene2chemical: 1 hits
-API 2.325 dgidb_gene2chemical: 11 hits
+API 2.324 dgidb_gene2chemical: No hits
+API 2.325 dgidb_gene2chemical: 5 hits
 API 2.326 dgidb_gene2chemical: No hits
-API 2.327 dgidb_gene2chemical: 37 hits
-API 2.328 dgidb_gene2chemical: No hits
-API 2.329 dgidb_gene2chemical: 4 hits
-API 2.330 dgidb_gene2chemical: 1 hits
-API 2.331 dgidb_gene2chemical: 1 hits
-API 2.332 dgidb_gene2chemical: No hits
+API 2.327 dgidb_gene2chemical: 14 hits
+API 2.328 dgidb_gene2chemical: 1 hits
+API 2.329 dgidb_gene2chemical: No hits
+API 2.330 dgidb_gene2chemical: 2 hits
+API 2.331 dgidb_gene2chemical: 13 hits
+API 2.332 dgidb_gene2chemical: 1 hits
 API 2.333 dgidb_gene2chemical: No hits
-API 2.334 dgidb_gene2chemical: No hits
-API 2.335 dgidb_gene2chemical: 1 hits
-API 2.336 dgidb_gene2chemical: 2 hits
-API 2.337 dgidb_gene2chemical: 5 hits
-API 2.338 dgidb_gene2chemical: 19 hits
-API 3.1 mychem.info: 352 hits
-API 3.2 mychem.info: 1208 hits
-API 3.3 mychem.info: 1239 hits
-API 1.1 semmedgene: 63036 hits
+API 3.1 mychem.info: 353 hits
+API 3.2 mychem.info: 1094 hits
+API 3.3 mychem.info: 1062 hits
+API 1.1 semmedgene: 62710 hits
 
-After id-to-object translation, BTE retrieved 11358 unique objects.
+After id-to-object translation, BTE retrieved 11162 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-In the #1 query, BTE found 475 unique Gene nodes
-In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
+In the #1 query, BTE found 470 unique Gene nodes
+In the #2 query, BTE found 11162 unique ChemicalSubstance nodes
 </pre>
 </div>
 </div>
@@ -14002,11 +13953,301 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;output_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pred1 == &quot;causedBy&quot; and pred2 == &quot;targetedBy&quot;&#39;</span><span class="p">)</span>
 <span class="n">dfFilt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>input</th>
+      <th>input_type</th>
+      <th>pred1</th>
+      <th>pred1_source</th>
+      <th>pred1_api</th>
+      <th>pred1_pubmed</th>
+      <th>node1_id</th>
+      <th>node1_name</th>
+      <th>node1_type</th>
+      <th>pred2</th>
+      <th>pred2_source</th>
+      <th>pred2_api</th>
+      <th>pred2_pubmed</th>
+      <th>output_id</th>
+      <th>output_name</th>
+      <th>output_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:5728</td>
+      <td>PTEN</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL1684984</td>
+      <td>PA-799</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:627</td>
+      <td>BDNF</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL563</td>
+      <td>FLURBIPROFEN</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:760</td>
+      <td>CA2</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL402262</td>
+      <td>InChI=1S/C14H11ClN2O4S/c15-11-6-5-8(7-12(11)22...</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:207</td>
+      <td>AKT1</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>mychem.info</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>drugbank:DB05971</td>
+      <td>DB05971</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:10846</td>
+      <td>PDE10A</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>mychem.info</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL348000</td>
+      <td>CINCHOPHEN</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>91796</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>mychem.info</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL267930</td>
+      <td>SPIPERONE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>91848</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:7124</td>
+      <td>TNF</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>mychem.info</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>drugbank:DB05758</td>
+      <td>DB05758</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>91865</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL3545388</td>
+      <td>SERIDOPIDINE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>92023</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:2629</td>
+      <td>GBA</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL206468</td>
+      <td>AFEGOSTAT</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>92024</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td></td>
+      <td>entrez:2629</td>
+      <td>GBA</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
+      <td>chembl:CHEMBL206468</td>
+      <td>AFEGOSTAT</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+  </tbody>
+</table>
+<p>2489 rows × 16 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's examine how many unique Parkinsons - GENE - DRUG paths there are:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFiltUnique</span> <span class="o">=</span> <span class="n">dfFilt</span><span class="p">[[</span><span class="s2">&quot;input&quot;</span><span class="p">,</span><span class="s2">&quot;node1_name&quot;</span><span class="p">,</span><span class="s2">&quot;output_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="n">dfFiltUnique</span>
 </pre></div>
 
     </div>
@@ -14043,236 +14284,80 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
     <tr style="text-align: right;">
       <th></th>
       <th>input</th>
-      <th>input_type</th>
-      <th>pred1</th>
-      <th>pred1_source</th>
-      <th>pred1_api</th>
-      <th>pred1_pubmed</th>
-      <th>node1_id</th>
       <th>node1_name</th>
-      <th>node1_type</th>
-      <th>pred2</th>
-      <th>pred2_source</th>
-      <th>pred2_api</th>
-      <th>pred2_pubmed</th>
-      <th>output_id</th>
       <th>output_name</th>
-      <th>output_type</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>34</td>
+      <th>35</th>
       <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5599</td>
-      <td>MAPK8</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
-      <td>None</td>
-      <td>chembl:CHEMBL47</td>
-      <td>VITAMIN E</td>
-      <td>ChemicalSubstance</td>
+      <td>PTEN</td>
+      <td>PA-799</td>
     </tr>
     <tr>
-      <td>69</td>
+      <th>49</th>
       <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:2534</td>
-      <td>FYN</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL442</td>
-      <td>ERGOTAMINE</td>
-      <td>ChemicalSubstance</td>
+      <td>BDNF</td>
+      <td>FLURBIPROFEN</td>
     </tr>
     <tr>
-      <td>98</td>
+      <th>174</th>
       <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:6530</td>
-      <td>SLC6A2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
-      <td>None</td>
-      <td>chembl:CHEMBL716</td>
-      <td>QUETIAPINE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>145</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:134</td>
-      <td>ADORA1</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
-      <td>None</td>
-      <td>chembl:CHEMBL106265</td>
-      <td>8-CYCLOPENTYLTHEOPHYLLINE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>202</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:1813</td>
-      <td>DRD2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
-      <td>None</td>
-      <td>chembl:CHEMBL567</td>
-      <td>PERPHENAZINE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <td>92887</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:1565</td>
-      <td>CYP2D6</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL415</td>
-      <td>CLOMIPRAMINE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>92922</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:6530</td>
-      <td>SLC6A2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL508583</td>
-      <td>TRODUSQUEMINE</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>92979</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:760</td>
       <td>CA2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>drugbank:DB03221</td>
-      <td>InChI=1S/C14H17N3O5S3/c1-16-12-8-17(9-4-3-5-10...</td>
-      <td>ChemicalSubstance</td>
+      <td>InChI=1S/C14H11ClN2O4S/c15-11-6-5-8(7-12(11)22...</td>
     </tr>
     <tr>
-      <td>93021</td>
+      <th>193</th>
       <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:6010</td>
-      <td>RHO</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>drugbank:DB04450</td>
-      <td>InChI=1S/C13H26O5S/c1-2-3-4-5-6-7-19-13-12(17)...</td>
-      <td>ChemicalSubstance</td>
+      <td>AKT1</td>
+      <td>DB05971</td>
     </tr>
     <tr>
-      <td>93026</td>
+      <th>278</th>
       <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:4157</td>
-      <td>MC1R</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
-      <td>None</td>
-      <td>chembl:CHEMBL72</td>
-      <td>DESIPRAMINE</td>
-      <td>ChemicalSubstance</td>
+      <td>PDE10A</td>
+      <td>CINCHOPHEN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>91765</th>
+      <td>Parkinson disease</td>
+      <td>DRD2</td>
+      <td>RACLOPRIDE</td>
+    </tr>
+    <tr>
+      <th>91796</th>
+      <td>Parkinson disease</td>
+      <td>DRD2</td>
+      <td>SPIPERONE</td>
+    </tr>
+    <tr>
+      <th>91848</th>
+      <td>Parkinson disease</td>
+      <td>TNF</td>
+      <td>DB05758</td>
+    </tr>
+    <tr>
+      <th>91865</th>
+      <td>Parkinson disease</td>
+      <td>DRD2</td>
+      <td>SERIDOPIDINE</td>
+    </tr>
+    <tr>
+      <th>92023</th>
+      <td>Parkinson disease</td>
+      <td>GBA</td>
+      <td>AFEGOSTAT</td>
     </tr>
   </tbody>
 </table>
-<p>2483 rows × 16 columns</p>
+<p>1908 rows × 3 columns</p>
 </div>
 </div>
 
@@ -14285,7 +14370,14 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's examine how many unique Parkinsons - GENE - DRUG paths there are:</p>
+<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, let's sort the drugs by the number of proteins that link them to Parkinson's Disease.</p>
 
 </div>
 </div>
@@ -14295,8 +14387,13 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFiltUnique</span> <span class="o">=</span> <span class="n">dfFilt</span><span class="p">[[</span><span class="s2">&quot;input&quot;</span><span class="p">,</span><span class="s2">&quot;node1_name&quot;</span><span class="p">,</span><span class="s2">&quot;output_name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-<span class="n">dfFiltUnique</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">genes</span> <span class="o">=</span> <span class="n">dfFiltUnique</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;output_name&#39;</span><span class="p">])[</span><span class="s1">&#39;node1_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">dfFiltUnique</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;output_name&#39;</span><span class="p">])[</span><span class="s1">&#39;node1_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span> <span class="s1">&#39;genes&#39;</span><span class="p">:</span> <span class="n">genes</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">count</span> <span class="p">}</span> <span class="p">)</span>
+
+<span class="n">result</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14332,81 +14429,168 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>input</th>
-      <th>node1_name</th>
+      <th>genes</th>
+      <th>count</th>
+    </tr>
+    <tr>
       <th>output_name</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>34</td>
-      <td>Parkinson disease</td>
-      <td>MAPK8</td>
-      <td>VITAMIN E</td>
+      <th>ZINC CHLORIDE</th>
+      <td>TP53,FYN,MT2A,PON1,APP,UTRN,GSN,SLC6A2,CA2</td>
+      <td>9</td>
     </tr>
     <tr>
-      <td>69</td>
-      <td>Parkinson disease</td>
-      <td>FYN</td>
-      <td>ERGOTAMINE</td>
+      <th>InChI=1S/Cu</th>
+      <td>BDNF,PARK7,SNCA,APP,GSN,HSPA8,PON1,PRDX2</td>
+      <td>8</td>
     </tr>
     <tr>
-      <td>98</td>
-      <td>Parkinson disease</td>
-      <td>SLC6A2</td>
-      <td>QUETIAPINE</td>
+      <th>TRETINOIN</th>
+      <td>NFE2L2,MAPK8,NR4A1,BAX,FUS,HSPA8</td>
+      <td>6</td>
     </tr>
     <tr>
-      <td>145</td>
-      <td>Parkinson disease</td>
-      <td>ADORA1</td>
-      <td>8-CYCLOPENTYLTHEOPHYLLINE</td>
+      <th>PACLITAXEL</th>
+      <td>AKT1,BDNF,NAT2,FYN,PTEN,MAPT</td>
+      <td>6</td>
     </tr>
     <tr>
-      <td>202</td>
-      <td>Parkinson disease</td>
-      <td>DRD2</td>
-      <td>PERPHENAZINE</td>
+      <th>InChI=1S/Zn</th>
+      <td>UTRN,TP53,GSN,APP,MT2A,PON1</td>
+      <td>6</td>
     </tr>
     <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>ZINC ACETATE</th>
+      <td>UTRN,TP53,MT2A,APP,GSN,PON1</td>
+      <td>6</td>
     </tr>
     <tr>
-      <td>92886</td>
-      <td>Parkinson disease</td>
-      <td>CYP2D6</td>
-      <td>CLOMIPRAMINE</td>
+      <th>LEVODOPA</th>
+      <td>BDNF,DRD2,FYN,COMT,BAX,NR4A1</td>
+      <td>6</td>
     </tr>
     <tr>
-      <td>92922</td>
-      <td>Parkinson disease</td>
-      <td>SLC6A2</td>
-      <td>TRODUSQUEMINE</td>
+      <th>CETUXIMAB</th>
+      <td>PTEN,AKT1,BDNF,BAX,EGF</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td>92979</td>
-      <td>Parkinson disease</td>
-      <td>CA2</td>
-      <td>InChI=1S/C14H17N3O5S3/c1-16-12-8-17(9-4-3-5-10...</td>
+      <th>DESIPRAMINE</th>
+      <td>SLC6A2,CYP2D6,DRD2,MC1R,BDNF</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td>93021</td>
-      <td>Parkinson disease</td>
-      <td>RHO</td>
-      <td>InChI=1S/C13H26O5S/c1-2-3-4-5-6-7-19-13-12(17)...</td>
+      <th>TAMOXIFEN</th>
+      <td>MAPK8,NFE2L2,LRRK2,FYN,ADORA1</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td>93026</td>
-      <td>Parkinson disease</td>
-      <td>MC1R</td>
-      <td>DESIPRAMINE</td>
+      <th>DOCETAXEL</th>
+      <td>GSTM1,NAT2,ATP7A,MAPT,BAX</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>FOSTAMATINIB</th>
+      <td>DAPK2,EPHB1,PAK1,LRRK2,FYN</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>RISPERIDONE</th>
+      <td>CYP2D6,COMT,AKT1,TNF,DRD2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>RESVERATROL</th>
+      <td>MTNR1B,SIRT1,AKT1,SNCA,APP</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>NINTEDANIB</th>
+      <td>MAPK8,DAPK2,FYN,LRRK2,EPHB1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>QUERCETIN</th>
+      <td>CA2,BAX,AKT1,CDK5R1,ADORA1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>DOXORUBICIN</th>
+      <td>BAX,FYN,BDNF,NFE2L2,AKT1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>SUNITINIB</th>
+      <td>DAPK2,EPHB1,LRRK2,FYN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>BUPROPION</th>
+      <td>SLC6A2,CYP2D6,DRD2,COMT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>PHENOBARBITAL</th>
+      <td>TAT,CHRNA4,SLC18A2,BAX</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>ALCOHOL</th>
+      <td>DRD2,NAT2,NFE2L2,CHRNA4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>IMIPRAMINE</th>
+      <td>CYP2D6,SLC6A2,BDNF,DRD2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>HALOPERIDOL</th>
+      <td>BDNF,SLC18A2,DRD2,NR4A1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>ESTRADIOL BENZOATE</th>
+      <td>SLC6A2,FYN,BDNF,CHRNA4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>DOPAMINE</th>
+      <td>SLC6A2,DRD2,MTNR1B,SLC18A2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>IMATINIB</th>
+      <td>EPHB1,MAPK8,FYN,CA2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>NICOTINE</th>
+      <td>NR4A1,BAX,CHRNA4,BDNF</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>NILOTINIB</th>
+      <td>CA2,MAPK8,EPHB1,FYN</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>ERLOTINIB</th>
+      <td>CYP2D6,PTEN,LRRK2,EPHB1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>ADENOSINE TRIPHOSPHATE</th>
+      <td>GRK2,HSPA8,AKT1,P2RX7</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
-<p>1930 rows × 3 columns</p>
 </div>
 </div>
 
@@ -14419,30 +14603,17 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Finally, let's sort the drugs by the number of proteins that link them to Parkinson's Disease.</p>
+<p>Let's focus specifically on drugs that are joined by one of the dopamine receptor genes:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">genes</span> <span class="o">=</span> <span class="n">dfFiltUnique</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;output_name&#39;</span><span class="p">])[</span><span class="s1">&#39;node1_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
-<span class="n">count</span> <span class="o">=</span> <span class="n">dfFiltUnique</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;output_name&#39;</span><span class="p">])[</span><span class="s1">&#39;node1_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span> <span class="s1">&#39;genes&#39;</span><span class="p">:</span> <span class="n">genes</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="n">count</span> <span class="p">}</span> <span class="p">)</span>
-
-<span class="n">result</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;genes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;DRD&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;count &gt;= 3&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14455,7 +14626,7 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -14489,154 +14660,149 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>ZINC CHLORIDE</td>
-      <td>CA2,SLC6A2,GSN,MT2A,TP53,FYN,UTRN,PON1,APP</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <td>InChI=1S/Cu</td>
-      <td>PON1,APP,BDNF,PARK7,PRDX2,GSN,SNCA,HSPA8</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <td>TAMOXIFEN</td>
-      <td>ADORA1,LRRK2,FYN,NFE2L2,TP53,MAPK8</td>
+      <th>LEVODOPA</th>
+      <td>BDNF,DRD2,FYN,COMT,BAX,NR4A1</td>
       <td>6</td>
     </tr>
     <tr>
-      <td>HALOPERIDOL</td>
-      <td>BDNF,HSPA4,DRD2,SLC18A2,TP53,NR4A1</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>ZINC ACETATE</td>
-      <td>MT2A,PON1,APP,GSN,UTRN,TP53</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>PACLITAXEL</td>
-      <td>TP53,FYN,PTEN,MAPT,NAT2,BDNF</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>InChI=1S/Zn</td>
-      <td>MT2A,PON1,APP,UTRN,GSN,TP53</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>RESVERATROL</td>
-      <td>AKT1,SNCA,SIRT1,MTNR1B,APP</td>
+      <th>RISPERIDONE</th>
+      <td>CYP2D6,COMT,AKT1,TNF,DRD2</td>
       <td>5</td>
     </tr>
     <tr>
-      <td>LEVODOPA</td>
-      <td>FYN,BDNF,NR4A1,DRD2,COMT</td>
+      <th>DESIPRAMINE</th>
+      <td>SLC6A2,CYP2D6,DRD2,MC1R,BDNF</td>
       <td>5</td>
     </tr>
     <tr>
-      <td>QUERCETIN</td>
-      <td>AKT1,GABPA,CDK5R1,CA2,ADORA1</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>DESIPRAMINE</td>
-      <td>DRD2,BDNF,SLC6A2,CYP2D6,MC1R</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>TRETINOIN</td>
-      <td>FUS,NFE2L2,MAPK8,NR4A1,HSPA8</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>CHLORPROMAZINE</td>
-      <td>CYP2D6,HSPA4,DRD2,BDNF,FYN</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>ERLOTINIB</td>
-      <td>CYP2D6,LRRK2,PTEN,TP53,EPHB1</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>FOSTAMATINIB</td>
-      <td>PAK1,LRRK2,EPHB1,DAPK2,FYN</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>NINTEDANIB</td>
-      <td>LRRK2,EPHB1,DAPK2,FYN,MAPK8</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>ALCOHOL</td>
-      <td>MT2A,NFE2L2,DRD2,NAT2,CHRNA4</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>PROCHLORPERAZINE</td>
-      <td>FYN,SLC6A2,DRD2,CYP2D6</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>DOCETAXEL</td>
-      <td>NAT2,MAPT,TP53,ATP7A</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>RISPERIDONE</td>
-      <td>COMT,TNF,DRD2,CYP2D6</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>BOSUTINIB</td>
-      <td>PAK1,FYN,EPHB1,LRRK2</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>CETUXIMAB</td>
-      <td>TP53,EGF,BDNF,PTEN</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>DOXORUBICIN</td>
-      <td>FYN,NFE2L2,BDNF,TP53</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>BORTEZOMIB</td>
-      <td>HSPA4,TP53,PSMC1,BDNF</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>IMATINIB</td>
-      <td>EPHB1,MAPK8,CA2,FYN</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>LITHIUM</td>
-      <td>DRD2,BDNF,HSPA4,NFE2L2</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>BUPROPION</td>
-      <td>DRD2,CYP2D6,COMT,SLC6A2</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <td>DOPAMINE</td>
+      <th>DOPAMINE</th>
       <td>SLC6A2,DRD2,MTNR1B,SLC18A2</td>
       <td>4</td>
     </tr>
     <tr>
-      <td>NILOTINIB</td>
-      <td>MAPK8,FYN,CA2,EPHB1</td>
+      <th>PROCHLORPERAZINE</th>
+      <td>FYN,SLC6A2,DRD2,CYP2D6</td>
       <td>4</td>
     </tr>
     <tr>
-      <td>AMPHETAMINE</td>
-      <td>CYP2D6,SLC18A2,SLC6A2,DRD2</td>
+      <th>IMIPRAMINE</th>
+      <td>CYP2D6,SLC6A2,BDNF,DRD2</td>
       <td>4</td>
+    </tr>
+    <tr>
+      <th>HALOPERIDOL</th>
+      <td>BDNF,SLC18A2,DRD2,NR4A1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>ALCOHOL</th>
+      <td>DRD2,NAT2,NFE2L2,CHRNA4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>CHLORPROMAZINE</th>
+      <td>BDNF,CYP2D6,FYN,DRD2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>BUPROPION</th>
+      <td>SLC6A2,CYP2D6,DRD2,COMT</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>AMPHETAMINE</th>
+      <td>SLC18A2,CYP2D6,DRD2,SLC6A2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>DOMPERIDONE</th>
+      <td>SLC6A2,DRD2,CYP2D6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>NEFAZODONE</th>
+      <td>SLC6A2,CYP2D6,DRD2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>THIORIDAZINE</th>
+      <td>DRD2,CYP2D6,FYN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>TETRABENAZINE</th>
+      <td>DRD2,CYP2D6,SLC18A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>BREXPIPRAZOLE</th>
+      <td>SLC6A2,DRD2,CYP2D6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>PAROXETINE</th>
+      <td>CYP2D6,SLC6A2,DRD2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>NORTRIPTYLINE</th>
+      <td>DRD2,SLC6A2,CYP2D6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>NOMIFENSINE</th>
+      <td>SLC18A2,DRD2,SLC6A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>MIANSERIN</th>
+      <td>DRD2,SLC6A2,CYP2D6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>MIRTAZAPINE</th>
+      <td>CYP2D6,SLC6A2,DRD2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>DEXTROAMPHETAMINE</th>
+      <td>DRD2,SLC18A2,SLC6A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>METHAMPHETAMINE</th>
+      <td>SLC6A2,SLC18A2,DRD2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>MAPROTILINE</th>
+      <td>SLC6A2,CYP2D6,DRD2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>LITHIUM</th>
+      <td>NFE2L2,DRD2,BDNF</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>AMOXAPINE</th>
+      <td>CYP2D6,DRD2,SLC6A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>ESCITALOPRAM</th>
+      <td>CYP2D6,DRD2,SLC6A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>ERGOTAMINE</th>
+      <td>FYN,DRD2,SLC6A2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>TRIMIPRAMINE</th>
+      <td>CYP2D6,SLC6A2,DRD2</td>
+      <td>3</td>
     </tr>
   </tbody>
 </table>
@@ -14652,17 +14818,17 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While the list above clearly could benefit from more filtering and sorting, the table provides a wide range of information from our distributed knowledge graph on potential testable hypotheses. For more details on any individual drug candidate, we again can query the original BTE results. For example, here we examine the evidence behind the link between Parkinson's Disease and the drug nintedanib.</p>
+<p>While the list above clearly could benefit from more filtering and sorting, the table provides a wide range of information from our distributed knowledge graph on potential testable hypotheses. For more details on any individual drug candidate, we again can query the original BTE results. For example, here we examine the evidence behind the link between Parkinson's Disease and the drug chlorpromazine.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;output_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;NINTEDANIB&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="nb">all</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;output_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;CHLORPROMAZINE&#39;</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;node1_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;DRD&quot;</span><span class="p">))]]</span>
 </pre></div>
 
     </div>
@@ -14675,7 +14841,7 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -14718,364 +14884,155 @@ In the #2 query, BTE found 11358 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>9105</td>
+      <th>18016</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>disgenet</td>
       <td>mydisease.info</td>
       <td>None</td>
-      <td>entrez:3643</td>
-      <td>INSR</td>
+      <td>entrez:1812</td>
+      <td>DRD1</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>mychem.info</td>
       <td>mychem.info</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>11417</td>
+      <th>18017</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5979</td>
-      <td>RET</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:1812</td>
+      <td>DRD1</td>
+      <td>Gene</td>
+      <td>targetedBy</td>
+      <td>mychem.info</td>
+      <td>mychem.info</td>
+      <td>None</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <th>75084</th>
+      <td>Parkinson disease</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>dgidb</td>
       <td>dgidb_gene2chemical</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>11418</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5979</td>
-      <td>RET</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>43775</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:22848</td>
-      <td>AAK1</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>47749</td>
+      <th>75085</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>disgenet</td>
       <td>mydisease.info</td>
       <td>None</td>
-      <td>entrez:3480</td>
-      <td>IGF1R</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>mychem.info</td>
       <td>mychem.info</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>65089</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>65090</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>65091</td>
+      <th>75086</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>disgenet</td>
       <td>mydisease.info</td>
       <td>None</td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>mychem.info</td>
       <td>mychem.info</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>65092</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>65093</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>65094</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>65095</td>
+      <th>75087</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
       <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>65096</td>
+      <th>75088</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
       <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>mychem.info</td>
       <td>mychem.info</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>65097</td>
+      <th>75089</th>
       <td>Parkinson disease</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>causedBy</td>
       <td>semmed</td>
       <td>semmeddisease</td>
       <td></td>
-      <td>entrez:120892</td>
-      <td>LRRK2</td>
+      <td>entrez:1813</td>
+      <td>DRD2</td>
       <td>Gene</td>
       <td>targetedBy</td>
       <td>mychem.info</td>
       <td>mychem.info</td>
       <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>66497</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:2047</td>
-      <td>EPHB1</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>67488</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:23604</td>
-      <td>DAPK2</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>75926</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:2534</td>
-      <td>FYN</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>90788</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5599</td>
-      <td>MAPK8</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>90789</td>
-      <td>Parkinson disease</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5599</td>
-      <td>MAPK8</td>
-      <td>Gene</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL502835</td>
-      <td>NINTEDANIB</td>
+      <td>chembl:CHEMBL71</td>
+      <td>CHLORPROMAZINE</td>
       <td>ChemicalSubstance</td>
     </tr>
   </tbody>
