@@ -20,6 +20,7 @@ class BioThingsCaller():
     """call biothings APIs"""
     def __init__(self, batch_mode=False):
         self._batch_mode = batch_mode
+        self.retry_count = 5
 
     @property
     def batch_mode(self):
@@ -86,51 +87,62 @@ class BioThingsCaller():
                                                 _input['batch_mode'],
                                                 size=size)
             if not _input['batch_mode']:
-                try:
-                    async with session.get(metadata[_input['api']]['url'],
-                                        params=params) as res:
+                uri_retry_count = 0
+                while(uri_retry_count<self.retry_count):
+                    try:
+                        async with session.get(metadata[_input['api']]['url'],
+                                            params=params) as res:
+                            if verbose:
+                                print("{}: {} - attempted {} time(s) before".format(_input['query_id'], self.print_request('GET', metadata[_input['api']]['url'], params), uri_retry_count))
+                            try:
+                                return await res.json()
+                            except:
+                                print("Unable to fetch results from {}".format(_input['api']))
+                                return {}
+                    except:                                        
+                        uri_retry_count+=1
                         if verbose:
-                            print("{}: {}".format(_input['query_id'], self.print_request('GET', metadata[_input['api']]['url'], params)))
-                        try:
-                            return await res.json()
-                        except:
-                            print("Unable to fetch results from {}".format(_input['api']))
-                            return {}
-                except:
-                    if verbose:
-                        print('{} failed'.format(_input['api']))
+                            print('{} has failed {} time(s)'.format(_input['api'], uri_retry_count))
             # handle cases for API call using POST HTTP method
             else:
                 headers = {'content-type': 'application/x-www-form-urlencoded'}
-                try:
-                    async with session.post(metadata[_input['api']]['url'],
-                                            data=params,
-                                            headers=headers) as res:
+                uri_retry_count = 0
+                while(uri_retry_count<self.retry_count):
+                    try:
+                            async with session.post(metadata[_input['api']]['url'],
+                                                    data=params,
+                                                    headers=headers) as res:
+                                if verbose:
+                                    print("{}: {} - attempted {} time(s) before".format(_input['query_id'], self.print_request("POST", metadata[_input['api']]['url'], params), uri_retry_count))
+                                try:
+                                    return await res.json()
+                                except:
+                                    print("Unable to fetch results from {}".format(_input['api']))
+                                    return {}
+                    except:
+                        uri_retry_count+=1
                         if verbose:
-                            print("{}: {}".format(_input['query_id'], self.print_request("POST", metadata[_input['api']]['url'], params)))
-                        try:
-                            return await res.json()
-                        except:
-                            print("Unable to fetch results from {}".format(_input['api']))
-                            return {}
-                except:
-                    if verbose:
-                        print('{} failed'.format(_input['api']))
+                            print('{} has failed {} time(s)'.format(_input['api'], uri_retry_count))
         else:
             api_url = metadata[_input['api']]['url']
             api_param = metadata[_input['api']]['path']
             path = self.construct_path(api_url, api_param, _input['values'])
-            try:
-                async with session.get(path) as res:
+            uri_retry_count = 0
+            while(uri_retry_count<self.retry_count):
+                try:
+                    async with session.get(path) as res:
+                        if verbose:
+                            print("trying: {}: {} - attempted {} time(s) before".format(_input['query_id'], path, uri_retry_count))
+                        try:
+                            return await res.json()
+                        except:
+                            print("Unable to fetch results from {}".format(_input['api']))
+                            return {}
+                    raise ValueError('Communication failure with API endpoint:{}'.format(_input['api']))
+                except: 
+                    uri_retry_count+=1
                     if verbose:
-                        print("{}: {}".format(_input['query_id'], path))
-                    try:
-                        return await res.json()
-                    except:
-                        return {}
-            except:
-                if verbose:
-                    print('{} failed'.format(_input['api']))
+                        print('{} has failed {} time(s)'.format(_input['api'], uri_retry_count))
 
     async def run(self, inputs, size, verbose=False):
         """asynchronous make one API call
@@ -173,3 +185,4 @@ class BioThingsCaller():
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(inputs, size=size, verbose=verbose))
         return loop.run_until_complete(future)
+        
