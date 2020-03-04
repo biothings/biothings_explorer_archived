@@ -99,7 +99,7 @@ class BioThingsCaller():
                             except:
                                 print("Unable to fetch results from {}".format(_input['api']))
                                 return {}
-                    except:                                        
+                    except:
                         uri_retry_count+=1
                         if verbose:
                             print('{} has failed {} time(s)'.format(_input['api'], uri_retry_count))
