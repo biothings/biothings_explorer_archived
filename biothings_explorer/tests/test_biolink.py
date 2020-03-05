@@ -17,7 +17,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          values='UBERON:0004720',
                                          registry=self.reg)
         seqd.query()
-        self.assertTrue('15859' in seqd.G)
+        self.assertTrue('15859' in seqd.G or '21165' in seqd.G)
 
     def test_disease2gene(self):
         # test <chemical, interactswith, anatomy>
