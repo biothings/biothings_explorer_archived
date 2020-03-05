@@ -1,5 +1,6 @@
 from .biolink import restructure_biolink_response
 from .reasoner import restructure_reasoner_response
+from .stanford import restructure_stanford_response
 
 class APIPreprocess():
 
@@ -13,6 +14,8 @@ class APIPreprocess():
             return restructure_biolink_response(self.json_doc)
         elif self.api_type == 'reasoner':
             return restructure_reasoner_response(self.json_doc)
+        elif self.api_type == 'stanford':
+            return restructure_stanford_response(self.json_doc)
         else:
             return self.json_doc
 
