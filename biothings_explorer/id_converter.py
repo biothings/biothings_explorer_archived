@@ -72,8 +72,8 @@ class IDConverter():
                     results[_type[4:] + ':' + str(_id)] = {_type: [str(_id)]}
             if isinstance(ids, list):
                 ids = [str(i) for i in ids if ' ' not in str(i)]
-            if _type == 'bts:efo':
-                ids = [i.split(':')[-1] for i in ids]
+            #if _type == 'bts:efo':
+            #    ids = [i.split(':')[-1] for i in ids]
             api = self.semantic_type_api_mapping.get(semantic_type)
             # if id can not be converted, the equivalent id is itself
             if not api:
