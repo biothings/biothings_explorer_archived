@@ -12,8 +12,8 @@ id_ranks = {
 
 metadata = {
   "mygene.info": {
-    "scopes": ['entrezgene', 'symbol', 'name', 'HGNC', 'umls.cui', 'uniprot.Swiss-Prot'],
-    "id_ranks": ['entrez', 'symbol', 'hgnc', 'umls', 'uniprot', 'name'],
+    "scopes": ['entrezgene', 'symbol', 'name', 'HGNC', 'umls.cui', 'uniprot.Swiss-Prot', "ensembl.gene"],
+    "id_ranks": ['entrez', 'symbol', 'hgnc', 'umls', 'uniprot', 'ensembl', 'name'],
     "doc_type": "Gene",
     "api_type": "biothings",
     "method": "post",
@@ -27,7 +27,8 @@ metadata = {
       'taxid': 'taxonomy',
       'umls.cui': 'umls',
       'uniprot.Swiss-Prot': 'uniprot',
-      'HGNC': 'hgnc'
+      'HGNC': 'hgnc',
+      "ensembl.gene": 'ensembl'
     },
     'api_name': "mygene.info"
   },
@@ -126,6 +127,30 @@ metadata = {
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     'api_type': "biothings",
     'api_name': 'semmed'
+  },
+  "mgigene2phenotype": {
+    "url": "https://pending.biothings.io/mgigene2phenotype/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mgigene2phenotype/schema.json",
+    'api_type': "biothings",
+    'api_name': 'mgigene2phenotype'
+  },
+  "ebigene2phenotype": {
+    "url": "https://pending.biothings.io/ebigene2phenotype/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/ebigene2phenotype/schema.json",
+    'api_type': "biothings",
+    'api_name': 'ebigene2phenotype'
+  },
+  "DISEASES": {
+    "url": "https://pending.biothings.io/DISEASES/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/DISEASES/schema.json",
+    'api_type': "biothings",
+    'api_name': 'DISEASES'
+  },
+  "pfocr": {
+    "url": "https://pending.biothings.io/pfocr/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/pfocr/schema.json",
+    'api_type': "biothings",
+    'api_name': 'pfocr'
   },
   "pathway": {
     "scopes": ['_id', 'name'],
@@ -407,11 +432,51 @@ metadata = {
     "api_name": "stanford_kp"
   },
   "biosample_cl2sample": {
-    "url": " http://api.kp.metadatacenter.org/biosample/search?q=biolink:CellLine={clo}",
+    "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:CellLine={clo}",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/stanford/cl2sample.json",
     "method": "get",
     "path": "clo",
     "api_type": "stanford",
     "api_name": "stanford_kp"
+  },
+  "chembl_drug_mechanism": {
+    "url": "https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id={chembl}",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/ChEMBL/drugmechanism.json",
+    "method": "get",
+    "path": "chembl",
+    "api_type": "other",
+    "api_name": "ChEMBL"
+  },
+  "ctd_chemical2gene": {
+    "url": "http://ctdbase.org/tools/batchQuery.go?inputType=chem&inputTerms={mesh}|mercury&report=genes_curated&format=json",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/CTD_api/chemical2gene.json",
+    "method": "get",
+    "path": "mesh",
+    "api_type": "ctd",
+    "api_name": "CTD"
+  },
+  "ctd_gene2disease": {
+    "url": "http://ctdbase.org/tools/batchQuery.go?inputType=gene&inputTerms={entrez}&report=diseases_curated&format=json",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/CTD_api/gene2disease.json",
+    "method": "get",
+    "path": "entrez",
+    "api_type": "ctd",
+    "api_name": "CTD"
+  },
+  "opentarget": {
+    "url": "https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target={ensembl}&datasource=chembl&size=15&fields=drug",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/opentarget/gene2chemical.json",
+    "method": "get",
+    "path": "ensembl",
+    "api_type": "opentarget",
+    "api_name": "opentarget"
+  },
+  "RGD": {
+    "url": "https://rest.rgd.mcw.edu/rgdws/genes/{rgd}",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/RGD/schema.json",
+    "method": "get",
+    "path": "rgd",
+    "api_type": "other",
+    "api_name": "RGD"
   }
 }
