@@ -1,10 +1,11 @@
 from itertools import groupby
 
 def restructure_reasoner_response(json_doc):
-    """restructure the API output from reasoner API
+    """Restructure the API output from reasoner API.
     
     parameters
-        * json_doc: json output from reasoner API
+    ----------
+    json_doc: json output from reasoner API
     """
     edges = json_doc['knowledge_graph']['edges']
     if not edges:

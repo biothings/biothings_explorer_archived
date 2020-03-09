@@ -10,15 +10,17 @@ from collections import defaultdict
 
 
 class ReasonerConverter():
+
     """Convert the output of BTE to ReasonerAPIStd."""
 
     def load_bte_query_path(self, start, intermediate, end):
         """Load bte input query in the form of path.
         
         Parameters
-            * start: the input of user query
-            * intermediate: the intermediate nodes connecting input and output
-            * end: the output of user query
+        ----------
+        start : the input of user query
+        intermediate : the intermediate nodes connecting input and output
+        end : the output of user query
         """
         self.path = [start.get('type')]
         self.start = start
@@ -38,7 +40,8 @@ class ReasonerConverter():
         """Load bte output in the format of networkx graph into class.
         
         Parameters
-            * G: the networkx representation of bte output
+        ----------
+        G : the networkx representation of bte output
         """
         self.G = G
         self.nodes = self.G.nodes(data=True)
@@ -47,7 +50,8 @@ class ReasonerConverter():
         """Retrieve the curie representation of node.
         
         Parameters
-            * node: the node id in networkx graph
+        ----------
+        node : the node id in networkx graph
         """
         if not node:
             return str(node)
@@ -59,18 +63,19 @@ class ReasonerConverter():
         else:
             return node
 
-    def hash_id(self, _id):
+    @staticmethod
+    def hash_id(_id):
         """Hash an id.
         
         Parameters
-            * _id: a node or edge id
+        ----------
+        _id : a node or edge id
         """
         hash_obj = hashlib.sha256(str(_id).encode())
         return hash_obj.hexdigest()
 
     def fetch_edges(self):
-        """Reorganize the edges into reasonerSTd format.
-        """
+        """Reorganize the edges into reasonerSTd format."""
         self.result = defaultdict(list)
         edges = []
         for k, v, o in self.G.edges(data=True):
@@ -89,8 +94,7 @@ class ReasonerConverter():
         return edges
 
     def fetch_nodes(self):
-        """Reorganize the nodes into reasonerSTD format.
-        """
+        """Reorganize the nodes into reasonerSTD format."""
         nodes = []
         for k, v in self.nodes:
             name = v['equivalent_ids'].get("bts:name")
@@ -105,10 +109,8 @@ class ReasonerConverter():
             nodes.append(node)
         return nodes
 
-
     def generate_knowledge_graph(self):
-        """Reorganize the nodes and edges into reasonerSTD format.
-        """
+        """Reorganize the nodes and edges into reasonerSTD format."""
         if len(self.G) == 0:
             return {"nodes": [], "edges": []}
         return {"nodes": self.fetch_nodes(),
@@ -158,7 +160,7 @@ class ReasonerConverter():
                     edge_id += 1
         return {"edges": edges,
                 "nodes": nodes}
-    
+
     def generate_result(self):
         result = {"node_bindings": [], "edge_bindings": []}
         for k, v in self.result.items():
@@ -166,9 +168,9 @@ class ReasonerConverter():
             result["node_bindings"].append({"qg_id": "n1", "kg_id": target_id})
             result["edge_bindings"].append({"qg_id": "e1", "kg_id": v})
         return result
-    
+
     def generate_reasoner_response(self):
-        """Generate reasoner response"""
+        """Generate reasoner response."""
         response = {"query_graph": self.generate_question_graph(),
                     "knowledge_graph": self.generate_knowledge_graph()}
         response['results'] = self.generate_result()
