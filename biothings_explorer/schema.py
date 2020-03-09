@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Organize BioThings Schema into networkx graphs.
 
-"""
-biothings_explorer.registry
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
-This module contains code that biothings_explorer use to organize
-BioThings Schema into networkx graphs.
+
 """
 
 import itertools
@@ -15,17 +13,18 @@ import networkx as nx
 
 
 class SchemaExtractor():
-    """ Extract BioThings Schema and construct networkx graph
-    """
+
+    """ Extract BioThings Schema and construct networkx graph."""
 
     def __init__(self, schema):
+        """Load biothings schema"""
         self.se = Schema(schema)
         # get all properties which are descendants of "identifier" property
         self.all_ids = self.se.get_property('identifier',
                                             output_type="curie").descendant_properties
 
     def find_descendants(self, lst):
-        """ Find all descendants for a list of schemaclass classes
+        """ Find all descendants for a list of schemaclass classes.
 
         :arg list lst: a list of schemaclass classes
         """
@@ -37,7 +36,7 @@ class SchemaExtractor():
         return dsc_lst
 
     def find_cls_ids(self, _cls):
-        """ Find all identifiers which belongs to a class
+        """ Find all identifiers which belongs to a class.
 
         :arg cls _cls: a SchemaClass instance
         """
@@ -46,7 +45,7 @@ class SchemaExtractor():
         return properties
 
     def schema2networkx(self):
-        """Convert schema into a networkx graph
+        """Convert schema into a networkx graph.
 
         Logics
         ~~~~~~
