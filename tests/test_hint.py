@@ -56,7 +56,7 @@ class TestHint(unittest.TestCase):
         self.assertEqual(bioentity['type'], 'Gene')
         self.assertEqual(bioentity['primary']['identifier'], 'entrez')
         self.assertEqual(bioentity['primary']['value'], '1017')
-        self.assertEqual(bioentity['symbol'], 'CXCR4')
+        self.assertEqual(bioentity['symbol'], 'CDK2')
 
     def test_gene_uniprot_id_as_input(self):
         """test the output of Hint query when providing gene uniprot id as input"""
