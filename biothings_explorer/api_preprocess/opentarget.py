@@ -1,8 +1,17 @@
+# -*- coding: utf-8 -*-
+"""restructure the output from OpenTarget API
+
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
+
+"""
+
 def restructure_opentarget_response(json_doc):
-    """restructure the API output from opentarget API
+    """Restructure the API output from opentarget API.
     
     parameters
-        * json_doc: json output from opentarget API
+    ----------
+    json_doc: json output from opentarget API
     """
     if not json_doc.get("data"):
         return json_doc
