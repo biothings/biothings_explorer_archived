@@ -127,7 +127,7 @@ class BioThingsCaller():
                         print("{}: {}".format(_input['query_id'], path))
                     try:
                         return await res.json()
-                    except Exception as inst:
+                    except:
                         m = await res.text()
                         return json.loads(m)
             except:
