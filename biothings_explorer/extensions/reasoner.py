@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Convert the output of BTE to ReasonerAPIStd
+"""Convert the output of BTE to ReasonerAPIStd.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -16,11 +16,10 @@ class ReasonerConverter():
     def load_bte_query_path(self, start, intermediate, end):
         """Load bte input query in the form of path.
         
-        Parameters
-        ----------
-        start : the input of user query
-        intermediate : the intermediate nodes connecting input and output
-        end : the output of user query
+        Parameters:
+            start : the input of user query
+            intermediate : the intermediate nodes connecting input and output
+            end : the output of user query
         """
         self.path = [start.get('type')]
         self.start = start
@@ -39,9 +38,8 @@ class ReasonerConverter():
     def load_bte_output(self, G):
         """Load bte output in the format of networkx graph into class.
         
-        Parameters
-        ----------
-        G : the networkx representation of bte output
+        Parameters:
+            G : the networkx representation of bte output
         """
         self.G = G
         self.nodes = self.G.nodes(data=True)
@@ -49,9 +47,8 @@ class ReasonerConverter():
     def get_curie(self, node):
         """Retrieve the curie representation of node.
         
-        Parameters
-        ----------
-        node : the node id in networkx graph
+        Parameters:
+            node : the node id in networkx graph
         """
         if not node:
             return str(node)
@@ -66,10 +63,9 @@ class ReasonerConverter():
     @staticmethod
     def hash_id(_id):
         """Hash an id.
-        
-        Parameters
-        ----------
-        _id : a node or edge id
+
+        Parameters:
+            _id : a node or edge id
         """
         hash_obj = hashlib.sha256(str(_id).encode())
         return hash_obj.hexdigest()
