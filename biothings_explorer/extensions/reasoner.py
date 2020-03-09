@@ -64,7 +64,6 @@ class ReasonerConverter():
     def hash_id(_id):
         """Hash an id.
 
-        Parameters:
         :param _id: a node or edge id
         """
         hash_obj = hashlib.sha256(str(_id).encode())
