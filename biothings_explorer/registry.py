@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Storing metadata information and connectivity of APIs
 
-"""
-biothings_explorer.registry
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
-This module contains code that biothings_explorer use to parse the
-smartAPI registry.
+
 """
 import networkx as nx
 from biothings_schema import Schema
@@ -15,7 +13,7 @@ from .config import metadata
 
 
 class Registry():
-    """Construct network"""
+    """Convert metadata information of APIs into a networkx graph."""
     def __init__(self):
 
         self.G = nx.MultiDiGraph()
@@ -27,7 +25,7 @@ class Registry():
         self.all_outputs = set([d[-1]['output_type'] for d in self.all_edges_info])
 
     def load_biothings(self):
-        """load biothings API into registry network graph"""
+        """Load biothings API into registry network graph."""
         # load biothings schema
         BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
         se = Schema(BIOTHINGS_SCHEMA_PATH)
@@ -46,28 +44,25 @@ class Registry():
         return self.G
 
     def class2id(self, _cls):
-        """find identifiers associated with a class
+        """Find identifiers associated with a class using biothings_schema.py package.
 
-        params
-        ------
-        _cls: str, schema class name
+        Parameters
+            * _cls (str): schema class name
         """
         scls = self.mp.se.get_class(_cls, output_type="curie")
         return [_item['curie'] for _item in scls.list_properties(class_specific=False, group_by_class=False) if _item['curie'] in self.mp.id_list]
 
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):
-        """filter edges based on input, output and label
+        """Filter edges based on input, output and label.
 
         The relationship between bio-entities is represented as a networkx MultiDiGraph in BioThings explorer. This function helps you filter for the relationships of your interest based on input/output/edge info.
 
-        Params
-        ------
-        input_cls: str or list or None, the semantic type(s) of the input.
+        Parameters
+            * input_cls (str|list|None): the semantic type(s) of the input.
                    Optional
-        output_cls: str or list or None, the semantic type(s) of the output.
+            * output_cls (str|list|None): the semantic type(s) of the output.
                     Optional
-        edge_label: str or list or None, the relationship between input and
-                    output
+            * edge_label (str|list|None): the relationship between input and output.
 
         """
         if edge_label:
@@ -80,11 +75,11 @@ class Registry():
         if not input_cls:
             input_cls = self.all_inputs
         # if input_cls is str, convert it to list of one element
-        elif type(input_cls) == str:
+        elif isinstance(input_cls, str):
             input_cls = [input_cls]
         # if no output_cls is specified, set it as all output types
         if not output_cls:
             output_cls = self.all_outputs
-        elif type(output_cls) == str:
+        elif isinstance(output_cls, str):
             output_cls = [output_cls]
         return [d for u,v,d in self.all_edges_info if d['input_type'] in input_cls and d['output_type'] in output_cls and d['label'] in edge_label]
