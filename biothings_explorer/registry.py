@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Storing metadata information and connectivity of APIs
+"""Storing metadata information and connectivity of APIs.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -13,9 +13,10 @@ from .config import metadata
 
 
 class Registry():
+
     """Convert metadata information of APIs into a networkx graph."""
     def __init__(self):
-
+        """initialize networkx graph and load biothings apis"""
         self.G = nx.MultiDiGraph()
         self.registry = {}
         self.load_biothings()
@@ -47,7 +48,8 @@ class Registry():
         """Find identifiers associated with a class using biothings_schema.py package.
 
         Parameters
-            * _cls (str): schema class name
+        ----------
+        _cls (str) : schema class name
         """
         scls = self.mp.se.get_class(_cls, output_type="curie")
         return [_item['curie'] for _item in scls.list_properties(class_specific=False, group_by_class=False) if _item['curie'] in self.mp.id_list]
@@ -58,11 +60,12 @@ class Registry():
         The relationship between bio-entities is represented as a networkx MultiDiGraph in BioThings explorer. This function helps you filter for the relationships of your interest based on input/output/edge info.
 
         Parameters
-            * input_cls (str|list|None): the semantic type(s) of the input.
+        ----------
+        input_cls (str|list|None) : the semantic type(s) of the input.
                    Optional
-            * output_cls (str|list|None): the semantic type(s) of the output.
+        output_cls (str|list|None) : the semantic type(s) of the output.
                     Optional
-            * edge_label (str|list|None): the relationship between input and output.
+        edge_label (str|list|None) : the relationship between input and output.
 
         """
         if edge_label:
