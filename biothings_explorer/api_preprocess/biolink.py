@@ -2,7 +2,8 @@ def restructure_biolink_response(json_doc):
     """ restructure API response from biolink API before extracting data
 
     parameters
-        * json_doc: the API response from biolink API
+    ----------
+    json_doc: the API response from biolink API
 
     notes: list of prefixes used in biolink API for different semantic types
 
@@ -23,7 +24,7 @@ def restructure_biolink_response(json_doc):
                         _doc['object'][prefix] = value
                     else:
                         _doc['object'][prefix] = object_id
-                except:
+                except ValueError:
                     pass
             # remove empty value
             if not _doc['publications']:
@@ -34,6 +35,7 @@ def restructure_biolink_response(json_doc):
             if not _doc['provided_by']:
                 _doc.pop('provided_by')
             else:
+                # extract the database name from uri
                 for i, _item in enumerate(_doc['provided_by']):
                     _doc['provided_by'][i] = _item.split(".")[-2].split("/")[-1]
     return json_doc
