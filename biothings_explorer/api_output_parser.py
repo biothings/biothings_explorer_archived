@@ -7,6 +7,7 @@ biothings_explorer.dispatcher
 This module contains code that biothings_explorer use to communicate to and receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
 """
 from .json_transformer import Transformer
+from .config import metadata
 
 
 class OutputParser():
@@ -15,14 +16,7 @@ class OutputParser():
         self.response = res
         self.mapping = mapping
         self.batch_mode = batch_mode
-        self.BIOTHINGS = ['mygene.info', 'myvariant.info',
-                          'mychem.info', 'mydisease.info',
-                          'semmeddisease', 'semmedanatomy',
-                          'semmedbp', 'semmedchemical',
-                          'semmedgene', 'semmedphenotype', 'bp',
-                          'cc', 'mf', 'pathway', 'umlschem', 'gwascatalog',
-                          'mgigene2phenotype', 'ebigene2phenotype',
-                          'DISEASES', 'pfocr']
+        self.BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
     def parse_biothings_get_res(self):
         """Parse the API response from biothings API using GET method"""
