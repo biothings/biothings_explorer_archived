@@ -55,7 +55,7 @@ class TestHint(unittest.TestCase):
         self.assertEqual(bioentity['hgnc'], '1771')
         self.assertEqual(bioentity['type'], 'Gene')
         self.assertEqual(bioentity['primary']['identifier'], 'entrez')
-        self.assertEqual(bioentity['primary']['value'], '7852')
+        self.assertEqual(bioentity['primary']['value'], '1017')
         self.assertEqual(bioentity['symbol'], 'CXCR4')
 
     def test_gene_uniprot_id_as_input(self):
