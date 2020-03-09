@@ -65,7 +65,7 @@ class ReasonerConverter():
         """Hash an id.
 
         Parameters:
-            _id : a node or edge id
+        _id -- a node or edge id
         """
         hash_obj = hashlib.sha256(str(_id).encode())
         return hash_obj.hexdigest()
