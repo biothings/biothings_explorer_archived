@@ -50,10 +50,10 @@ metadata = {
     'api_name': "myvariant.info"
   },
   "mychem.info": {
-    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id',
+    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id',
                'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
                'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
-    "id_ranks": ['chembl', 'drugbank', 'pubchem', 'mesh', 'name'],
+    "id_ranks": ['chembl', 'drugbank', 'pubchem', 'mesh', 'chebi', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
     "hint": True,
@@ -66,7 +66,8 @@ metadata = {
       'chembl.pref_name': 'name',
       'pubchem.cid': 'pubchem',
       'drugcentral.xrefs.umlscui': 'umls',
-      'drugcentral.xrefs.mesh_descriptor_ui': 'mesh'
+      'drugcentral.xrefs.mesh_descriptor_ui': 'mesh',
+      'chebi.id': 'chebi'
     },
     'api_name': "mychem.info"
   },
@@ -367,9 +368,25 @@ metadata = {
     'api_type': "biolink",
     'api_name': "biolink"
   },
+  "robokop_gene2chemical": {
+    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/chemical_substance/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2chemical.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
   "robokop_gene2genefamily": {
     "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/gene_family/",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2genefamily.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
+  "robokop_chemical2disease": {
+    "url": "https://robokop.renci.org/api/simple/expand/chemical_substance/CHEMBL:{hgnc_id}/disease_or_phenotypic_feature/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/chemical2disease.json",
     "method": "get",
     "path": "hgnc_id",
     'api_type': "reasoner",
