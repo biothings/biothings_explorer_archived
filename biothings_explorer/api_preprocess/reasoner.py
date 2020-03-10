@@ -17,5 +17,9 @@ def restructure_reasoner_response(json_doc):
         for _item in g:
             if _item['target_id'].startswith("PANTHER.FAMILY"):
                 _item['panther'] = _item['target_id'][15:]
+            if _item['target_id'].startswith("CHEBI"):
+                _item['chebi'] = _item['target_id']
+            if _item['target_id'].startswith("CHEMBL:"):
+                _item['chembl'] = _item['target_id'][7:]
             res[k].append(_item)
     return res
