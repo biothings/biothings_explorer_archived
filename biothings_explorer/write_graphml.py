@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""A fix for GraphML write_graphml module
+
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
+
+"""
+
 import warnings
 from collections import defaultdict
 
