@@ -44,8 +44,11 @@ class GraphmlConverter():
                 o.update(o['info'])
                 del o['info']
             for m, n in o.items():
+                print(m,n)
                 if type(n) == list:
                     o[m] = ','.join([str(_item) for _item in n])
+                if not n:
+                    o[m] = 'null'
    
     def generate_graphml_output(self, path):
         """Return the graphml representation of bte output.
@@ -56,6 +59,4 @@ class GraphmlConverter():
         """
         self.restructure_edge_info()
         self.restructure_node_info()
-        print('nodes', self.G.nodes(data=True))
-        print('edges', self.G.edges(data=True))
         return nx.write_graphml(self.G, path)
