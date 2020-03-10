@@ -93,7 +93,7 @@ class Metadata():
     def semantic_network_nx(self, edge="pred"):
         """Convert the meta knowledge graph into a semantic networkx graph"""
         _id = 1
-        G = nx.MultiGraph()
+        G = nx.MultiDiGraph()
         edges = set()
         nodes = set()
         for _, _, info in self.registry.G.edges(data=True):
@@ -109,7 +109,9 @@ class Metadata():
             edge = input_type + '-' + api + '-' + output_type
             if edge not in edges:
                 edges.add(edge)
-                G.add_edge(input_type, output_type, label=api, id=_id)
+                edge_reverse = output_type + '-' + api + '-' + input_type
+                edges.add(edge_reverse)
+                G.add_edge(input_type, output_type, label=api, id='e' + str(_id))
                 _id += 1
         return G
 
