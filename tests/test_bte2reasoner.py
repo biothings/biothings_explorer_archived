@@ -11,8 +11,7 @@ fc.connect(verbose=True)
 response = fc.to_reasoner_std()
 
 class TestSingleHopQuery(unittest.TestCase):
-    def setUp(self):
-        
+
     def test_result_section(self):
         res = requests.post("http://transltr.io:7071/validate_result",
                             headers={"accept": "text/plain", "content-type": "application/json"},
