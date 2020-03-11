@@ -614,13 +614,13 @@ class Predict:
                     if verbose:
                         print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
                         print("==========\n")
-                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
-                                                                     input_cls=input_cls,
-                                                                     output_cls=output_cls,
-                                                                     pred=None)
-                        self.seqd[i + 1].query(verbose=verbose)
-                        self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
-                        self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
+                    self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
+                                                                    input_cls=input_cls,
+                                                                    output_cls=output_cls,
+                                                                    pred=None)
+                    self.seqd[i + 1].query(verbose=verbose)
+                    self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
+                    self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
 
         else:
             pass
