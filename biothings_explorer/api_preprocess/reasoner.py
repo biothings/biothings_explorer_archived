@@ -21,5 +21,8 @@ def restructure_reasoner_response(json_doc):
                 _item['chebi'] = _item['target_id']
             if _item['target_id'].startswith("CHEMBL:"):
                 _item['chembl'] = _item['target_id'][7:]
+            if _item['target_id'].startswith("MONDO:"):
+                _item['mondo'] = _item['target_id'][6:]
+            
             res[k].append(_item)
     return res
