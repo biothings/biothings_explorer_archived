@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-"""Make API calls.
+"""
+Make API calls.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -18,10 +19,11 @@ BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothi
 
 
 class Dispatcher():
+
     """Dispatch API calls."""
 
     def __init__(self, registry=None):
-        """load BTE registry and API caller."""
+        """Load BTE registry and API caller."""
         if not registry:
             self.registry = Registry().registry
         else:
@@ -110,7 +112,7 @@ class Dispatcher():
         return (apis, api_call_inputs, batch_modes, input_values, edges)
 
     def dispatch(self, edges, verbose=False):
-        """send request to and parse response from API"""
+        """Send request to and parse response from API."""
         results = {}
         self.unique_apis = set([_edge['api'] for _edge in edges if _edge])
         self.api_dict = {}
