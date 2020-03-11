@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""API-specific JSON response restructure
+"""
+API-specific JSON response restructure.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -13,17 +14,28 @@ from .ctd import restructure_ctd_response
 from .opentarget import restructure_opentarget_response
 
 class APIPreprocess():
-    """restructure the output of specific APIs
+
+    """
+    Restructure the output of specific APIs.
     
     This is to make sure the JSON output from these APIs could be uniformly consumed by the jsontransform module
     """
+
     def __init__(self, json_doc, api_type, api_name=None):
+        """
+        Load json doc and api info.
+        
+        :param: json_doc: the json_doc to be preprocessed
+        :param: api_type: the type of api, e.g. biothings
+        :param: api_name: optional, the name of api
+        
+        """
         self.api_type = api_type
         self.api_name = api_name
         self.json_doc = json_doc
 
     def restructure(self):
-        """restructue API response"""
+        """Restructue API response."""
         # if input is empty, do not restructure
         if not self.json_doc:
             return self.json_doc
@@ -42,3 +54,4 @@ class APIPreprocess():
             return restructure_opentarget_response(self.json_doc)
         else:
             return self.json_doc
+
