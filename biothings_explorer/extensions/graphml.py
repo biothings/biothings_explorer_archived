@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Convert the output of BTE to GraphML file type
+"""
+Convert the output of BTE to GraphML file type.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -46,7 +47,7 @@ class GraphmlConverter():
                 o.update(o['info'])
                 del o['info']
             for m, n in o.items():
-                if type(n) == list:
+                if isinstance(n, list):
                     o[m] = ','.join([str(_item) for _item in n])
                 if not n:
                     o[m] = 'null'
