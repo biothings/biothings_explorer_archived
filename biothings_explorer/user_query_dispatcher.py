@@ -171,7 +171,7 @@ class SingleEdgeQueryDispatcher():
         """
         if verbose:
             print("==== Step #1: Query path planning ====")
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, str(self.output_cls)))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
