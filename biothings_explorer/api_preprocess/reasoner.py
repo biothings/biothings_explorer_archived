@@ -1,11 +1,10 @@
 from itertools import groupby
 
 def restructure_reasoner_response(json_doc):
-    """Restructure the API output from reasoner API.
+    """
+    Restructure the API output from reasoner API.
     
-    parameters
-    ----------
-    json_doc: json output from reasoner API
+    :param: json_doc: json output from reasoner API
     """
     edges = json_doc['knowledge_graph']['edges']
     if not edges:
@@ -23,6 +22,5 @@ def restructure_reasoner_response(json_doc):
                 _item['chembl'] = _item['target_id'][7:]
             if _item['target_id'].startswith("MONDO:"):
                 _item['mondo'] = _item['target_id'][6:]
-            
             res[k].append(_item)
     return res
