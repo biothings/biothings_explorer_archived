@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
-"""
-biothings_explorer.api_call_dispatcher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""Make API calls.
 
-This module contains code that biothings_explorer use to communicate to
-and receive from APIs. It serves as a glue between "apicall" module and
- "api_output_parser" module.
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
 """
-import string
+
 from itertools import groupby
 from operator import itemgetter
 from .registry import Registry
@@ -21,7 +18,10 @@ BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothi
 
 
 class Dispatcher():
+    """Dispatch API calls."""
+
     def __init__(self, registry=None):
+        """load BTE registry and API caller."""
         if not registry:
             self.registry = Registry().registry
         else:
@@ -29,11 +29,12 @@ class Dispatcher():
         self.caller = BioThingsCaller()
 
     def fetch_schema_mapping_file(self, api):
-        """Fetch schema mapping file from the registry"""
+        """Fetch schema mapping file from the registry."""
         return self.registry[api]['mapping']
 
-    def subset_mapping_file(self, edges, mapping_file):
-        """Only maintain a subset of mapping file based on edge label"""
+    @staticmethod
+    def subset_mapping_file(edges, mapping_file):
+        """Only maintain a subset of mapping file based on edge label."""
         mapping_keys = [_item.get('mapping_key') for _item in edges]
         if mapping_keys:
             mapping_keys += ["@type", "@context"]
@@ -41,17 +42,18 @@ class Dispatcher():
         else:
             return mapping_file
 
-    def group_edges(self, edges):
-        """Group edges based on API and API input"""
+    @staticmethod
+    def group_edges(edges):
+        """Group edges based on API and API input."""
         grouper = itemgetter("api", "input_field")
         groups = []
         # group all edges based on their API and input_field value
-        for key, grp in groupby(sorted(edges, key=grouper), grouper):
+        for _, grp in groupby(sorted(edges, key=grouper), grouper):
             groups.append(list(grp))
         return groups
 
     def construct_api_calls(self, edge_groups):
-        """Construct API calls for apicall module using edge groups"""
+        """Construct API calls for apicall module using edge groups."""
         # store all API call inputs
         api_call_inputs = []
         apis = []
@@ -67,13 +69,13 @@ class Dispatcher():
                 api = _item['api']
                 input_field = _item['input_field']
                 # add output fields
-                if type(_item['output_field']) == list:
+                if isinstance(_item['output_field'], list):
                     for i in _item['output_field']:
                         outputs.add(i)
                 else:
                     outputs.add(_item['output_field'])
                 # add values
-                if type(_item['value']) == list:
+                if isinstance(_item['value'], list):
                     values |= set(_item['value'])
                 else:
                     values.add(_item['value'])
@@ -147,10 +149,10 @@ class Dispatcher():
                         # if key is not present in final res, create a list
                         if k1 not in results[val]:
                             results[val][k1] = []
-                        if type(v) == list:
+                        if isinstance(v, list):
                             hits_cnt += len(v)
                             for _v in v:
-                                if type(_v) == dict:
+                                if isinstance(_v, dict):
                                     _v.update({"$api": edges[0]['api']})
                                     results[val][k1].append(_v)
                                 else:
@@ -158,7 +160,7 @@ class Dispatcher():
                                         edges[0]['output_id']: [_v],
                                         "$source": edges[0]['api'], "$api": edges[0]['api']}
                                     results[val][k1].append(item)
-                        elif type(v) == dict:
+                        elif isinstance(v, dict):
                             hits_cnt += 1
                             v.update({"$api": edges[0]['api']})
                             results[val][k1].append(v)
@@ -192,10 +194,10 @@ class Dispatcher():
                                 k1 = edges[0]['label']
                             if k1 not in results[m]:
                                 results[m][k1] = []
-                            if type(v) == list:
+                            if isinstance(v, list):
                                 hits_cnt += len(v)
                                 for _v in v:
-                                    if type(_v) == dict:
+                                    if isinstance(_v, dict):
                                         _v.update({"$api": edges[0]['api']})
                                         results[m][k1].append(_v)
                                     else:
@@ -204,7 +206,7 @@ class Dispatcher():
                                             "$source": edges[0]['api'],
                                             "$api": edges[0]['api']}
                                         results[m][k1].append(item)
-                            elif type(v) == dict:
+                            elif isinstance(v, dict):
                                 hits_cnt += len(v)
                                 v.update({'$api': edges[0]['api']})
                                 results[m][k1].append(v)
