@@ -42,11 +42,13 @@ class SingleEdgeQueryDispatcher():
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
                  equivalent_ids=None, input_obj=None, registry=None):
+        # load bte registry
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
         self.metadata = Metadata(reg=self.registry)
+        # load id conversion module
         self.idc = IDConverter(registry=self.registry)
         semantic_types = self.metadata.list_all_semantic_types()
         id_types = self.metadata.list_all_id_types()
@@ -171,7 +173,8 @@ class SingleEdgeQueryDispatcher():
         """
         if verbose:
             print("==== Step #1: Query path planning ====")
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, str(self.output_cls)))
+            output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
@@ -218,16 +221,12 @@ class SingleEdgeQueryDispatcher():
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges, verbose=verbose)
-        # t3 = time.time()
-        # print('time to make API calls {}'.format(t3 - t2))
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
         self.equivalent_ids.update(out_equ_ids)
-        # t4 = time.time()
-        # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
         print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
