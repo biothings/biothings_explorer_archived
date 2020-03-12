@@ -13,7 +13,8 @@ import itertools
 import networkx as nx
 from biothings_schema import Schema
 
-from .utils import find_common_path, get_dict_values
+from .utils import load_json_or_yaml, find_common_path, get_dict_values
+from .config import metadata
 
 
 class MappingParser():
@@ -34,12 +35,9 @@ class MappingParser():
         self.linked_prop_list = [_prop.name for _prop in self.se.list_all_defined_properties() if set([_item.name for _item in _prop.range]) & set(self.defined_clses)]
         self.cls_prop_clsf = {}
 
-    def load_mapping(self, mapping, api=None, api_type=None):
-        self.mapping = mapping
-        # name of the API
+    def load_mapping(self, mapping, api=None):
+        self.mapping = load_json_or_yaml(mapping)
         self.api = api
-        # type of the API, e.g. BioThings, BioLink
-        self.api_type = api_type
 
     def classify_keys_in_json(self, json_doc):
         """ classify the keys in a json doc"""
@@ -86,14 +84,13 @@ class MappingParser():
                                    output_id=_edge[1],
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
-                        # for all biothings APIs, add reverse relationship as well
-                        if self.api_type == 'biothings':
+                        if metadata[self.api].get('api_type') == 'biothings':
                             inverse_property = None if not sp.inverse_property else sp.inverse_property.name
                             if not inverse_property:
                                 print(predicate)
                             G.add_edge(_edge[1], _edge[0], api=self.api,
-                                       input_field=output_field,
-                                       input_type=_pred["@type"],
+                                        input_field=output_field,
+                                        input_type=_pred["@type"],
                                         source=source,
                                         input_id=_edge[1],
                                         output_id=_edge[0],
