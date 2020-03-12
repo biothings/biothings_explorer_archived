@@ -2,10 +2,9 @@ import unittest
 from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 
+reg = Registry()
 
 class TestSingleHopQuery(unittest.TestCase):
-    def setUp(self):
-        self.reg = Registry()
 
     def test_chemical2gene(self):
         # test <chemical, target, gene>
@@ -15,7 +14,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:entrez',
                                          pred='bts:target',
                                          values='CHEMBL744',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('6331' in seqd.G)
 
@@ -27,7 +26,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:chembl',
                                          pred='bts:targetedBy',
                                          values='CXCR4',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('CHEMBL518924' in seqd.G)
         self.assertTrue('CHEMBL2104426' in seqd.G)

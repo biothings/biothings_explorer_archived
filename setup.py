@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 install_requires = [
@@ -24,7 +24,7 @@ setup(
     license="BSD",
     keywords="schema biothings",
     url="https://github.com/biothings/biothings_explorer",
-    packages=['biothings_explorer'],
+    packages=find_packages(),
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
@@ -45,5 +45,7 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
     dependency_links=['https://github.com/biothings/biothings_schema.py/master#egg=biothings_schema.py']
 )

@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
+"""Display bioentities in biothings explorer based on user specified input
+
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
 
 """
-biothings_explorer.hint
-~~~~~~~~~~~~~~~~~~~~~~~
 
-Display bioentities in biothings explorer based on user specified input
-"""
 import asyncio
 from aiohttp import ClientSession
 from .config import metadata
-
 BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 
 class Hint():
+    """query any biomedical ID or name into BioThings objects, which contain mappings to many common identifiers. Generally, the top result returned by the Hint module will be the correct item, but you should confirm that using the identifiers shown."""
+
+
     def __init__(self, size=5):
         """Guess appropriate bio-entities based on user input
 
@@ -71,8 +73,7 @@ class Hint():
         """run API call tasks
 
         params
-        ------
-        _input: str, user typed text
+            * _input (str): user typed text
         """
         inputs = []
         for k, v in metadata.items():
@@ -128,12 +129,23 @@ class Hint():
             return final_res
 
     def query(self, _input):
-        """Query APIs based on user input
+        """Query APIs based on user input.
 
-        params
-        ------
-        _input: str, user specified input
+        Parameters
+            * _input (str): user specified input, could be any biomeidcal id or name
+
+        Returns
+            hint Object: A dict containing all possible ids corresponding to the input
+        
+        **Examples**
+
+        >>> from biothings_explorer.hint import Hint
+        >>> ht = Hint()
+        >>> ht.query('CXCR4')
+                
         """
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(_input))
         return loop.run_until_complete(future)
+
+        

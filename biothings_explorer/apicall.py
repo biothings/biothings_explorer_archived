@@ -11,6 +11,7 @@ import requests
 import asyncio
 from aiohttp import ClientSession
 from collections import Counter
+import json
 
 from .config import metadata
 from .utils import add_s
@@ -127,10 +128,12 @@ class BioThingsCaller():
                     try:
                         return await res.json()
                     except:
-                        return {}
+                        m = await res.text()
+                        return json.loads(m)
             except:
                 if verbose:
                     print('{} failed'.format(_input['api']))
+                return {}
 
     async def run(self, inputs, size, verbose=False):
         """asynchronous make one API call

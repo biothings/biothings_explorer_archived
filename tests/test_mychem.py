@@ -2,10 +2,9 @@ import unittest
 from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 
+reg = Registry()
 
 class TestSingleHopQuery(unittest.TestCase):
-    def setUp(self):
-        self.reg = Registry()
 
     def test_chemical2metabolizer(self):
         # test <gene, enableMF, mf>
@@ -15,7 +14,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:symbol',
                                          pred='bts:metabolizedBy',
                                          values='DB00740',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('CYP1A2' in seqd.G)
         seqd = SingleEdgeQueryDispatcher(input_cls='ChemicalSubstance',
@@ -24,7 +23,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:symbol',
                                          pred='bts:metabolizedBy',
                                          values='CHEMBL744',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('CYP1A2' in seqd.G)
 
@@ -36,7 +35,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:symbol',
                                          pred='bts:target',
                                          values='DB00740',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('SCN5A' in seqd.G)
         self.assertTrue('SLC7A11' in seqd.G)
@@ -48,7 +47,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:symbol',
                                          pred='bts:target',
                                          values='CHEMBL744',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('SCN5A' in seqd.G)
 
@@ -60,7 +59,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:umls',
                                          pred='bts:treats',
                                          values='DB00740',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('C0002736' in seqd.G)
 
@@ -72,7 +71,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:umls',
                                          pred='bts:contraindication',
                                          values='DB00740',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('C0001973' in seqd.G)
         self.assertTrue('C0206061' in seqd.G)
