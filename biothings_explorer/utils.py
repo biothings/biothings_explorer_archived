@@ -35,6 +35,8 @@ def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
     """
     if not equivalent_ids:
         return None
+    if _type not in id_ranks:
+        return None
     id_rank = [('bts:' + _item) for _item in id_ranks.get(_type)]
     # loop through id_rank, if the id is found in equivalent ids, return it
     for _item in id_rank:
@@ -45,69 +47,30 @@ def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
         if v:
             return (k[4:] + ':' + str(v[0]))
     
-def get_name_from_equivalent_ids(equivalent_ids):
+def get_name_from_equivalent_ids(equivalent_ids, input_label):
     """find name from equivalent id dict
     
     params
     ------
     equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
+    input_label: desginated input_label
     """
+    if input_label:
+        return input_label
     if not equivalent_ids:
-        return None
+        return "unknown"
     if equivalent_ids.get('bts:symbol'):
         return equivalent_ids.get('bts:symbol')[0]
     elif equivalent_ids.get('bts:name'):
         return equivalent_ids.get('bts:name')[0]
     else:
-        return None
-
-def restructure_gwascatalog(json_doc):
-    """restructure gwascatalog"""
-    if json_doc:
-        associations = json_doc.get('gwascatalog').get("associations")
-        if type(associations) == dict:
-            associations = [associations]
-        for _assoc in associaitons:
-            efo = _assoc.get("efo")
-            if efo:
-                efo_id = efo.get("id")
-                if efo_id:
-                    efo_id = efo_id.split(':')[-1]
-        return json_doc
-
-def restructure_biolink_response(json_doc):
-    """
-    ANATOMY: UBERON, CL, FBbt
-    DISEASE: MONDO
-    GENE: HGNC, NCBIGene, MGI， ZFIN，FlyBase
-    PHENOTYPE: EFO, HP, MONDO
-    """
-    if json_doc and 'associations' in json_doc:
-        for _doc in json_doc['associations']:
-            # remove prefix
-            if 'object' in _doc and 'id' in _doc['object']:
-                object_id = _doc['object']['id']
-                try:
-                    prefix, value = object_id.split(':')
-                    # these IDs have prefix by nature
-                    if prefix in ['HGNC', 'NCBIGene']:
-                        _doc['object'][prefix] = value
-                    else:
-                        _doc['object'][prefix] = object_id
-                except:
-                    pass
-            # remove empty value
-            if not _doc['publications']:
-                _doc.pop('publications')
-            else:
-                for _item in _doc['publications']:
-                    _item['id'] = _item['id'].split(':')[-1]
-            if not _doc['provided_by']:
-                _doc.pop('provided_by')
-            else:
-                for i, _item in enumerate(_doc['provided_by']):
-                    _doc['provided_by'][i] = _item.split(".")[-2].split("/")[-1]
-    return json_doc
+        for v in equivalent_ids.values():
+            if v:
+                if type(v) == list:
+                    return v[0]
+                else:
+                    return v
+        return "unknown"
 
 
 def visualize(edges, size=None):

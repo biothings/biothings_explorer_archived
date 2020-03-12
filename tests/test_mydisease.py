@@ -2,10 +2,10 @@ import unittest
 from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 
+reg = Registry()
+
 
 class TestSingleHopQuery(unittest.TestCase):
-    def setUp(self):
-        self.reg = Registry()
 
     def test_disease2gene(self):
         # test <gene, enableMF, mf>
@@ -15,7 +15,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:entrez',
                                          pred='bts:associatedWith',
                                          values='C0008780',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('10309' in seqd.G)
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
@@ -24,7 +24,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:entrez',
                                          pred='bts:associatedWith',
                                          values='MONDO:0016575',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('10309' in seqd.G)
 
@@ -36,7 +36,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:rsid',
                                          pred='bts:associatedWith',
                                          values='C0011860',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('rs10010131' in seqd.G)
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
@@ -45,7 +45,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:rsid',
                                          pred='bts:associatedWith',
                                          values='MONDO:0015122',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('rs10010131' in seqd.G)
 
@@ -57,7 +57,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:hp',
                                          pred='bts:associatedWith',
                                          values='MONDO:0009079',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('HP:0000007' in seqd.G)
 
@@ -69,7 +69,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:mesh',
                                          pred='bts:associatedWith',
                                          values='MONDO:0002258',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('D014874' in seqd.G)
 
@@ -81,6 +81,6 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:go',
                                          pred='bts:associatedWith',
                                          values='MONDO:0015229',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('GO:0035082' in seqd.G)

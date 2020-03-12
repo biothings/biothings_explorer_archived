@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
-biothings_explorer.user_query_dispatcher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""Accept user query and return results as a graph
 
-Accept user query and return results as a graph
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
 """
 from collections import defaultdict
 import networkx as nx
@@ -17,6 +16,8 @@ from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
 from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
+from .extensions.reasoner import ReasonerConverter
+from .extensions.graphml import GraphmlConverter
 
 
 ID_RANK = {'Gene': 'bts:symbol',
@@ -41,11 +42,13 @@ class SingleEdgeQueryDispatcher():
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
                  equivalent_ids=None, input_obj=None, registry=None):
+        # load bte registry
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
         self.metadata = Metadata(reg=self.registry)
+        # load id conversion module
         self.idc = IDConverter(registry=self.registry)
         semantic_types = self.metadata.list_all_semantic_types()
         id_types = self.metadata.list_all_id_types()
@@ -79,7 +82,7 @@ class SingleEdgeQueryDispatcher():
             else:
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
         else:
-            self.input_label = 'the inputs'
+            self.input_label = None
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
@@ -170,7 +173,8 @@ class SingleEdgeQueryDispatcher():
         """
         if verbose:
             print("==== Step #1: Query path planning ====")
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input".format(self.input_label, self.input_cls, self.input_cls))
+            output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
@@ -203,13 +207,13 @@ class SingleEdgeQueryDispatcher():
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
-                    self.G.add_node(get_name_from_equivalent_ids(v),
+                    self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
                                     identifier="bts:" + k.split(':', 1)[0],
                                     level=1,
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
-                        id_mapping[_id] = get_name_from_equivalent_ids(v)
+                        id_mapping[_id] = get_name_from_equivalent_ids(v, self.input_label)
         if not input_edges:
             if verbose:
                 print("We are sorry! We couln't find any APIs which can do the type of query for you!")
@@ -217,16 +221,12 @@ class SingleEdgeQueryDispatcher():
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
         _res = self.dp.dispatch(input_edges, verbose=verbose)
-        # t3 = time.time()
-        # print('time to make API calls {}'.format(t3 - t2))
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
         self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
         self.equivalent_ids.update(out_equ_ids)
-        # t4 = time.time()
-        # print("time to generate equivalent ids for output {}".format(t4-t3))
         # merge equivalent nodes
         self.merge_equivalent_nodes()
         print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
@@ -301,26 +301,24 @@ class Explain:
     
     There might not be direct evidence showing connection between A and B. The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
 
-    Parameters
-    ----------
-    input_obj: the input object returned from Hint, required
-    output_obj: the output object returned from Hint, required
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
-    
+    Parameters:
+        input_obj: dict
+            the input object returned from Hint, required
+        output_obj: dict
+            the output object returned from Hint, required
+        intermediate_nodes: dict
+            the semantic type(s) of the intermediate node
+            could be None, which represents any semantic type, or a list of semantic types
+        
     Examples
-    --------
-    Find all possible intermediate node(s) connecting asthama and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
+        >>> fc.connect()
 
-    Find all Gene(s) which could connect asthma and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene'])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene'])
+        >>> fc.connect()
 
-    Finall all Gene(s) or ChemicalSubstance(s) which could connect asthma and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
+        >>> fc.connect()
     """
     def __init__(self, input_obj, output_obj,
                  intermediate_nodes=None, registry=None):
@@ -464,9 +462,9 @@ class Explain:
     def display_node_info(self, node):
         """show detailed node information
 
-        Params
-        ------
-        node: str, node id
+        Args:
+            node: str
+                node id
         """
         if node not in self.G:
             raise Exception("{} is not in the graph".format(node))
@@ -613,13 +611,13 @@ class Predict:
                     if verbose:
                         print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
                         print("==========\n")
-                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
-                                                                     input_cls=input_cls,
-                                                                     output_cls=output_cls,
-                                                                     pred=None)
-                        self.seqd[i + 1].query(verbose=verbose)
-                        self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
-                        self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
+                    self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
+                                                                    input_cls=input_cls,
+                                                                    output_cls=output_cls,
+                                                                    pred=None)
+                    self.seqd[i + 1].query(verbose=verbose)
+                    self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
+                    self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
 
         else:
             pass
@@ -736,43 +734,61 @@ class Predict:
 
 class FindConnection:
     """find relationships between one specific entity and another specific entity or other classes of entity types
+        
+        Args:
+            input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                                Examples: 
+                    Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+
+            output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                                entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                                Examples:
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+                    'Gene'
+                    ['Gene','ChemicalSubstance']
+
+            intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                    None                         : no intermediate node, find direct connections only
+                    []                           : no intermediate node, find direct connections only
+                    ['BiologicalEntity']         : one intermediate node of any semantic type
+                    ['Gene']                     : one intermediate node that must be a Gene
+                    [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                    ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                    ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                    **NOTE**: queries with more than one intermediate node are currently not supported
     
-    params
-    ------
-    input_obj: the input object returned from Hint, required
-    output_obj: the class of entities as output, required
-        could be None, str, or a list of entity classes
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
-    
+    **NOTE**: queries with more than one intermediate node are currently not supported
     """
     def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
         """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
         
-        params
-        ------
-        input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                              Examples: 
-                Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
-                Hint().query("acetaminophen")['ChemicalSubstance'][0]
+        Args:
+            input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                                Examples: 
+                    Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
 
-        output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
-                               entity, OR be a string or list of strings corresponding to Biolink Entity classes.
-                               Examples:
-                Hint().query("acetaminophen")['ChemicalSubstance'][0]
-                'Gene'
-                ['Gene','ChemicalSubstance']
+            output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                                entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                                Examples:
+                    Hint().query("acetaminophen")['ChemicalSubstance'][0]
+                    'Gene'
+                    ['Gene','ChemicalSubstance']
 
-        intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
-                None                         : no intermediate node, find direct connections only
-                []                           : no intermediate node, find direct connections only
-                ['BiologicalEntity']         : one intermediate node of any semantic type
-                ['Gene']                     : one intermediate node that must be a Gene
-                [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
-                ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
-                ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
-                                                  **NOTE**: queries with more than one intermediate node are currently not supported
+            intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                    None                         : no intermediate node, find direct connections only
+                    []                           : no intermediate node, find direct connections only
+                    ['BiologicalEntity']         : one intermediate node of any semantic type
+                    ['Gene']                     : one intermediate node that must be a Gene
+                    [('Gene','Pathway')]         : one intermediate node that must be a Gene or a Pathway
+                    ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                    ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                    **NOTE**: queries with more than one intermediate node are currently not supported
         """
+        self.input_obj = input_obj
+        self.output_obj = output_obj
+        self.intermediate_nodes = intermediate_nodes
         if type(output_obj) == dict:
             self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
         else:
@@ -791,19 +807,17 @@ class FindConnection:
     def display_node_info(self, node):
         """show detailed node information
 
-        Params
-        ------
-        node: str, node id
+        Parameters
+            * node (str): node id
         """
         return self.fc.display_node_info(node)
 
     def display_edge_info(self, start_node, end_node):
         """display detailed edge info between start node and end node
 
-        Params
-        ------
-        start_node: str, start node id
-        end_node: str, end node id
+        Parameters
+            * start_node (str): start node id
+            * end_node (str): end node id
         """
         return self.fc.display_edge_info(start_node, end_node)
 
@@ -818,9 +832,30 @@ class FindConnection:
     def display_table_view(self):
         """Display the query results as a pandas table
         
-        Examples
-        --------
+        **Examples**
+
         >>> df = fc.display_table_view()
         >>> df
         """
         return self.fc.display_table_view()
+
+    def to_reasoner_std(self):
+        """convert the output to reasoner api standard
+        """
+        rc = ReasonerConverter()
+        rc.load_bte_query_path(start=self.input_obj,
+                               intermediate=self.intermediate_nodes,
+                               end=self.output_obj)
+        rc.load_bte_output(self.fc.G)
+        return rc.generate_reasoner_response()
+    
+    def to_graphml(self, path):
+        """convert the output to graphml format
+        
+        parameters
+            * path (str): the file path to store the graphml file
+        """
+        rc = GraphmlConverter()
+        rc.load_bte_output(self.fc.G)
+        rc.generate_graphml_output(path)
+        print('graphml file has been saved at {}'.format(path))

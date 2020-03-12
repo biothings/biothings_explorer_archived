@@ -1,22 +1,27 @@
+# -*- coding: utf-8 -*-
+"""A collection of util functions related to networkx
+
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
+
+"""
+
 from collections import defaultdict
 from graphviz import Digraph
 import pandas as pd
-import networkx as nx
-import copy
 import itertools
-from .utils import unlist, get_primary_id_from_equivalent_ids, get_name_from_equivalent_ids
+from .utils import get_primary_id_from_equivalent_ids, get_name_from_equivalent_ids
 
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
-    """Load restructured API response into a networkx MultiDiGraph
+    """Load restructured API response into a networkx MultiDiGraph.
 
-    Params
-    ~~~~~~
-    G: networkx MultiDiGraph
-    _res: restructured API response
-    labels: list of schema properties to extract from API response
-    id_mapping: dict containing mapping between equivalent ids and original ids
-    output_id_types: list of output identifiers
+    Parameters
+        * G: networkx MultiDiGraph
+        * _res: restructured API response
+        * labels: list of schema properties to extract from API response
+        * id_mapping: dict containing mapping between equivalent ids and original ids
+        * output_id_types: list of output identifiers
     """
     # check if API response is empty
     if _res:
@@ -27,7 +32,7 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                 for a, b in n.items():
                     if a in labels:
                         for _b in b:
-                            if type(_b) != dict:
+                            if not isinstance(_b, dict):
                                 G.add_node(str(_b),
                                            identifier=a,
                                            type=n["@type"],
@@ -46,21 +51,21 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                                                          identifier=i,
                                                          type=output_type,
                                                          level=2)
-                                        G.add_edge(id_mapping[m],
-                                                   str(j[0]),
-                                                   info=_b,
-                                                   label=a,
-                                                   source=source)
+                                        for _j in j:
+                                            G.add_edge(id_mapping[m],
+                                                       _j,
+                                                       info=_b,
+                                                       label=a,
+                                                       source=source)
     return G
 
 
 def add_equivalent_ids_to_nodes(G, IDConverter):
-    """Add equivalent ids to each node
+    """Add equivalent ids to each node.
 
-    Params
-    ~~~~~~
-    G: Networkx Graph
-    IDConverter: Python Class in BTE to convert IDs
+    Parameters
+        * G: Networkx Graph
+        * IDConverter: Python Class in BTE to convert IDs
     """
     # check if G is empty
     if not G:
@@ -92,12 +97,11 @@ def add_equivalent_ids_to_nodes(G, IDConverter):
 
 
 def merge_two_networkx_graphs(G1, G2):
-    """Merge two networkx MultiDiGraphs
+    """Merge two networkx MultiDiGraphs.
 
-    Params
-    ------
-    G1: networkx graph as the source graph
-    G2: networkx graph added to G1
+    Parameters
+        * G1: networkx graph as the source graph
+        * G2: networkx graph added to G1
     """
     nodes_to_add = []
     for k, v in G2.nodes(data=True):
@@ -139,19 +143,19 @@ def retrieve_prop_from_edge(edge_info, prop):
     if prop == 'api':
         data = edge_info['info'].get('$api')
         if data:
-            if type(data) != list:
+            if not isinstance(data, list):
                 data = [data]
             return ','.join(data)
     elif prop == 'source':
         data = edge_info['info'].get('$source')
         if data:
-            if type(data) != list:
+            if not isinstance(data, list):
                 data = [data]
             return ','.join(data)
     elif prop == 'pubmed':
         data = edge_info['info'].get('bts:pubmed')
         if data:
-            if type(data) != list:
+            if not isinstance(data, list):
                 data = [data]
             else:
                 data = [str(item) for item in data if not isinstance(item, str)]
@@ -165,10 +169,10 @@ def connect_networkx_to_pandas_df(G, paths, pred1=None,
     data = []
     for _path in paths:
         output_id = get_primary_id_from_equivalent_ids(G.nodes[_path[-1]].get('equivalent_ids'), G.nodes[_path[-1]]['type'])
-        output_name = get_name_from_equivalent_ids(G.nodes[_path[-1]].get('equivalent_ids'))
+        output_name = get_name_from_equivalent_ids(G.nodes[_path[-1]].get('equivalent_ids'), None)
         if len(_path) == 3:
             node1_id = get_primary_id_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), G.nodes[_path[1]]['type'])
-            node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'))
+            node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), None)
             start_edges = dict(G[_path[0]][_path[1]]).values()
             end_edges = dict(G[_path[1]][_path[2]]).values()
             for k, v in itertools.product(start_edges, end_edges):
@@ -213,93 +217,11 @@ def connect_networkx_to_pandas_df(G, paths, pred1=None,
     return df
 
 
-def predict_networkx_to_pandas_df(G, paths, path_length):
-    """Convert the networkx graph from the predict query into pandas table
-    
-    params
-    ------
-    G: the networkx multidigraph from the query
-    paths: all paths connecting from start to end
-    path_length: the length of the query path
-    """
-    data = []
-    for _path in paths:
-        info = {'input': _path[0],
-                'input_type': G.nodes[_path[0]]['type'],
-                'output': _path[-1],
-                'output_type': G.nodes[_path[-1]]['type']}
-        for i in range(1, len(_path) - 1):
-            start_edges = dict(G[_path[i-1]][_path[i]]).values()
-            end_edges = dict(G[_path[1]][_path[2]]).values()
-
-        if len(_path) == 3:
-            node1_id = get_primary_id_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'), G.nodes[_path[1]]['type'])
-            node1_name = get_name_from_equivalent_ids(G.nodes[_path[1]].get('equivalent_ids'))
-            start_edges = dict(G[_path[0]][_path[1]]).values()
-            end_edges = dict(G[_path[1]][_path[2]]).values()
-            for k, v in itertools.product(start_edges, end_edges):
-                data.append({'input': _path[0],
-                             'input_type': G.nodes[_path[0]]['type'],
-                             'pred1': k['label'][4:],
-                             'pred1_source': retrieve_prop_from_edge(G, 'source',
-                                                                _path[0],
-                                                                _path[1]),
-                             'pred1_api': retrieve_prop_from_edge(G, 'api',
-                                                                _path[0],
-                                                                _path[1]),
-                             'pred1_pubmed': retrieve_prop_from_edge(G, 'pubmed',
-                                                                _path[0],
-                                                                _path[1]),
-                             'node1_id': node1_id,
-                             'node1_name': node1_name,
-                             'node1_type': G.nodes[_path[1]]['type'],
-                             'pred2': v['label'][4:],
-                             'pred2_source': retrieve_prop_from_edge(G, 'source',
-                                                                _path[1],
-                                                                _path[2]),
-                             'pred2_api': retrieve_prop_from_edge(G, 'api',
-                                                                _path[1],
-                                                                _path[2]),
-                             'pred2_pubmed': retrieve_prop_from_edge(G, 'pubmed',
-                                                                _path[1],
-                                                                _path[2]),
-                             'output': _path[2],
-                             'output_type': G.nodes[_path[2]]['type']})
-        else:
-            edges = G[_path[0]][_path[1]]
-            for _edge in edges:
-                data.append({'input': _path[0],
-                             'input_type': G.nodes[_path[0]]['type'],
-                             'pred1': _edge['label'],
-                             'source1': retrieve_prop_from_edge(G, 'source',
-                                                                _path[0],
-                                                                _path[1]),
-                             'api1': retrieve_prop_from_edge(G, 'api',
-                                                                _path[0],
-                                                                _path[1]),
-                             'output': _path[1],
-                             'output_type': G.nodes[_path[1]]['type'],
-                             })
-    df = pd.DataFrame(data)
-    if pred1:
-        df = df[(df['pred1'] == pred1)]
-    if intermediate:
-        df = df[(df['intermediate'] == intermediate)]
-    if intermediate_type:
-        df = df[(df['intermediate_type'] == intermediate_type)]
-    if pred2:
-        df = df[(df['pred2'] == pred2)]
-    return df
-
-
-
-
 def networkx_json_to_visjs(res):
-    """Convert JSON output from networkx to visjs compatible version
+    """Convert JSON output from networkx to visjs compatible version.
 
-    Params
-    ------
-    res: JSON output from networkx of the graph
+    Parameters
+        * res: JSON output from networkx of the graph
     """
     colors = {1: 'green', 2: 'red', 3: 'rgba(255,168,7)'}
     if res:

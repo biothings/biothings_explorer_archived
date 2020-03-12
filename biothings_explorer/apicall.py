@@ -9,8 +9,9 @@ biothings schema and biothings API fields
 """
 import requests
 import asyncio
-from aiohttp import ClientSession
+from aiohttp import ClientSession, TCPConnector
 from collections import Counter
+import json
 
 from .config import metadata
 from .utils import add_s
@@ -126,11 +127,14 @@ class BioThingsCaller():
                         print("{}: {}".format(_input['query_id'], path))
                     try:
                         return await res.json()
-                    except:
-                        return {}
+                    except Exception as ex:
+                        print(ex)
+                        m = await res.text()
+                        return json.loads(m)
             except:
                 if verbose:
                     print('{} failed'.format(_input['api']))
+                return {}
 
     async def run(self, inputs, size, verbose=False):
         """asynchronous make one API call
@@ -147,7 +151,7 @@ class BioThingsCaller():
         """
         tasks = []
         # timeout = ClientTimeout(total=15)
-        async with ClientSession() as session:
+        async with ClientSession(connector=TCPConnector(verify_ssl=False)) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
                                                                size=size,
