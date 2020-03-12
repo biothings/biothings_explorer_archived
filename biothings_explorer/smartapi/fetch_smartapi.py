@@ -1,16 +1,15 @@
-from pathlib import Path, PurePath
+from pathlib import Path
 import json
 import requests
-from requests.exceptions import ConnectionError
 
 CURRENT_PATH = Path(__file__)
 SPECS_FOLDER_PATH = Path.joinpath(CURRENT_PATH.parent, 'specs')
 SMARTAPI_URL = 'http://smart-api.info/api/query/?q=tags.name:translator&size=200'
 
 def create_specs_folder():
-    """Create an empty folder storing smartapi specs"""
+    """Create an empty folder storing smartapi specs."""
     if Path(SPECS_FOLDER_PATH).exists():
-        # remove existing docs in the folder 
+        # remove existing docs in the folder
         for x in Path(SPECS_FOLDER_PATH).iterdir():
             Path.unlink(x)
     else:
@@ -18,7 +17,7 @@ def create_specs_folder():
         print("'{}' folder has been created!".format(SPECS_FOLDER_PATH))
 
 def check_if_exists_x_bte_kgs_operation(specs):
-    """Check if x-bte-kgs-operation field presents in smartapi specs
+    """Check if x-bte-kgs-operation field presents in smartapi specs.
     
     :param: specs: the JSON smartapi specs
     """
@@ -29,7 +28,7 @@ def check_if_exists_x_bte_kgs_operation(specs):
 
 def get_api_title(specs):
     """Fetch the API title
-    
+
     :param: specs: the JSON smartapi specs
     """
     return specs['info']['title']
