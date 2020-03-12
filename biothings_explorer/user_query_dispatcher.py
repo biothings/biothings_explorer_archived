@@ -301,26 +301,24 @@ class Explain:
     
     There might not be direct evidence showing connection between A and B. The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
 
-    Parameters
-    ----------
-    input_obj: the input object returned from Hint, required
-    output_obj: the output object returned from Hint, required
-    intermediate_nodes: the semantic type(s) of the intermediate node
-        could be None, which represents any semantic type, or a list of semantic types
-    
+    Parameters:
+        input_obj: dict
+            the input object returned from Hint, required
+        output_obj: dict
+            the output object returned from Hint, required
+        intermediate_nodes: dict
+            the semantic type(s) of the intermediate node
+            could be None, which represents any semantic type, or a list of semantic types
+        
     Examples
-    --------
-    Find all possible intermediate node(s) connecting asthama and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
+        >>> fc.connect()
 
-    Find all Gene(s) which could connect asthma and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene'])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene'])
+        >>> fc.connect()
 
-    Finall all Gene(s) or ChemicalSubstance(s) which could connect asthma and imatinib
-    >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
-    >>> fc.connect()
+        >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
+        >>> fc.connect()
     """
     def __init__(self, input_obj, output_obj,
                  intermediate_nodes=None, registry=None):
@@ -464,9 +462,9 @@ class Explain:
     def display_node_info(self, node):
         """show detailed node information
 
-        Params
-        ------
-        node: str, node id
+        Args:
+            node: str
+                node id
         """
         if node not in self.G:
             raise Exception("{} is not in the graph".format(node))
@@ -760,6 +758,7 @@ class FindConnection:
                     ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
                                                     **NOTE**: queries with more than one intermediate node are currently not supported
     
+    **NOTE**: queries with more than one intermediate node are currently not supported
     """
     def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
         """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
@@ -808,19 +807,17 @@ class FindConnection:
     def display_node_info(self, node):
         """show detailed node information
 
-        Params
-        ------
-        node: str, node id
+        Parameters
+            * node (str): node id
         """
         return self.fc.display_node_info(node)
 
     def display_edge_info(self, start_node, end_node):
         """display detailed edge info between start node and end node
 
-        Params
-        ------
-        start_node: str, start node id
-        end_node: str, end node id
+        Parameters
+            * start_node (str): start node id
+            * end_node (str): end node id
         """
         return self.fc.display_edge_info(start_node, end_node)
 
@@ -835,8 +832,8 @@ class FindConnection:
     def display_table_view(self):
         """Display the query results as a pandas table
         
-        Examples
-        --------
+        **Examples**
+
         >>> df = fc.display_table_view()
         >>> df
         """
@@ -855,14 +852,10 @@ class FindConnection:
     def to_graphml(self, path):
         """convert the output to graphml format
         
-        params
-        ======
-        path: the file path to store the graphml file
+        parameters
+            * path (str): the file path to store the graphml file
         """
         rc = GraphmlConverter()
         rc.load_bte_output(self.fc.G)
         rc.generate_graphml_output(path)
         print('graphml file has been saved at {}'.format(path))
-
-
-
