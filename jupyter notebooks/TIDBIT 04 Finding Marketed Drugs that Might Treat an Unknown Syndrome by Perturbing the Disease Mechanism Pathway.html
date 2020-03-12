@@ -14566,6 +14566,73 @@ In the #2 query, BTE found 6103 unique ChemicalSubstance nodes
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[22]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;entrez:7422&#39;, &#39;entrez:1385&#39;, &#39;entrez:7124&#39;, &#39;entrez:10013&#39;,
+       &#39;entrez:5657&#39;, &#39;entrez:4547&#39;], dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[25]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;VEGFA&#39;, &#39;CREB1&#39;, &#39;TNF&#39;, &#39;HDAC6&#39;, &#39;PRTN3&#39;, &#39;MTTP&#39;], dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14576,20 +14643,20 @@ In the #2 query, BTE found 6103 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's see if PRDX1 (entrez:5052) is in the same pathway as VEGFA (entrez:7422) using our newly created API <a href="http://pending.biothings.io/pfocr">PFOCR</a></p>
+<p>Let's see if PRDX1 (entrez:5052) is in the same pathway as TNF (entrez:7124) using our newly created API <a href="http://pending.biothings.io/pfocr">PFOCR</a></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="c1"># query pfocr to see if PRDX1 and VEGFA is in the same pathway figure</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://pending.biothings.io/pfocr/query?q=associatedWith.genes:5052 AND associatedWith.genes:7422&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://pending.biothings.io/pfocr/query?q=associatedWith.genes:5052 AND associatedWith.genes:7124&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 <span class="n">doc</span>
 </pre></div>
 
@@ -14603,134 +14670,46 @@ In the #2 query, BTE found 6103 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;max_score&#39;: 10.06258,
- &#39;took&#39;: 1,
+<pre>{&#39;max_score&#39;: 9.817886,
+ &#39;took&#39;: 2,
  &#39;total&#39;: 1,
- &#39;hits&#39;: [{&#39;_id&#39;: &#39;PMC4776098__srep22392-f1.jpg&#39;,
-   &#39;_score&#39;: 10.06258,
-   &#39;associatedWith&#39;: {&#39;figureUrl&#39;: &#39;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4776098/bin/srep22392-f1.jpg&#39;,
-    &#39;genes&#39;: [&#39;1000&#39;,
-     &#39;10013&#39;,
-     &#39;10451&#39;,
-     &#39;10540&#39;,
-     &#39;10657&#39;,
-     &#39;1072&#39;,
-     &#39;1147&#39;,
-     &#39;116085&#39;,
-     &#39;1232&#39;,
-     &#39;1410&#39;,
-     &#39;1499&#39;,
-     &#39;1600&#39;,
-     &#39;161003&#39;,
-     &#39;1654&#39;,
-     &#39;1956&#39;,
-     &#39;207&#39;,
-     &#39;2113&#39;,
-     &#39;2146&#39;,
-     &#39;2194&#39;,
-     &#39;226&#39;,
-     &#39;2308&#39;,
-     &#39;2309&#39;,
-     &#39;2324&#39;,
-     &#39;2475&#39;,
-     &#39;2495&#39;,
-     &#39;25&#39;,
-     &#39;25759&#39;,
-     &#39;2885&#39;,
-     &#39;2902&#39;,
-     &#39;3091&#39;,
-     &#39;3181&#39;,
-     &#39;3326&#39;,
-     &#39;3329&#39;,
-     &#39;3397&#39;,
-     &#39;3399&#39;,
-     &#39;3717&#39;,
-     &#39;3791&#39;,
-     &#39;3921&#39;,
-     &#39;3927&#39;,
-     &#39;399694&#39;,
-     &#39;4092&#39;,
-     &#39;4171&#39;,
-     &#39;4172&#39;,
-     &#39;4176&#39;,
-     &#39;4282&#39;,
-     &#39;4306&#39;,
-     &#39;4602&#39;,
-     &#39;4609&#39;,
-     &#39;4627&#39;,
-     &#39;4628&#39;,
-     &#39;4846&#39;,
-     &#39;4869&#39;,
-     &#39;5013&#39;,
+ &#39;hits&#39;: [{&#39;_id&#39;: &#39;PMC4749872__molce-39-1-40f1.jpg&#39;,
+   &#39;_score&#39;: 9.817886,
+   &#39;associatedWith&#39;: {&#39;figureUrl&#39;: &#39;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4749872/bin/molce-39-1-40f1.jpg&#39;,
+    &#39;genes&#39;: [&#39;11221&#39;,
+     &#39;1432&#39;,
+     &#39;1843&#39;,
+     &#39;3163&#39;,
+     &#39;369&#39;,
+     &#39;4217&#39;,
+     &#39;4297&#39;,
      &#39;5052&#39;,
-     &#39;5058&#39;,
-     &#39;5062&#39;,
-     &#39;5063&#39;,
-     &#39;5080&#39;,
-     &#39;5156&#39;,
-     &#39;5290&#39;,
-     &#39;5308&#39;,
-     &#39;5330&#39;,
-     &#39;5335&#39;,
-     &#39;53358&#39;,
-     &#39;5480&#39;,
-     &#39;5578&#39;,
-     &#39;5580&#39;,
-     &#39;5587&#39;,
-     &#39;5590&#39;,
      &#39;5594&#39;,
+     &#39;5595&#39;,
      &#39;5599&#39;,
+     &#39;5600&#39;,
+     &#39;5601&#39;,
+     &#39;5602&#39;,
+     &#39;5603&#39;,
      &#39;5604&#39;,
      &#39;5605&#39;,
-     &#39;5730&#39;,
-     &#39;5764&#39;,
-     &#39;5803&#39;,
-     &#39;5880&#39;,
+     &#39;5606&#39;,
+     &#39;5607&#39;,
+     &#39;5608&#39;,
+     &#39;5609&#39;,
      &#39;5894&#39;,
-     &#39;5979&#39;,
-     &#39;6004&#39;,
-     &#39;6097&#39;,
-     &#39;6197&#39;,
-     &#39;6387&#39;,
-     &#39;6464&#39;,
-     &#39;6584&#39;,
-     &#39;6622&#39;,
-     &#39;6624&#39;,
-     &#39;6714&#39;,
+     &#39;6300&#39;,
+     &#39;6416&#39;,
      &#39;673&#39;,
-     &#39;6772&#39;,
-     &#39;6773&#39;,
-     &#39;6774&#39;,
-     &#39;6935&#39;,
-     &#39;7001&#39;,
-     &#39;7052&#39;,
-     &#39;7157&#39;,
-     &#39;7204&#39;,
-     &#39;7253&#39;,
-     &#39;7301&#39;,
-     &#39;7422&#39;,
-     &#39;7428&#39;,
-     &#39;7431&#39;,
-     &#39;7852&#39;,
-     &#39;8320&#39;,
-     &#39;83737&#39;,
-     &#39;8407&#39;,
-     &#39;84342&#39;,
-     &#39;860&#39;,
-     &#39;868&#39;,
-     &#39;8879&#39;,
-     &#39;9112&#39;,
-     &#39;91544&#39;,
-     &#39;920&#39;,
-     &#39;9590&#39;,
-     &#39;983&#39;],
-    &#39;pmc&#39;: &#39;PMC4776098&#39;}}]}</pre>
+     &#39;7124&#39;,
+     &#39;7180&#39;],
+    &#39;pmc&#39;: &#39;PMC4749872&#39;}}]}</pre>
 </div>
 
 </div>
@@ -14742,7 +14721,7 @@ In the #2 query, BTE found 6103 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>image of PMC4776098__srep22392-f1.jpg</strong></p>
+<p><strong>image of PMC4749872__molce-39-1-40f1.jpg</strong></p>
 
 </div>
 </div>
@@ -14750,7 +14729,7 @@ In the #2 query, BTE found 6103 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="img/srep22392-f1.jpg" alt=""></p>
+<p><img src="img/molce-39-1-40f1.jpg" alt=""></p>
 
 </div>
 </div>
