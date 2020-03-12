@@ -440,16 +440,16 @@ metadata = {
     'api_type': "other",
     'api_name': 'cohd'
   },
-  "biosample_disease2sample": {
-    "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:Disease={mondo}",
+  "stanford_biosample_disease2sample": {
+    "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:Disease={mondo}&limit=1000",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/stanford/disease2sample.json",
     "method": "get",
     "path": "mondo",
     "api_type": "stanford",
     "api_name": "stanford_kp"
   },
-  "biosample_cl2sample": {
-    "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:CellLine={clo}",
+  "stanford_biosample_cl2sample": {
+    "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:CellLine={clo}&limit=1000",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/stanford/cl2sample.json",
     "method": "get",
     "path": "clo",
