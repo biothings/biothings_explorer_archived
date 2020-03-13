@@ -158,7 +158,7 @@ def retrieve_prop_from_edge(edge_info, prop):
             if not isinstance(data, list):
                 data = [data]
             else:
-                data = [str(item) for item in data if not isinstance(item, str)]
+                data = [str(item) if not isinstance(item, str) else item for item in data ]
             return ','.join(data)
 
 
