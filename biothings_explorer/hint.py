@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Display bioentities in biothings explorer based on user specified input
+"""Display bioentities in biothings explorer based on user specified input.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -13,15 +13,12 @@ BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 
 class Hint():
-    """query any biomedical ID or name into BioThings objects, which contain mappings to many common identifiers. Generally, the top result returned by the Hint module will be the correct item, but you should confirm that using the identifiers shown."""
-
+    """Query any biomedical ID or name into BioThings objects, which contain mappings to many common identifiers. Generally, the top result returned by the Hint module will be the correct item, but you should confirm that using the identifiers shown."""
 
     def __init__(self, size=5):
-        """Guess appropriate bio-entities based on user input
+        """Guess appropriate bio-entities based on user input.
 
-        params
-        ------
-        size: the max number of documents returned for each bioentity type
+        :param: size: The max number of documents returned for each bioentity type.
         """
         self.clients = []
         self.types = []
@@ -30,8 +27,14 @@ class Hint():
         self.id_ranks = []
         self.size = size
 
-    def get_primary_id(self, client, json_doc, _type):
-        """Get the primary id of a biological entity"""
+    @staticmethod
+    def get_primary_id(client, json_doc, _type):
+        """Get the primary id of a biological entity
+        
+        :param: client: the name of the API
+        :param: json_doc: the API output
+        :param: _type: the main entity type of the output, e.g. Gene, SequenceVariant
+        """
         # parse the id rank info from metadata
         ranks = metadata[client]['id_ranks']
         res = {}
@@ -47,33 +50,50 @@ class Hint():
         return res
 
     async def call_api(self, _input, session):
-        """make asynchronous API calls
+        """Make asynchronous API calls.
 
-        params
-        ------
-        _input: str, user specified input
-        session: aiohttp session object
+        :param: _input: str, user specified input
+        :param: session: aiohttp session object
         """
         if _input['api'] in self.post_apis:
             async with session.post(_input['url'], data=_input['data']) as res:
                 try:
                     return await res.json()
-                except:
+                except Exception:
                     print("Unable to fetch results from {}".format(_input['api']))
                     return {}
         else:
             async with session.get(_input['url'], params=_input['data']) as res:
                 try:
                     return await res.json()
-                except:
+                except Exception:
                     print("Unable to fetch results from {}".format(_input['api']))
                     return {}
 
-    async def run(self, _input):
-        """run API call tasks
+    def construct_single_hint_obj(self, api, res, doc_type):
+        """Construct a single Hint Object
+        
+        :param: api: the name of API
+        :param: res: the JSON response from API
+        :param: doc_type: the main entity type of the API output
+        """
+        result = {}
+        display = ''
+        for field_name in metadata[api]['fields']:
+            if field_name in res:
+                if metadata[api]['fields'][field_name] not in result:
+                    result[metadata[api]['fields'][field_name]] = res[field_name]
+                    display += metadata[api]['fields'][field_name] + '(' + str(res[field_name]) + ')' + ' '
+        result['display'] = display
+        result['type'] = doc_type
+        primary = self.get_primary_id(api, result, doc_type)
+        result.update({'primary': primary})
+        return result
 
-        params
-            * _input (str): user typed text
+    async def run(self, _input):
+        """Run API call tasks.
+
+        :param: _input (str): user typed text
         """
         inputs = []
         for k, v in metadata.items():
@@ -106,43 +126,33 @@ class Hint():
             final_res = {}
             for j in self.types:
                 final_res[j] = []
-            for (k, v, j) in zip(self.clients, responses, self.types):
+            for (api, res, _type) in zip(self.clients, responses, self.types):
                 # response could be from GET or POST, need to restructure
-                if 'hits' in v:
-                    v = v['hits']
-                for _v in v:
+                if 'hits' in res:
+                    res = res['hits']
+                for _v in res:
                     if 'notfound' in _v:
                         continue
                     else:
-                        _res = {}
-                        display = ''
-                        for field_name in metadata[k]['fields']:
-                            if field_name in _v:
-                                if metadata[k]['fields'][field_name] not in _res:
-                                    _res[metadata[k]['fields'][field_name]] = _v[field_name]
-                                    display += metadata[k]['fields'][field_name] + '(' + str(_v[field_name]) + ')' + ' '
-                        _res['display'] = display
-                        _res['type'] = j
-                        primary = self.get_primary_id(k, _res, j)
-                        _res.update({'primary': primary})
-                        final_res[j].append(_res)
+                        _res = self.construct_single_hint_obj(api, _v, _type)
+                        final_res[_type].append(_res)
             return final_res
 
     def query(self, _input):
         """Query APIs based on user input.
 
-        Parameters
-            * _input (str): user specified input, could be any biomeidcal id or name
+        :param: _input (str): user specified input, could be any biomeidcal id or name
 
         Returns
+        -------
             hint Object: A dict containing all possible ids corresponding to the input
-        
-        **Examples**
+
+        Examples
+        --------
 
         >>> from biothings_explorer.hint import Hint
         >>> ht = Hint()
         >>> ht.query('CXCR4')
-                
         """
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(_input))

@@ -63,6 +63,7 @@ metadata = {
     "fields": {
       'chembl.molecule_chembl_id': 'chembl',
       'drugbank.id': 'drugbank',
+      'drugbank.name': 'name',
       'chembl.pref_name': 'name',
       'pubchem.cid': 'pubchem',
       'drugcentral.xrefs.umlscui': 'umls',
