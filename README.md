@@ -9,6 +9,8 @@
 
 This is the development repo for the python client of BioThings Explorer. This tool aims at helping users querying and linking results from a variety of biomedical relevant APIs through one interface. The project is funded by the NCATS Translator project.
 
+## P.S. — Documentation is Available at [`//biothings-explorer.readthedocs.io`](https://biothings-explorer.readthedocs.io/en/latest/).
+
 ### Revelant Concepts
 
 1. BioLink Model
