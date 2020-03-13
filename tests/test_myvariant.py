@@ -2,10 +2,9 @@ import unittest
 from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 
+reg = Registry()
 
 class TestSingleHopQuery(unittest.TestCase):
-    def setUp(self):
-        self.reg = Registry()
 
     def test_variant2gene(self):
         # test <gene, enableMF, mf>
@@ -15,7 +14,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:entrez',
                                          pred='bts:variantAssociatedWithGene',
                                          values='rs539316232',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('8816' in seqd.G)
 
@@ -27,7 +26,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          output_id='bts:omim',
                                          pred='bts:variantAssociatedWithCondition',
                                          values='rs111364296',
-                                         registry=self.reg)
+                                         registry=reg)
         seqd.query()
         self.assertTrue('145600' in seqd.G)
         self.assertTrue('423' in seqd.G)

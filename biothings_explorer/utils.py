@@ -64,7 +64,7 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label):
     elif equivalent_ids.get('bts:name'):
         return equivalent_ids.get('bts:name')[0]
     else:
-        for k, v in equivalent_ids.items():
+        for v in equivalent_ids.values():
             if v:
                 if type(v) == list:
                     return v[0]

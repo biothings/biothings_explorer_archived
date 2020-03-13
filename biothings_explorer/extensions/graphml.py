@@ -1,47 +1,62 @@
+# -*- coding: utf-8 -*-
+"""
+Convert the output of BTE to GraphML file type.
+
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
+
+
+"""
+
 import copy
 import networkx as nx
+
 
 class GraphmlConverter():
 
     def load_bte_output(self, G):
-        """Load bte output in the format of networkx graph into class
-        
-        params
-        ======
-        G: the networkx representation of bte output
+        """
+        Load bte output in the format of networkx graph into class.
+
+        :param: G : the networkx representation of bte output
         """
         self.G = copy.deepcopy(G)
 
     def restructure_node_info(self):
-        """restructure node info
+        """
+        Restructure node info.
+
         note: graphml doesn't support dict as output
         """
-        for k, v in self.G.nodes(data=True):
+        for _, v in self.G.nodes(data=True):
             if 'equivalent_ids' in v:
                 v.update(v['equivalent_ids'])
                 del v['equivalent_ids']
-        for k, v in self.G.nodes(data=True):
+        for _, v in self.G.nodes(data=True):
             for m, n in v.items():
                 if type(n) == list:
-                    v[m] = ','.join(str(n))
-    
+                    v[m] = ','.join([str(_item) for _item in n])
+
     def restructure_edge_info(self):
-        """restructure edge info
+        """
+        Restructure edge info.
+
         note: graphml doesn't support dict as output
         """
-        for k, v, o in self.G.edges(data=True):
+        for _, _, o in self.G.edges(data=True):
             if 'info' in o:
                 o.update(o['info'])
                 del o['info']
             for m, n in o.items():
-                if type(n) == list:
-                    o[m] = ','.join(str(n))        
+                if isinstance(n, list):
+                    o[m] = ','.join([str(_item) for _item in n])
+                if not n:
+                    o[m] = 'null'
+
     def generate_graphml_output(self, path):
-        """return the graphml representation of bte output
-        
-        params
-        ======
-        path: the file path to store graphml file
+        """
+        Return the graphml representation of bte output.
+
+        :param: path (str) : the file path to store graphml file
         """
         self.restructure_edge_info()
         self.restructure_node_info()

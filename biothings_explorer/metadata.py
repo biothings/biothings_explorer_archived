@@ -1,6 +1,7 @@
 from .registry import Registry
 from .config import metadata
 from collections import defaultdict
+import networkx as nx
 
 
 class Metadata():
@@ -15,7 +16,7 @@ class Metadata():
     def list_all_semantic_types(self):
         """List all semantic types used in BTE"""
         semmantic_types = set()
-        for p, o, info in self.registry.G.edges(data=True):
+        for _, _, info in self.registry.G.edges(data=True):
             semmantic_types.add(info['input_type'])
             semmantic_types.add(info['output_type'])
         return list(semmantic_types)
@@ -23,7 +24,7 @@ class Metadata():
     def list_all_predicates(self):
         """List all predicates used in BTE"""
         predicates = set()
-        for p, o, info in self.registry.G.edges(data=True):
+        for _, _, info in self.registry.G.edges(data=True):
             predicates.add(info['label'])
         return list(predicates)
 
@@ -52,7 +53,7 @@ class Metadata():
         edges = set()
         edges_dict = defaultdict(list)
         result = {'nodes': [], 'edges': []}
-        for p, o, info in self.registry.G.edges(data=True):
+        for _, _, info in self.registry.G.edges(data=True):
             input_type = info['input_type']
             output_type = info['output_type']
             predicate = info['label'][4:]
@@ -89,12 +90,37 @@ class Metadata():
                                         'label': '\n'.join(v)})
         return result
 
+    def semantic_network_nx(self, edge="pred"):
+        """Convert the meta knowledge graph into a semantic networkx graph"""
+        _id = 1
+        G = nx.MultiDiGraph()
+        edges = set()
+        nodes = set()
+        for _, _, info in self.registry.G.edges(data=True):
+            input_type = info['input_type']
+            if input_type not in nodes:
+                nodes.add(input_type)
+                G.add_node(input_type, label=input_type)
+            output_type = info['output_type']
+            if output_type not in nodes:
+                nodes.add(output_type)
+                G.add_node(output_type, label=output_type)
+            api = metadata[info['api']]['api_name']
+            edge = input_type + '-' + api + '-' + output_type
+            if edge not in edges:
+                edges.add(edge)
+                edge_reverse = output_type + '-' + api + '-' + input_type
+                edges.add(edge_reverse)
+                G.add_edge(input_type, output_type, label=api, id='e' + str(_id))
+                _id += 1
+        return G
+
     def id_network_graph(self, edge="pred"):
         _id = 1
         id_dict = {}
         edges = set()
         result = {'nodes': [], 'edges': []}
-        for p, o, info in self.registry.G.edges(data=True):
+        for _, _, info in self.registry.G.edges(data=True):
             input_type = info['input_id'][4:]
             output_type = info['output_id'][4:]
             predicate = info['label'][4:]

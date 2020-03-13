@@ -50,9 +50,11 @@ class MappingParser():
         return result
 
     def connect(self):
+        # G is used to store the relationship between input and output in a schema mapping file
         G = nx.MultiDiGraph()
+        # get the document type
         self.type = self.mapping.get("@type")
-        # classify the keys in the JSON doc
+        # classify the keys in the JSON doc into IDs or Links
         clsf = self.classify_keys_in_json(self.mapping)
         # for each "links" properties, find its ids
         for predicate in clsf['links']:
@@ -83,17 +85,17 @@ class MappingParser():
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
                         if metadata[self.api].get('api_type') == 'biothings':
-                          inverse_property = None if not sp.inverse_property else sp.inverse_property.name
-                          if not inverse_property:
-                              print(predicate)
-                          G.add_edge(_edge[1], _edge[0], api=self.api,
-                                     input_field=output_field,
-                                     input_type=_pred["@type"],
-                                     source=source,
-                                     input_id=_edge[1],
-                                     output_id=_edge[0],
-                                     output_type=self.mapping["@type"],
-                                     output_field=input_field,
-                                     label=inverse_property,
-                                     mapping_key=_edge[0])
+                            inverse_property = None if not sp.inverse_property else sp.inverse_property.name
+                            if not inverse_property:
+                                print(predicate)
+                            G.add_edge(_edge[1], _edge[0], api=self.api,
+                                        input_field=output_field,
+                                        input_type=_pred["@type"],
+                                        source=source,
+                                        input_id=_edge[1],
+                                        output_id=_edge[0],
+                                        output_type=self.mapping["@type"],
+                                        output_field=input_field,
+                                        label=inverse_property,
+                                        mapping_key=_edge[0])
         return G
