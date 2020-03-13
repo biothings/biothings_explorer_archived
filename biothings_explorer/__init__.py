@@ -1,5 +1,6 @@
-"""A pypi demonstration vehicle.
+"""
+BioThings Explorer.
 
-.. moduleauthor:: Andrew Carter <andrew@invalid.com>
+.. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
 """
