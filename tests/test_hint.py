@@ -95,3 +95,10 @@ class TestHint(unittest.TestCase):
         self.assertEqual(bioentity['type'], 'SequenceVariant')
         self.assertEqual(bioentity['primary']['identifier'], 'dbsnp')
         self.assertEqual(bioentity['primary']['value'], 'rs12190874')
+        
+    def test_chemical(self):
+        """Test the output of Hint query when providing chemical drugbank ID as input."""
+        res = self.ht.query("DB01926")
+        bioentity = res.get('ChemicalSubstance')[0]
+        self.assertIsNotNone(res)
+        self.assertEqual(bioentity['name'], 'Carboxymycobactin S')
