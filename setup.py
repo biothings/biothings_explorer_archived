@@ -11,7 +11,8 @@ install_requires = [
     'requests>=2.21.0',
     'graphviz>=0.11.1',
     'aiohttp',
-    'pandas'
+    'pandas',
+    "biothings_schema @ git+https://github.com/biothings/biothings_schema.py"
 ]
 
 
@@ -46,6 +47,5 @@ setup(
     ],
     install_requires=install_requires,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
-    dependency_links=['https://github.com/biothings/biothings_schema.py/master#egg=biothings_schema.py']
+    tests_require=['pytest']
 )
