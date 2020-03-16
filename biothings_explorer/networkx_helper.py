@@ -161,6 +161,35 @@ def retrieve_prop_from_edge(edge_info, prop):
                 data = [str(item) if not isinstance(item, str) else item for item in data ]
             return ','.join(data)
 
+def connect_networkx_to_pandas_df_new(current_graph, query_path):
+    """Converting current graph into a pandas data frame
+    
+    :param: current_graph: a python dict containing all paths
+    :param: query_path: the path of user query
+    """
+    data = []
+    for _, paths in current_graph.items():
+        for path in paths:
+            path_data = {}
+            for i, edge in enumerate(path):
+                if i == 0:
+                    path_data['input'] = edge['input'].split('-')[-1]
+                    path_data['input_type'] = query_path[i]
+                path_data['pred' + str(i + 1)] = edge['info']['label'][4:]
+                path_data['pred' + str(i + 1) + '_source'] = retrieve_prop_from_edge(edge['info'], 'source')
+                path_data['pred' + str(i + 1) + '_api'] = retrieve_prop_from_edge(edge['info'], 'api')
+                path_data['pred' + str(i + 1) + '_pubmed'] = retrieve_prop_from_edge(edge['info'], 'pubmed')
+                if i + 1 == len(path):
+                    node = 'output'
+                else:
+                    node = 'node' + str(i + 1)
+                path_data[node + '_type'] = edge['info']['info']['@type']
+                path_data[node + '_name'] = edge['output'].split('-')[-1]
+                path_data[node + '_id'] = edge['output'].split('-')[-1]
+            data.append(path_data)
+    return pd.DataFrame(data)
+
+
 
 def connect_networkx_to_pandas_df(G, paths, pred1=None,
                                   intermediate=None,
