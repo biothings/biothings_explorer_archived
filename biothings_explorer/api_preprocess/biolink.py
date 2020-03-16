@@ -29,6 +29,8 @@ def restructure_biolink_response(json_doc):
             # remove empty value
             if not _doc['publications']:
                 _doc.pop('publications')
+            elif not _doc['publications'][0]['id'].startswith('PMID'):
+                _doc.pop('publications')
             else:
                 for _item in _doc['publications']:
                     _item['id'] = _item['id'].split(':')[-1]
