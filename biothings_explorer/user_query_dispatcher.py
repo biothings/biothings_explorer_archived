@@ -13,7 +13,7 @@ import copy
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df
+from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df, connect_networkx_to_pandas_df_new
 from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
 from .metadata import Metadata
 from .extensions.reasoner import ReasonerConverter
@@ -37,16 +37,19 @@ class SingleEdgeQueryDispatcher():
     output_id: str, optional, the identifier type in which output ids will be, e.g. bts:chembl
     pred: str or list or None, the relationship between input and output. If None, search for all relationships between input and output
     input_obj: optional, a representation of the input from Hint Module
+    prev_graph: the graph object coming from last query
     registry: optional, the Registry object in BioThings Explorer
     """
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
-                 equivalent_ids=None, input_obj=None, registry=None):
+                 equivalent_ids=None, input_obj=None, prev_graph={}, query_id=1, registry=None):
         # load bte registry
         if not registry:
             self.registry = Registry()
         else:
             self.registry = registry
+        self.prev_graph = prev_graph
+        self.query_id = query_id
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
         self.idc = IDConverter(registry=self.registry)
@@ -70,6 +73,7 @@ class SingleEdgeQueryDispatcher():
         self.pred = pred
         self.values = values
         self.equivalent_ids = equivalent_ids
+        self.input_identifier = None
         if input_obj:
             assert "primary" in input_obj
             self.input_cls = input_obj.get("primary").get("cls")
@@ -77,10 +81,13 @@ class SingleEdgeQueryDispatcher():
             self.values = input_obj.get("primary").get("value")
             if 'symbol' in input_obj:
                 self.input_label = input_obj.get("symbol")
+                self.input_identifier = 'bts:symbol'
             elif 'name' in input_obj:
                 self.input_label = input_obj.get("name")
+                self.input_identifier = 'bts:name'
             else:
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
+                self.input_identifier = input_obj.get("primary").get("identifier")
         else:
             self.input_label = None
         # check if input_cls is valid
@@ -163,6 +170,22 @@ class SingleEdgeQueryDispatcher():
             # add new nodes and edges
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
+    
+    def construct_internal_graph(self):
+        graph = defaultdict(list)
+        for sbj, obj, info in self.G.edges(data=True):
+            sbj_label = str(self.query_id - 1) + '-' + self.G.nodes[sbj]['identifier'][4:] + ':' + str(sbj).upper()
+            obj_label = str(self.query_id) + '-' + self.G.nodes[obj]['identifier'][4:] + ':' + str(obj).upper()
+            tmp = []
+            if sbj_label in self.prev_graph:
+                prev_graph = copy.deepcopy(self.prev_graph[sbj_label])
+                for prec_rec in prev_graph:
+                    prec_rec.append({'input': sbj_label, 'output': obj_label, 'info': info})
+                    tmp.append(prec_rec)
+            else:
+                tmp = [[{'input': sbj_label, 'output': obj_label, 'info': info}]]
+            graph[obj_label] += tmp
+        self.current_graph = graph
 
     def query(self, verbose=False):
         """Query APIs and organize outputs into networkx graph"""
@@ -207,9 +230,10 @@ class SingleEdgeQueryDispatcher():
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
+                    input_identifier = self.input_identifier if self.input_identifier else "bts:" + k.split(':', 1)[0]
                     self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
-                                    identifier="bts:" + k.split(':', 1)[0],
+                                    identifier=input_identifier,
                                     level=1,
                                     equivalent_ids=self.equivalent_ids[k])
                     for _id in v[p]:
@@ -229,7 +253,9 @@ class SingleEdgeQueryDispatcher():
         self.equivalent_ids.update(out_equ_ids)
         # merge equivalent nodes
         self.merge_equivalent_nodes()
-        print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
+        self.construct_internal_graph()
+        if verbose:
+            print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -545,6 +571,8 @@ class Predict:
         self.seqd = {}
         # aggregate output_ids from different queries
         self.output_ids = {}
+        self.current_graph = {}
+        self.prev_graph = {}
 
     def merge_output_ids(self, query_id, output_ids):
         level = query_id.split('.')[0]
@@ -567,7 +595,7 @@ class Predict:
             print("==========\n")
             print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_nodes)))
             for i, item in enumerate(self.intermediate_nodes):
-                print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_nodes])))
+                print("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
         for i, output_cls in enumerate(self.paths):
             if i == 0:
                 # if it's the first element in the path
@@ -602,11 +630,16 @@ class Predict:
                                                         equivalent_ids=equivalent_ids[input_cls],
                                                         input_cls=input_cls,
                                                         output_cls=output_cls,
+                                                        query_id = i + 1,
+                                                        prev_graph=self.prev_graph,
                                                         pred=None)
                         self.seqd[query_id].query(verbose=verbose)
                         # print(seqd.G.nodes())
                         self.G = merge_two_networkx_graphs(self.G, self.seqd[query_id].G)
                         self.merge_output_ids(query_id, self.seqd[query_id].output_ids)
+                        self.prev_graph.update(self.seqd[query_id].current_graph)
+                        if i + 1 == len(self.paths):
+                            self.current_graph.update(self.seqd[query_id].current_graph)
                 else:
                     if verbose:
                         print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
@@ -614,10 +647,15 @@ class Predict:
                     self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
                                                                     input_cls=input_cls,
                                                                     output_cls=output_cls,
+                                                                    query_id = i + 1,
+                                                                    prev_graph=self.prev_graph,
                                                                     pred=None)
                     self.seqd[i + 1].query(verbose=verbose)
                     self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
                     self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
+                    self.prev_graph.update(self.seqd[i + 1].current_graph)
+                    if i + 1 == len(self.paths):
+                        self.current_graph.update(self.seqd[i + 1].current_graph)
 
         else:
             pass
@@ -729,8 +767,10 @@ class Predict:
         >>> df = fc.display_table_view()
         >>> df
         """
-        paths = self.show_path()
-        return connect_networkx_to_pandas_df(self.G, paths)
+        # paths = self.show_path()
+        # return connect_networkx_to_pandas_df(self.G, paths)
+        self.paths.insert(0, self.input_obj['type'])
+        return connect_networkx_to_pandas_df_new(self.current_graph, self.paths)
 
 class FindConnection:
     """find relationships between one specific entity and another specific entity or other classes of entity types
