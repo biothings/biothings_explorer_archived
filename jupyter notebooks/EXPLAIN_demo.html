@@ -13146,7 +13146,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install git+https://github.com/biothings/biothings_explorer#egg<span class="o">=</span>biothings_explorer
-<span class="o">!</span>pip install git+https://github.com/biothings/biothings_schema.py#egg<span class="o">=</span>biothings_schema
 </pre></div>
 
     </div>
@@ -13163,84 +13162,82 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Requirement already satisfied: biothings_explorer from git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer in /home/asu/env/bte_schema/lib/python3.6/site-packages (0.0.1)
-Requirement already satisfied: jupyter in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (1.0.0)
-Requirement already satisfied: tornado==4.5.3 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (4.5.3)
-Requirement already satisfied: jsonpath-rw&gt;=1.4.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (1.4.0)
-Requirement already satisfied: notebook==5.7.5 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (5.7.5)
-Requirement already satisfied: requests&gt;=2.21.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (2.22.0)
-Requirement already satisfied: graphviz&gt;=0.11.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (0.13)
-Requirement already satisfied: jsonschema&gt;=3.0.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (3.0.2)
-Requirement already satisfied: pandas in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (0.25.1)
-Requirement already satisfied: aiohttp in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (3.6.0)
-Requirement already satisfied: networkx==2.3 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_explorer) (2.3)
-Requirement already satisfied: jupyter-console in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-&gt;biothings_explorer) (6.0.0)
-Requirement already satisfied: nbconvert in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-&gt;biothings_explorer) (5.6.0)
-Requirement already satisfied: ipykernel in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-&gt;biothings_explorer) (5.1.2)
-Requirement already satisfied: ipywidgets in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-&gt;biothings_explorer) (7.5.1)
-Requirement already satisfied: qtconsole in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-&gt;biothings_explorer) (4.5.5)
-Requirement already satisfied: decorator in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (4.4.0)
-Requirement already satisfied: six in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (1.12.0)
-Requirement already satisfied: ply in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (3.11)
-Requirement already satisfied: Send2Trash in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (1.5.0)
-Requirement already satisfied: pyzmq&gt;=17 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (18.1.0)
-Requirement already satisfied: jupyter-core&gt;=4.4.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.5.0)
-Requirement already satisfied: nbformat in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.4.0)
-Requirement already satisfied: terminado&gt;=0.8.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.8.2)
-Requirement already satisfied: prometheus-client in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.7.1)
-Requirement already satisfied: jinja2 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (2.10.1)
-Requirement already satisfied: jupyter-client&gt;=5.2.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (5.3.1)
-Requirement already satisfied: traitlets&gt;=4.2.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.3.2)
-Requirement already satisfied: ipython-genutils in /home/asu/env/bte_schema/lib/python3.6/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.2.0)
-Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2.8)
-Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (3.0.4)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (1.25.3)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2019.9.11)
-Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (0.15.4)
-Requirement already satisfied: setuptools in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (41.2.0)
-Requirement already satisfied: attrs&gt;=17.4.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (19.1.0)
-Requirement already satisfied: numpy&gt;=1.13.3 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from pandas-&gt;biothings_explorer) (1.17.2)
-Requirement already satisfied: python-dateutil&gt;=2.6.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from pandas-&gt;biothings_explorer) (2.8.0)
-Requirement already satisfied: pytz&gt;=2017.2 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from pandas-&gt;biothings_explorer) (2019.2)
-Requirement already satisfied: multidict&lt;5.0,&gt;=4.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from aiohttp-&gt;biothings_explorer) (4.5.2)
-Requirement already satisfied: async-timeout&lt;4.0,&gt;=3.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from aiohttp-&gt;biothings_explorer) (3.0.1)
-Requirement already satisfied: idna-ssl&gt;=1.0; python_version &lt; &#34;3.7&#34; in /home/asu/env/bte_schema/lib/python3.6/site-packages (from aiohttp-&gt;biothings_explorer) (1.1.0)
-Requirement already satisfied: typing-extensions&gt;=3.6.5; python_version &lt; &#34;3.7&#34; in /home/asu/env/bte_schema/lib/python3.6/site-packages (from aiohttp-&gt;biothings_explorer) (3.7.4)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from aiohttp-&gt;biothings_explorer) (1.3.0)
-Requirement already satisfied: prompt-toolkit&lt;2.1.0,&gt;=2.0.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-console-&gt;jupyter-&gt;biothings_explorer) (2.0.9)
-Requirement already satisfied: pygments in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-console-&gt;jupyter-&gt;biothings_explorer) (2.4.2)
-Requirement already satisfied: ipython in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jupyter-console-&gt;jupyter-&gt;biothings_explorer) (7.8.0)
-Requirement already satisfied: pandocfilters&gt;=1.4.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (1.4.2)
-Requirement already satisfied: entrypoints&gt;=0.2.2 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.3)
-Requirement already satisfied: testpath in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.4.2)
-Requirement already satisfied: mistune&lt;2,&gt;=0.8.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.8.4)
-Requirement already satisfied: defusedxml in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.6.0)
-Requirement already satisfied: bleach in /home/asu/env/bte_schema/lib/python3.6/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (3.1.0)
-Requirement already satisfied: widgetsnbextension~=3.5.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from ipywidgets-&gt;jupyter-&gt;biothings_explorer) (3.5.1)
-Requirement already satisfied: ptyprocess; os_name != &#34;nt&#34; in /home/asu/env/bte_schema/lib/python3.6/site-packages (from terminado&gt;=0.8.1-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.6.0)
-Requirement already satisfied: MarkupSafe&gt;=0.23 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jinja2-&gt;notebook==5.7.5-&gt;biothings_explorer) (1.1.1)
-Requirement already satisfied: wcwidth in /home/asu/env/bte_schema/lib/python3.6/site-packages (from prompt-toolkit&lt;2.1.0,&gt;=2.0.0-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.1.7)
-Requirement already satisfied: pexpect; sys_platform != &#34;win32&#34; in /home/asu/env/bte_schema/lib/python3.6/site-packages (from ipython-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (4.7.0)
-Requirement already satisfied: backcall in /home/asu/env/bte_schema/lib/python3.6/site-packages (from ipython-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.1.0)
-Requirement already satisfied: pickleshare in /home/asu/env/bte_schema/lib/python3.6/site-packages (from ipython-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.7.5)
-Requirement already satisfied: jedi&gt;=0.10 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from ipython-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.15.1)
-Requirement already satisfied: webencodings in /home/asu/env/bte_schema/lib/python3.6/site-packages (from bleach-&gt;nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.5.1)
-Requirement already satisfied: parso&gt;=0.5.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jedi&gt;=0.10-&gt;ipython-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.5.1)
-Requirement already satisfied: biothings_schema from git+https://github.com/biothings/biothings_schema.py#egg=biothings_schema in /home/asu/env/bte_schema/lib/python3.6/site-packages (0.0.1)
-Requirement already satisfied: networkx&gt;=2.3 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_schema) (2.3)
-Requirement already satisfied: strict-rfc3339 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_schema) (0.7)
-Requirement already satisfied: requests&gt;=2.21.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_schema) (2.22.0)
-Requirement already satisfied: jsonschema&gt;=3.0.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_schema) (3.0.2)
-Requirement already satisfied: PyYAML&gt;=5.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from biothings_schema) (5.1.2)
-Requirement already satisfied: decorator&gt;=4.3.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from networkx&gt;=2.3-&gt;biothings_schema) (4.4.0)
-Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_schema) (2.8)
-Requirement already satisfied: certifi&gt;=2017.4.17 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_schema) (2019.9.11)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_schema) (1.25.3)
-Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from requests&gt;=2.21.0-&gt;biothings_schema) (3.0.4)
-Requirement already satisfied: setuptools in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_schema) (41.2.0)
-Requirement already satisfied: attrs&gt;=17.4.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_schema) (19.1.0)
-Requirement already satisfied: six&gt;=1.11.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_schema) (1.12.0)
-Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema/lib/python3.6/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_schema) (0.15.4)
+<pre>Collecting biothings_explorer from git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer
+  Cloning https://github.com/biothings/biothings_explorer to /private/var/folders/59/w2v_bg_d2rj_hg69468vdxzw0000gn/T/pip-install-87l7sgk0/biothings-explorer
+  Running command git clone -q https://github.com/biothings/biothings_explorer /private/var/folders/59/w2v_bg_d2rj_hg69468vdxzw0000gn/T/pip-install-87l7sgk0/biothings-explorer
+  Running command git submodule update --init --recursive -q
+Requirement already satisfied: jupyter in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (1.0.0)
+Requirement already satisfied: notebook==5.7.5 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (5.7.5)
+Requirement already satisfied: tornado==4.5.3 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (4.5.3)
+Requirement already satisfied: jsonschema&gt;=3.0.1 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (3.0.1)
+Requirement already satisfied: networkx==2.3 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (2.3)
+Requirement already satisfied: jsonpath-rw&gt;=1.4.0 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (1.4.0)
+Requirement already satisfied: requests&gt;=2.21.0 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (2.22.0)
+Requirement already satisfied: graphviz&gt;=0.11.1 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.11.1)
+Requirement already satisfied: aiohttp in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (3.5.4)
+Requirement already satisfied: pandas in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.25.1)
+Requirement already satisfied: biothings_schema@ git+https://github.com/biothings/biothings_schema.py from git+https://github.com/biothings/biothings_schema.py in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.0.1)
+Requirement already satisfied: ipykernel in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (5.1.1)
+Requirement already satisfied: nbconvert in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (5.5.0)
+Requirement already satisfied: ipywidgets in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (7.4.2)
+Requirement already satisfied: qtconsole in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (4.5.1)
+Requirement already satisfied: jupyter-console in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (6.0.0)
+Requirement already satisfied: prometheus-client in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.7.0)
+Requirement already satisfied: jupyter-core&gt;=4.4.0 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.4.0)
+Requirement already satisfied: pyzmq&gt;=17 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (18.0.1)
+Requirement already satisfied: traitlets&gt;=4.2.1 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.3.2)
+Requirement already satisfied: jinja2 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (2.10.1)
+Requirement already satisfied: nbformat in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.4.0)
+Requirement already satisfied: terminado&gt;=0.8.1 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.8.2)
+Requirement already satisfied: ipython-genutils in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.2.0)
+Requirement already satisfied: Send2Trash in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (1.5.0)
+Requirement already satisfied: jupyter-client&gt;=5.2.0 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (5.2.4)
+Requirement already satisfied: attrs&gt;=17.4.0 in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (19.1.0)
+Requirement already satisfied: setuptools in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (41.0.1)
+Requirement already satisfied: six&gt;=1.11.0 in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (1.12.0)
+Requirement already satisfied: pyrsistent&gt;=0.14.0 in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (0.15.2)
+Requirement already satisfied: decorator&gt;=4.3.0 in ./ENV/lib/python3.7/site-packages (from networkx==2.3-&gt;biothings_explorer) (4.4.0)
+Requirement already satisfied: ply in ./ENV/lib/python3.7/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (3.11)
+Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2.8)
+Requirement already satisfied: certifi&gt;=2017.4.17 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2019.3.9)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (1.25.3)
+Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (3.0.4)
+Requirement already satisfied: async-timeout&lt;4.0,&gt;=3.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (3.0.1)
+Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (1.3.0)
+Requirement already satisfied: multidict&lt;5.0,&gt;=4.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (4.5.2)
+Requirement already satisfied: numpy&gt;=1.13.3 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (1.17.0)
+Requirement already satisfied: python-dateutil&gt;=2.6.1 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (2.8.0)
+Requirement already satisfied: pytz&gt;=2017.2 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (2019.2)
+Requirement already satisfied: PyYAML&gt;=5.1 in ./ENV/lib/python3.7/site-packages (from biothings_schema@ git+https://github.com/biothings/biothings_schema.py-&gt;biothings_explorer) (5.1.1)
+Requirement already satisfied: strict-rfc3339 in ./ENV/lib/python3.7/site-packages (from biothings_schema@ git+https://github.com/biothings/biothings_schema.py-&gt;biothings_explorer) (0.7)
+Requirement already satisfied: ipython&gt;=5.0.0 in ./ENV/lib/python3.7/site-packages (from ipykernel-&gt;jupyter-&gt;biothings_explorer) (7.5.0)
+Requirement already satisfied: entrypoints&gt;=0.2.2 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.3)
+Requirement already satisfied: defusedxml in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.6.0)
+Requirement already satisfied: pandocfilters&gt;=1.4.1 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (1.4.2)
+Requirement already satisfied: testpath in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.4.2)
+Requirement already satisfied: pygments in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (2.4.2)
+Requirement already satisfied: bleach in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (3.1.0)
+Requirement already satisfied: mistune&gt;=0.8.1 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.8.4)
+Requirement already satisfied: widgetsnbextension~=3.4.0 in ./ENV/lib/python3.7/site-packages (from ipywidgets-&gt;jupyter-&gt;biothings_explorer) (3.4.2)
+Requirement already satisfied: prompt-toolkit&lt;2.1.0,&gt;=2.0.0 in ./ENV/lib/python3.7/site-packages (from jupyter-console-&gt;jupyter-&gt;biothings_explorer) (2.0.9)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in ./ENV/lib/python3.7/site-packages (from jinja2-&gt;notebook==5.7.5-&gt;biothings_explorer) (1.1.1)
+Requirement already satisfied: ptyprocess; os_name != &#34;nt&#34; in ./ENV/lib/python3.7/site-packages (from terminado&gt;=0.8.1-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.6.0)
+Requirement already satisfied: appnope; sys_platform == &#34;darwin&#34; in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (0.1.0)
+Requirement already satisfied: pexpect; sys_platform != &#34;win32&#34; in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (4.7.0)
+Requirement already satisfied: pickleshare in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (0.7.5)
+Requirement already satisfied: jedi&gt;=0.10 in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (0.13.3)
+Requirement already satisfied: backcall in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (0.1.0)
+Requirement already satisfied: webencodings in ./ENV/lib/python3.7/site-packages (from bleach-&gt;nbconvert-&gt;jupyter-&gt;biothings_explorer) (0.5.1)
+Requirement already satisfied: wcwidth in ./ENV/lib/python3.7/site-packages (from prompt-toolkit&lt;2.1.0,&gt;=2.0.0-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.1.7)
+Requirement already satisfied: parso&gt;=0.3.0 in ./ENV/lib/python3.7/site-packages (from jedi&gt;=0.10-&gt;ipython&gt;=5.0.0-&gt;ipykernel-&gt;jupyter-&gt;biothings_explorer) (0.4.0)
+Building wheels for collected packages: biothings-explorer
+  Building wheel for biothings-explorer (setup.py) ... done
+  Stored in directory: /private/var/folders/59/w2v_bg_d2rj_hg69468vdxzw0000gn/T/pip-ephem-wheel-cache-mp83lp3v/wheels/61/44/e1/901cb798059240028e8e2b5d8ed46a47aafa11af30a20c465a
+Successfully built biothings-explorer
+Installing collected packages: biothings-explorer
+Successfully installed biothings-explorer-0.0.1
+<span class="ansi-yellow-fg">WARNING: You are using pip version 19.1.1, however version 20.0.2 is available.
+You should consider upgrading via the &#39;pip install --upgrade pip&#39; command.</span>
 </pre>
 </div>
 </div>
@@ -13263,7 +13260,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import modules from biothings_explorer</span>
@@ -13287,7 +13284,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
@@ -13308,7 +13305,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13334,7 +13331,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find all potential representations of imatinib</span>
@@ -13354,7 +13351,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -13362,11 +13359,12 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 <div class="output_text output_subarea output_execute_result">
 <pre>{&#39;chembl&#39;: &#39;CHEMBL941&#39;,
  &#39;drugbank&#39;: &#39;DB00619&#39;,
- &#39;name&#39;: &#39;IMATINIB&#39;,
+ &#39;name&#39;: &#39;Imatinib&#39;,
  &#39;pubchem&#39;: 5291,
  &#39;umls&#39;: &#39;C0935989&#39;,
  &#39;mesh&#39;: &#39;D000068877&#39;,
- &#39;display&#39;: &#39;chembl(CHEMBL941) drugbank(DB00619) name(IMATINIB) pubchem(5291) umls(C0935989) mesh(D000068877) &#39;,
+ &#39;chebi&#39;: &#39;CHEBI:45783&#39;,
+ &#39;display&#39;: &#39;chembl(CHEMBL941) drugbank(DB00619) name(Imatinib) pubchem(5291) umls(C0935989) mesh(D000068877) chebi(CHEBI:45783) &#39;,
  &#39;type&#39;: &#39;ChemicalSubstance&#39;,
  &#39;primary&#39;: {&#39;identifier&#39;: &#39;chembl&#39;,
   &#39;cls&#39;: &#39;ChemicalSubstance&#39;,
@@ -13390,7 +13388,7 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">FindConnection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
@@ -13415,29 +13413,28 @@ Requirement already satisfied: pyrsistent&gt;=0.14.0 in /home/asu/env/bte_schema
 __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
     Find relationships in the Knowledge Graph between an Input Object and an Output Object.
     
-    params
-    ------
-    input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                          Examples: 
-            Hint().query(&#34;Fanconi anemia&#34;)[&#39;DiseaseOrPhenotypicFeature&#39;][0]
-            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+    Args:
+        input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
+                            Examples: 
+                Hint().query(&#34;Fanconi anemia&#34;)[&#39;DiseaseOrPhenotypicFeature&#39;][0]
+                Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
     
-    output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
-                           entity, OR be a string or list of strings corresponding to Biolink Entity classes.
-                           Examples:
-            Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
-            &#39;Gene&#39;
-            [&#39;Gene&#39;,&#39;ChemicalSubstance&#39;]
+        output_obj (required): must EITHER be an object returned from Hint corresponding to a specific biomedical
+                            entity, OR be a string or list of strings corresponding to Biolink Entity classes.
+                            Examples:
+                Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
+                &#39;Gene&#39;
+                [&#39;Gene&#39;,&#39;ChemicalSubstance&#39;]
     
-    intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
-            None                         : no intermediate node, find direct connections only
-            []                           : no intermediate node, find direct connections only
-            [&#39;BiologicalEntity&#39;]         : one intermediate node of any semantic type
-            [&#39;Gene&#39;]                     : one intermediate node that must be a Gene
-            [(&#39;Gene&#39;,&#39;Pathway&#39;)]         : one intermediate node that must be a Gene or a Pathway
-            [&#39;Gene&#39;,&#39;Pathway&#39;]           : two intermediate nodes, first must be a Gene, second must be a Pathway.
-            [&#39;Gene&#39;,(&#39;Pathway&#39;,&#39;Gene&#39;)]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
-                                              **NOTE**: queries with more than one intermediate node are currently not supported
+        intermediate_nodes (required): the semantic type(s) of the intermediate node(s).  Examples:
+                None                         : no intermediate node, find direct connections only
+                []                           : no intermediate node, find direct connections only
+                [&#39;BiologicalEntity&#39;]         : one intermediate node of any semantic type
+                [&#39;Gene&#39;]                     : one intermediate node that must be a Gene
+                [(&#39;Gene&#39;,&#39;Pathway&#39;)]         : one intermediate node that must be a Gene or a Pathway
+                [&#39;Gene&#39;,&#39;Pathway&#39;]           : two intermediate nodes, first must be a Gene, second must be a Pathway.
+                [&#39;Gene&#39;,(&#39;Pathway&#39;,&#39;Gene&#39;)]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
+                                                **NOTE**: queries with more than one intermediate node are currently not supported
 
 </pre>
 </div>
@@ -13457,7 +13454,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">cml</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="n">imatinib</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="s1">&#39;Gene&#39;</span><span class="p">)</span>
@@ -13479,7 +13476,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set verbose=True will display all steps which BTE takes to find the connection</span>
@@ -13504,7 +13501,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;chronic myelogenous leukemia&#39; and &#39;IMATINIB&#39;. Paths will have 1 intermediate node.
+BTE will find paths that join &#39;chronic myelogenous leukemia&#39; and &#39;Imatinib&#39;. Paths will have 1 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
@@ -13515,81 +13512,97 @@ Intermediate node #1 will have these type constraints: Gene
 
 ==== Step #1: Query path planning ====
 
-Because chronic myelogenous leukemia is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE will query our meta-KG for APIs that can take &#39;DiseaseOrPhenotypicFeature&#39; as input
+Because chronic myelogenous leukemia is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE will query our meta-KG for APIs that can take &#39;DiseaseOrPhenotypicFeature&#39; as input and &#39;Gene&#39; as output
 
-BTE found 3 apis:
+BTE found 5 apis:
 
-API 1. mydisease.info(1 API call)
-API 2. semmeddisease(1 API call)
-API 3. biolink_disease2gene(1 API call)
+API 1. semmeddisease(1 API call)
+API 2. DISEASES(1 API call)
+API 3. mydisease.info(1 API call)
+API 4. mgigene2phenotype(1 API call)
+API 5. biolink_disease2gene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 1.1: http://mydisease.info/v1/query (POST &#34;q=C1292772,C0023473&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 2.1: http://pending.biothings.io/semmed/query (POST &#34;q=C1292772,C0023473&amp;scopes=umls&amp;fields=AFFECTS.protein,AFFECTS_reverse.gene,AFFECTS.gene,CAUSES_reverse.gene,ASSOCIATED_WITH.gene,AFFECTS_reverse.protein&amp;species=human&amp;size=100&#34;)
-API 3.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=100
+API 3.1: http://mydisease.info/v1/query (POST &#34;q=C1292772,C0023473&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
+API 1.1: http://pending.biothings.io/semmed/query (POST &#34;q=C1292772,C0023473&amp;scopes=umls&amp;fields=ASSOCIATED_WITH.gene,AFFECTS_reverse.gene,CAUSES_reverse.gene,AFFECTS_reverse.protein,AFFECTS.gene,ASSOCIATED_WITH_reverse.gene,AFFECTS.protein&amp;species=human&amp;size=100&#34;)
+API 2.1: https://pending.biothings.io/DISEASES/query (POST &#34;q=MONDO:0011996&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
+API 4.1: https://pending.biothings.io/mgigene2phenotype/query (POST &#34;q=DOID:8552&amp;scopes=mgi.associated_with_disease.doid&amp;fields=_id&amp;species=human&amp;size=100&#34;)
+API 5.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=100
 
 
 ==== Step #3: Output normalization ====
 
-API 3.1 biolink_disease2gene: 4 hits
-API 1.1 mydisease.info: 52 hits
-API 2.1 semmeddisease: 160 hits
+API 2.1 DISEASES: 3 hits
+API 5.1 biolink_disease2gene: 4 hits
+API 4.1 mgigene2phenotype: 8 hits
+API 3.1 mydisease.info: 52 hits
+API 1.1 semmeddisease: 609 hits
 
-After id-to-object translation, BTE retrieved 143 unique objects.
+After id-to-object translation, BTE retrieved 520 unique objects.
 
 
 ==========
-========== QUERY #2 -- fetch all Gene entities linked to &#39;IMATINIB&#39; ==========
+========== QUERY #2 -- fetch all Gene entities linked to &#39;Imatinib&#39; ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because IMATINIB is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input
+Because Imatinib is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
 
-BTE found 3 apis:
+BTE found 5 apis:
 
-API 1. mychem.info(2 API calls)
-API 2. semmedgene(6 API calls)
-API 3. dgidb_chemical2gene(1 API call)
+API 1. semmedgene(6 API calls)
+API 2. dgidb_chemical2gene(1 API call)
+API 3. mychem.info(2 API calls)
+API 4. chembl_drug_mechanism(1 API call)
+API 5. ctd_chemical2gene(2 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 1.2: http://mychem.info/v1/query (POST &#34;q=DB00619&amp;scopes=drugbank.id&amp;fields=drugbank.targets,drugbank.enzymes&amp;species=human&amp;size=100&#34;)
-API 1.1: http://mychem.info/v1/query (POST &#34;q=CHEMBL941&amp;scopes=chembl.molecule_chembl_id&amp;fields=drugcentral.bioactivity&amp;species=human&amp;size=100&#34;)
-API 2.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 3.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
-API 2.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.2: http://mychem.info/v1/query (POST &#34;q=DB00619&amp;scopes=drugbank.id&amp;fields=drugbank.targets,drugbank.enzymes&amp;species=human&amp;size=100&#34;)
+API 3.1: http://mychem.info/v1/query (POST &#34;q=CHEMBL941&amp;scopes=chembl.molecule_chembl_id&amp;fields=drugcentral.bioactivity&amp;species=human&amp;size=100&#34;)
+API 1.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 2.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
+API 4.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=C097613|mercury&amp;report=genes_curated&amp;format=json
+API 1.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=affects.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=associated_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 4.2: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877|mercury&amp;report=genes_curated&amp;format=json
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+API 1.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0935989&amp;scopes=interacts_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.1: https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id=CHEMBL941
 
 
 ==== Step #3: Output normalization ====
 
-API 3.1 dgidb_chemical2gene: 34 hits
-API 1.1 mychem.info: 77 hits
-API 1.2 mychem.info: 18 hits
-API 2.1 semmedgene: No hits
-API 2.2 semmedgene: No hits
-API 2.3 semmedgene: No hits
-API 2.4 semmedgene: No hits
-API 2.5 semmedgene: 100 hits
-API 2.6 semmedgene: 100 hits
+API 5.1 chembl_drug_mechanism: No hits
+API 4.1 ctd_chemical2gene: 711 hits
+API 4.2 ctd_chemical2gene: 910 hits
+API 2.1 dgidb_chemical2gene: 34 hits
+API 3.1 mychem.info: 77 hits
+API 3.2 mychem.info: 18 hits
+API 1.1 semmedgene: No hits
+API 1.2 semmedgene: No hits
+API 1.3 semmedgene: No hits
+API 1.4 semmedgene: No hits
+API 1.5 semmedgene: 100 hits
+API 1.6 semmedgene: 100 hits
 
-After id-to-object translation, BTE retrieved 244 unique objects.
+After id-to-object translation, BTE retrieved 959 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leukemia&#39; and &#39;IMATINIB&#39;
+BTE found 127 unique intermediate nodes connecting &#39;chronic myelogenous leukemia&#39; and &#39;Imatinib&#39;
 </pre>
 </div>
 </div>
@@ -13609,7 +13622,7 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -13632,7 +13645,7 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13675,178 +13688,7 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
   </thead>
   <tbody>
     <tr>
-      <td>30</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:6776</td>
-      <td>STAT5A</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>117</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:207</td>
-      <td>AKT1</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>34</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:4547</td>
-      <td>MTTP</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>56</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:10534</td>
-      <td>ZNRD2</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>113</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:613</td>
-      <td>BCR</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>57</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:10534</td>
-      <td>ZNRD2</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>27</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:6776</td>
-      <td>STAT5A</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>101</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>None</td>
-      <td>entrez:613</td>
-      <td>BCR</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:25</td>
-      <td>ABL1</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>13</td>
+      <td>287</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -13856,10 +13698,181 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
       <td>entrez:25</td>
       <td>ABL1</td>
       <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>19937285</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>516</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>12908554,16938665,23796006,23796006,23846442,2...</td>
+      <td>entrez:2322</td>
+      <td>FLT3</td>
+      <td>Gene</td>
       <td>target</td>
-      <td>drugbank</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>208</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>11516103</td>
+      <td>entrez:5777</td>
+      <td>PTPN6</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>449</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>DISEASES</td>
+      <td>DISEASES</td>
+      <td>None</td>
+      <td>entrez:613</td>
+      <td>BCR</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>152</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>6306134</td>
+      <td>entrez:5155</td>
+      <td>PDGFB</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>17268099</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>15815727</td>
+      <td>entrez:3569</td>
+      <td>IL6</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>18393961</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>391</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>26476544,26476544</td>
+      <td>entrez:3791</td>
+      <td>KDR</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
       <td>mychem.info</td>
-      <td>15799618,15917650,15949566,16153117,16205964</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>189</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>18474303</td>
+      <td>entrez:7157</td>
+      <td>TP53</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>456</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2gene</td>
+      <td>None</td>
+      <td>entrez:613</td>
+      <td>BCR</td>
+      <td>Gene</td>
+      <td>molecularlyInteractsWith</td>
+      <td>semmedgene</td>
+      <td>semmedgene</td>
+      <td>None</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>181</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>28979704</td>
+      <td>entrez:3627</td>
+      <td>CXCL10</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>21935477</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
@@ -13886,7 +13899,7 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -13902,22 +13915,22 @@ BTE found 51 unique intermediate nodes connecting &#39;chronic myelogenous leuke
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>ABL1      20
-BCR       15
-KIT       10
-ABCB1      8
-AKT1       4
-STAT5A     4
-BIRC5      4
-JAK2       3
-DCC        2
-TMED7      2
+<pre>ABL1     77
+BCR      49
+ABCB1    27
+KIT      24
+GSTP1    18
+AKT1     15
+MYC      10
+ABCC1    10
+JAK2     10
+TNF       9
 Name: node1_name, dtype: int64</pre>
 </div>
 
@@ -13938,10 +13951,14 @@ Name: node1_name, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">articles</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_edge_info</span><span class="p">(</span><span class="s1">&#39;chronic myelogenous leukemia&#39;</span><span class="p">,</span> <span class="s1">&#39;ABL1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;bts:pubmed&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fetch all articles connecting &#39;chronic myelogenous leukemia&#39; and &#39;ABL1&#39;</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_edge_info</span><span class="p">(</span><span class="s1">&#39;chronic myelogenous leukemia&#39;</span><span class="p">,</span> <span class="s1">&#39;ABL1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s1">&#39;bts:pubmed&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]:</span>
+        <span class="n">articles</span> <span class="o">+=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;bts:pubmed&#39;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">articles</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot; articles supporting the edge between CML and ABL1. Sampling of 10 of those:&quot;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;http://pubmed.gov/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span> <span class="p">]</span>
 </pre></div>
@@ -13960,17 +13977,17 @@ Name: node1_name, dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 63 articles supporting the edge between CML and ABL1. Sampling of 10 of those:
-http://pubmed.gov/12623848
-http://pubmed.gov/20537386
-http://pubmed.gov/23676790
-http://pubmed.gov/11964322
-http://pubmed.gov/22870928
-http://pubmed.gov/11423618
-http://pubmed.gov/20010464
-http://pubmed.gov/24109527
-http://pubmed.gov/21562040
-http://pubmed.gov/20557306
+<pre>There are 15 articles supporting the edge between CML and ABL1. Sampling of 10 of those:
+http://pubmed.gov/11979553
+http://pubmed.gov/10498618
+http://pubmed.gov/10822991
+http://pubmed.gov/11368359
+http://pubmed.gov/20809971
+http://pubmed.gov/18082628
+http://pubmed.gov/18243808
+http://pubmed.gov/23287430
+http://pubmed.gov/21955823
+http://pubmed.gov/23637631
 </pre>
 </div>
 </div>
@@ -13981,10 +13998,14 @@ http://pubmed.gov/20557306
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">articles</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_edge_info</span><span class="p">(</span><span class="s1">&#39;ABL1&#39;</span><span class="p">,</span> <span class="s1">&#39;IMATINIB&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;bts:publication&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fetch all articles connecting &#39;ABL1&#39; and &#39;Imatinib</span>
+<span class="n">articles</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_edge_info</span><span class="p">(</span><span class="s1">&#39;ABL1&#39;</span><span class="p">,</span> <span class="s1">&#39;Imatinib&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s1">&#39;bts:pubmed&#39;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]:</span>
+        <span class="n">articles</span> <span class="o">+=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">][</span><span class="s1">&#39;bts:pubmed&#39;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">articles</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot; articles supporting the edge between ABL1 and imatinib. Sampling of 10 of those:&quot;</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;http://pubmed.gov/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span> <span class="p">]</span>
 </pre></div>
@@ -14003,17 +14024,17 @@ http://pubmed.gov/20557306
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 16 articles supporting the edge between ABL1 and imatinib. Sampling of 10 of those:
-http://pubmed.gov/11287973
-http://pubmed.gov/20537386
-http://pubmed.gov/26758680
-http://pubmed.gov/20525993
-http://pubmed.gov/23502220
-http://pubmed.gov/19075254
-http://pubmed.gov/15930265
-http://pubmed.gov/17496201
-http://pubmed.gov/12637609
-http://pubmed.gov/11287972
+<pre>There are 25 articles supporting the edge between ABL1 and imatinib. Sampling of 10 of those:
+http://pubmed.gov/15799618
+http://pubmed.gov/15917650
+http://pubmed.gov/15949566
+http://pubmed.gov/16153117
+http://pubmed.gov/16205964
+http://pubmed.gov/19937285
+http://pubmed.gov/12032135
+http://pubmed.gov/12446442
+http://pubmed.gov/15039284
+http://pubmed.gov/15107311
 </pre>
 </div>
 </div>
@@ -14032,7 +14053,7 @@ http://pubmed.gov/11287972
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
@@ -14053,7 +14074,7 @@ http://pubmed.gov/11287972
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[14]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -14079,7 +14100,7 @@ http://pubmed.gov/11287972
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">gist</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="n">imatinib</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="s1">&#39;Gene&#39;</span><span class="p">)</span>
@@ -14092,7 +14113,7 @@ http://pubmed.gov/11287972
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># skipping the verbose log here</span>
@@ -14112,10 +14133,8 @@ http://pubmed.gov/11287972
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-After id-to-object translation, BTE retrieved 30 unique objects.
-
-After id-to-object translation, BTE retrieved 244 unique objects.
+<pre>0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
 </pre>
 </div>
 </div>
@@ -14126,7 +14145,7 @@ After id-to-object translation, BTE retrieved 244 unique objects.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -14149,7 +14168,7 @@ After id-to-object translation, BTE retrieved 244 unique objects.
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -14192,121 +14211,83 @@ After id-to-object translation, BTE retrieved 244 unique objects.
   </thead>
   <tbody>
     <tr>
-      <td>35</td>
+      <td>82</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:3815</td>
-      <td>KIT</td>
+      <td>18615679</td>
+      <td>entrez:673</td>
+      <td>BRAF</td>
       <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>19937285</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>39</td>
+      <td>177</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
+      <td>associatedWith</td>
+      <td>DISEASES</td>
+      <td>DISEASES</td>
+      <td>None</td>
+      <td>entrez:5156</td>
+      <td>PDGFRA</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>22447953</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>304</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td></td>
+      <td>15869870,15709888,22652566,25544564,26349547,1...</td>
       <td>entrez:3815</td>
       <td>KIT</td>
       <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>17420286,27793025</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>79</td>
+      <td>58</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
+      <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5156</td>
-      <td>PDGFRA</td>
+      <td>21163869</td>
+      <td>entrez:5243</td>
+      <td>ABCB1</td>
       <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>27</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>entrez:3815</td>
-      <td>KIT</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>27262785</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>42</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:5156</td>
-      <td>PDGFRA</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>45</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td></td>
-      <td>entrez:5156</td>
-      <td>PDGFRA</td>
-      <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>57</td>
+      <td>208</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -14316,43 +14297,24 @@ After id-to-object translation, BTE retrieved 244 unique objects.
       <td>entrez:5156</td>
       <td>PDGFRA</td>
       <td>Gene</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>15786421,17614352,28347583</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>85</td>
+      <td>23</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
+      <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5154</td>
-      <td>PDGFA</td>
-      <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
-      <td>None</td>
-      <td>chembl:CHEMBL941</td>
-      <td>IMATINIB</td>
-      <td>ChemicalSubstance</td>
-    </tr>
-    <tr>
-      <td>78</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:5156</td>
-      <td>PDGFRA</td>
+      <td>15297464</td>
+      <td>entrez:2322</td>
+      <td>FLT3</td>
       <td>Gene</td>
       <td>target</td>
       <td>drugcentral</td>
@@ -14363,19 +14325,76 @@ After id-to-object translation, BTE retrieved 244 unique objects.
       <td>ChemicalSubstance</td>
     </tr>
     <tr>
-      <td>2</td>
+      <td>257</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>causedBy</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>17566086,17566086,15154005,15580284,21364689,2...</td>
+      <td>entrez:5156</td>
+      <td>PDGFRA</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>22447953</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>232</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
       <td>semmed</td>
       <td>semmeddisease</td>
-      <td></td>
-      <td>entrez:947</td>
-      <td>CD34</td>
+      <td>18987545,20947481,19949796,17827398,21479127,2...</td>
+      <td>entrez:5156</td>
+      <td>PDGFRA</td>
       <td>Gene</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmedgene</td>
-      <td>semmedgene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>15786421,17614352,28347583</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>321</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>semmed</td>
+      <td>semmeddisease</td>
+      <td>12949711,20859122</td>
+      <td>entrez:3815</td>
+      <td>KIT</td>
+      <td>Gene</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>21295132</td>
+      <td>chembl:CHEMBL941</td>
+      <td>IMATINIB</td>
+      <td>ChemicalSubstance</td>
+    </tr>
+    <tr>
+      <td>269</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>DISEASES</td>
+      <td>DISEASES</td>
+      <td>None</td>
+      <td>entrez:3815</td>
+      <td>KIT</td>
+      <td>Gene</td>
+      <td>target</td>
+      <td>drugcentral</td>
+      <td>mychem.info</td>
       <td>None</td>
       <td>chembl:CHEMBL941</td>
       <td>IMATINIB</td>
@@ -14394,7 +14413,7 @@ After id-to-object translation, BTE retrieved 244 unique objects.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -14410,22 +14429,22 @@ After id-to-object translation, BTE retrieved 244 unique objects.
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>PDGFRA    42
-KIT       25
-BRAF       9
-CD34       4
-BIRC5      2
-PDGFA      2
-NCOR1      1
-SNRPE      1
-NF1        1
-VEGFA      1
+<pre>PDGFRA    88
+KIT       80
+BRAF      25
+ABCC1     10
+PDGFRB     9
+ABCB1      9
+BCR        7
+EGFR       6
+BCL2       6
+AKT1       5
 Name: node1_name, dtype: int64</pre>
 </div>
 
