@@ -7,7 +7,6 @@
 """
 from collections import defaultdict
 import networkx as nx
-import time
 import copy
 
 from .api_call_dispatcher import Dispatcher
