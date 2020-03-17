@@ -13128,6 +13128,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>To experiment with an executable version of this notebook, <a href="https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/TIDBIT%2004%20Finding%20Marketed%20Drugs%20that%20Might%20Treat%20an%20Unknown%20Syndrome%20by%20Perturbing%20the%20Disease%20Mechanism%20Pathway.ipynb">load it in Google Colaboratory</a>.</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Background of TIDBIT 04</strong>:</p>
 <p>A five-year-old patient was brought to the emergency room with recurrent polymicrobial lung infections, only 29% small airway function and was unresponsive to antibiotics.</p>
 <p>The patient’s medical records included a genetics report from age 1, which showed a 1p34.1 chromosomal duplication encompassing 1.9 Mb, including the PRDX1 gene, which encodes Peroxiredoxin 1. The gene has been linked to airway disease in both rats and humans, and is known to act as an agonist of toll-like receptor 4 (TLR4), a pro-inflammatory receptor. In addition, two patients at another clinic were found to have 1p34.1 duplications:</p>
@@ -13142,6 +13150,34 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-0:-Load-BioThings-Explorer-modules">Step 0: Load BioThings Explorer modules<a class="anchor-link" href="#Step-0:-Load-BioThings-Explorer-modules">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, install the <code>biothings_explorer</code> and <code>biothings_schema</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but including it here for compability with <a href="https://colab.research.google.com/">colab</a>).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install git+https://github.com/biothings/biothings_explorer#egg<span class="o">=</span>biothings_explorer
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
