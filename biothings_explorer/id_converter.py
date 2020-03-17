@@ -60,6 +60,7 @@ class IDConverter():
             return input_fields
 
     def convert_ids(self, inputs):
+        # this parameter stores the final id conversion outputs
         results = {}
         api_call_inputs = []
         mapping_files = []
@@ -116,30 +117,28 @@ class IDConverter():
                     for _id in ids:
                         results[_type + ':' + _id] = {'bts:' + _type: [_id]}
         # make API calls asynchronously and gather all outputs
-        responses = self.caller.call_apis(api_call_inputs, size=10)
-        # loop through outputs
-        for _res, _map, _api, _type in zip(responses, mapping_files,
-                                                 apis, types):
-            # restructure API output based on mapping file
-            new_res = OutputParser(_res, _map, True, _api).parse()
-            # remove "@context" and "@type" from result
-            for k, v in new_res.items():
-                if _type == 'bts:efo' or _type == 'efo':
-                    k = 'EFO:' + k
-                if '@context' in v:
-                    v.pop("@context")
-                if '@type' in v:
-                    v.pop("@type")
-                if _type.startswith("bts:"):
-                    _type = _type[4:]
-                # remove duplicates
-                for m, n in v.items():
-                    if n and isinstance(n, list):
-                        v[m] = list(set(n))
-                # after removing @context and @type, check if the dict is empty
-                if v:
-                    results[_type + ':' + k] = v
-                # if the dict is empty, just return itself as its value
+        responses = self.caller.call_apis(api_call_inputs, size=10, dotfield=True)
+        for _res, _map, _type in zip(responses, mapping_files, types):
+            if _type.startswith("bts:"):
+                _type = _type[4:]
+            # if API response is empty, continue
+            if not _res:
+                continue
+            for single_res in _res:
+                # if query of the item returns no hit
+                if 'notfound' in single_res:
+                    results[_type + ':' + single_res['query']] = {'bts:' + _type: [single_res['query']]}
+                    continue
                 else:
-                    results[_type + ':' + k] = {'bts:' + _type: [k]}
+                    new_res = {}
+                    for k, v in _map.items():
+                        if type(v) != list:
+                            v = [v]
+                        for _v in v:
+                            if _v in single_res:
+                                val = single_res[_v]
+                                if type(val) != list:
+                                    val = [val]
+                                new_res[k] = val
+                    results[_type + ':' + single_res['query']] = new_res
         return results
