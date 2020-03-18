@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>TIDBIT 04 Finding Marketed Drugs that Might Treat an Unknown Syndrome by Perturbing the Disease Mechanism Pathway</title>
+<title>Multi intermediate nodes query</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,11 +13116,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This notebook demonstrates how BioThings Explorer can be used to answer the following query:</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>"Finding Marketed Drugs that Might Treat an Unknown Syndrome by Perturbing the Disease Mechanism Pathway"</em></p>
-<p><img src="img/tidbit4_300.png" alt=""></p>
-<p>This query corresponds to <a href="https://ncats.nih.gov/tidbit/tidbit_04.html">Tidbit 4</a> which was formulated as a demonstration of the NCATS Translator program.</p>
-<p><strong>Background of BTE</strong>: BioThings Explorer can answer two classes of queries -- "EXPLAIN" and "PREDICT".  EXPLAIN queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/EXPLAIN_demo.ipynb">EXPLAIN_demo.ipynb</a>, and PREDICT queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb">PREDICT_demo.ipynb</a>. Here, we describe PREDICT queries and how to use BioThings Explorer to execute them.  A more detailed overview of the BioThings Explorer systems is provided in <a href="https://docs.google.com/presentation/d/1QWQqqQhPD_pzKryh6Wijm4YQswv8pAjleVORCPyJyDE/edit?usp=sharing">these slides</a>.</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This notebook demonstrates how BioThings Explorer can be used to execute queries having more than one intermediate nodes:</p>
+<p>The query starts from drug "Anisindione", the two intermediate nodes with be *Gene and DiseaseOrPhenotypicFeature", the final output will be "PhenotypicFeature".</p>
+<p><strong>Background</strong>: BioThings Explorer can answer two classes of queries -- "EXPLAIN" and "PREDICT".  EXPLAIN queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/EXPLAIN_demo.ipynb">EXPLAIN_demo.ipynb</a>, and PREDICT queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb">PREDICT_demo.ipynb</a>. Here, we describe PREDICT queries and how to use BioThings Explorer to execute them.  A more detailed overview of the BioThings Explorer systems is provided in <a href="https://docs.google.com/presentation/d/1QWQqqQhPD_pzKryh6Wijm4YQswv8pAjleVORCPyJyDE/edit?usp=sharing">these slides</a>.</p>
 
 </div>
 </div>
@@ -13128,7 +13126,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>To experiment with an executable version of this notebook, <a href="https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/TIDBIT%2004%20Finding%20Marketed%20Drugs%20that%20Might%20Treat%20an%20Unknown%20Syndrome%20by%20Perturbing%20the%20Disease%20Mechanism%20Pathway.ipynb">load it in Google Colaboratory</a>.</strong></p>
+<p><strong>To experiment with an executable version of this notebook, <a href="https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/Multi%20intermediate%20nodes%20query.ipynb">load it in Google Colaboratory</a>.</strong></p>
 
 </div>
 </div>
@@ -13136,32 +13134,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Background of TIDBIT 04</strong>:</p>
-<p>A five-year-old patient was brought to the emergency room with recurrent polymicrobial lung infections, only 29% small airway function and was unresponsive to antibiotics.</p>
-<p>The patient’s medical records included a genetics report from age 1, which showed a 1p34.1 chromosomal duplication encompassing 1.9 Mb, including the PRDX1 gene, which encodes Peroxiredoxin 1. The gene has been linked to airway disease in both rats and humans, and is known to act as an agonist of toll-like receptor 4 (TLR4), a pro-inflammatory receptor. In addition, two patients at another clinic were found to have 1p34.1 duplications:</p>
-<ol>
-<li>One patient with a duplication including PRDX1 died with similar phenotypes</li>
-<li>One patient with a duplication that did NOT include PRDX1 showed no airway disease phenotype
-While recurrent lung infections are typically treated with antibiotics, this patient was unresponsive to standard treatments. The patient’s earlier genetics report and data from other patients with similar duplications gave the physician evidence that PRDX1 may play a role in the disease, but no treatments directly related to the gene were known. With this information in mind, the physician asked a researcher familiar with Translator to try to find possible treatments for this patient.</li>
-</ol>
-<p><strong>How Might Translator Help?</strong>
-The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator researchers a good place to start. Since PRDX1 is an agonist of TLR4, the duplication of the PRDX1 gene likely causes overexpression of PRDX1, which could lead to overactivity of both of the gene products. The researcher decided to try to find drugs that could be used to reduce the activity of those two proteins. An exhaustive search of chemical databases and PubMed to find safe drug options could take days to weeks.</p>
-<p>For a known genetic mutation, can Translator be used to quickly find existing modulators to compensate for the dysfunctional gene product?</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-0:-Load-BioThings-Explorer-modules">Step 0: Load BioThings Explorer modules<a class="anchor-link" href="#Step-0:-Load-BioThings-Explorer-modules">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First, install the <code>biothings_explorer</code> and <code>biothings_schema</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but including it here for compability with <a href="https://colab.research.google.com/">colab</a>).</p>
+<h2 id="Step-0:-Load-BioThings-Explorer-modules">Step 0: Load BioThings Explorer modules<a class="anchor-link" href="#Step-0:-Load-BioThings-Explorer-modules">&#182;</a></h2><p>Install the <code>biothings_explorer</code> and <code>biothings_schema</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but including it here for compability with <a href="https://colab.research.google.com/">colab</a>).</p>
 
 </div>
 </div>
@@ -13182,8 +13155,11 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Find-representation-of-&quot;PRDX1&quot;-in-BTE">Step 1: Find representation of "PRDX1" in BTE<a class="anchor-link" href="#Step-1:-Find-representation-of-&quot;PRDX1&quot;-in-BTE">&#182;</a></h2><p>In this step, BioThings Explorer translates our query string "PRDX1"  into BioThings objects, which contain mappings to many common identifiers.  Generally, the top result returned by the <code>Hint</code> module will be the correct item, but you should confirm that using the identifiers shown.</p>
-<p>Search terms can correspond to any child of <a href="https://biolink.github.io/biolink-model/docs/BiologicalEntity.html">BiologicalEntity</a> from the <a href="https://biolink.github.io/biolink-model/docs/">Biolink Model</a>, including <code>DiseaseOrPhenotypicFeature</code> (e.g., "lupus"), <code>ChemicalSubstance</code> (e.g., "acetaminophen"), <code>Gene</code> (e.g., "CDK2"), <code>BiologicalProcess</code> (e.g., "T cell differentiation"), and <code>Pathway</code> (e.g., "Citric acid cycle").</p>
+<p>Next, import the relevant modules:</p>
+<ul>
+<li><strong>Hint</strong>: Find corresponding bio-entity representation used in BioThings Explorer based on user input (could be any database IDs, symbols, names)</li>
+<li><strong>FindConnection</strong>: Find intermediate bio-entities which connects user specified input and output</li>
+</ul>
 
 </div>
 </div>
@@ -13194,10 +13170,32 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.hint</span> <span class="k">import</span> <span class="n">Hint</span>
-<span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
-<span class="n">prdx1</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;PRDX1&quot;</span><span class="p">)[</span><span class="s1">&#39;Gene&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="k">import</span> <span class="n">FindConnection</span>
+</pre></div>
 
-<span class="n">prdx1</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-1:-Find-representation-of-&quot;Anisindione&quot;-in-BTE">Step 1: Find representation of "Anisindione" in BTE<a class="anchor-link" href="#Step-1:-Find-representation-of-&quot;Anisindione&quot;-in-BTE">&#182;</a></h2><p>In this step, BioThings Explorer translates our query string "Anisindioine"  into BioThings objects, which contain mappings to many common identifiers.  Generally, the top result returned by the <code>Hint</code> module will be the correct item, but you should confirm that using the identifiers shown.</p>
+<p>Search terms can correspond to any child of <a href="https://biolink.github.io/biolink-model/docs/BiologicalEntity.html">BiologicalEntity</a> from the <a href="https://biolink.github.io/biolink-model/docs/">Biolink Model</a>, including <code>DiseaseOrPhenotypicFeature</code> (e.g., "lupus"), <code>ChemicalSubstance</code> (e.g., "acetaminophen"), <code>Gene</code> (e.g., "CDK2"), <code>BiologicalProcess</code> (e.g., "T cell differentiation"), and <code>Pathway</code> (e.g., "Citric acid cycle").</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
+<span class="n">anisindione</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;Anisindione&quot;</span><span class="p">)[</span><span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">anisindione</span>
 </pre></div>
 
     </div>
@@ -13210,23 +13208,23 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[1]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;entrez&#39;: &#39;5052&#39;,
- &#39;name&#39;: &#39;peroxiredoxin 1&#39;,
- &#39;symbol&#39;: &#39;PRDX1&#39;,
- &#39;taxonomy&#39;: 9606,
- &#39;umls&#39;: &#39;C1418879&#39;,
- &#39;uniprot&#39;: &#39;Q06830&#39;,
- &#39;hgnc&#39;: &#39;9352&#39;,
- &#39;ensembl&#39;: &#39;ENSG00000117450&#39;,
- &#39;display&#39;: &#39;entrez(5052) name(peroxiredoxin 1) symbol(PRDX1) taxonomy(9606) umls(C1418879) uniprot(Q06830) hgnc(9352) ensembl(ENSG00000117450) &#39;,
- &#39;type&#39;: &#39;Gene&#39;,
- &#39;primary&#39;: {&#39;identifier&#39;: &#39;entrez&#39;, &#39;cls&#39;: &#39;Gene&#39;, &#39;value&#39;: &#39;5052&#39;}}</pre>
+<pre>{&#39;chembl&#39;: &#39;CHEMBL712&#39;,
+ &#39;drugbank&#39;: &#39;DB01125&#39;,
+ &#39;name&#39;: &#39;Anisindione&#39;,
+ &#39;pubchem&#39;: 2197,
+ &#39;umls&#39;: &#39;C0051919&#39;,
+ &#39;chebi&#39;: &#39;CHEBI:133809&#39;,
+ &#39;display&#39;: &#39;chembl(CHEMBL712) drugbank(DB01125) name(Anisindione) pubchem(2197) umls(C0051919) chebi(CHEBI:133809) &#39;,
+ &#39;type&#39;: &#39;ChemicalSubstance&#39;,
+ &#39;primary&#39;: {&#39;identifier&#39;: &#39;chembl&#39;,
+  &#39;cls&#39;: &#39;ChemicalSubstance&#39;,
+  &#39;value&#39;: &#39;CHEMBL712&#39;}}</pre>
 </div>
 
 </div>
@@ -13238,21 +13236,32 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Find-drugs-that-are-associated-with-genes-which-are-associated-with-PRDX1">Step 2: Find drugs that are associated with genes which are associated with PRDX1<a class="anchor-link" href="#Step-2:-Find-drugs-that-are-associated-with-genes-which-are-associated-with-PRDX1">&#182;</a></h2><p>In this section, we find all paths in the knowledge graph that connect PRDX1 to any entity that is a chemical compound.  To do that, we will use <code>FindConnection</code>.  This class is a convenient wrapper around two advanced functions for <strong>query path planning</strong> and <strong>query path execution</strong>. More advanced features for both query path planning and query path execution are in development and will be documented in the coming months.</p>
-<p>The parameters for <code>FindConnection</code> are described below:</p>
+<h2 id="Step-2:-Find-phenotypes-that-are-associated-with-Anisindione-through-Gene-and-DiseaseOrPhenotypicFeature-as-intermediate-nodes">Step 2: Find phenotypes that are associated with Anisindione through Gene and DiseaseOrPhenotypicFeature as intermediate nodes<a class="anchor-link" href="#Step-2:-Find-phenotypes-that-are-associated-with-Anisindione-through-Gene-and-DiseaseOrPhenotypicFeature-as-intermediate-nodes">&#182;</a></h2><p>In this section, we find all paths in the knowledge graph that connect Anisindione to any entity that is a phenotypic feature.  To do that, we will use <code>FindConnection</code>.  This class is a convenient wrapper around two advanced functions for <strong>query path planning</strong> and <strong>query path execution</strong>. More advanced features for both query path planning and query path execution are in development and will be documented in the coming months.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="k">import</span> <span class="n">FindConnection</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">anisindione</span><span class="p">,</span> 
+                    <span class="n">output_obj</span><span class="o">=</span><span class="s1">&#39;PhenotypicFeature&#39;</span><span class="p">,</span> 
+                    <span class="n">intermediate_nodes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">,</span> <span class="s1">&#39;DiseaseOrPhenotypicFeature&#39;</span><span class="p">])</span>
+</pre></div>
 
-<span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">prdx1</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">])</span>
-<span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13273,1016 +13282,490 @@ The patient’s duplication of the 1p34.1 region of chromosome 1 gave Translator
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;PRDX1&#39; and &#39;ChemicalSubstance&#39;. Paths will have 1 intermediate node.
+BTE will find paths that join &#39;Anisindione&#39; and &#39;PhenotypicFeature&#39;. Paths will have 2 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
+Intermediate node #2 will have these type constraints: DiseaseOrPhenotypicFeature
 
 
-========== QUERY #1 -- fetch all Gene entities linked to PRDX1 ==========
+
+========== QUERY #1 -- fetch all Gene entities linked to Anisindione ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because PRDX1 is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that can take &#39;Gene&#39; as input and &#39;Gene&#39; as output
+Because Anisindione is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
 
-BTE found 3 apis:
+BTE found 4 apis:
 
-API 1. biolink_geneinteraction(1 API call)
-API 2. semmedgene(11 API calls)
-API 3. mygene.info(3 API calls)
+API 1. dgidb_chemical2gene(1 API call)
+API 2. chembl_drug_mechanism(1 API call)
+API 3. semmedgene(6 API calls)
+API 4. mychem.info(2 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 3.1: http://mygene.info/v3/query (POST &#34;q=5052&amp;scopes=entrezgene&amp;fields=pantherdb.ortholog&amp;species=human&amp;size=100&#34;)
-API 3.3: http://mygene.info/v3/query (POST &#34;q=9352&amp;scopes=pantherdb.ortholog.HGNC&amp;fields=entrezgene&amp;species=human&amp;size=100&#34;)
-API 3.2: http://mygene.info/v3/query (POST &#34;q=ENSG00000117450&amp;scopes=pantherdb.ortholog.Ensembl&amp;fields=entrezgene&amp;species=human&amp;size=100&#34;)
-API 2.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=disrupts.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.7: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=inhibits.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=inhibits.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=affects.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.10: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=stimulates.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.9: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=interacts_with.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=disrupts.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=affects.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.8: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=interacts_with.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=associated_with.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
-API 2.11: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1418879&amp;scopes=umls&amp;fields=disrupts.gene,inhibits.gene,associated_with.gene,affects.gene,stimulates.protein,disrupts.protein,inhibits.protein,interacts_with.gene,affects.protein,interacts_with.protein&amp;species=human&amp;size=100&#34;)
-API 1.1: https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:5052/interactions?rows=100
+API 4.2: http://mychem.info/v1/query (POST &#34;q=DB01125&amp;scopes=drugbank.id&amp;fields=drugbank.enzymes,drugbank.targets&amp;species=human&amp;size=100&#34;)
+API 4.1: http://mychem.info/v1/query (POST &#34;q=CHEMBL712&amp;scopes=chembl.molecule_chembl_id&amp;fields=drugcentral.bioactivity&amp;species=human&amp;size=100&#34;)
+API 1.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL712
+API 3.5: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=interacts_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.4: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=associated_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.6: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=interacts_with_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.2: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=affects_reverse.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=affects.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 3.3: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0051919&amp;scopes=associated_with.chemical_substance.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 2.1: https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id=CHEMBL712
 
 
 ==== Step #3: Output normalization ====
 
-API 1.1 biolink_geneinteraction: 100 hits
-API 3.1 mygene.info: 16 hits
-API 3.2 mygene.info: No hits
-API 3.3 mygene.info: 1 hits
-API 2.1 semmedgene: No hits
-API 2.2 semmedgene: No hits
-API 2.3 semmedgene: No hits
-API 2.4 semmedgene: No hits
-API 2.5 semmedgene: No hits
-API 2.6 semmedgene: 11 hits
-API 2.7 semmedgene: No hits
-API 2.8 semmedgene: 38 hits
-API 2.9 semmedgene: No hits
-API 2.10 semmedgene: No hits
-API 2.11 semmedgene: 85 hits
+API 2.1 chembl_drug_mechanism: 1 hits
+API 1.1 dgidb_chemical2gene: 2 hits
+API 4.1 mychem.info: 2 hits
+API 4.2 mychem.info: 1 hits
+API 3.1 semmedgene: No hits
+API 3.2 semmedgene: No hits
+API 3.3 semmedgene: No hits
+API 3.4 semmedgene: No hits
+API 3.5 semmedgene: No hits
+API 3.6 semmedgene: No hits
 
-After id-to-object translation, BTE retrieved 218 unique objects.
+After id-to-object translation, BTE retrieved 4 unique objects.
 
 
-========== QUERY #2.1 -- fetch all ChemicalSubstance entities linked to Gene entites ==========
+========== QUERY #2.1 -- fetch all DiseaseOrPhenotypicFeature entities linked to Gene entites ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that can take &#39;Gene&#39; as input and &#39;ChemicalSubstance&#39; as output
+Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that can take &#39;Gene&#39; as input and &#39;DiseaseOrPhenotypicFeature&#39; as output
 
 BTE found 5 apis:
 
-API 1. semmedgene(1 API call)
-API 2. mychem.info(3 API calls)
-API 3. dgidb_gene2chemical(146 API calls)
-API 4. opentarget(162 API calls)
-API 5. robokop_gene2chemical(146 API calls)
+API 1. DISEASES(1 API call)
+API 2. biolink_gene2disease(3 API calls)
+API 3. mydisease.info(1 API call)
+API 4. ctd_gene2disease(3 API calls)
+API 5. semmeddisease(7 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 4.16: http://www.dgidb.org/api/v2/interactions.json?genes=ZFR
-API 4.1: http://www.dgidb.org/api/v2/interactions.json?genes=RNF144A
-API 4.6: http://www.dgidb.org/api/v2/interactions.json?genes=LARP7
-API 4.4: http://www.dgidb.org/api/v2/interactions.json?genes=LGALS3
-API 4.14: http://www.dgidb.org/api/v2/interactions.json?genes=SYK
-API 4.11: http://www.dgidb.org/api/v2/interactions.json?genes=SESN1
-API 4.10: http://www.dgidb.org/api/v2/interactions.json?genes=CDC37
-API 4.12: http://www.dgidb.org/api/v2/interactions.json?genes=FERMT3
-dgidb_gene2chemical failed
-dgidb_gene2chemical failed
-API 4.8: http://www.dgidb.org/api/v2/interactions.json?genes=PPP2R5D
-dgidb_gene2chemical failed
-API 4.2: http://www.dgidb.org/api/v2/interactions.json?genes=CLEC4G
-API 4.3: http://www.dgidb.org/api/v2/interactions.json?genes=SCCPDH
-API 4.13: http://www.dgidb.org/api/v2/interactions.json?genes=RECQL4
-API 4.18: http://www.dgidb.org/api/v2/interactions.json?genes=PPT1
-API 4.5: http://www.dgidb.org/api/v2/interactions.json?genes=CALB2
-dgidb_gene2chemical failed
-API 4.17: http://www.dgidb.org/api/v2/interactions.json?genes=MST1
-dgidb_gene2chemical failed
-API 4.7: http://www.dgidb.org/api/v2/interactions.json?genes=KMT2A
-dgidb_gene2chemical failed
-dgidb_gene2chemical failed
-API 4.15: http://www.dgidb.org/api/v2/interactions.json?genes=CAT
-API 4.29: http://www.dgidb.org/api/v2/interactions.json?genes=COX6B1
-dgidb_gene2chemical failed
-API 4.21: http://www.dgidb.org/api/v2/interactions.json?genes=PDP1
-API 4.25: http://www.dgidb.org/api/v2/interactions.json?genes=GABPA
-API 4.27: http://www.dgidb.org/api/v2/interactions.json?genes=DAB2
-API 4.26: http://www.dgidb.org/api/v2/interactions.json?genes=TDGF1
-API 4.9: http://www.dgidb.org/api/v2/interactions.json?genes=SH3BGRL2
-dgidb_gene2chemical failed
-API 4.28: http://www.dgidb.org/api/v2/interactions.json?genes=MEPCE
-API 4.24: http://www.dgidb.org/api/v2/interactions.json?genes=PIK3CB
-API 4.19: http://www.dgidb.org/api/v2/interactions.json?genes=CUL2
-API 4.20: http://www.dgidb.org/api/v2/interactions.json?genes=PRRX1
-API 4.23: http://www.dgidb.org/api/v2/interactions.json?genes=TERF1
-API 4.30: http://www.dgidb.org/api/v2/interactions.json?genes=ETS1
-API 3.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000118058&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=55872&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000110063&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000274442&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.31: http://www.dgidb.org/api/v2/interactions.json?genes=VEGFA
-API 4.42: http://www.dgidb.org/api/v2/interactions.json?genes=NF2
-API 3.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000116132&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000143653&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000146457&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.41: http://www.dgidb.org/api/v2/interactions.json?genes=COPS5
-API 3.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000121022&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000146648&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.13: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000121691&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.40: http://www.dgidb.org/api/v2/interactions.json?genes=MTRNR2L1
-API 3.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000117748&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.34: http://www.dgidb.org/api/v2/interactions.json?genes=CCNB1
-API 4.62: http://www.dgidb.org/api/v2/interactions.json?genes=CDK9
-API 1.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C0138965,C0073337,C0282625,C1419243,C1539128,C1332695,C1425509,C1705047,C1335243,C3539596,C1418881,C1412825,C0071827,C1539098,C1424868,C1709820,C1335212,C1707152,C0074147,C2984529,C1367578,C2698689,C1826328,C0085114,C1825689,C1335262,C3147237,C1708291,C1335281,C3148432,C1427896,C1332810,C1419619,C0079427,C1427424,C0812303,C1825792,C1413633,C1336636,C1412173,C0031727,C0669365,C0007367,C1413614,C1419211,C4285071,C1705442,C0527356,C1826505,C1425940,C1424590,C2700100,C0140145,C0969119,C0056467,C1426950,C1414270,C0287531,C0017360,C1335208,C1705387,C1421999,C1419618,C1426741,C1824894,C0812201,C1413850,C1332813,C0164786,C1335607,C1421986,C0036773,C1823127,C1427252,C1419277,C0086661,C0812246,C1826417,C2681660,C1335892,C1426328,C1825463,C1418818,C1418837,C1413724,C0312359,C1424518,C1413365,C1705325,C1424135,C1413355,C1826784,C1709127,C3642141,C1425683,C1709439,C1706351,C1427105,C3272447,C1842840,C1335285,C1420667,C0672553,C1705997,C1425522,C0017822,C1539228,C1424792,C1413702,C1421047,C1539902,C1418882,C1420307,C0812252,C1413912,C1413826,C1424145,C1335213,C1418928,C1332733,C1412851,C1418696,C0812228,C0010531,C3714973,C1424323,C1414313,C1418270,C1332805,C1825553,C0059256,C0694888,C1705981,C1824317,C1705633,C1705691,C1334294,C1421289,C1332812,C1332102,C1423579,C1414905,C1826843,C1333895,C1426197,C0010642,C0376571,C0022959,C1427952,C0029073,C1705581,C1456380,C1439337,C1413290,C1826565,C1420306,C1413671,C1422009,C1427633,C1414968,C1539559,C1418596,C1424673,C1416831,C1418880,C1419620,C1427739,C1704928,C0919487,C1538595,C1335248,C1332811,C1423806,C0024750,C0079050,C1333202,C1336604,C1825621,C1707161,C1825045,C1823619,C0919528,C1332659,C1332809,C1427363,C1419236,C1424915,C1366537,C1413081,C1708031,C0694872,C1413696,C1332722,C1418582,C0248813,C1413138,C0033681,C0031678,C1822651,C0027021,C1705518,C1335267,C1418854,C1336690,C1417377&amp;scopes=umls&amp;fields=associated_with_reverse.chemical_substance,interacts_with.chemical_substance,affects.chemical_substance,associated_with.chemical_substance,affects_reverse.chemical_substance,interacts_with_reverse.chemical_substance&amp;species=human&amp;size=100&#34;)
-API 4.36: http://www.dgidb.org/api/v2/interactions.json?genes=PHB
-API 4.45: http://www.dgidb.org/api/v2/interactions.json?genes=GDPD5
-API 4.22: http://www.dgidb.org/api/v2/interactions.json?genes=ZFP36L2
-API 4.46: http://www.dgidb.org/api/v2/interactions.json?genes=APEX1
-API 4.59: http://www.dgidb.org/api/v2/interactions.json?genes=PRKDC
-API 4.33: http://www.dgidb.org/api/v2/interactions.json?genes=EIF4A3
-API 3.17: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135870&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000204490&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.66: http://www.dgidb.org/api/v2/interactions.json?genes=RNH1
-API 4.32: http://www.dgidb.org/api/v2/interactions.json?genes=EEF1A1
-API 3.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000123131&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.14: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000124006&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.16: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000167815&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.43: http://www.dgidb.org/api/v2/interactions.json?genes=PIDD1
-API 4.51: http://www.dgidb.org/api/v2/interactions.json?genes=PBK
-API 3.15: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198478&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.35: http://www.dgidb.org/api/v2/interactions.json?genes=CTSD
-API 4.37: http://www.dgidb.org/api/v2/interactions.json?genes=COPS6
-API 3.20: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198668&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.19: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000112096&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.18: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000147601&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.22: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151692&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.23: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000182566&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.21: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000156508&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.39: http://www.dgidb.org/api/v2/interactions.json?genes=PIK3CA
-API 3.25: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000130725&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.38: http://www.dgidb.org/api/v2/interactions.json?genes=HEXIM1
-API 4.55: http://www.dgidb.org/api/v2/interactions.json?genes=PITX2
-API 4.57: http://www.dgidb.org/api/v2/interactions.json?genes=RASA1
-API 3.24: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000164951&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.61: http://www.dgidb.org/api/v2/interactions.json?genes=LAP3
-API 3.26: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000228849&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.47: http://www.dgidb.org/api/v2/interactions.json?genes=HDAC6
-API 4.60: http://www.dgidb.org/api/v2/interactions.json?genes=CUL7
-API 4.50: http://www.dgidb.org/api/v2/interactions.json?genes=ERVW-4
-API 4.91: http://www.dgidb.org/api/v2/interactions.json?genes=AAR2
-API 4.63: http://www.dgidb.org/api/v2/interactions.json?genes=BTRC
-API 4.48: http://www.dgidb.org/api/v2/interactions.json?genes=SESN2
-API 3.27: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000138823&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.44: http://www.dgidb.org/api/v2/interactions.json?genes=RIOK1
-API 4.54: http://www.dgidb.org/api/v2/interactions.json?genes=HECTD1
-API 3.28: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000010810&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.49: http://www.dgidb.org/api/v2/interactions.json?genes=RC3H1
-API 4.87: http://www.dgidb.org/api/v2/interactions.json?genes=CRY1
-API 3.29: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000196415&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.52: http://www.dgidb.org/api/v2/interactions.json?genes=METTL14
-API 4.56: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX4
-API 4.53: http://www.dgidb.org/api/v2/interactions.json?genes=WTAP
-API 3.30: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000196396&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.58: http://www.dgidb.org/api/v2/interactions.json?genes=CDC42
-API 3.31: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000134283&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.70: http://www.dgidb.org/api/v2/interactions.json?genes=TXN
-API 3.32: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000039068&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.97: http://www.dgidb.org/api/v2/interactions.json?genes=PEBP1
-API 3.34: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000284792&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.33: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000139842&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.35: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000083799&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.36: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000118260&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.71: http://www.dgidb.org/api/v2/interactions.json?genes=CUL4B
-API 4.88: http://www.dgidb.org/api/v2/interactions.json?genes=CPLX2
-API 3.37: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000001626&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.77: http://www.dgidb.org/api/v2/interactions.json?genes=CDK2
-API 4.74: http://www.dgidb.org/api/v2/interactions.json?genes=YAP1
-API 4.72: http://www.dgidb.org/api/v2/interactions.json?genes=RNF123
-API 4.64: http://www.dgidb.org/api/v2/interactions.json?genes=FYN
-API 4.79: http://www.dgidb.org/api/v2/interactions.json?genes=RAB4B
-API 3.38: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145920&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.83: http://www.dgidb.org/api/v2/interactions.json?genes=GAPDH
-API 4.78: http://www.dgidb.org/api/v2/interactions.json?genes=PTPN1
-API 4.76: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX6
-API 3.39: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000126267&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.80: http://www.dgidb.org/api/v2/interactions.json?genes=CR2
-API 4.65: http://www.dgidb.org/api/v2/interactions.json?genes=SOD2
-API 4.85: http://www.dgidb.org/api/v2/interactions.json?genes=PRKN
-API 3.40: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000117984&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.86: http://www.dgidb.org/api/v2/interactions.json?genes=SOD1
-API 4.69: http://www.dgidb.org/api/v2/interactions.json?genes=MYC
-API 3.41: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000126432&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.82: http://www.dgidb.org/api/v2/interactions.json?genes=CUL4A
-API 4.90: http://www.dgidb.org/api/v2/interactions.json?genes=OBSL1
-API 4.92: http://www.dgidb.org/api/v2/interactions.json?genes=DCUN1D1
-API 4.68: http://www.dgidb.org/api/v2/interactions.json?genes=UBE2M
-API 3.42: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000165672&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.94: http://www.dgidb.org/api/v2/interactions.json?genes=TLR4
-API 4.96: http://www.dgidb.org/api/v2/interactions.json?genes=TRBV20OR9-2
-API 4.84: http://www.dgidb.org/api/v2/interactions.json?genes=TP63
-API 3.43: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000063244&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.75: http://www.dgidb.org/api/v2/interactions.json?genes=COX17
-API 4.73: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX2
-API 4.95: http://www.dgidb.org/api/v2/interactions.json?genes=RAD52
-API 3.44: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000230108&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.98: http://www.dgidb.org/api/v2/interactions.json?genes=ANAPC15
-API 4.93: http://www.dgidb.org/api/v2/interactions.json?genes=VRK3
-API 3.46: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000165025&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.100: http://www.dgidb.org/api/v2/interactions.json?genes=ACY1
-API 3.47: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000271303&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.89: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX3
-API 3.45: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000121879&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.81: http://www.dgidb.org/api/v2/interactions.json?genes=UCHL5
-API 4.110: http://www.dgidb.org/api/v2/interactions.json?genes=PPP2R1B
-API 4.112: http://www.dgidb.org/api/v2/interactions.json?genes=RPA3
-API 4.113: http://www.dgidb.org/api/v2/interactions.json?genes=RPA2
-API 4.114: http://www.dgidb.org/api/v2/interactions.json?genes=RBMS3
-API 4.99: http://www.dgidb.org/api/v2/interactions.json?genes=CFTR
-API 3.49: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000186834&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.115: http://www.dgidb.org/api/v2/interactions.json?genes=PRTN3
-API 3.52: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000172137&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.67: http://www.dgidb.org/api/v2/interactions.json?genes=TNF
-API 4.117: http://www.dgidb.org/api/v2/interactions.json?genes=CYLD
-API 4.116: http://www.dgidb.org/api/v2/interactions.json?genes=PTPRC
-API 3.53: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000284807&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.119: http://www.dgidb.org/api/v2/interactions.json?genes=CUL1
-API 4.120: http://www.dgidb.org/api/v2/interactions.json?genes=SLC38A1
-API 3.54: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000256618&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.121: http://www.dgidb.org/api/v2/interactions.json?genes=DHRS4
-API 3.55: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000105401&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.122: http://www.dgidb.org/api/v2/interactions.json?genes=PPHLN1
-API 4.123: http://www.dgidb.org/api/v2/interactions.json?genes=OTUB1
-API 4.126: http://www.dgidb.org/api/v2/interactions.json?genes=PPP2R1A
-API 4.118: http://www.dgidb.org/api/v2/interactions.json?genes=NTRK1
-API 4.125: http://www.dgidb.org/api/v2/interactions.json?genes=CREB1
-API 3.59: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131238&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.127: http://www.dgidb.org/api/v2/interactions.json?genes=PRDX5
-API 4.128: http://www.dgidb.org/api/v2/interactions.json?genes=ISG15
-API 4.129: http://www.dgidb.org/api/v2/interactions.json?genes=PRPF8
-API 4.130: http://www.dgidb.org/api/v2/interactions.json?genes=DCPS
-API 4.131: http://www.dgidb.org/api/v2/interactions.json?genes=CDH1
-API 3.60: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000164093&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.104: http://www.dgidb.org/api/v2/interactions.json?genes=PTEN
-API 3.57: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000243989&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.63: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000160957&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.62: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000092148&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.132: http://www.dgidb.org/api/v2/interactions.json?genes=SUZ12
-API 4.124: http://www.dgidb.org/api/v2/interactions.json?genes=AKT1
-API 4.133: http://www.dgidb.org/api/v2/interactions.json?genes=HTRA2
-API 3.65: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000138495&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.61: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000228321&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.135: http://www.dgidb.org/api/v2/interactions.json?genes=DAZAP1
-API 3.48: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000094631&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.136: http://www.dgidb.org/api/v2/interactions.json?genes=RPA1
-API 4.137: http://www.dgidb.org/api/v2/interactions.json?genes=JTB
-API 4.134: http://www.dgidb.org/api/v2/interactions.json?genes=CALM1
-API 4.138: http://www.dgidb.org/api/v2/interactions.json?genes=PIN1
-API 4.139: http://www.dgidb.org/api/v2/interactions.json?genes=RAD23A
-API 3.64: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000262418&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.141: http://www.dgidb.org/api/v2/interactions.json?genes=CDC73
-API 4.142: http://www.dgidb.org/api/v2/interactions.json?genes=AGO4
-API 3.50: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000167770&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.68: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000172757&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.51: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000117592&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.145: http://www.dgidb.org/api/v2/interactions.json?genes=U2AF2
-API 3.66: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137693&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.67: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000185345&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.144: http://www.dgidb.org/api/v2/interactions.json?genes=PRKCZ
-API 3.69: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000071626&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.146: http://www.dgidb.org/api/v2/interactions.json?genes=CUL5
-API 3.72: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000285441&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.76: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000144642&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.73: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000276230&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.70: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000164944&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.77: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142208&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.78: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000174231&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.71: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000167085&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.80: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000164068&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.79: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000051382&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.82: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171862&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.81: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000012048&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.75: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000134371&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.74: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000134057&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.143: http://www.dgidb.org/api/v2/interactions.json?genes=AR
-API 3.84: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000002549&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.56: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000023191&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.58: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000134698&amp;datasource=chembl&amp;size=15&amp;fields=drug
-robokop_gene2chemical failed
-API 3.85: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000130766&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.1: http://mychem.info/v1/query (POST &#34;q=RNF144A,CALB2,SCCPDH,KMT2A,PPP2R5D,SH3BGRL2,CDC37,SESN1,FERMT3,RECQL4,MST1,PPT1,PDP1,ZFP36L2,PIK3CB,MEPCE,COX6B1,ETS1,EEF1A1,CTSD,PHB,COPS6,GDPD5,HDAC6,MTRNR2L1,ERVW-4,PIDD1,RIOK1,APEX1,SESN2,RC3H1,PBK,HECTD1,PRDX4,RASA1,PRKDC,LAP3,TNF,UBE2M,MYC,TXN,CUL4B,RNF123,COX17,CDK2,PRDX6,PTPN1,RAB4B,GAPDH,TP63,PRKN,SOD1,CRY1,OBSL1,VRK3,AAR2,TRBV20OR9-2,RAD52,PEBP1,CFTR,ACY1,CUL3,BRCA1,DNPH1,TRIM4,VIRMA,RPA2,PRTN3,CYLD,DHRS4,OTUB1,CREB1,ISG15,HTRA2,DCPS,CALM1,DAZAP1,PIN1,AR,CPLX2,U2AF2,CDC73,CLEC4G,LGALS3,LARP7,SYK,CAT,ZFR,PRRX1,CUL2,TERF1,GABPA,TDGF1,DAB2,VEGFA,EIF4A3,CCNB1,HEXIM1,PIK3CA,NF2,COPS5,METTL14,WTAP,PITX2,CDC42,CUL7,CDK9,BTRC,FYN,SOD2,RNH1,YAP1,PRDX2,CR2,UCHL5,CUL4A,PRDX3,DCUN1D1,TLR4,ANAPC15,CRK,SRXN1,MTTP,PTEN,CFL1,RPA3,PPP2R1B,RBMS3,PTPRC,NTRK1,CUL1,PPHLN1,AKT1,PPP2R1A,PRDX5,PRPF8,CDH1,SUZ12,RPA1,JTB,RAD23A,EGFR,AGO4,SLC38A1,PRKCZ,CUL5&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 3.86: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000152518&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.87: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000178691&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.88: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000132383&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.83: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000146834&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.91: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000073282&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.92: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000136810&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.93: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000153071&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.89: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000179262&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.90: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000136807&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.140: http://www.dgidb.org/api/v2/interactions.json?genes=EGFR
-API 5.1: https://robokop.renci.org/api/simple/expand/gene/HGNC:1442/chemical_substance/
-API 5.3: https://robokop.renci.org/api/simple/expand/gene/HGNC:16783/chemical_substance/
-API 5.4: https://robokop.renci.org/api/simple/expand/gene/HGNC:8912/chemical_substance/
-API 2.3: http://mychem.info/v1/query (POST &#34;q=RNF144A,CALB2,SCCPDH,KMT2A,PPP2R5D,SH3BGRL2,CDC37,SESN1,FERMT3,RECQL4,MST1,PPT1,PDP1,ZFP36L2,PIK3CB,MEPCE,COX6B1,ETS1,EEF1A1,CTSD,PHB,COPS6,GDPD5,HDAC6,MTRNR2L1,ERVW-4,PIDD1,RIOK1,APEX1,SESN2,RC3H1,PBK,HECTD1,PRDX4,RASA1,PRKDC,LAP3,TNF,UBE2M,MYC,TXN,CUL4B,RNF123,COX17,CDK2,PRDX6,PTPN1,RAB4B,GAPDH,TP63,PRKN,SOD1,CRY1,OBSL1,VRK3,AAR2,TRBV20OR9-2,RAD52,PEBP1,CFTR,ACY1,CUL3,BRCA1,DNPH1,TRIM4,VIRMA,RPA2,PRTN3,CYLD,DHRS4,OTUB1,CREB1,ISG15,HTRA2,DCPS,CALM1,DAZAP1,PIN1,AR,CPLX2,U2AF2,CDC73,CLEC4G,LGALS3,LARP7,SYK,CAT,ZFR,PRRX1,CUL2,TERF1,GABPA,TDGF1,DAB2,VEGFA,EIF4A3,CCNB1,HEXIM1,PIK3CA,NF2,COPS5,METTL14,WTAP,PITX2,CDC42,CUL7,CDK9,BTRC,FYN,SOD2,RNH1,YAP1,PRDX2,CR2,UCHL5,CUL4A,PRDX3,DCUN1D1,TLR4,ANAPC15,CRK,SRXN1,MTTP,PTEN,CFL1,RPA3,PPP2R1B,RBMS3,PTPRC,NTRK1,CUL1,PPHLN1,AKT1,PPP2R1A,PRDX5,PRPF8,CDH1,SUZ12,RPA1,JTB,RAD23A,EGFR,AGO4,SLC38A1,PRKCZ,CUL5&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
-API 5.2: https://robokop.renci.org/api/simple/expand/gene/HGNC:3189/chemical_substance/
-API 2.2: http://mychem.info/v1/query (POST &#34;q=RNF144A,CALB2,SCCPDH,KMT2A,PPP2R5D,SH3BGRL2,CDC37,SESN1,FERMT3,RECQL4,MST1,PPT1,PDP1,ZFP36L2,PIK3CB,MEPCE,COX6B1,ETS1,EEF1A1,CTSD,PHB,COPS6,GDPD5,HDAC6,MTRNR2L1,ERVW-4,PIDD1,RIOK1,APEX1,SESN2,RC3H1,PBK,HECTD1,PRDX4,RASA1,PRKDC,LAP3,TNF,UBE2M,MYC,TXN,CUL4B,RNF123,COX17,CDK2,PRDX6,PTPN1,RAB4B,GAPDH,TP63,PRKN,SOD1,CRY1,OBSL1,VRK3,AAR2,TRBV20OR9-2,RAD52,PEBP1,CFTR,ACY1,CUL3,BRCA1,DNPH1,TRIM4,VIRMA,RPA2,PRTN3,CYLD,DHRS4,OTUB1,CREB1,ISG15,HTRA2,DCPS,CALM1,DAZAP1,PIN1,AR,CPLX2,U2AF2,CDC73,CLEC4G,LGALS3,LARP7,SYK,CAT,ZFR,PRRX1,CUL2,TERF1,GABPA,TDGF1,DAB2,VEGFA,EIF4A3,CCNB1,HEXIM1,PIK3CA,NF2,COPS5,METTL14,WTAP,PITX2,CDC42,CUL7,CDK9,BTRC,FYN,SOD2,RNH1,YAP1,PRDX2,CR2,UCHL5,CUL4A,PRDX3,DCUN1D1,TLR4,ANAPC15,CRK,SRXN1,MTTP,PTEN,CFL1,RPA3,PPP2R1B,RBMS3,PTPRC,NTRK1,CUL1,PPHLN1,AKT1,PPP2R1A,PRDX5,PRPF8,CDH1,SUZ12,RPA1,JTB,RAD23A,EGFR,AGO4,SLC38A1,PRKCZ,CUL5&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 5.5: https://robokop.renci.org/api/simple/expand/gene/HGNC:11179/chemical_substance/
-API 5.8: https://robokop.renci.org/api/simple/expand/gene/HGNC:18449/chemical_substance/
-API 5.6: https://robokop.renci.org/api/simple/expand/gene/HGNC:16262/chemical_substance/
-API 5.7: https://robokop.renci.org/api/simple/expand/gene/HGNC:29812/chemical_substance/
-API 5.10: https://robokop.renci.org/api/simple/expand/gene/HGNC:9355/chemical_substance/
-API 3.94: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142168&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.9: https://robokop.renci.org/api/simple/expand/gene/HGNC:15979/chemical_substance/
-API 5.11: https://robokop.renci.org/api/simple/expand/gene/HGNC:29092/chemical_substance/
-API 3.95: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000044090&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.12: https://robokop.renci.org/api/simple/expand/gene/HGNC:1736/chemical_substance/
-API 3.97: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000173531&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.13: https://robokop.renci.org/api/simple/expand/gene/HGNC:9279/chemical_substance/
-API 5.14: https://robokop.renci.org/api/simple/expand/gene/HGNC:16132/chemical_substance/
-API 5.15: https://robokop.renci.org/api/simple/expand/gene/HGNC:9354/chemical_substance/
-API 3.96: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000157326&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.17: https://robokop.renci.org/api/simple/expand/gene/HGNC:37155/chemical_substance/
-API 3.99: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000112667&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.100: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000112715&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.16: https://robokop.renci.org/api/simple/expand/gene/HGNC:644/chemical_substance/
-API 3.101: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000168090&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.98: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000232810&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.18: https://robokop.renci.org/api/simple/expand/gene/HGNC:4071/chemical_substance/
-API 3.102: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131043&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.21: https://robokop.renci.org/api/simple/expand/gene/HGNC:8031/chemical_substance/
-API 5.19: https://robokop.renci.org/api/simple/expand/gene/HGNC:18424/chemical_substance/
-API 3.103: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000056097&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.104: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000055130&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.20: https://robokop.renci.org/api/simple/expand/gene/HGNC:16753/chemical_substance/
-API 3.105: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000177595&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.106: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145715&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.107: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000134954&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.109: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000136997&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.108: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000174720&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.23: https://robokop.renci.org/api/simple/expand/gene/HGNC:29330/chemical_substance/
-API 5.24: https://robokop.renci.org/api/simple/expand/gene/HGNC:2280/chemical_substance/
-API 5.22: https://robokop.renci.org/api/simple/expand/gene/HGNC:1884/chemical_substance/
-API 3.110: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000124784&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.25: https://robokop.renci.org/api/simple/expand/gene/HGNC:17340/chemical_substance/
-API 3.111: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000154727&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.112: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000111640&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.27: https://robokop.renci.org/api/simple/expand/gene/HGNC:1780/chemical_substance/
-API 3.113: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000081237&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.26: https://robokop.renci.org/api/simple/expand/gene/HGNC:1108/chemical_substance/
-API 5.29: https://robokop.renci.org/api/simple/expand/gene/HGNC:23151/chemical_substance/
-API 3.114: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000123374&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.115: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000158555&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.28: https://robokop.renci.org/api/simple/expand/gene/HGNC:4053/chemical_substance/
-API 3.116: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSRNOG00000017695&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.30: https://robokop.renci.org/api/simple/expand/gene/HGNC:587/chemical_substance/
-API 3.117: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000169083&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.118: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198400&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.119: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000136869&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.120: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000277804&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.34: https://robokop.renci.org/api/simple/expand/gene/HGNC:24591/chemical_substance/
-API 5.32: https://robokop.renci.org/api/simple/expand/gene/HGNC:177/chemical_substance/
-API 3.121: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000089220&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.36: https://robokop.renci.org/api/simple/expand/gene/HGNC:13427/chemical_substance/
-API 5.37: https://robokop.renci.org/api/simple/expand/gene/HGNC:2362/chemical_substance/
-API 3.122: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000146833&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.33: https://robokop.renci.org/api/simple/expand/gene/HGNC:391/chemical_substance/
-API 5.38: https://robokop.renci.org/api/simple/expand/gene/HGNC:7380/chemical_substance/
-API 5.39: https://robokop.renci.org/api/simple/expand/gene/HGNC:24500/chemical_substance/
-API 5.41: https://robokop.renci.org/api/simple/expand/gene/HGNC:9782/chemical_substance/
-API 5.35: https://robokop.renci.org/api/simple/expand/gene/HGNC:2264/chemical_substance/
-API 3.123: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166266&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.43: https://robokop.renci.org/api/simple/expand/gene/HGNC:18282/chemical_substance/
-API 5.42: https://robokop.renci.org/api/simple/expand/gene/HGNC:9824/chemical_substance/
-API 3.124: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000110200&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.46: https://robokop.renci.org/api/simple/expand/gene/HGNC:10074/chemical_substance/
-API 5.45: https://robokop.renci.org/api/simple/expand/gene/HGNC:20457/chemical_substance/
-API 3.125: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141543&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.40: https://robokop.renci.org/api/simple/expand/gene/HGNC:3236/chemical_substance/
-API 5.48: https://robokop.renci.org/api/simple/expand/gene/HGNC:24275/chemical_substance/
-API 5.47: https://robokop.renci.org/api/simple/expand/gene/HGNC:16491/chemical_substance/
-API 3.126: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000108094&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.52: https://robokop.renci.org/api/simple/expand/gene/HGNC:9949/chemical_substance/
-API 5.44: https://robokop.renci.org/api/simple/expand/gene/HGNC:4141/chemical_substance/
-API 5.50: https://robokop.renci.org/api/simple/expand/gene/HGNC:14348/chemical_substance/
-API 5.49: https://robokop.renci.org/api/simple/expand/gene/HGNC:15886/chemical_substance/
-API 3.129: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000070831&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.51: https://robokop.renci.org/api/simple/expand/gene/HGNC:9666/chemical_substance/
-API 3.127: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000002016&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.128: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000036257&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.54: https://robokop.renci.org/api/simple/expand/gene/HGNC:9303/chemical_substance/
-API 3.130: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166167&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.55: https://robokop.renci.org/api/simple/expand/gene/HGNC:18996/chemical_substance/
-API 5.59: https://robokop.renci.org/api/simple/expand/gene/HGNC:9812/chemical_substance/
-API 3.131: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000158290&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.133: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000043093&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.132: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000106399&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.134: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000282830&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.137: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000115317&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.135: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000285069&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.56: https://robokop.renci.org/api/simple/expand/gene/HGNC:9495/chemical_substance/
-API 5.58: https://robokop.renci.org/api/simple/expand/gene/HGNC:21218/chemical_substance/
-API 3.143: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000206439&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.147: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000223952&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.146: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000167193&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.136: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000112640&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.53: https://robokop.renci.org/api/simple/expand/gene/HGNC:9353/chemical_substance/
-API 5.64: https://robokop.renci.org/api/simple/expand/gene/HGNC:1144/chemical_substance/
-API 3.138: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000100823&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.140: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000111371&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.142: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000117322&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.141: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145388&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.144: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000187608&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.145: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000067606&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.148: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131981&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.57: https://robokop.renci.org/api/simple/expand/gene/HGNC:1435/chemical_substance/
-API 3.149: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000143543&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.150: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000008405&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.151: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000127445&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.158: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000228978&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.152: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000080546&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.153: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000253729&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.156: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000105568&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.154: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000105053&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.155: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000167578&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.157: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000241186&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.160: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000116750&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.159: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSGALG00000010243&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.139: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137713&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.161: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000149781&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.162: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000186575&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 5.31: https://robokop.renci.org/api/simple/expand/gene/HGNC:11892/chemical_substance/
-API 5.61: https://robokop.renci.org/api/simple/expand/gene/HGNC:10291/chemical_substance/
-API 5.65: https://robokop.renci.org/api/simple/expand/gene/HGNC:16846/chemical_substance/
-API 5.60: https://robokop.renci.org/api/simple/expand/gene/HGNC:8607/chemical_substance/
-API 5.68: https://robokop.renci.org/api/simple/expand/gene/HGNC:23077/chemical_substance/
-API 5.69: https://robokop.renci.org/api/simple/expand/gene/HGNC:9642/chemical_substance/
-API 5.67: https://robokop.renci.org/api/simple/expand/gene/HGNC:21024/chemical_substance/
-API 5.62: https://robokop.renci.org/api/simple/expand/gene/HGNC:17101/chemical_substance/
-API 5.75: https://robokop.renci.org/api/simple/expand/gene/HGNC:20746/chemical_substance/
-API 5.66: https://robokop.renci.org/api/simple/expand/gene/HGNC:2662/chemical_substance/
-API 5.74: https://robokop.renci.org/api/simple/expand/gene/HGNC:7553/chemical_substance/
-API 5.72: https://robokop.renci.org/api/simple/expand/gene/HGNC:9302/chemical_substance/
-API 5.77: https://robokop.renci.org/api/simple/expand/gene/HGNC:17277/chemical_substance/
-API 5.70: https://robokop.renci.org/api/simple/expand/gene/HGNC:24531/chemical_substance/
-API 5.63: https://robokop.renci.org/api/simple/expand/gene/HGNC:9588/chemical_substance/
-API 5.79: https://robokop.renci.org/api/simple/expand/gene/HGNC:23156/chemical_substance/
-API 5.78: https://robokop.renci.org/api/simple/expand/gene/HGNC:11728/chemical_substance/
-API 5.73: https://robokop.renci.org/api/simple/expand/gene/HGNC:20247/chemical_substance/
-API 5.87: https://robokop.renci.org/api/simple/expand/gene/HGNC:19678/chemical_substance/
-API 5.82: https://robokop.renci.org/api/simple/expand/gene/HGNC:16985/chemical_substance/
-API 5.80: https://robokop.renci.org/api/simple/expand/gene/HGNC:10290/chemical_substance/
-API 5.83: https://robokop.renci.org/api/simple/expand/gene/HGNC:2683/chemical_substance/
-API 5.84: https://robokop.renci.org/api/simple/expand/gene/HGNC:19369/chemical_substance/
-API 5.89: https://robokop.renci.org/api/simple/expand/gene/HGNC:3488/chemical_substance/
-API 5.90: https://robokop.renci.org/api/simple/expand/gene/HGNC:15567/chemical_substance/
-API 5.88: https://robokop.renci.org/api/simple/expand/gene/HGNC:21749/chemical_substance/
-API 5.94: https://robokop.renci.org/api/simple/expand/gene/HGNC:2384/chemical_substance/
-API 5.91: https://robokop.renci.org/api/simple/expand/gene/HGNC:7467/chemical_substance/
-API 5.85: https://robokop.renci.org/api/simple/expand/gene/HGNC:12197/chemical_substance/
-API 5.71: https://robokop.renci.org/api/simple/expand/gene/HGNC:1100/chemical_substance/
-API 5.81: https://robokop.renci.org/api/simple/expand/gene/HGNC:6563/chemical_substance/
-API 5.86: https://robokop.renci.org/api/simple/expand/gene/HGNC:2584/chemical_substance/
-API 5.92: https://robokop.renci.org/api/simple/expand/gene/HGNC:4037/chemical_substance/
-API 5.76: https://robokop.renci.org/api/simple/expand/gene/HGNC:1579/chemical_substance/
-API 5.95: https://robokop.renci.org/api/simple/expand/gene/HGNC:8975/chemical_substance/
-API 5.96: https://robokop.renci.org/api/simple/expand/gene/HGNC:11701/chemical_substance/
-API 5.97: https://robokop.renci.org/api/simple/expand/gene/HGNC:28804/chemical_substance/
-API 5.98: https://robokop.renci.org/api/simple/expand/gene/HGNC:2336/chemical_substance/
-API 5.99: https://robokop.renci.org/api/simple/expand/gene/HGNC:6201/chemical_substance/
-API 5.100: https://robokop.renci.org/api/simple/expand/gene/HGNC:21595/chemical_substance/
-API 5.102: https://robokop.renci.org/api/simple/expand/gene/HGNC:14064/chemical_substance/
-API 5.104: https://robokop.renci.org/api/simple/expand/gene/HGNC:18656/chemical_substance/
-API 5.101: https://robokop.renci.org/api/simple/expand/gene/HGNC:1771/chemical_substance/
-API 5.106: https://robokop.renci.org/api/simple/expand/gene/HGNC:16275/chemical_substance/
-API 5.108: https://robokop.renci.org/api/simple/expand/gene/HGNC:9142/chemical_substance/
-API 5.109: https://robokop.renci.org/api/simple/expand/gene/HGNC:2556/chemical_substance/
-API 5.107: https://robokop.renci.org/api/simple/expand/gene/HGNC:9413/chemical_substance/
-API 5.111: https://robokop.renci.org/api/simple/expand/gene/HGNC:17169/chemical_substance/
-API 5.103: https://robokop.renci.org/api/simple/expand/gene/HGNC:20157/chemical_substance/
-API 5.105: https://robokop.renci.org/api/simple/expand/gene/HGNC:7773/chemical_substance/
-API 5.110: https://robokop.renci.org/api/simple/expand/gene/HGNC:12680/chemical_substance/
-API 5.112: https://robokop.renci.org/api/simple/expand/gene/HGNC:1735/chemical_substance/
-API 5.113: https://robokop.renci.org/api/simple/expand/gene/HGNC:1874/chemical_substance/
-API 5.116: https://robokop.renci.org/api/simple/expand/gene/HGNC:8630/chemical_substance/
-API 5.114: https://robokop.renci.org/api/simple/expand/gene/HGNC:1516/chemical_substance/
-API 5.115: https://robokop.renci.org/api/simple/expand/gene/HGNC:11180/chemical_substance/
-API 5.117: https://robokop.renci.org/api/simple/expand/gene/HGNC:1748/chemical_substance/
-API 5.118: https://robokop.renci.org/api/simple/expand/gene/HGNC:2553/chemical_substance/
-API 5.120: https://robokop.renci.org/api/simple/expand/gene/HGNC:2554/chemical_substance/
-API 5.119: https://robokop.renci.org/api/simple/expand/gene/HGNC:2345/chemical_substance/
-API 5.121: https://robokop.renci.org/api/simple/expand/gene/HGNC:10289/chemical_substance/
-API 5.122: https://robokop.renci.org/api/simple/expand/gene/HGNC:8988/chemical_substance/
-API 5.123: https://robokop.renci.org/api/simple/expand/gene/HGNC:2310/chemical_substance/
-API 5.124: https://robokop.renci.org/api/simple/expand/gene/HGNC:29434/chemical_substance/
-API 5.125: https://robokop.renci.org/api/simple/expand/gene/HGNC:18683/chemical_substance/
-API 5.126: https://robokop.renci.org/api/simple/expand/gene/HGNC:24953/chemical_substance/
-API 5.127: https://robokop.renci.org/api/simple/expand/gene/HGNC:21148/chemical_substance/
-API 5.128: https://robokop.renci.org/api/simple/expand/gene/HGNC:2555/chemical_substance/
-API 5.129: https://robokop.renci.org/api/simple/expand/gene/HGNC:9312/chemical_substance/
-API 5.130: https://robokop.renci.org/api/simple/expand/gene/HGNC:7132/chemical_substance/
-API 5.132: https://robokop.renci.org/api/simple/expand/gene/HGNC:39043/chemical_substance/
-API 5.131: https://robokop.renci.org/api/simple/expand/gene/HGNC:2529/chemical_substance/
-API 5.133: https://robokop.renci.org/api/simple/expand/gene/HGNC:8976/chemical_substance/
-API 5.135: https://robokop.renci.org/api/simple/expand/gene/HGNC:9005/chemical_substance/
-API 5.134: https://robokop.renci.org/api/simple/expand/gene/HGNC:13447/chemical_substance/
-API 5.136: https://robokop.renci.org/api/simple/expand/gene/HGNC:24912/chemical_substance/
-API 5.138: https://robokop.renci.org/api/simple/expand/gene/HGNC:2551/chemical_substance/
-API 5.139: https://robokop.renci.org/api/simple/expand/gene/HGNC:11491/chemical_substance/
-API 5.140: https://robokop.renci.org/api/simple/expand/gene/HGNC:12491/chemical_substance/
-API 5.137: https://robokop.renci.org/api/simple/expand/gene/HGNC:2240/chemical_substance/
-API 5.145: https://robokop.renci.org/api/simple/expand/gene/HGNC:18184/chemical_substance/
-API 5.141: https://robokop.renci.org/api/simple/expand/gene/HGNC:9412/chemical_substance/
-API 5.144: https://robokop.renci.org/api/simple/expand/gene/HGNC:9325/chemical_substance/
-API 5.146: https://robokop.renci.org/api/simple/expand/gene/HGNC:2552/chemical_substance/
-API 5.143: https://robokop.renci.org/api/simple/expand/gene/HGNC:9871/chemical_substance/
-API 5.142: https://robokop.renci.org/api/simple/expand/gene/HGNC:11850/chemical_substance/
+API 4.1: http://ctdbase.org/tools/batchQuery.go?inputType=gene&amp;inputTerms=2677&amp;report=diseases_curated&amp;format=json
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+API 2.2: https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:240/diseases?rows=100
+API 4.3: http://ctdbase.org/tools/batchQuery.go?inputType=gene&amp;inputTerms=2638&amp;report=diseases_curated&amp;format=json
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+API 2.3: https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:2638/diseases?rows=100
+API 3.1: http://mydisease.info/v1/query (POST &#34;q=2677,240,2638&amp;scopes=disgenet.genes_related_to_disease.gene_id&amp;fields=mondo.xrefs.umls,disgenet.xrefs.umls&amp;species=human&amp;size=100&#34;)
+API 2.1: https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:2677/diseases?rows=100
+API 5.6: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=ASSOCIATED_WITH_reverse.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.5: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=ASSOCIATED_WITH.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.2: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=AFFECTS.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.7: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=CAUSES_reverse.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.4: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=AFFECTS_reverse.protein.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 4.2: http://ctdbase.org/tools/batchQuery.go?inputType=gene&amp;inputTerms=240&amp;report=diseases_curated&amp;format=json
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;
+API 5.3: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=AFFECTS_reverse.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 5.1: http://pending.biothings.io/semmed/query (POST &#34;q=C1412361,C1367452,C1415050&amp;scopes=AFFECTS.gene.umls&amp;fields=umls&amp;species=human&amp;size=100&#34;)
+API 1.1: https://pending.biothings.io/DISEASES/query (POST &#34;q=GC,ALOX5,GGCX&amp;scopes=DISEASES.associatedWith.symbol&amp;fields=_id&amp;species=human&amp;size=100&#34;)
 
 
 ==== Step #3: Output normalization ====
 
-API 4.1 dgidb_gene2chemical: No hits
-API 4.2 dgidb_gene2chemical: No hits
-API 4.3 dgidb_gene2chemical: No hits
-API 4.4 dgidb_gene2chemical: No hits
-API 4.5 dgidb_gene2chemical: No hits
-API 4.6 dgidb_gene2chemical: No hits
-API 4.7 dgidb_gene2chemical: 13 hits
-API 4.8 dgidb_gene2chemical: No hits
-API 4.9 dgidb_gene2chemical: No hits
-API 4.10 dgidb_gene2chemical: No hits
-API 4.11 dgidb_gene2chemical: No hits
-API 4.12 dgidb_gene2chemical: No hits
-API 4.13 dgidb_gene2chemical: No hits
-API 4.14 dgidb_gene2chemical: 20 hits
-API 4.15 dgidb_gene2chemical: 1 hits
-API 4.16 dgidb_gene2chemical: No hits
-API 4.17 dgidb_gene2chemical: 1 hits
-API 4.18 dgidb_gene2chemical: 3 hits
-API 4.19 dgidb_gene2chemical: No hits
-API 4.20 dgidb_gene2chemical: No hits
-API 4.21 dgidb_gene2chemical: No hits
-API 4.22 dgidb_gene2chemical: 1 hits
-API 4.23 dgidb_gene2chemical: No hits
-API 4.24 dgidb_gene2chemical: 67 hits
-API 4.25 dgidb_gene2chemical: 2 hits
-API 4.26 dgidb_gene2chemical: No hits
-API 4.27 dgidb_gene2chemical: No hits
-API 4.28 dgidb_gene2chemical: No hits
-API 4.29 dgidb_gene2chemical: 1 hits
-API 4.30 dgidb_gene2chemical: No hits
-API 4.31 dgidb_gene2chemical: 33 hits
-API 4.32 dgidb_gene2chemical: 2 hits
-API 4.33 dgidb_gene2chemical: No hits
-API 4.34 dgidb_gene2chemical: No hits
-API 4.35 dgidb_gene2chemical: 9 hits
-API 4.36 dgidb_gene2chemical: No hits
-API 4.37 dgidb_gene2chemical: No hits
-API 4.38 dgidb_gene2chemical: No hits
-API 4.39 dgidb_gene2chemical: 149 hits
-API 4.40 dgidb_gene2chemical: No hits
-API 4.41 dgidb_gene2chemical: No hits
-API 4.42 dgidb_gene2chemical: 11 hits
-API 4.43 dgidb_gene2chemical: No hits
-API 4.44 dgidb_gene2chemical: No hits
-API 4.45 dgidb_gene2chemical: No hits
-API 4.46 dgidb_gene2chemical: 3 hits
-API 4.47 dgidb_gene2chemical: 24 hits
-API 4.48 dgidb_gene2chemical: No hits
-API 4.49 dgidb_gene2chemical: No hits
-API 4.50 dgidb_gene2chemical: No hits
-API 4.51 dgidb_gene2chemical: 1 hits
-API 4.52 dgidb_gene2chemical: No hits
-API 4.53 dgidb_gene2chemical: No hits
-API 4.54 dgidb_gene2chemical: No hits
-API 4.55 dgidb_gene2chemical: No hits
-API 4.56 dgidb_gene2chemical: 1 hits
-API 4.57 dgidb_gene2chemical: No hits
-API 4.58 dgidb_gene2chemical: 2 hits
-API 4.59 dgidb_gene2chemical: 7 hits
-API 4.60 dgidb_gene2chemical: No hits
-API 4.61 dgidb_gene2chemical: 3 hits
-API 4.62 dgidb_gene2chemical: 14 hits
-API 4.63 dgidb_gene2chemical: 1 hits
-API 4.64 dgidb_gene2chemical: 15 hits
-API 4.65 dgidb_gene2chemical: 2 hits
-API 4.66 dgidb_gene2chemical: No hits
-API 4.67 dgidb_gene2chemical: 72 hits
-API 4.68 dgidb_gene2chemical: No hits
-API 4.69 dgidb_gene2chemical: 48 hits
-API 4.70 dgidb_gene2chemical: 1 hits
-API 4.71 dgidb_gene2chemical: No hits
-API 4.72 dgidb_gene2chemical: No hits
-API 4.73 dgidb_gene2chemical: 1 hits
-API 4.74 dgidb_gene2chemical: No hits
-API 4.75 dgidb_gene2chemical: No hits
-API 4.76 dgidb_gene2chemical: No hits
-API 4.77 dgidb_gene2chemical: 142 hits
-API 4.78 dgidb_gene2chemical: 35 hits
-API 4.79 dgidb_gene2chemical: No hits
-API 4.80 dgidb_gene2chemical: 2 hits
-API 4.81 dgidb_gene2chemical: No hits
-API 4.82 dgidb_gene2chemical: 3 hits
-API 4.83 dgidb_gene2chemical: 8 hits
-API 4.84 dgidb_gene2chemical: No hits
-API 4.85 dgidb_gene2chemical: No hits
-API 4.86 dgidb_gene2chemical: 2 hits
-API 4.87 dgidb_gene2chemical: 1 hits
-API 4.88 dgidb_gene2chemical: No hits
-API 4.89 dgidb_gene2chemical: No hits
-API 4.90 dgidb_gene2chemical: No hits
-API 4.91 dgidb_gene2chemical: No hits
-API 4.92 dgidb_gene2chemical: No hits
-API 4.93 dgidb_gene2chemical: No hits
-API 4.94 dgidb_gene2chemical: 13 hits
-API 4.95 dgidb_gene2chemical: 1 hits
-API 4.96 dgidb_gene2chemical: No hits
-API 4.97 dgidb_gene2chemical: 2 hits
-API 4.98 dgidb_gene2chemical: No hits
-API 4.99 dgidb_gene2chemical: 20 hits
-API 4.100 dgidb_gene2chemical: 2 hits
-API 4.101 dgidb_gene2chemical: No hits
-API 4.102 dgidb_gene2chemical: No hits
-API 4.103 dgidb_gene2chemical: No hits
-API 4.104 dgidb_gene2chemical: 104 hits
-API 4.105 dgidb_gene2chemical: No hits
-API 4.106 dgidb_gene2chemical: No hits
-API 4.107 dgidb_gene2chemical: No hits
-API 4.108 dgidb_gene2chemical: No hits
-API 4.109 dgidb_gene2chemical: No hits
-API 4.110 dgidb_gene2chemical: No hits
-API 4.111 dgidb_gene2chemical: No hits
-API 4.112 dgidb_gene2chemical: No hits
-API 4.113 dgidb_gene2chemical: No hits
-API 4.114 dgidb_gene2chemical: 1 hits
-API 4.115 dgidb_gene2chemical: 3 hits
-API 4.116 dgidb_gene2chemical: 8 hits
-API 4.117 dgidb_gene2chemical: No hits
-API 4.118 dgidb_gene2chemical: 37 hits
-API 4.119 dgidb_gene2chemical: No hits
-API 4.120 dgidb_gene2chemical: No hits
-API 4.121 dgidb_gene2chemical: 1 hits
-API 4.122 dgidb_gene2chemical: No hits
-API 4.123 dgidb_gene2chemical: No hits
-API 4.124 dgidb_gene2chemical: 43 hits
-API 4.125 dgidb_gene2chemical: 3 hits
-API 4.126 dgidb_gene2chemical: No hits
-API 4.127 dgidb_gene2chemical: 3 hits
-API 4.128 dgidb_gene2chemical: 1 hits
-API 4.129 dgidb_gene2chemical: No hits
-API 4.130 dgidb_gene2chemical: 2 hits
-API 4.131 dgidb_gene2chemical: 7 hits
-API 4.132 dgidb_gene2chemical: No hits
-API 4.133 dgidb_gene2chemical: No hits
-API 4.134 dgidb_gene2chemical: 15 hits
-API 4.135 dgidb_gene2chemical: No hits
-API 4.136 dgidb_gene2chemical: No hits
-API 4.137 dgidb_gene2chemical: No hits
-API 4.138 dgidb_gene2chemical: No hits
-API 4.139 dgidb_gene2chemical: No hits
-API 4.140 dgidb_gene2chemical: 146 hits
-API 4.141 dgidb_gene2chemical: No hits
-API 4.142 dgidb_gene2chemical: No hits
-API 4.143 dgidb_gene2chemical: 80 hits
-API 4.144 dgidb_gene2chemical: 10 hits
-API 4.145 dgidb_gene2chemical: No hits
-API 4.146 dgidb_gene2chemical: No hits
-API 2.1 mychem.info: 19 hits
-API 2.2 mychem.info: 518 hits
-API 2.3 mychem.info: 301 hits
-API 3.1 opentarget: No hits
-API 3.2 opentarget: No hits
-API 3.3 opentarget: No hits
-API 3.4 opentarget: No hits
-API 3.5 opentarget: No hits
-API 3.6 opentarget: 15 hits
-API 3.7 opentarget: No hits
-API 3.8 opentarget: No hits
-API 3.9 opentarget: No hits
-API 3.10 opentarget: No hits
-API 3.11 opentarget: No hits
-API 3.12 opentarget: No hits
-API 3.13 opentarget: No hits
-API 3.14 opentarget: No hits
-API 3.15 opentarget: No hits
-API 3.16 opentarget: No hits
-API 3.17 opentarget: No hits
-API 3.18 opentarget: No hits
-API 3.19 opentarget: No hits
-API 3.20 opentarget: No hits
-API 3.21 opentarget: No hits
-API 3.22 opentarget: No hits
-API 3.23 opentarget: No hits
-API 3.24 opentarget: No hits
-API 3.25 opentarget: No hits
-API 3.26 opentarget: No hits
-API 3.27 opentarget: 10 hits
-API 3.28 opentarget: 15 hits
-API 3.29 opentarget: No hits
-API 3.30 opentarget: No hits
-API 3.31 opentarget: No hits
-API 3.32 opentarget: No hits
-API 3.33 opentarget: 15 hits
-API 3.34 opentarget: No hits
-API 3.35 opentarget: No hits
-API 3.36 opentarget: No hits
-API 3.37 opentarget: 15 hits
-API 3.38 opentarget: No hits
-API 3.39 opentarget: No hits
-API 3.40 opentarget: No hits
-API 3.41 opentarget: No hits
-API 3.42 opentarget: No hits
-API 3.43 opentarget: No hits
-API 3.44 opentarget: No hits
-API 3.45 opentarget: 15 hits
-API 3.46 opentarget: 15 hits
-API 3.47 opentarget: No hits
-API 3.48 opentarget: 15 hits
-API 3.49 opentarget: No hits
-API 3.50 opentarget: No hits
-API 3.51 opentarget: No hits
-API 3.52 opentarget: No hits
-API 3.53 opentarget: No hits
-API 3.54 opentarget: No hits
-API 3.55 opentarget: No hits
-API 3.56 opentarget: No hits
-API 3.57 opentarget: No hits
-API 3.58 opentarget: No hits
-API 3.59 opentarget: No hits
-API 3.60 opentarget: No hits
-API 3.61 opentarget: No hits
-API 3.62 opentarget: No hits
-API 3.63 opentarget: No hits
-API 3.64 opentarget: No hits
-API 3.65 opentarget: No hits
-API 3.66 opentarget: No hits
-API 3.67 opentarget: No hits
-API 3.68 opentarget: No hits
-API 3.69 opentarget: No hits
-API 3.70 opentarget: No hits
-API 3.71 opentarget: No hits
-API 3.72 opentarget: No hits
-API 3.73 opentarget: No hits
-API 3.74 opentarget: No hits
-API 3.75 opentarget: No hits
-API 3.76 opentarget: No hits
-API 3.77 opentarget: 15 hits
-API 3.78 opentarget: No hits
-API 3.79 opentarget: 15 hits
-API 3.80 opentarget: No hits
-API 3.81 opentarget: No hits
-API 3.82 opentarget: No hits
-API 3.83 opentarget: No hits
-API 3.84 opentarget: 7 hits
-API 3.85 opentarget: No hits
-API 3.86 opentarget: No hits
-API 3.87 opentarget: No hits
-API 3.88 opentarget: No hits
-API 3.89 opentarget: No hits
-API 3.90 opentarget: 15 hits
-API 3.91 opentarget: No hits
-API 3.92 opentarget: No hits
-API 3.93 opentarget: No hits
-API 3.94 opentarget: 2 hits
-API 3.95 opentarget: No hits
-API 3.96 opentarget: No hits
-API 3.97 opentarget: No hits
-API 3.98 opentarget: 15 hits
-API 3.99 opentarget: No hits
-API 3.100 opentarget: 15 hits
-API 3.101 opentarget: No hits
-API 3.102 opentarget: No hits
-API 3.103 opentarget: No hits
-API 3.104 opentarget: No hits
-API 3.105 opentarget: No hits
-API 3.106 opentarget: No hits
-API 3.107 opentarget: No hits
-API 3.108 opentarget: No hits
-API 3.109 opentarget: No hits
-API 3.110 opentarget: No hits
-API 3.111 opentarget: No hits
-API 3.112 opentarget: No hits
-API 3.113 opentarget: 10 hits
-API 3.114 opentarget: 15 hits
-API 3.115 opentarget: No hits
-API 3.116 opentarget: No hits
-API 3.117 opentarget: 15 hits
-API 3.118 opentarget: 15 hits
-API 3.119 opentarget: 3 hits
-API 3.120 opentarget: No hits
-API 3.121 opentarget: No hits
-API 3.122 opentarget: No hits
-API 3.123 opentarget: No hits
-API 3.124 opentarget: No hits
-API 3.125 opentarget: No hits
-API 3.126 opentarget: No hits
-API 3.127 opentarget: No hits
-API 3.128 opentarget: No hits
-API 3.129 opentarget: No hits
-API 3.130 opentarget: No hits
-API 3.131 opentarget: No hits
-API 3.132 opentarget: No hits
-API 3.133 opentarget: No hits
-API 3.134 opentarget: No hits
-API 3.135 opentarget: No hits
-API 3.136 opentarget: No hits
-API 3.137 opentarget: No hits
-API 3.138 opentarget: No hits
-API 3.139 opentarget: No hits
-API 3.140 opentarget: No hits
-API 3.141 opentarget: No hits
-API 3.142 opentarget: No hits
-API 3.143 opentarget: No hits
-API 3.144 opentarget: No hits
-API 3.145 opentarget: 15 hits
-API 3.146 opentarget: No hits
-API 3.147 opentarget: No hits
-API 3.148 opentarget: No hits
-API 3.149 opentarget: No hits
-API 3.150 opentarget: No hits
-API 3.151 opentarget: No hits
-API 3.152 opentarget: No hits
-API 3.153 opentarget: 8 hits
-API 3.154 opentarget: No hits
-API 3.155 opentarget: No hits
-API 3.156 opentarget: No hits
-API 3.157 opentarget: 1 hits
-API 3.158 opentarget: No hits
-API 3.159 opentarget: No hits
-API 3.160 opentarget: No hits
-API 3.161 opentarget: No hits
-API 3.162 opentarget: No hits
-API 5.1 robokop_gene2chemical: No hits
-API 5.2 robokop_gene2chemical: 1 hits
-API 5.3 robokop_gene2chemical: No hits
-API 5.4 robokop_gene2chemical: No hits
-API 5.5 robokop_gene2chemical: 26 hits
-API 5.6 robokop_gene2chemical: 3 hits
-API 5.7 robokop_gene2chemical: 1 hits
-API 5.8 robokop_gene2chemical: No hits
-API 5.9 robokop_gene2chemical: 4 hits
-API 5.10 robokop_gene2chemical: 2 hits
-API 5.11 robokop_gene2chemical: No hits
-API 5.12 robokop_gene2chemical: 1 hits
-API 5.13 robokop_gene2chemical: No hits
-API 5.14 robokop_gene2chemical: 1 hits
-API 5.15 robokop_gene2chemical: 2 hits
-API 5.16 robokop_gene2chemical: 13 hits
-API 5.17 robokop_gene2chemical: No hits
-API 5.18 robokop_gene2chemical: No hits
-API 5.19 robokop_gene2chemical: No hits
-API 5.20 robokop_gene2chemical: 6 hits
-API 5.21 robokop_gene2chemical: No hits
-API 5.22 robokop_gene2chemical: 7 hits
-API 5.23 robokop_gene2chemical: No hits
-API 5.24 robokop_gene2chemical: No hits
-API 5.25 robokop_gene2chemical: No hits
-API 5.26 robokop_gene2chemical: No hits
-API 5.27 robokop_gene2chemical: No hits
-API 5.28 robokop_gene2chemical: 2 hits
-API 5.29 robokop_gene2chemical: No hits
-API 5.30 robokop_gene2chemical: 18 hits
-API 5.31 robokop_gene2chemical: 66 hits
-API 5.32 robokop_gene2chemical: 1 hits
-API 5.33 robokop_gene2chemical: 23 hits
-API 5.34 robokop_gene2chemical: No hits
-API 5.35 robokop_gene2chemical: 3 hits
-API 5.36 robokop_gene2chemical: No hits
-API 5.37 robokop_gene2chemical: No hits
-API 5.38 robokop_gene2chemical: No hits
-API 5.39 robokop_gene2chemical: No hits
-API 5.40 robokop_gene2chemical: 23 hits
-API 5.41 robokop_gene2chemical: No hits
-API 5.42 robokop_gene2chemical: No hits
-API 5.43 robokop_gene2chemical: No hits
-API 5.44 robokop_gene2chemical: 8 hits
-API 5.45 robokop_gene2chemical: No hits
-API 5.46 robokop_gene2chemical: No hits
-API 5.47 robokop_gene2chemical: No hits
-API 5.48 robokop_gene2chemical: No hits
-API 5.49 robokop_gene2chemical: No hits
-API 5.50 robokop_gene2chemical: 1 hits
-API 5.51 robokop_gene2chemical: No hits
-API 5.52 robokop_gene2chemical: No hits
-API 5.53 robokop_gene2chemical: 7 hits
-API 5.54 robokop_gene2chemical: No hits
-API 5.55 robokop_gene2chemical: No hits
-API 5.56 robokop_gene2chemical: No hits
-API 5.57 robokop_gene2chemical: 2 hits
-API 5.58 robokop_gene2chemical: No hits
-API 5.59 robokop_gene2chemical: No hits
-API 5.60 robokop_gene2chemical: 1 hits
-API 5.61 robokop_gene2chemical: No hits
-API 5.62 robokop_gene2chemical: 1 hits
-API 5.63 robokop_gene2chemical: 19 hits
-API 5.64 robokop_gene2chemical: No hits
-API 5.65 robokop_gene2chemical: No hits
-API 5.66 robokop_gene2chemical: 3 hits
-API 5.67 robokop_gene2chemical: No hits
-API 5.68 robokop_gene2chemical: No hits
-API 5.69 robokop_gene2chemical: 2 hits
-API 5.70 robokop_gene2chemical: No hits
-API 5.71 robokop_gene2chemical: 14 hits
-API 5.72 robokop_gene2chemical: No hits
-API 5.73 robokop_gene2chemical: No hits
-API 5.74 robokop_gene2chemical: 16 hits
-API 5.75 robokop_gene2chemical: No hits
-API 5.76 robokop_gene2chemical: 3 hits
-API 5.77 robokop_gene2chemical: No hits
-API 5.78 robokop_gene2chemical: No hits
-API 5.79 robokop_gene2chemical: No hits
-API 5.80 robokop_gene2chemical: No hits
-API 5.81 robokop_gene2chemical: 6 hits
-API 5.82 robokop_gene2chemical: No hits
-API 5.83 robokop_gene2chemical: No hits
-API 5.84 robokop_gene2chemical: No hits
-API 5.85 robokop_gene2chemical: No hits
-API 5.86 robokop_gene2chemical: 3 hits
-API 5.87 robokop_gene2chemical: No hits
-API 5.88 robokop_gene2chemical: No hits
-API 5.89 robokop_gene2chemical: No hits
-API 5.90 robokop_gene2chemical: No hits
-API 5.91 robokop_gene2chemical: No hits
-API 5.92 robokop_gene2chemical: 2 hits
-API 5.93 robokop_gene2chemical: No hits
-API 5.94 robokop_gene2chemical: No hits
-API 5.95 robokop_gene2chemical: 4 hits
-API 5.96 robokop_gene2chemical: No hits
-API 5.97 robokop_gene2chemical: No hits
-API 5.98 robokop_gene2chemical: No hits
-API 5.99 robokop_gene2chemical: No hits
-API 5.100 robokop_gene2chemical: No hits
-API 5.101 robokop_gene2chemical: 4 hits
-API 5.102 robokop_gene2chemical: 1 hits
-API 5.103 robokop_gene2chemical: No hits
-API 5.104 robokop_gene2chemical: No hits
-API 5.105 robokop_gene2chemical: 1 hits
-API 5.106 robokop_gene2chemical: No hits
-API 5.107 robokop_gene2chemical: 1 hits
-API 5.108 robokop_gene2chemical: No hits
-API 5.109 robokop_gene2chemical: No hits
-API 5.110 robokop_gene2chemical: 12 hits
-API 5.111 robokop_gene2chemical: No hits
-API 5.112 robokop_gene2chemical: No hits
-API 5.113 robokop_gene2chemical: No hits
-API 5.114 robokop_gene2chemical: 52 hits
-API 5.115 robokop_gene2chemical: 39 hits
-API 5.116 robokop_gene2chemical: No hits
-API 5.117 robokop_gene2chemical: 2 hits
-API 5.118 robokop_gene2chemical: No hits
-API 5.119 robokop_gene2chemical: 2 hits
-API 5.120 robokop_gene2chemical: 2 hits
-API 5.121 robokop_gene2chemical: No hits
-API 5.122 robokop_gene2chemical: 1 hits
-API 5.123 robokop_gene2chemical: No hits
-API 5.124 robokop_gene2chemical: No hits
-API 5.125 robokop_gene2chemical: No hits
-API 5.126 robokop_gene2chemical: No hits
-API 5.127 robokop_gene2chemical: No hits
-API 5.128 robokop_gene2chemical: No hits
-API 5.129 robokop_gene2chemical: No hits
-API 5.130 robokop_gene2chemical: 2 hits
-API 5.131 robokop_gene2chemical: 1 hits
-API 5.132 robokop_gene2chemical: No hits
-API 5.133 robokop_gene2chemical: 2 hits
-API 5.134 robokop_gene2chemical: No hits
-API 5.135 robokop_gene2chemical: No hits
-API 5.136 robokop_gene2chemical: No hits
-API 5.137 robokop_gene2chemical: No hits
-API 5.138 robokop_gene2chemical: No hits
-API 5.139 robokop_gene2chemical: No hits
-API 5.140 robokop_gene2chemical: No hits
-API 5.141 robokop_gene2chemical: 1 hits
-API 5.142 robokop_gene2chemical: 7 hits
-API 5.143 robokop_gene2chemical: No hits
-API 5.144 robokop_gene2chemical: 2 hits
-API 5.145 robokop_gene2chemical: No hits
-API 5.146 robokop_gene2chemical: No hits
-API 1.1 semmedgene: 25595 hits
+API 1.1 DISEASES: 92 hits
+API 2.1 biolink_gene2disease: 5 hits
+API 2.2 biolink_gene2disease: 1 hits
+API 2.3 biolink_gene2disease: No hits
+API 4.1 ctd_gene2disease: 4 hits
+API 4.2 ctd_gene2disease: 28 hits
+API 4.3 ctd_gene2disease: 15 hits
+API 3.1 mydisease.info: 130 hits
+API 5.1 semmeddisease: 3 hits
+API 5.2 semmeddisease: No hits
+API 5.3 semmeddisease: 41 hits
+API 5.4 semmeddisease: No hits
+API 5.5 semmeddisease: 9 hits
+API 5.6 semmeddisease: 105 hits
+API 5.7 semmeddisease: 56 hits
 
-After id-to-object translation, BTE retrieved 6146 unique objects.
+After id-to-object translation, BTE retrieved 330 unique objects.
+
+
+========== QUERY #3.1 -- fetch all PhenotypicFeature entities linked to DiseaseOrPhenotypicFeature entites ==========
+==========
+
+==== Step #1: Query path planning ====
+
+Because None is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE will query our meta-KG for APIs that can take &#39;DiseaseOrPhenotypicFeature&#39; as input and &#39;PhenotypicFeature&#39; as output
+
+BTE found 3 apis:
+
+API 1. semmeddisease(1 API call)
+API 2. biolink_disease2phenotype(167 API calls)
+API 3. mydisease.info(1 API call)
+
+
+==== Step #2: Query path execution ====
+NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
+
+API 1.27: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018870/phenotypes?rows=100
+API 1.47: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004981/phenotypes?rows=100
+API 1.43: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0012570/phenotypes?rows=100
+API 1.67: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005015/phenotypes?rows=100
+API 1.93: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010643/phenotypes?rows=100
+API 1.58: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011786/phenotypes?rows=100
+API 1.14: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005044/phenotypes?rows=100
+API 1.37: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005160/phenotypes?rows=100
+API 1.61: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002732/phenotypes?rows=100
+API 1.39: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000184/phenotypes?rows=100
+API 1.70: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0024331/phenotypes?rows=100
+API 1.25: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011122/phenotypes?rows=100
+API 1.77: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018531/phenotypes?rows=100
+API 1.81: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018874/phenotypes?rows=100
+API 1.44: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0006044/phenotypes?rows=100
+API 1.16: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005068/phenotypes?rows=100
+API 1.59: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0021400/phenotypes?rows=100
+API 1.21: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005359/phenotypes?rows=100
+API 1.55: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0021063/phenotypes?rows=100
+API 1.42: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005148/phenotypes?rows=100
+API 2.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0033575,C0005586,C0001430,C0022661,C0451641,C0004364,C0876973,C0036983,C0027022,C0010674,C0333641,C0260397,C0332448,C0546837,C0178874,C0232910,C0036572,C0020507,C0877373,C0036631,C0020456,C0152018,C0020542,C0009566,C0033847,C0037274,C0001511,C0007137,C0010495,C0020502,C1854114,C0027651,C0339573,C0029456,C0035334,C0085166,C0518003,C0038454,C0580545,C1320716,C0037277,C0020437,C0007820,C0030305,C0007102,C4021097,C0858321,C0423798,C1839829,C1368683,C1292772,C0235974,C0028754,C0235401,C0518010,C0007784,C0019080,C0026766,C0677886,C1968782,C1869116,C0524851,C0042109,C0014175,C0024623,C0272316,C0035579,C0153594,C1336839,C1857277,C0235222,C0002982,C0347653,C0701826,C0002871,C0024032,C0599732,C0948775,C0011860,C0151744,C3150911,C0338656,C0018799,C0041408,C0015230,C1292778,C0151650,C0038433,C1306837,C1266158,C0241863,C2931456,C0553692,C3203356,C0332563,C0004096,C0027719,C0497406,C0022658,C0242488,C0740392,C0497327,C1442839,C1852548,C2829267,C0021390,C0023418,C0000768,C0006142,C0039231,C0235266,C0850624,C1285162,C0011164,C0017178,C0014145,C0014457,C0006145,C3278975,C0699791,C0010068,C0011847,C4280606,C0520679,C0021655,C0002895,C0919267,C0220701,C4020899,C0002395,C0205643,C0587248,C0024121,C0856716,C1859727,C0029131,C1096063,C0205710,C0043242,C0242606,C0699748,C2930812,C0027051,C3279392,C0879257,C4023159,C1549114,C0032460,C0497247,C0277785,C0220702,C0029442,C0023467,C0730290,C1290884,C4280569,C0687133,C0241954,C0426414,C0235032,C0596020,C0029458,C0205648,C1378511,C1140680,C0019034,C4024722,C0948008,C0014356,C1519697,C1458140,C0278134,C0015519,C3495676,C0004153,C0860603,C0028077,C0036679,C1504598,C4024853,C3275959,C0040156,C0162735,C0149721,C0272317,C0085580,C1532253,C0037286,C0014591,C0022679,C0011156,C0018213,C1859126,C1835813,C0021368,C0009402,C0026244,C0042880,C0879626,C0009376,C0162557,C0008925,C0009404,C0003811,C0002938,C0020517,C1956346,C0598608,C0005684,C0376358,C0041296,C0014072,C0023890,C0598309,C0039870,C0012634,C0600327,C0042510,C0042870,C0005779,C0276037,C0741923,C3665365,C0020429,C0005695,C0025517,C1691228,C3495426,C0235169,C0279000,C0023895,C0025521,C0033578,C0008625,C0035126,C0595921,C0333467,C4277682,C2931899,C0019151,C0242184,C0027627,C0403528,C0021775,C0497248,C0015397,C0007222,C0086132,C0036202,C0003873,C0034065,C0004093,C0022116,C0013491,C1540912,C0265509,C0002726,C0596263,C0870182,C0730345,C0023473,C0425946,C0085639,C0011609,C0006663,C1336708,C0231337,C0018924,C0003864,C0376618,C0751688,C0032231,C0007134,C0005944,C0009443,C0678222,C0023893,C0039082,C0038379,C0015503,C0007097,C0581342,C0221198,C1848534,C1155266,C1879321,C0079772,C0019087,C0085669,C0600688,C0020538,C0036974,C0002736,C0019693,C0949664,C0156312,C0683416,C0240671,C0039730,C0038356,C4024702,C0024117,C0015674,C0038999,C0085681,C0037285,C0012860,C0004238,C0334517,C0221468,C0040053,C0455825,C0009319,C1457887,C0024115,C0086565,C4020885,C0036337,C0009375,C0020640,C2607914,C0027626,C1527304,C0003486,C0872150,C0012242,C1295654,C0006826,C0596402,C3495587,C0024141,C0014859,C0036341,C0026769,C0035258,C0011849,C2931038,C0003578,C0010054,C0042693,C0029928&amp;scopes=umls&amp;fields=AFFECTS.phenotypic_feature,AFFECTS_reverse.phenotypic_feature,ASSOCIATED_WITH.phenotypic_feature&amp;species=human&amp;size=100&#34;)
+API 1.60: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005090/phenotypes?rows=100
+API 1.2: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009172/phenotypes?rows=100
+API 1.66: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005492/phenotypes?rows=100
+API 1.57: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0006547/phenotypes?rows=100
+API 1.10: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004982/phenotypes?rows=100
+API 1.63: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005335/phenotypes?rows=100
+API 1.24: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019200/phenotypes?rows=100
+API 1.53: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000986/phenotypes?rows=100
+API 1.7: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001415/phenotypes?rows=100
+API 1.4: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005053/phenotypes?rows=100
+API 1.6: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010940/phenotypes?rows=100
+API 1.26: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009061/phenotypes?rows=100
+API 1.11: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011057/phenotypes?rows=100
+API 1.8: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019052/phenotypes?rows=100
+API 1.3: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019086/phenotypes?rows=100
+API 1.12: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004976/phenotypes?rows=100
+API 1.49: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004937/phenotypes?rows=100
+API 3.1: http://mydisease.info/v1/query (POST &#34;q=605074,120970,109800,145500,180300,601665,275000,268000,264800,310500,176807,603903,181500,601626,222448,608232,107100,308960,273300,260350,203700,607140,227500,607154,613659,615429,600807,219700,601367,606963,613679,277450,226150,167000,603174,610842,166710,218040,227600,109100&amp;scopes=mondo.xrefs.omim&amp;fields=hpo.phenotype_related_to_disease&amp;species=human&amp;size=100&#34;)
+API 1.69: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005709/phenotypes?rows=100
+API 1.18: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001187/phenotypes?rows=100
+API 1.33: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016175/phenotypes?rows=100
+API 1.52: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005527/phenotypes?rows=100
+API 1.64: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005010/phenotypes?rows=100
+API 1.41: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005328/phenotypes?rows=100
+API 1.34: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0007781/phenotypes?rows=100
+API 1.38: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005271/phenotypes?rows=100
+API 1.15: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005298/phenotypes?rows=100
+API 1.30: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0008758/phenotypes?rows=100
+API 1.17: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005192/phenotypes?rows=100
+API 1.51: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0003105/phenotypes?rows=100
+API 1.5: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000328/phenotypes?rows=100
+API 1.13: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009026/phenotypes?rows=100
+API 1.45: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010138/phenotypes?rows=100
+API 1.20: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005391/phenotypes?rows=100
+API 1.9: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011382/phenotypes?rows=100
+API 1.28: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004972/phenotypes?rows=100
+API 1.50: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005559/phenotypes?rows=100
+API 1.40: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015760/phenotypes?rows=100
+API 1.68: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005558/phenotypes?rows=100
+API 1.56: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018501/phenotypes?rows=100
+API 1.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0021661/phenotypes?rows=100
+API 1.98: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015870/phenotypes?rows=100
+API 1.22: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015278/phenotypes?rows=100
+API 1.48: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005149/phenotypes?rows=100
+API 1.31: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005267/phenotypes?rows=100
+API 1.100: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005240/phenotypes?rows=100
+API 1.78: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002909/phenotypes?rows=100
+API 1.94: https://api.monarchinitiative.org/api/bioentity/disease/DOID:0111582/phenotypes?rows=100
+API 1.89: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0006176/phenotypes?rows=100
+API 1.35: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0020466/phenotypes?rows=100
+API 1.97: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011293/phenotypes?rows=100
+API 1.88: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009211/phenotypes?rows=100
+API 1.71: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004993/phenotypes?rows=100
+API 1.84: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000001/phenotypes?rows=100
+API 1.75: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005093/phenotypes?rows=100
+API 1.80: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005203/phenotypes?rows=100
+API 1.73: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0024327/phenotypes?rows=100
+API 1.79: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004979/phenotypes?rows=100
+API 1.95: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005043/phenotypes?rows=100
+API 1.99: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/phenotypes?rows=100
+API 1.83: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018972/phenotypes?rows=100
+API 1.87: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0021166/phenotypes?rows=100
+API 1.96: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002243/phenotypes?rows=100
+API 1.85: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001566/phenotypes?rows=100
+API 1.86: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001711/phenotypes?rows=100
+API 1.90: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001056/phenotypes?rows=100
+API 1.91: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001627/phenotypes?rows=100
+API 1.92: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000190/phenotypes?rows=100
+API 1.76: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0021085/phenotypes?rows=100
+API 1.82: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000313/phenotypes?rows=100
+API 1.62: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005295/phenotypes?rows=100
+API 1.74: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002278/phenotypes?rows=100
+API 1.72: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004992/phenotypes?rows=100
+API 1.54: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005316/phenotypes?rows=100
+API 1.29: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005292/phenotypes?rows=100
+API 1.65: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005154/phenotypes?rows=100
+API 1.23: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0013361/phenotypes?rows=100
+API 1.19: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002123/phenotypes?rows=100
+API 1.46: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002531/phenotypes?rows=100
+API 1.102: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0006857/phenotypes?rows=100
+API 1.104: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011751/phenotypes?rows=100
+API 1.101: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0007136/phenotypes?rows=100
+API 1.32: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0006873/phenotypes?rows=100
+API 1.103: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009212/phenotypes?rows=100
+API 1.108: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016627/phenotypes?rows=100
+API 1.110: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005311/phenotypes?rows=100
+API 1.36: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010108/phenotypes?rows=100
+API 1.105: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0007362/phenotypes?rows=100
+API 1.106: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011782/phenotypes?rows=100
+API 1.113: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018076/phenotypes?rows=100
+API 1.107: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0008383/phenotypes?rows=100
+API 1.109: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004588/phenotypes?rows=100
+API 1.111: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0007179/phenotypes?rows=100
+API 1.114: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002280/phenotypes?rows=100
+API 1.119: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019298/phenotypes?rows=100
+API 1.112: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005520/phenotypes?rows=100
+API 1.120: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0003432/phenotypes?rows=100
+API 1.118: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005401/phenotypes?rows=100
+API 1.121: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002254/phenotypes?rows=100
+API 1.115: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002657/phenotypes?rows=100
+API 1.117: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009925/phenotypes?rows=100
+API 1.124: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004431/phenotypes?rows=100
+API 1.116: https://api.monarchinitiative.org/api/bioentity/disease/DOID:162/phenotypes?rows=100
+API 1.127: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010690/phenotypes?rows=100
+API 1.129: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001881/phenotypes?rows=100
+API 1.123: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0018577/phenotypes?rows=100
+API 1.125: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004995/phenotypes?rows=100
+API 1.130: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005265/phenotypes?rows=100
+API 1.126: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002473/phenotypes?rows=100
+API 1.122: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001741/phenotypes?rows=100
+API 1.133: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015796/phenotypes?rows=100
+API 1.136: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001068/phenotypes?rows=100
+API 1.128: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004335/phenotypes?rows=100
+API 1.131: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0010187/phenotypes?rows=100
+API 1.134: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005364/phenotypes?rows=100
+API 1.132: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016064/phenotypes?rows=100
+API 1.140: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001186/phenotypes?rows=100
+API 1.137: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015305/phenotypes?rows=100
+API 1.135: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005059/phenotypes?rows=100
+API 1.142: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0008315/phenotypes?rows=100
+API 1.138: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0004975/phenotypes?rows=100
+API 1.139: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019065/phenotypes?rows=100
+API 1.141: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005155/phenotypes?rows=100
+API 1.144: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005279/phenotypes?rows=100
+API 1.148: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0014182/phenotypes?rows=100
+API 1.146: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005404/phenotypes?rows=100
+API 1.145: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0017884/phenotypes?rows=100
+API 1.143: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005574/phenotypes?rows=100
+API 1.152: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019338/phenotypes?rows=100
+API 1.149: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005275/phenotypes?rows=100
+API 1.150: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0008170/phenotypes?rows=100
+API 1.147: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005578/phenotypes?rows=100
+API 1.151: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000984/phenotypes?rows=100
+API 1.155: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002492/phenotypes?rows=100
+API 1.156: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0002276/phenotypes?rows=100
+API 1.154: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005096/phenotypes?rows=100
+API 1.157: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0009104/phenotypes?rows=100
+API 1.159: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005301/phenotypes?rows=100
+API 1.158: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0015691/phenotypes?rows=100
+API 1.162: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005098/phenotypes?rows=100
+API 1.160: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001244/phenotypes?rows=100
+API 1.161: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0003435/phenotypes?rows=100
+API 1.164: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005109/phenotypes?rows=100
+API 1.153: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0000831/phenotypes?rows=100
+API 1.166: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019542/phenotypes?rows=100
+API 1.167: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0005002/phenotypes?rows=100
+API 1.163: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0001531/phenotypes?rows=100
+API 1.165: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0020076/phenotypes?rows=100
+
+
+==== Step #3: Output normalization ====
+
+API 1.1 biolink_disease2phenotype: No hits
+API 1.2 biolink_disease2phenotype: 4 hits
+API 1.3 biolink_disease2phenotype: 31 hits
+API 1.4 biolink_disease2phenotype: No hits
+API 1.5 biolink_disease2phenotype: No hits
+API 1.6 biolink_disease2phenotype: 1 hits
+API 1.7 biolink_disease2phenotype: No hits
+API 1.8 biolink_disease2phenotype: 100 hits
+API 1.9 biolink_disease2phenotype: 39 hits
+API 1.10 biolink_disease2phenotype: 22 hits
+API 1.11 biolink_disease2phenotype: 100 hits
+API 1.12 biolink_disease2phenotype: 100 hits
+API 1.13 biolink_disease2phenotype: 98 hits
+API 1.14 biolink_disease2phenotype: 100 hits
+API 1.15 biolink_disease2phenotype: 23 hits
+API 1.16 biolink_disease2phenotype: No hits
+API 1.17 biolink_disease2phenotype: 27 hits
+API 1.18 biolink_disease2phenotype: 7 hits
+API 1.19 biolink_disease2phenotype: 73 hits
+API 1.20 biolink_disease2phenotype: 6 hits
+API 1.21 biolink_disease2phenotype: No hits
+API 1.22 biolink_disease2phenotype: 27 hits
+API 1.23 biolink_disease2phenotype: 24 hits
+API 1.24 biolink_disease2phenotype: 100 hits
+API 1.25 biolink_disease2phenotype: 100 hits
+API 1.26 biolink_disease2phenotype: 21 hits
+API 1.27 biolink_disease2phenotype: 17 hits
+API 1.28 biolink_disease2phenotype: 100 hits
+API 1.29 biolink_disease2phenotype: No hits
+API 1.30 biolink_disease2phenotype: 46 hits
+API 1.31 biolink_disease2phenotype: 100 hits
+API 1.32 biolink_disease2phenotype: 100 hits
+API 1.33 biolink_disease2phenotype: 100 hits
+API 1.34 biolink_disease2phenotype: 3 hits
+API 1.35 biolink_disease2phenotype: 100 hits
+API 1.36 biolink_disease2phenotype: 8 hits
+API 1.37 biolink_disease2phenotype: 1 hits
+API 1.38 biolink_disease2phenotype: 76 hits
+API 1.39 biolink_disease2phenotype: 14 hits
+API 1.40 biolink_disease2phenotype: 71 hits
+API 1.41 biolink_disease2phenotype: 100 hits
+API 1.42 biolink_disease2phenotype: 8 hits
+API 1.43 biolink_disease2phenotype: 13 hits
+API 1.44 biolink_disease2phenotype: No hits
+API 1.45 biolink_disease2phenotype: 15 hits
+API 1.46 biolink_disease2phenotype: 100 hits
+API 1.47 biolink_disease2phenotype: 41 hits
+API 1.48 biolink_disease2phenotype: 100 hits
+API 1.49 biolink_disease2phenotype: No hits
+API 1.50 biolink_disease2phenotype: 100 hits
+API 1.51 biolink_disease2phenotype: 7 hits
+API 1.52 biolink_disease2phenotype: No hits
+API 1.53 biolink_disease2phenotype: No hits
+API 1.54 biolink_disease2phenotype: No hits
+API 1.55 biolink_disease2phenotype: 12 hits
+API 1.56 biolink_disease2phenotype: No hits
+API 1.57 biolink_disease2phenotype: 19 hits
+API 1.58 biolink_disease2phenotype: No hits
+API 1.59 biolink_disease2phenotype: No hits
+API 1.60 biolink_disease2phenotype: 78 hits
+API 1.61 biolink_disease2phenotype: No hits
+API 1.62 biolink_disease2phenotype: No hits
+API 1.63 biolink_disease2phenotype: 100 hits
+API 1.64 biolink_disease2phenotype: 16 hits
+API 1.65 biolink_disease2phenotype: 100 hits
+API 1.66 biolink_disease2phenotype: 100 hits
+API 1.67 biolink_disease2phenotype: 100 hits
+API 1.68 biolink_disease2phenotype: 100 hits
+API 1.69 biolink_disease2phenotype: No hits
+API 1.70 biolink_disease2phenotype: 62 hits
+API 1.71 biolink_disease2phenotype: 100 hits
+API 1.72 biolink_disease2phenotype: 100 hits
+API 1.73 biolink_disease2phenotype: No hits
+API 1.74 biolink_disease2phenotype: No hits
+API 1.75 biolink_disease2phenotype: 100 hits
+API 1.76 biolink_disease2phenotype: 39 hits
+API 1.77 biolink_disease2phenotype: 100 hits
+API 1.78 biolink_disease2phenotype: No hits
+API 1.79 biolink_disease2phenotype: No hits
+API 1.80 biolink_disease2phenotype: No hits
+API 1.81 biolink_disease2phenotype: 99 hits
+API 1.82 biolink_disease2phenotype: No hits
+API 1.83 biolink_disease2phenotype: 32 hits
+API 1.84 biolink_disease2phenotype: 100 hits
+API 1.85 biolink_disease2phenotype: 84 hits
+API 1.86 biolink_disease2phenotype: No hits
+API 1.87 biolink_disease2phenotype: 100 hits
+API 1.88 biolink_disease2phenotype: 15 hits
+API 1.89 biolink_disease2phenotype: No hits
+API 1.90 biolink_disease2phenotype: 7 hits
+API 1.91 biolink_disease2phenotype: 100 hits
+API 1.92 biolink_disease2phenotype: 5 hits
+API 1.93 biolink_disease2phenotype: 1 hits
+API 1.94 biolink_disease2phenotype: No hits
+API 1.95 biolink_disease2phenotype: 3 hits
+API 1.96 biolink_disease2phenotype: 100 hits
+API 1.97 biolink_disease2phenotype: No hits
+API 1.98 biolink_disease2phenotype: No hits
+API 1.99 biolink_disease2phenotype: 15 hits
+API 1.100 biolink_disease2phenotype: 100 hits
+API 1.101 biolink_disease2phenotype: 2 hits
+API 1.102 biolink_disease2phenotype: No hits
+API 1.103 biolink_disease2phenotype: 22 hits
+API 1.104 biolink_disease2phenotype: 1 hits
+API 1.105 biolink_disease2phenotype: 14 hits
+API 1.106 biolink_disease2phenotype: No hits
+API 1.107 biolink_disease2phenotype: 73 hits
+API 1.108 biolink_disease2phenotype: No hits
+API 1.109 biolink_disease2phenotype: 63 hits
+API 1.110 biolink_disease2phenotype: 1 hits
+API 1.111 biolink_disease2phenotype: 100 hits
+API 1.112 biolink_disease2phenotype: 100 hits
+API 1.113 biolink_disease2phenotype: 5 hits
+API 1.114 biolink_disease2phenotype: 100 hits
+API 1.115 biolink_disease2phenotype: 100 hits
+API 1.116 biolink_disease2phenotype: 100 hits
+API 1.117 biolink_disease2phenotype: 80 hits
+API 1.118 biolink_disease2phenotype: 64 hits
+API 1.119 biolink_disease2phenotype: No hits
+API 1.120 biolink_disease2phenotype: No hits
+API 1.121 biolink_disease2phenotype: 100 hits
+API 1.122 biolink_disease2phenotype: 100 hits
+API 1.123 biolink_disease2phenotype: 11 hits
+API 1.124 biolink_disease2phenotype: No hits
+API 1.125 biolink_disease2phenotype: 100 hits
+API 1.126 biolink_disease2phenotype: 100 hits
+API 1.127 biolink_disease2phenotype: 4 hits
+API 1.128 biolink_disease2phenotype: 100 hits
+API 1.129 biolink_disease2phenotype: No hits
+API 1.130 biolink_disease2phenotype: 100 hits
+API 1.131 biolink_disease2phenotype: 9 hits
+API 1.132 biolink_disease2phenotype: 62 hits
+API 1.133 biolink_disease2phenotype: No hits
+API 1.134 biolink_disease2phenotype: 15 hits
+API 1.135 biolink_disease2phenotype: 100 hits
+API 1.136 biolink_disease2phenotype: No hits
+API 1.137 biolink_disease2phenotype: No hits
+API 1.138 biolink_disease2phenotype: 78 hits
+API 1.139 biolink_disease2phenotype: 100 hits
+API 1.140 biolink_disease2phenotype: No hits
+API 1.141 biolink_disease2phenotype: 47 hits
+API 1.142 biolink_disease2phenotype: 6 hits
+API 1.143 biolink_disease2phenotype: 78 hits
+API 1.144 biolink_disease2phenotype: No hits
+API 1.145 biolink_disease2phenotype: 1 hits
+API 1.146 biolink_disease2phenotype: No hits
+API 1.147 biolink_disease2phenotype: 100 hits
+API 1.148 biolink_disease2phenotype: 1 hits
+API 1.149 biolink_disease2phenotype: 100 hits
+API 1.150 biolink_disease2phenotype: 49 hits
+API 1.151 biolink_disease2phenotype: 100 hits
+API 1.152 biolink_disease2phenotype: 75 hits
+API 1.153 biolink_disease2phenotype: 100 hits
+API 1.154 biolink_disease2phenotype: 21 hits
+API 1.155 biolink_disease2phenotype: No hits
+API 1.156 biolink_disease2phenotype: No hits
+API 1.157 biolink_disease2phenotype: 40 hits
+API 1.158 biolink_disease2phenotype: 94 hits
+API 1.159 biolink_disease2phenotype: 15 hits
+API 1.160 biolink_disease2phenotype: No hits
+API 1.161 biolink_disease2phenotype: No hits
+API 1.162 biolink_disease2phenotype: 1 hits
+API 1.163 biolink_disease2phenotype: 100 hits
+API 1.164 biolink_disease2phenotype: No hits
+API 1.165 biolink_disease2phenotype: 100 hits
+API 1.166 biolink_disease2phenotype: No hits
+API 1.167 biolink_disease2phenotype: 35 hits
+API 3.1 mydisease.info: 609 hits
+API 2.1 semmeddisease: 108 hits
+
+After id-to-object translation, BTE retrieved 2213 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-In the #1 query, BTE found 218 unique Gene nodes
-In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
+In the #1 query, BTE found 4 unique Gene nodes
+In the #2 query, BTE found 330 unique DiseaseOrPhenotypicFeature nodes
+In the #3 query, BTE found 2213 unique PhenotypicFeature nodes
 </pre>
 </div>
 </div>
@@ -14293,7 +13776,7 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -14307,25 +13790,30 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The df object contains the full output from BioThings Explorer. Each row shows one path that joins the input node (PRDX1) to an intermediate node (a gene or protein) to an ending node (a chemical compound). The data frame includes a set of columns with additional details on each node and edge (including human-readable labels, identifiers, and sources). Let's remove all examples where the output_name (the compound label) is None, and specifically focus on paths with specific mechanistic predicates decreasesActivityOf and targetedBy.</p>
+<p>The df object contains the full output from BioThings Explorer. Each row shows one path that joins the input node (ANISINDIONE) to an intermediate node (a gene or protein) to another intermediate node (a DisseaseOrPhenotypicFeature) to an ending node (a Phenotypic Feature). The data frame includes a set of columns with additional details on each node and edge (including human-readable labels, identifiers, and sources). Let's remove all examples where the output_name (the phenotype label) is None, and specifically focus on paths with specific mechanistic predicates <strong>target</strong> and <strong>causes</strong>.</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Filter-for-drugs-that-targets-genes-which-decrease-the-activity-of-PRDX1">Filter for drugs that targets genes which decrease the activity of PRDX1<a class="anchor-link" href="#Filter-for-drugs-that-targets-genes-which-decrease-the-activity-of-PRDX1">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;output_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pred1 == &quot;decreasesActivityOf&quot; and pred2 == &quot;targetedBy&quot;&#39;</span><span class="p">)</span>
-<span class="n">dfFilt</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;output_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;pred1 == &quot;target&quot; and pred2 == &quot;causes&quot;&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span>
 </pre></div>
 
     </div>
@@ -14338,7 +13826,7 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -14371,9 +13859,14 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
       <th>node1_name</th>
       <th>node1_id</th>
       <th>pred2</th>
-      <th>pred2_source</th>
-      <th>pred2_api</th>
-      <th>pred2_pubmed</th>
+      <th>...</th>
+      <th>node2_type</th>
+      <th>node2_name</th>
+      <th>node2_id</th>
+      <th>pred3</th>
+      <th>pred3_source</th>
+      <th>pred3_api</th>
+      <th>pred3_pubmed</th>
       <th>output_type</th>
       <th>output_name</th>
       <th>output_id</th>
@@ -14381,99 +13874,124 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>9348</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>21167242</td>
-      <td>Gene</td>
-      <td>CREB1</td>
-      <td>entrez:1385</td>
-      <td>targetedBy</td>
+      <td>39</td>
+      <td>ANISINDIONE</td>
+      <td>ChemicalSubstance</td>
+      <td>target</td>
       <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
+      <td>dgidb_chemical2gene</td>
       <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>ALCOHOL</td>
-      <td>chembl:CHEMBL545</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>cancer</td>
+      <td>mondo:MONDO:0004992</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2phenotype</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0002664</td>
+      <td>hp:HP:0002664</td>
     </tr>
     <tr>
-      <td>9901</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>44</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>EPINEPHRINE</td>
-      <td>chembl:CHEMBL679</td>
-    </tr>
-    <tr>
-      <td>10324</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>23185615</td>
-      <td>Gene</td>
-      <td>VEGFA</td>
-      <td>entrez:7422</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>MINOCYCLINE</td>
-      <td>chembl:CHEMBL1434</td>
-    </tr>
-    <tr>
-      <td>10409</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>21167242</td>
-      <td>Gene</td>
-      <td>CREB1</td>
-      <td>entrez:1385</td>
-      <td>targetedBy</td>
+      <td>target</td>
       <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
+      <td>dgidb_chemical2gene</td>
       <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>NICOTINE</td>
-      <td>chembl:CHEMBL3</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>carcinoma of liver and intrahepatic biliary tract</td>
+      <td>mondo:MONDO:0018531</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2phenotype</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0002664</td>
+      <td>hp:HP:0002664</td>
     </tr>
     <tr>
-      <td>10697</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>23185615</td>
-      <td>Gene</td>
-      <td>VEGFA</td>
-      <td>entrez:7422</td>
-      <td>targetedBy</td>
+      <td>45</td>
+      <td>ANISINDIONE</td>
+      <td>ChemicalSubstance</td>
+      <td>target</td>
       <td>dgidb</td>
-      <td>dgidb_gene2chemical</td>
+      <td>dgidb_chemical2gene</td>
       <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>exanthem (disease)</td>
+      <td>mondo:MONDO:0006547</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2phenotype</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0002664</td>
+      <td>hp:HP:0002664</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>FENOFIBRATE</td>
-      <td>chembl:CHEMBL672</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>cancer</td>
+      <td>mondo:MONDO:0004992</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2phenotype</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0000976</td>
+      <td>hp:HP:0000976</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td>ANISINDIONE</td>
+      <td>ChemicalSubstance</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>cancer</td>
+      <td>mondo:MONDO:0004992</td>
+      <td>associatedWith</td>
+      <td>biolink</td>
+      <td>biolink_disease2phenotype</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0005534</td>
+      <td>hp:HP:0005534</td>
     </tr>
     <tr>
       <td>...</td>
@@ -14493,105 +14011,135 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <td>33686</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>19307</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>PLINABULIN</td>
-      <td>chembl:CHEMBL1096380</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>mitochondrial DNA depletion syndrome 4a</td>
+      <td>mondo:MONDO:0008758</td>
+      <td>associatedWith</td>
+      <td>hpo</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0002446</td>
+      <td>hp:HP:0002446</td>
     </tr>
     <tr>
-      <td>33687</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>19308</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>DILMAPIMOD</td>
-      <td>chembl:CHEMBL2103838</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>mitochondrial DNA depletion syndrome 4a</td>
+      <td>mondo:MONDO:0008758</td>
+      <td>associatedWith</td>
+      <td>hpo</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0000478</td>
+      <td>hp:HP:0000478</td>
     </tr>
     <tr>
-      <td>33688</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>19309</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>ATIPRIMOD</td>
-      <td>chembl:CHEMBL103735</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>mitochondrial DNA depletion syndrome 4a</td>
+      <td>mondo:MONDO:0008758</td>
+      <td>associatedWith</td>
+      <td>hpo</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0001276</td>
+      <td>hp:HP:0001276</td>
     </tr>
     <tr>
-      <td>33689</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>19310</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>ANDROGRAPHOLIDE</td>
-      <td>chembl:CHEMBL186141</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>mitochondrial DNA depletion syndrome 4a</td>
+      <td>mondo:MONDO:0008758</td>
+      <td>associatedWith</td>
+      <td>hpo</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0003678</td>
+      <td>hp:HP:0003678</td>
     </tr>
     <tr>
-      <td>33690</td>
-      <td>PRDX1</td>
-      <td>Gene</td>
-      <td>decreasesActivityOf</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20683885</td>
-      <td>Gene</td>
-      <td>TNF</td>
-      <td>entrez:7124</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>19311</td>
+      <td>ANISINDIONE</td>
       <td>ChemicalSubstance</td>
-      <td>PSEUDOEPHEDRINE</td>
-      <td>chembl:CHEMBL1590</td>
+      <td>target</td>
+      <td>dgidb</td>
+      <td>dgidb_chemical2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GC</td>
+      <td>entrez:2638</td>
+      <td>causes</td>
+      <td>...</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>mitochondrial DNA depletion syndrome 4a</td>
+      <td>mondo:MONDO:0008758</td>
+      <td>associatedWith</td>
+      <td>hpo</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>PhenotypicFeature</td>
+      <td>HP:0003593</td>
+      <td>hp:HP:0003593</td>
     </tr>
   </tbody>
 </table>
-<p>219 rows × 16 columns</p>
+<p>1010 rows × 23 columns</p>
 </div>
 </div>
 
@@ -14600,174 +14148,6 @@ In the #2 query, BTE found 6146 unique ChemicalSubstance nodes
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[5]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([&#39;entrez:1385&#39;, &#39;entrez:7124&#39;, &#39;entrez:7422&#39;, &#39;entrez:10013&#39;,
-       &#39;entrez:4547&#39;, &#39;entrez:5657&#39;], dtype=object)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dfFilt</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[6]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([&#39;CREB1&#39;, &#39;TNF&#39;, &#39;VEGFA&#39;, &#39;HDAC6&#39;, &#39;MTTP&#39;, &#39;PRTN3&#39;], dtype=object)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3:-Evaluating-Paths-based-on-published-pathway-figures">Step 3: Evaluating Paths based on published pathway figures<a class="anchor-link" href="#Step-3:-Evaluating-Paths-based-on-published-pathway-figures">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's see if PRDX1 (entrez:5052) is in the same pathway as TNF (entrez:7124) using our newly created API <a href="http://pending.biothings.io/pfocr">PFOCR</a></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-
-<span class="c1"># query pfocr to see if PRDX1 and VEGFA is in the same pathway figure</span>
-<span class="n">doc</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://pending.biothings.io/pfocr/query?q=associatedWith.genes:5052 AND associatedWith.genes:7124&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="n">doc</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[7]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;max_score&#39;: 9.817886,
- &#39;took&#39;: 1,
- &#39;total&#39;: 1,
- &#39;hits&#39;: [{&#39;_id&#39;: &#39;PMC4749872__molce-39-1-40f1.jpg&#39;,
-   &#39;_score&#39;: 9.817886,
-   &#39;associatedWith&#39;: {&#39;figureUrl&#39;: &#39;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4749872/bin/molce-39-1-40f1.jpg&#39;,
-    &#39;genes&#39;: [&#39;11221&#39;,
-     &#39;1432&#39;,
-     &#39;1843&#39;,
-     &#39;3163&#39;,
-     &#39;369&#39;,
-     &#39;4217&#39;,
-     &#39;4297&#39;,
-     &#39;5052&#39;,
-     &#39;5594&#39;,
-     &#39;5595&#39;,
-     &#39;5599&#39;,
-     &#39;5600&#39;,
-     &#39;5601&#39;,
-     &#39;5602&#39;,
-     &#39;5603&#39;,
-     &#39;5604&#39;,
-     &#39;5605&#39;,
-     &#39;5606&#39;,
-     &#39;5607&#39;,
-     &#39;5608&#39;,
-     &#39;5609&#39;,
-     &#39;5894&#39;,
-     &#39;6300&#39;,
-     &#39;6416&#39;,
-     &#39;673&#39;,
-     &#39;7124&#39;,
-     &#39;7180&#39;],
-    &#39;pmc&#39;: &#39;PMC4749872&#39;}}]}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>image of PMC4749872__molce-39-1-40f1.jpg</strong></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="img/molce-39-1-40f1.jpg" alt=""></p>
-
-</div>
-</div>
 </div>
     </div>
   </div>
