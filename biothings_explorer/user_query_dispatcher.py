@@ -7,14 +7,13 @@
 """
 from collections import defaultdict
 import networkx as nx
-import time
 import copy
 
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df, connect_networkx_to_pandas_df_new
-from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids
+from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
 from .metadata import Metadata
 from .extensions.reasoner import ReasonerConverter
 from .extensions.graphml import GraphmlConverter
@@ -174,16 +173,34 @@ class SingleEdgeQueryDispatcher():
     def construct_internal_graph(self):
         graph = defaultdict(list)
         for sbj, obj, info in self.G.edges(data=True):
+            sbj_name = get_name_from_equivalent_ids(self.G.nodes[sbj]['equivalent_ids'], None)
+            sbj_id = get_primary_id_from_equivalent_ids(self.G.nodes[sbj]['equivalent_ids'],
+                                                        self.G.nodes[sbj]['type'])
+            obj_name = get_name_from_equivalent_ids(self.G.nodes[obj]['equivalent_ids'], None)
+            obj_id = get_primary_id_from_equivalent_ids(self.G.nodes[obj]['equivalent_ids'],
+                                                        self.G.nodes[obj]['type'])
             sbj_label = str(self.query_id - 1) + '-' + self.G.nodes[sbj]['identifier'][4:] + ':' + str(sbj).upper()
             obj_label = str(self.query_id) + '-' + self.G.nodes[obj]['identifier'][4:] + ':' + str(obj).upper()
             tmp = []
             if sbj_label in self.prev_graph:
                 prev_graph = copy.deepcopy(self.prev_graph[sbj_label])
                 for prec_rec in prev_graph:
-                    prec_rec.append({'input': sbj_label, 'output': obj_label, 'info': info})
+                    prec_rec.append({'input': sbj_label,
+                                     'output': obj_label,
+                                     'info': info,
+                                     'input_name': sbj_name,
+                                     'input_id': sbj_id,
+                                     'output_name': obj_name,
+                                     'output_id': obj_id})
                     tmp.append(prec_rec)
             else:
-                tmp = [[{'input': sbj_label, 'output': obj_label, 'info': info}]]
+                tmp = [[{'input': sbj_label,
+                         'output': obj_label,
+                         'info': info,
+                         'input_name': sbj_name,
+                         'input_id': sbj_id,
+                         'output_name': obj_name,
+                         'output_id': obj_id}]]
             graph[obj_label] += tmp
         self.current_graph = graph
 
