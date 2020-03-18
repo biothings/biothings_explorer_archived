@@ -13118,6 +13118,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This notebook demonstrates how BioThings Explorer can be used to answer the following query:</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>"What biosamples are associated with diseases related to gene SLC15A4"</em></p>
+<p><strong>To experiment with an executable version of this notebook, <a href="https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/Demo%20of%20Integrating%20Stanford%20BioSample%20API%20into%20BTE.ipynb">load it in Google Colaboratory</a>.</strong></p>
 <p><strong>Background</strong>: BioThings Explorer can answer two classes of queries -- "EXPLAIN" and "PREDICT".  EXPLAIN queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/EXPLAIN_demo.ipynb">EXPLAIN_demo.ipynb</a>, and PREDICT queries are described in <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb">PREDICT_demo.ipynb</a>. Here, we describe PREDICT queries and how to use BioThings Explorer to execute them.  A more detailed overview of the BioThings Explorer systems is provided in <a href="https://docs.google.com/presentation/d/1QWQqqQhPD_pzKryh6Wijm4YQswv8pAjleVORCPyJyDE/edit?usp=sharing">these slides</a>.</p>
 
 </div>
@@ -13138,6 +13139,27 @@ div#notebook {
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Step-0:-Load-BioThings-Explorer-modules">Step 0: Load BioThings Explorer modules<a class="anchor-link" href="#Step-0:-Load-BioThings-Explorer-modules">&#182;</a></h2><p>Install the <code>biothings_explorer</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but including it here for compability with <a href="https://colab.research.google.com/">colab</a>).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install git+https://github.com/biothings/biothings_explorer#egg<span class="o">=</span>biothings_explorer
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
