@@ -35,13 +35,12 @@ def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
     """
     if not equivalent_ids:
         return None
-    if _type not in id_ranks:
-        return None
-    id_rank = [('bts:' + _item) for _item in id_ranks.get(_type)]
-    # loop through id_rank, if the id is found in equivalent ids, return it
-    for _item in id_rank:
-        if equivalent_ids.get(_item):
-            return (_item[4:] + ':' + str(equivalent_ids[_item][0]))
+    if _type in id_ranks:
+        id_rank = [('bts:' + _item) for _item in id_ranks.get(_type)]
+        # loop through id_rank, if the id is found in equivalent ids, return it
+        for _item in id_rank:
+            if equivalent_ids.get(_item):
+                return (_item[4:] + ':' + str(equivalent_ids[_item][0]))
     # if no id found, return a random one from equivalent ids
     for k, v in equivalent_ids.items():
         if v:

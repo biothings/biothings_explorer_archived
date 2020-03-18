@@ -34,14 +34,18 @@ class BioThingsCaller():
         self._batch_mode = value
 
     @staticmethod
-    def construct_query_param(input_fields, output_fields, value, batch_mode, size):
+    def construct_query_param(input_fields, output_fields, value, batch_mode, size, dotfield=False):
         """Construct query parameters with input, output and value."""
         get_params = 'q={input}:{value}&fields={output}&species=human&size=' + str(size)
         post_params = 'q={value}&scopes={input}&fields={output}&species=human&size=' + str(size)
         if ',' in input_fields and not batch_mode:
             _input = ' OR'.join([(_item + ':' + value) for _item in input_fields.split(',')])
+            if dotfield:
+                get_params += '&dotfield=true'
             return get_params.replace('{input}:{value}', _input).replace('{output}', output_fields)
         params = post_params if batch_mode else get_params
+        if dotfield:
+            params += '&dotfield=true'
         return params.replace('{input}', input_fields).replace('{output}',output_fields).replace('{value}', value)
 
     @staticmethod
@@ -60,12 +64,13 @@ class BioThingsCaller():
         elif method == "POST":
             return url + ' (POST "' + params + '")'
 
-    async def call_one_biothings_api(self, _input, session, size, verbose):
+    async def call_one_biothings_api(self, _input, session, size, dotfield=False, verbose=False):
         params = self.construct_query_param(_input['input'],
                                             _input['output'],
                                             _input['values'],
                                             _input['batch_mode'],
-                                            size=size)
+                                            size=size,
+                                            dotfield=dotfield)
         if not _input['batch_mode']:
             try:
                 async with session.get(metadata[_input['api']]['url'],
@@ -99,7 +104,7 @@ class BioThingsCaller():
                     print('{} failed'.format(_input['api']))
                 return {}
 
-    async def call_one_non_biothings_api(self, _input, session, verbose):
+    async def call_one_non_biothings_api(self, _input, session, verbose=False):
         api_url = metadata[_input['api']]['url']
         api_param = metadata[_input['api']]['path']
         path = self.construct_path(api_url, api_param, _input['values'])
@@ -118,7 +123,7 @@ class BioThingsCaller():
                 print('{} failed'.format(_input['api']))
             return {}
 
-    async def call_one_api(self, _input, session, size, verbose=False):
+    async def call_one_api(self, _input, session, size, dotfield=False, verbose=False):
         """Asynchronously make one API call.
 
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
@@ -127,13 +132,13 @@ class BioThingsCaller():
         # check api type
         api_type = metadata[_input['api']]['api_type']
         if api_type == 'biothings':
-            res = await self.call_one_biothings_api(_input, session, size, verbose)            
+            res = await self.call_one_biothings_api(_input, session, size, dotfield=dotfield, verbose=verbose)            
         else:
-            res = await self.call_one_non_biothings_api(_input, session, verbose)
+            res = await self.call_one_non_biothings_api(_input, session, verbose=verbose)
         return res
             
 
-    async def run(self, inputs, size, verbose=False):
+    async def run(self, inputs, size, dotfield=False, verbose=False):
         """Asynchronously make a list of API calls.
 
         :param: inputs (list): list of python dicts containing three keys
@@ -144,13 +149,14 @@ class BioThingsCaller():
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
                                                                size=size,
+                                                               dotfield=dotfield,
                                                                verbose=verbose))
                 tasks.append(task)
             responses = await asyncio.gather(*tasks)
             # print(responses)
             return responses
 
-    def call_apis(self, inputs, size=100, verbose=False):
+    def call_apis(self, inputs, size=100, dotfield=False, verbose=False):
         if verbose:
             cnt = Counter()
             if inputs:
@@ -164,5 +170,5 @@ class BioThingsCaller():
             print("\n\n==== Step #2: Query path execution ====")
             print("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
         loop = asyncio.get_event_loop()
-        future = asyncio.ensure_future(self.run(inputs, size=size, verbose=verbose))
+        future = asyncio.ensure_future(self.run(inputs, size=size, dotfield=dotfield, verbose=verbose))
         return loop.run_until_complete(future)

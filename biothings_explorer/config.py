@@ -3,6 +3,8 @@ id_ranks = {
   'SequenceVariant': ['dbsnp', 'hgvs'],
   'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'name', 'umls'],
   'pathway': ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
+  'DiseaseOrPhenotypicFeature': ['mondo', 'doid', 'umls', 'mesh', 'hp', 'name'],
+  'PhenotypicFeature': ['hp', 'umls'],
   'mf': ['go'],
   'cc': ['go', 'umls'],
   'bp': ['go', 'umls'],
@@ -68,7 +70,8 @@ metadata = {
       'pubchem.cid': 'pubchem',
       'drugcentral.xrefs.umlscui': 'umls',
       'drugcentral.xrefs.mesh_descriptor_ui': 'mesh',
-      'chebi.id': 'chebi'
+      'chebi.id': 'chebi',
+      'drugcentral.xrefs.chebi': 'chebi'
     },
     'api_name': "mychem.info"
   },
