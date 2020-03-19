@@ -1,7 +1,6 @@
 from collections import defaultdict
-from .utils import find_common_path, get_dict_values
-
 from jsonpath_rw import parse
+from .utils.common import find_longest_common_path, get_dict_values
 
 
 class Transformer():
@@ -89,7 +88,7 @@ class Transformer():
         case 3: {"a": }
         """
         dict_values = get_dict_values(mapping_dict)
-        common_path = find_common_path(dict_values)
+        common_path = find_longest_common_path(dict_values)
         if common_path:
             all_paths = self.fetch_all_paths_from_mapping_file(mapping_dict)
             paths_jsonpaths_dict = {}
