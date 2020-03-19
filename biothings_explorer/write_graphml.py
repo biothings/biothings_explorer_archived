@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """A fix for GraphML write_graphml module
 
+Run this code only when you need to generate a metro Meta-KG graph
+
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
 
