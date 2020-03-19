@@ -79,35 +79,31 @@ def get_dict_values(py_dict: dict,
     return [v for k, v in py_dict.items() if k not in excluded_keys]
 
 
-def get_primary_id_from_equivalent_ids(equivalent_ids, _type):
+def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
     """find primary id from equivalent id dict
 
-    params
-    ------
-    equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
-    _type: the type of the bio-entity
+    :param: equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
+    :param: _type: the type of the bio-entity
     """
     if not equivalent_ids:
         return None
     if _type in id_ranks:
-        id_rank = [('bts:' + _item) for _item in id_ranks.get(_type)]
-        # loop through id_rank, if the id is found in equivalent ids, return it
+        id_rank = id_ranks.get(_type)
+        # loop through id_rank, return the first found id
         for _item in id_rank:
             if equivalent_ids.get(_item):
-                return (_item[4:] + ':' + str(equivalent_ids[_item][0]))
-    # if no id found, return a random one from equivalent ids
+                return (_item + ':' + str(equivalent_ids[_item][0]))
+    # if no id from id_rank found, return a random one from equivalent ids
     for k, v in equivalent_ids.items():
         if v:
             return (k[4:] + ':' + str(v[0]))
 
 
 def get_name_from_equivalent_ids(equivalent_ids, input_label):
-    """find name from equivalent id dict
+    """Find name from equivalent id dict.
 
-    params
-    ------
-    equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
-    input_label: desginated input_label
+    :param: equivalent_ids: a dictionary containing all equivalent ids of a bio-entity.
+    :param: input_label: desginated input_label
     """
     if input_label:
         return input_label

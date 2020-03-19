@@ -10,7 +10,7 @@ from collections import defaultdict
 from graphviz import Digraph
 import pandas as pd
 import itertools
-from .utils import get_primary_id_from_equivalent_ids, get_name_from_equivalent_ids
+from .utils.common import get_primary_id_from_equivalent_ids, get_name_from_equivalent_ids
 
 
 def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):

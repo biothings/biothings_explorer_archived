@@ -14,7 +14,7 @@ from .id_converter import IDConverter
 from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df, connect_networkx_to_pandas_df_new
 from .utils.common import dict2listoftuples, listoftuples2dict
-from .utils import get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
+from .utils.common import get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
 from .metadata import Metadata
 from .export.reasoner import ReasonerConverter
 from .export.graphml import GraphmlConverter
