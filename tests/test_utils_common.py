@@ -71,9 +71,9 @@ class TestUtilsCommon(unittest.TestCase):
     def test_get_dict_values(self):
         py_dict = {'m': 'n', 'k': 'm', '@type': 'k', '@input': 'q'}
         res = get_dict_values(py_dict)
-        self.assertListEqual(res, ['n', 'm'])
+        self.assertSetEqual(set(res), set(['n', 'm']))
         res = get_dict_values(py_dict, excluded_keys=[])
-        self.assertListEqual(res, ['n', 'm', 'k', 'q'])
+        self.assertSetEqual(set(res), set(['n', 'm', 'k', 'q']))
 
     def test_get_primary_id_from_equivalent_ids(self):
         equivalent_ids = {'bts:entrez': ['1017'],
