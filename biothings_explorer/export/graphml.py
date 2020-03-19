@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Convert the output of BTE to GraphML file type.
+Export the output of BTE to GraphML file type.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
