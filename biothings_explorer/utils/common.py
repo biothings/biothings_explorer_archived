@@ -91,15 +91,15 @@ def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
         id_rank = id_ranks.get(_type)
         # loop through id_rank, return the first found id
         for _item in id_rank:
-            if equivalent_ids.get(_item):
-                return (_item + ':' + str(equivalent_ids[_item][0]))
+            if equivalent_ids.get('bts:' + _item):
+                return (_item + ':' + str(equivalent_ids['bts:' + _item][0]))
     # if no id from id_rank found, return a random one from equivalent ids
     for k, v in equivalent_ids.items():
         if v:
             return (k[4:] + ':' + str(v[0]))
 
 
-def get_name_from_equivalent_ids(equivalent_ids, input_label):
+def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
     """Find name from equivalent id dict.
 
     :param: equivalent_ids: a dictionary containing all equivalent ids of a bio-entity.

@@ -1,6 +1,5 @@
 class SmartAPIParser():
-    """Parse SmartAPI specifications
-    """"
+    """Parse SmartAPI specifications."""
 
     def load_spec(self, spec=None):
         self.spec = spec

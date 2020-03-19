@@ -7,7 +7,7 @@ Organize BioThings Schema into networkx graphs.
 
 """
 
-from itertools.chain import from_iterable
+import itertools
 
 from biothings_schema import Schema
 import networkx as nx
@@ -34,7 +34,7 @@ class SchemaExtractor():
         if not lst:
             return set()
         # find descendant of each class and then merge together into a set
-        dsc_lst = set(from_iterable([self.se.get_class(_cls, output_type="curie").descendant_classes for _cls in lst]))
+        dsc_lst = set(itertools.chain.from_iterable([self.se.get_class(_cls, output_type="curie").descendant_classes for _cls in lst]))
         return dsc_lst
 
     def find_cls_ids(self, _cls):
@@ -68,8 +68,8 @@ class SchemaExtractor():
                 output_clses = set([_cls.name for _cls in _property.range if _cls.uri in self.se.full_class_only_graph])
                 output_clses |= self.find_descendants(output_clses)
                 if input_clses and output_clses:
-                    input_ids = set(from_iterable([self.find_cls_ids(_cls) for _cls in input_clses]))
-                    output_ids = set(from_iterable([self.find_cls_ids(_cls) for _cls in output_clses]))
+                    input_ids = set(itertools.chain.from_iterable([self.find_cls_ids(_cls) for _cls in input_clses]))
+                    output_ids = set(itertools.chain.from_iterable([self.find_cls_ids(_cls) for _cls in output_clses]))
                     if input_ids and output_ids:
                         G.add_edges_from(zip(input_ids, output_ids),
                                          label=_property.label)

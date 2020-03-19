@@ -12,7 +12,7 @@ import copy
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
+from .utils.networkx import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
 from .utils.common import dict2listoftuples, listoftuples2dict
 from .utils.common import get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
 from .metadata import Metadata
