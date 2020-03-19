@@ -13,7 +13,9 @@ import itertools
 import networkx as nx
 from biothings_schema import Schema
 
-from .utils import load_json_or_yaml, find_common_path, get_dict_values
+from .utils.dataload import load_json_or_yaml
+
+from .utils.common import find_longest_common_path, get_dict_values
 from .config import metadata
 
 
@@ -64,7 +66,7 @@ class MappingParser():
                 if "@type" in _pred:
                     sp = self.se.get_property(predicate)
                     obj_clsf = self.classify_keys_in_json(_pred)
-                    common_prefix = find_common_path(get_dict_values(_pred))
+                    common_prefix = find_longest_common_path(get_dict_values(_pred))
                     input_id = [_pred['$input']] if '$input' in _pred else clsf['id']
                     source = _pred['$source'] if '$source' in _pred else self.api
                     for _edge in itertools.product(input_id, obj_clsf['id']):
