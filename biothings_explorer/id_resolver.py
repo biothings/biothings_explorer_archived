@@ -61,7 +61,7 @@ class IDResolver():
         else:
             return input_fields
 
-    def convert_ids(self, inputs):
+    def resolve_ids(self, inputs):
         """Main function to resolve identifiers.
         
         :param: inputs: A list of tuples, [(ids, prefix, semantic_type), ...]
