@@ -10,7 +10,7 @@ import networkx as nx
 import copy
 
 from .api_call_dispatcher import Dispatcher
-from .id_converter import IDConverter
+from .id_resolver import IDResolver
 from .registry import Registry
 from .utils.networkx import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
 from .utils.common import dict2listoftuples, listoftuples2dict
