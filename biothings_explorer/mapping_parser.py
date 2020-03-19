@@ -13,7 +13,9 @@ import itertools
 import networkx as nx
 from biothings_schema import Schema
 
-from .utils import load_json_or_yaml, find_common_path, get_dict_values
+from .utils.dataload import load_json_or_yaml
+
+from .utils import find_common_path, get_dict_values
 from .config import metadata
 
 

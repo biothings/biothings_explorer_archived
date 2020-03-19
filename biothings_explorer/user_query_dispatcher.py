@@ -13,10 +13,11 @@ from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
 from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df, connect_networkx_to_pandas_df_new
-from .utils import dict2tuple, tuple2dict, get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
+from .utils.common import dict2listoftuples, listoftuples2dict
+from .utils import get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
 from .metadata import Metadata
-from .extensions.reasoner import ReasonerConverter
-from .extensions.graphml import GraphmlConverter
+from .export.reasoner import ReasonerConverter
+from .export.graphml import GraphmlConverter
 
 
 ID_RANK = {'Gene': 'bts:symbol',
@@ -118,7 +119,7 @@ class SingleEdgeQueryDispatcher():
         grouped_edges = defaultdict(list)
         for _edge in edges:
             # need to convert to tuple to make it immutable
-            grouped_edges[_edge['input_id']].append(dict2tuple(_edge))
+            grouped_edges[_edge['input_id']].append(dict2listoftuples(_edge))
         return grouped_edges
 
     def merge_equivalent_nodes(self):
@@ -242,7 +243,7 @@ class SingleEdgeQueryDispatcher():
                 if p in v and v[p]:
                     for _edge in q:
                         m = _edge
-                        m = tuple2dict(m)
+                        m = listoftuples2dict(m)
                         m['value'] = v[p]
                         mapping_keys.append(m['label'])
                         input_edges.append(m)

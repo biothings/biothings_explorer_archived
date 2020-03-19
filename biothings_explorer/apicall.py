@@ -12,7 +12,7 @@ from collections import Counter
 import json
 
 from .config import metadata
-from .utils import add_s
+from .utils.common import add_s
 
 
 class BioThingsCaller():
