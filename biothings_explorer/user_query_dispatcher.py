@@ -12,12 +12,14 @@ import copy
 from .api_call_dispatcher import Dispatcher
 from .id_converter import IDConverter
 from .registry import Registry
-from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs, networkx_to_graphvis, networkx_to_pandas_df, connect_networkx_to_pandas_df, connect_networkx_to_pandas_df_new
+from .networkx_helper import load_res_to_networkx, add_equivalent_ids_to_nodes, merge_two_networkx_graphs
 from .utils.common import dict2listoftuples, listoftuples2dict
 from .utils.common import get_name_from_equivalent_ids, get_primary_id_from_equivalent_ids
 from .metadata import Metadata
 from .export.reasoner import ReasonerConverter
 from .export.graphml import GraphmlConverter
+from .export.pandas import networkx2pandas
+from .export.graphviz import networkx2graphvis
 
 
 ID_RANK = {'Gene': 'bts:symbol',
@@ -337,7 +339,7 @@ class SingleEdgeQueryDispatcher():
         return dict(self.G[start_node][end_node])
 
     def display_table_view(self):
-        return networkx_to_pandas_df(self.G)
+        return networkx2pandas(self.G, self.input_cls)
 
 
 class Explain:
@@ -485,7 +487,7 @@ class Explain:
 
     def visualize(self):
         """Convert the graph to visjs JSON format"""
-        return networkx_to_graphvis(self.sub_G)
+        return networkx2graphvis(self.sub_G)
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -539,7 +541,7 @@ class Explain:
         >>> df
         """
         paths = self.show_path()
-        return connect_networkx_to_pandas_df(self.G, paths)
+        return networkx2pandas(self.G, paths)
 
 
 class Predict:
@@ -788,7 +790,7 @@ class Predict:
         # paths = self.show_path()
         # return connect_networkx_to_pandas_df(self.G, paths)
         self.paths.insert(0, self.input_obj['type'])
-        return connect_networkx_to_pandas_df_new(self.current_graph, self.paths)
+        return networkx2pandas(self.current_graph, self.input_obj['type'])
 
 class FindConnection:
     """find relationships between one specific entity and another specific entity or other classes of entity types
