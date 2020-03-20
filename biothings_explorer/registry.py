@@ -23,9 +23,9 @@ class Registry():
         self.registry = {}
         self.load_biothings()
         self.all_edges_info = self.G.edges(data=True)
-        self.all_labels = set([d[-1]['label'] for d in self.all_edges_info])
-        self.all_inputs = set([d[-1]['input_type'] for d in self.all_edges_info])
-        self.all_outputs = set([d[-1]['output_type'] for d in self.all_edges_info])
+        self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
+        self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
+        self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
 
     def load_biothings(self):
         """Load biothings API into registry network graph."""
@@ -59,7 +59,8 @@ class Registry():
         """
         Filter edges based on input, output and label.
 
-        The relationship between bio-entities is represented as a networkx MultiDiGraph in BioThings explorer. This function helps you filter for the relationships of your interest based on input/output/edge info.
+        The relationship between bio-entities is represented as a networkx MultiDiGraph \
+            in BioThings explorer. This function helps you filter for the relationships of your interest based on input/output/edge info.
 
         :param: input_cls (str|list|None) : the semantic type(s) of the input.
                    Optional
