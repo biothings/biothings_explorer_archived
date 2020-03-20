@@ -13,7 +13,8 @@ BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 
 class Hint():
-    """Query any biomedical ID or name into BioThings objects, which contain mappings to many common identifiers. Generally, the top result returned by the Hint module will be the correct item, but you should confirm that using the identifiers shown."""
+    """Query any biomedical ID or name into BioThings objects, which contain mappings to many common identifiers. \
+        Generally, the top result returned by the Hint module will be the correct item, but you should confirm that using the identifiers shown."""
 
     def __init__(self, size=5):
         """Guess appropriate bio-entities based on user input.
@@ -72,7 +73,7 @@ class Hint():
 
     def construct_single_hint_obj(self, api, res, doc_type):
         """Construct a single Hint Object
-        
+
         :param: api: the name of API
         :param: res: the JSON response from API
         :param: doc_type: the main entity type of the API output
@@ -133,9 +134,8 @@ class Hint():
                 for _v in res:
                     if 'notfound' in _v:
                         continue
-                    else:
-                        _res = self.construct_single_hint_obj(api, _v, _type)
-                        final_res[_type].append(_res)
+                    _res = self.construct_single_hint_obj(api, _v, _type)
+                    final_res[_type].append(_res)
             return final_res
 
     def query(self, _input):
@@ -157,5 +157,3 @@ class Hint():
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(_input))
         return loop.run_until_complete(future)
-
-        
