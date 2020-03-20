@@ -45,7 +45,7 @@ class ReasonerConverter():
 
     def get_curie(self, node):
         """Retrieve the curie representation of node.
-        
+
         :param: node : the node id in networkx graph
         """
         if not node:
@@ -55,8 +55,7 @@ class ReasonerConverter():
             prefix = node_info["identifier"][4:]
             curie = prefix.upper() + ':' + node
             return curie
-        else:
-            return node
+        return node
 
     @staticmethod
     def hash_id(_id):
