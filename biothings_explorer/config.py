@@ -243,7 +243,7 @@ metadata = {
   },
   "phenotype": {
     "scopes": ['umls', 'name'],
-    "doc_type": "SequenceVariant",
+    "doc_type": "PhenotypicFeature",
     "api_type": "biothings",
     "url": "http://pending.biothings.io/semmedphenotype/query",
     "method": "post",
@@ -251,6 +251,7 @@ metadata = {
       "name": "name",
       "umls": "umls"
     },
+    "hint": True,
     'api_name': 'semmed'
   },
   "umlschem": {
