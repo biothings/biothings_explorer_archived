@@ -28,7 +28,7 @@ class APIPreprocess():
         :param: json_doc: the json_doc to be preprocessed
         :param: api_type: the type of api, e.g. biothings
         :param: api_name: optional, the name of api
-        
+
         """
         self.api_type = api_type
         self.api_name = api_name
@@ -52,6 +52,5 @@ class APIPreprocess():
             return restructure_ctd_response(self.json_doc)
         elif self.api_type == 'opentarget':
             return restructure_opentarget_response(self.json_doc)
-        else:
-            return self.json_doc
+        return self.json_doc
 
