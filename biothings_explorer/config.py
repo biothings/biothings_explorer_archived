@@ -246,6 +246,7 @@ metadata = {
     "doc_type": "PhenotypicFeature",
     "api_type": "biothings",
     "url": "http://pending.biothings.io/semmedphenotype/query",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     "method": "post",
     "fields": {
       "name": "name",
