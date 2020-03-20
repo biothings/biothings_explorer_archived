@@ -22,7 +22,8 @@ class SmartAPIParser():
             return [_item['name'] for _item in self.spec['tags']]
         return []
 
-    def fetch_semantic_mapping_path(self, endpoint_spec):
+    @staticmethod
+    def fetch_semantic_mapping_path(endpoint_spec):
         """Fetch the path of semantic mapping json doc.
         """
         return endpoint_spec["x-bte-semanticmapping"]["$ref"]
@@ -36,7 +37,7 @@ class SmartAPIParser():
     @staticmethod
     def fetch_param(endpoint_spec):
         """fetch the parameter name of the endpoint
-        
+
         params
         ======
         endpoint_spec: the smartAPI spec related to the endpoint
