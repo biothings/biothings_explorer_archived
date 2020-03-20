@@ -61,8 +61,9 @@ class BioThingsCaller():
             if params:
                 params = '?' + params
             return url + params
-        elif method == "POST":
+        if method == "POST":
             return url + ' (POST "' + params + '")'
+        return ''
 
     async def call_one_biothings_api(self, _input, session, size, dotfield=False, verbose=False):
         params = self.construct_query_param(_input['input'],
@@ -118,7 +119,7 @@ class BioThingsCaller():
                     print(ex)
                     m = await res.text()
                     return json.loads(m)
-        except:
+        except Exception:
             if verbose:
                 print('{} failed'.format(_input['api']))
             return {}
@@ -132,11 +133,11 @@ class BioThingsCaller():
         # check api type
         api_type = metadata[_input['api']]['api_type']
         if api_type == 'biothings':
-            res = await self.call_one_biothings_api(_input, session, size, dotfield=dotfield, verbose=verbose)            
+            res = await self.call_one_biothings_api(_input, session, size, dotfield=dotfield, verbose=verbose)
         else:
             res = await self.call_one_non_biothings_api(_input, session, verbose=verbose)
         return res
-            
+
 
     async def run(self, inputs, size, dotfield=False, verbose=False):
         """Asynchronously make a list of API calls.
@@ -162,7 +163,7 @@ class BioThingsCaller():
             if inputs:
                 for _input in inputs:
                     cnt[_input['api']] += 1
-            self.unique_apis = set([_edge['api'] for _edge in inputs if _edge])
+            self.unique_apis = {_edge['api'] for _edge in inputs if _edge}
             if verbose:
                 print("\nBTE found {} apis:\n".format(len(self.unique_apis)))
                 for i, _api in enumerate(self.unique_apis):
