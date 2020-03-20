@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Accept user query and return results as a graph
+"""Accept user query and return results as a graph.
 
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
@@ -28,7 +28,7 @@ ID_RANK = {'Gene': 'bts:symbol',
 
 
 class SingleEdgeQueryDispatcher():
-    """Query from one bio-entity to other type(s) of bio-entities
+    """Query from one bio-entity to other type(s) of bio-entities.
 
     params
     ------
@@ -66,18 +66,17 @@ class SingleEdgeQueryDispatcher():
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
-            if self.output_cls and type(self.output_cls) != list and self.output_cls in ID_RANK:
+            if self.output_cls and not isinstance(self.output_cls, list) and self.output_cls in ID_RANK:
                 self.output_id = [ID_RANK.get(self.output_cls)]
             else:
                 self.output_id = ["bts:symbol", "bts:name"]
-        if type(self.output_id) != list:
+        if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
         self.pred = pred
         self.values = values
         self.equivalent_ids = equivalent_ids
         self.input_identifier = None
         if input_obj:
-            assert "primary" in input_obj
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = "bts:" + input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
@@ -109,12 +108,11 @@ class SingleEdgeQueryDispatcher():
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
 
-    def group_edges_by_input_id(self, edges):
-        """ group edges based on the input identifier
+    @staticmethod
+    def group_edges_by_input_id(edges):
+        """Group edges based on the input identifier.
 
-        Params
-        ------
-        edges: list of dicts, edges filtered based on input/output/pred
+        :param: edges: list of dicts, edges filtered based on input/output/pred.
         """
         if not edges:
             return edges
@@ -125,7 +123,7 @@ class SingleEdgeQueryDispatcher():
         return grouped_edges
 
     def merge_equivalent_nodes(self):
-        """Merge equivalent nodes together
+        """Merge equivalent nodes together.
 
         nodes will be merged based on their equivalent ids
         edges will be added to the merged node
@@ -208,16 +206,12 @@ class SingleEdgeQueryDispatcher():
         self.current_graph = graph
 
     def query(self, verbose=False):
-        """Query APIs and organize outputs into networkx graph"""
-        """
-        if verbose:
-            print("Your input ID has been converted to all equivalent IDs")
-            print("========================================================")
-        """
+        """Query APIs and organize outputs into networkx graph."""
         if verbose:
             print("==== Step #1: Query path planning ====")
             output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and \
+                  '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
@@ -288,7 +282,7 @@ class SingleEdgeQueryDispatcher():
 
     @property
     def output_ids(self):
-        """Retrieve output ids along with their equivalent ids"""
+        """Retrieve output ids along with their equivalent ids."""
         result = {}
         if self.G.number_of_nodes() > 0:
             for x, y in self.G.nodes(data=True):
@@ -345,7 +339,8 @@ class SingleEdgeQueryDispatcher():
 class Explain:
     """Find intermediate node(s) that connect input and output
     
-    There might not be direct evidence showing connection between A and B. The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
+    There might not be direct evidence showing connection between A and B. \
+        The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
 
     Parameters:
         input_obj: dict
@@ -365,6 +360,7 @@ class Explain:
 
         >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=['Gene', 'ChemicalSubstance'])
         >>> fc.connect()
+
     """
     def __init__(self, input_obj, output_obj,
                  intermediate_nodes=None, registry=None):
@@ -376,14 +372,14 @@ class Explain:
         if not intermediate_nodes:
             self.intermediate_cls = output_obj['type']
             self.intermediate_cls_cnt = 0
-        elif type(intermediate_nodes) == list:
+        elif isinstance(intermediate_nodes, list):
             self.intermediate_cls = intermediate_nodes
             self.intermediate_cls_cnt = len(self.intermediate_cls)
-        else: 
+        else:
             self.intermediate_cls = [intermediate_nodes]
             self.intermediate_cls_cnt = len(self.intermediate_cls)
         self.input_obj = input_obj
-        # self.starts represents the display label of the input, 
+        # self.starts represents the display label of the input
         if 'symbol' in input_obj:
             self.starts = input_obj['symbol']
         elif 'name' in input_obj:
@@ -409,10 +405,11 @@ class Explain:
             print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, self.intermediate_cls_cnt))
             if self.intermediate_cls_cnt > 0:
                 for i, item in enumerate(self.intermediate_cls):
-                    print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
+                    print("Intermediate node #{} will have these type \
+                          constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
             print("==========")
         if self.intermediate_cls_cnt == 0:
-            output_cls = self.intermediate_cls            
+            output_cls = self.intermediate_cls
         elif self.intermediate_cls == ['BiologicalEntity']:
             output_cls = 'Biological Entities'
         else:
@@ -486,11 +483,11 @@ class Explain:
         return self.G.subgraph(nodes)
 
     def visualize(self):
-        """Convert the graph to visjs JSON format"""
+        """Convert the graph to visjs JSON format."""
         return networkx2graphvis(self.sub_G)
 
     def to_json(self):
-        """convert the graph into JSON through networkx"""
+        """Convert the graph into JSON through networkx."""
         if self.sub_G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.sub_G)
             return res
@@ -498,7 +495,7 @@ class Explain:
             return {}
 
     def show_all_nodes(self):
-        """show all nodes in the graph"""
+        """Show all nodes in the graph."""
         return list(self.sub_G.nodes())
 
     def show_all_edges(self):
@@ -506,23 +503,19 @@ class Explain:
         return list(self.sub_G.edges())
 
     def display_node_info(self, node):
-        """show detailed node information
+        """Show detailed node information.
 
-        Args:
-            node: str
-                node id
+        :param: node: node id
         """
         if node not in self.G:
             raise Exception("{} is not in the graph".format(node))
         return self.G.nodes[node]
 
     def display_edge_info(self, start_node, end_node):
-        """display detailed edge info between start node and end node
+        """Display detailed edge info between start node and end node.
 
-        Params
-        ------
-        start_node: str, start node id
-        end_node: str, end node id
+        :param: start_node: str, start node id
+        :param: end_node: str, end node id
         """
         if start_node not in self.G:
             raise Exception("{} is not in the graph".format(start_node))
@@ -533,19 +526,20 @@ class Explain:
         return dict(self.G[start_node][end_node])
 
     def display_table_view(self):
-        """Display the query results as a pandas table
+        """Display the query results as a pandas table.
         
         Examples
         --------
         >>> df = fc.display_table_view()
         >>> df
+
         """
         paths = self.show_path()
         return networkx2pandas(self.G, paths)
 
 
 class Predict:
-    """find relationships between one specific entity and a class of entity types
+    """Find relationships between one specific entity and a class of entity types.
     
     params
     ------
@@ -557,7 +551,7 @@ class Predict:
     
     """
     def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
-        """
+        """Initialize.
         params
         ------
         input_obj: the input object returned from Hint, required
@@ -569,7 +563,7 @@ class Predict:
         """
         if not intermediate_nodes:
             intermediate_nodes = []
-        elif type(intermediate_nodes) != list:
+        elif not isinstance(intermediate_nodes, list):
             intermediate_nodes = [intermediate_nodes]
         self.intermediate_nodes = copy.deepcopy(intermediate_nodes)
         self.paths = copy.deepcopy(intermediate_nodes)
@@ -603,7 +597,7 @@ class Predict:
                 self.output_ids[level][_type] = _ids
 
     def connect(self, verbose=False):
-        """Make the query
+        """Make the query.
         
         params
         ------
@@ -613,7 +607,10 @@ class Predict:
             print("==========")
             print("========== QUERY PARAMETER SUMMARY ==========")
             print("==========\n")
-            print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, len(self.intermediate_nodes)))
+            print("BTE will find paths that join '{}' and '{}'. \
+                  Paths will have {} intermediate node.\n".format(self.starts, 
+                                                                  self.ends, 
+                                                                  len(self.intermediate_nodes)))
             for i, item in enumerate(self.intermediate_nodes):
                 print("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
         for i, output_cls in enumerate(self.paths):
@@ -636,7 +633,7 @@ class Predict:
                     if output_cls == 'BiologicalEntity':
                         _output = 'Biological Entities'
                     else:
-                        if type(output_cls) not in [list, tuple]:
+                        if not isinstance(output_cls, list) or not isinstance(output_cls, tuple):
                             output_cls = [output_cls]
                         _output = ' AND '.join(output_cls) + ' entities'
                 self.output_ids[str(i + 1)] = {}
@@ -677,8 +674,6 @@ class Predict:
                     if i + 1 == len(self.paths):
                         self.current_graph.update(self.seqd[i + 1].current_graph)
 
-        else:
-            pass
         if verbose:
             print("\n==========")
             print("========== Final assembly of results ==========")
@@ -702,7 +697,7 @@ class Predict:
             return 
         # gather all outputs from the last query
         final_outputs = set()
-        for output_cls, output_ids in self.output_ids.get(str(len(self.paths))).items():
+        for output_ids in self.output_ids.get(str(len(self.paths))).values():
             for k, item in output_ids.items():
                 if item.get('bts:symbol'):
                     final_outputs.add(item['bts:symbol'][0])
@@ -714,7 +709,7 @@ class Predict:
                         final_outputs.add(splitted[-1])
                     elif len(splitted) == 3:
                         final_outputs.add(':'.join(splitted[1:]))
-        # if the last query returns no results, return 
+        # if the last query returns no results, return
         if len(final_outputs) == 0:
             return
         if len(self.paths) == 1:
@@ -793,7 +788,7 @@ class Predict:
         return networkx2pandas(self.current_graph, self.input_obj['type'])
 
 class FindConnection:
-    """find relationships between one specific entity and another specific entity or other classes of entity types
+    """Find relationships between one specific entity and another specific entity or other classes of entity types.
         
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
@@ -825,7 +820,7 @@ class FindConnection:
         
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                                Examples: 
+                                Examples:
                     Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
                     Hint().query("acetaminophen")['ChemicalSubstance'][0]
 
@@ -849,7 +844,7 @@ class FindConnection:
         self.input_obj = input_obj
         self.output_obj = output_obj
         self.intermediate_nodes = intermediate_nodes
-        if type(output_obj) == dict:
+        if isinstance(output_obj, dict):
             self.fc = Explain(input_obj, output_obj, intermediate_nodes, registry=registry)
         else:
             self.fc = Predict(input_obj, output_obj, intermediate_nodes, registry=registry)
@@ -858,14 +853,14 @@ class FindConnection:
         self.fc.connect(verbose=verbose)
 
     def to_json(self):
-        """convert the graph into JSON through networkx"""
+        """Convert the graph into JSON through networkx."""
         return self.fc.to_json()
 
     def show_path(self, remove_duplicate=True):
         return self.fc.show_path(remove_duplicate=remove_duplicate)
 
     def display_node_info(self, node):
-        """show detailed node information
+        """Show detailed node information.
 
         Parameters
             * node (str): node id
@@ -873,7 +868,7 @@ class FindConnection:
         return self.fc.display_node_info(node)
 
     def display_edge_info(self, start_node, end_node):
-        """display detailed edge info between start node and end node
+        """Display detailed edge info between start node and end node.
 
         Parameters
             * start_node (str): start node id
@@ -882,15 +877,15 @@ class FindConnection:
         return self.fc.display_edge_info(start_node, end_node)
 
     def show_all_nodes(self):
-        """show all nodes in the graph"""
+        """Show all nodes in the graph."""
         return self.fc.show_all_nodes()
 
     def show_all_edges(self):
-        """show all edges in the graph"""
+        """Show all edges in the graph."""
         return self.fc.show_all_edges()
 
     def display_table_view(self):
-        """Display the query results as a pandas table
+        """Display the query results as a pandas table.
         
         **Examples**
 
@@ -900,7 +895,7 @@ class FindConnection:
         return self.fc.display_table_view()
 
     def to_reasoner_std(self):
-        """convert the output to reasoner api standard
+        """Convert the output to reasoner api standard.
         """
         rc = ReasonerConverter()
         rc.load_bte_query_path(start=self.input_obj,
@@ -910,7 +905,7 @@ class FindConnection:
         return rc.generate_reasoner_response()
     
     def to_graphml(self, path):
-        """convert the output to graphml format
+        """Convert the output to graphml format.
         
         parameters
             * path (str): the file path to store the graphml file

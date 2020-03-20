@@ -80,7 +80,7 @@ def get_dict_values(py_dict: dict,
 
 
 def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
-    """find primary id from equivalent id dict
+    """Find primary id from equivalent id dict.
 
     :param: equivalent_ids: a dictionary containing all equivalent ids of a bio-entity
     :param: _type: the type of the bio-entity
@@ -116,7 +116,7 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
     else:
         for v in equivalent_ids.values():
             if v:
-                if type(v) == list:
+                if isinstance(v, list):
                     return v[0]
                 else:
                     return v
