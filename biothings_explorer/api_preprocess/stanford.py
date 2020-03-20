@@ -1,8 +1,7 @@
 def restructure_stanford_response(json_doc):
-    """restructure the JSON output from stanford KP
+    """Restructure the JSON output from stanford KP.
 
-    parameters
-        * json_doc: the API response from stanford KP
+    :param: json_doc: the API response from stanford KP
     """
     # convert from list to dict
     if isinstance(json_doc, list):
@@ -26,5 +25,4 @@ def restructure_stanford_response(json_doc):
                         new_attr[_attr['attributeName'].replace(' ', '_')]['clo'] = 'CLO:' + _attr['attributeValueTermUri'].split('_')[-1]
             _doc['attributes'] = new_attr
         return json_doc
-    else:
-        return
+    return {}
