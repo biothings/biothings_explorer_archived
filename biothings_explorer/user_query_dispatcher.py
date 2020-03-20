@@ -59,7 +59,7 @@ class SingleEdgeQueryDispatcher():
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
-        if output_cls == ['BiologicalEntity'] or output_cls == 'BiologicalEntity':
+        if output_cls in (['BiologicalEntity'], 'BiologicalEntity'):
             self.output_cls = None
         else:
             self.output_cls = output_cls
@@ -491,8 +491,7 @@ class Explain:
         if self.sub_G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.sub_G)
             return res
-        else:
-            return {}
+        return {}
 
     def show_all_nodes(self):
         """Show all nodes in the graph."""
@@ -608,8 +607,8 @@ class Predict:
             print("========== QUERY PARAMETER SUMMARY ==========")
             print("==========\n")
             print("BTE will find paths that join '{}' and '{}'. \
-                  Paths will have {} intermediate node.\n".format(self.starts, 
-                                                                  self.ends, 
+                  Paths will have {} intermediate node.\n".format(self.starts,
+                                                                  self.ends,
                                                                   len(self.intermediate_nodes)))
             for i, item in enumerate(self.intermediate_nodes):
                 print("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
@@ -688,13 +687,12 @@ class Predict:
         if self.G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.G)
             return res
-        else:
-            return {}
+        return {}
 
     def show_path(self, remove_duplicate=True):
         # if the last query was not performed, return
         if not self.output_ids.get(str(len(self.paths))):
-            return 
+            return
         # gather all outputs from the last query
         final_outputs = set()
         for output_ids in self.output_ids.get(str(len(self.paths))).values():
@@ -730,14 +728,13 @@ class Predict:
                 for _path in paths:
                     new_paths.append(_path.split('||'))
             return new_paths
-        else:
-            paths = []
-            for _node in final_outputs:
-                for path in nx.all_simple_paths(self.G,
-                                                source=self.starts,
-                                                target=self.ends):
-                    paths.append(path)
-            return paths
+        paths = []
+        for _node in final_outputs:
+            for path in nx.all_simple_paths(self.G,
+                                            source=self.starts,
+                                            target=self.ends):
+                paths.append(path)
+        return paths
 
     def display_node_info(self, node):
         """show detailed node information
@@ -789,7 +786,7 @@ class Predict:
 
 class FindConnection:
     """Find relationships between one specific entity and another specific entity or other classes of entity types.
-        
+
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
                                 Examples: 
@@ -906,7 +903,7 @@ class FindConnection:
     
     def to_graphml(self, path):
         """Convert the output to graphml format.
-        
+
         parameters
             * path (str): the file path to store the graphml file
         """
