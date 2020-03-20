@@ -4,3 +4,4 @@ requests>=2.21.0
 graphviz>=0.11.1
 aiohttp
 pandas
+-e git://github.com/biothings/biothings_schema.py#egg=biothings_schema.py
