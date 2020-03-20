@@ -54,15 +54,7 @@ class TestHint(unittest.TestCase):
     def test_gene_hgnc_id_as_input(self):
         """Test the output of Hint query when providing gene hgnc id as input."""
         res = self.ht.query('1771')
-        self.assertIsNotNone(res)
-        self.assertIsNotNone(res.get('Gene'))
-        self.assertIsNotNone(res.get('Gene')[0])
-        bioentity = res.get('Gene')[0]
-        self.assertEqual(bioentity['hgnc'], '1771')
-        self.assertEqual(bioentity['type'], 'Gene')
-        self.assertEqual(bioentity['primary']['identifier'], 'entrez')
-        self.assertEqual(bioentity['primary']['value'], '1017')
-        self.assertEqual(bioentity['symbol'], 'CDK2')
+        self.mygene_test(res)
 
     def test_gene_uniprot_id_as_input(self):
         """Test the output of Hint query when providing gene uniprot id as input."""
