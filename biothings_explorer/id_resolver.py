@@ -11,7 +11,6 @@ from .apicall import BioThingsCaller
 
 
 class IDResolver():
-
     """Resolving Biomedical Identifiers through BioThings APIs."""
 
     def __init__(self, registry=None):
@@ -36,7 +35,7 @@ class IDResolver():
         return self.registry.registry[api]['mapping']
 
     def subset_mapping_file(self, mapping_file):
-        """Retrieve a subset of the mapping file which only contains ids
+        """Retrieve a subset of the mapping file which only contains ids.
 
         :param: mapping_file: schema mapping file from smartapi registry
         """
@@ -94,7 +93,7 @@ class IDResolver():
         return self.results
 
     def parse_api_responses(self):
-        """Parse the API responses from APICall module in BTE"""
+        """Parse the API responses from APICall module in BTE."""
         for _res, _map, _type in zip(self.responses,
                                      self.mapping_files,
                                      self.types):
@@ -113,12 +112,12 @@ class IDResolver():
                 else:
                     new_res = {}
                     for k, v in _map.items():
-                        if type(v) != list:
+                        if not isinstance(v, list):
                             v = [v]
                         for _v in v:
                             if _v in single_res:
                                 val = single_res[_v]
-                                if type(val) != list:
+                                if not isinstance(val, list):
                                     val = [val]
                                 new_res[k] = val
                     self.results[_type + ':' + single_res['query']] = new_res
@@ -152,7 +151,7 @@ class IDResolver():
 
     def preprocess_ids(self, ids, _type):
         """Preprocess ids to become a list of strings.
-        
+
         :param: ids: list of input ids
         :param: _type: the prefix type
         """

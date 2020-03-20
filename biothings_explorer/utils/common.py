@@ -1,4 +1,4 @@
-"""This file covers some common utils functions for BioThings Explorer"""
+"""Some common utils functions for BioThings Explorer"""
 
 from os.path import commonprefix
 from ..config import id_ranks
@@ -42,12 +42,12 @@ def unlist(d: dict) -> dict:
 
     :param: d: a python dictionary to be unlisted
     """
-    if type(d) == list:
+    if isinstance(d, list):
         if len(d) == 1:
             return d[0]
         else:
             return d
-    elif type(d) == dict:
+    elif isinstance(d, dict):
         for key, val in d.items():
             if isinstance(val, list):
                 if len(val) == 1:
