@@ -7,12 +7,13 @@ python:
 - '3.5'
 install:
 - pip install -r requirements.txt
+- pip install .
 - pip install pytest
 - pip install coverage
-script: python -m pytest tests
+script: python -m pytest tests --disable-warnings
 after_script: cd ~
 after_success:
-  - coverage run -m python -m pytest tests
+  - coverage run -m pytest tests
   - coverage xml -o coverage.xml
   - export CODACY_PROJECT_TOKEN=56435a01b3474518a03a65e74b4a4fb0
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
