@@ -59,7 +59,7 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
     return G
 
 
-def add_equivalent_ids_to_nodes(G, IDConverter):
+def add_equivalent_ids_to_nodes(G, IDResolver):
     """Add equivalent ids to each node.
 
     Parameters
@@ -87,7 +87,7 @@ def add_equivalent_ids_to_nodes(G, IDConverter):
         input_cls, input_id = k.split(',')
         idc_inputs.append((v, input_id, input_cls))
     # find equivalent ids
-    equivalent_ids = IDConverter.convert_ids(idc_inputs)
+    equivalent_ids = IDResolver.resolve_ids(idc_inputs)
     # populate nodes with equivalent ids
     for m, n in equivalent_ids.items():
         G.node[m.split(':', 1)[-1]]['equivalent_ids'] = n
