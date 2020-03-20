@@ -13,8 +13,7 @@ def add_s(num: int) -> str:
         return ''
     if num <= 1:
         return ''
-    else:
-        return 's'
+    return 's'
 
 
 def dict2listoftuples(py_dict: dict) -> list:
@@ -45,8 +44,7 @@ def unlist(d: dict) -> dict:
     if isinstance(d, list):
         if len(d) == 1:
             return d[0]
-        else:
-            return d
+        return d
     elif isinstance(d, dict):
         for key, val in d.items():
             if isinstance(val, list):
@@ -55,8 +53,7 @@ def unlist(d: dict) -> dict:
             elif isinstance(val, dict):
                 unlist(val)
         return d
-    else:
-        return d
+    return d
 
 
 def find_longest_common_path(paths) -> str:
@@ -86,7 +83,7 @@ def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
     :param: _type: the type of the bio-entity
     """
     if not equivalent_ids:
-        return None
+        return ''
     if _type in id_ranks:
         id_rank = id_ranks.get(_type)
         # loop through id_rank, return the first found id
@@ -111,13 +108,12 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
         return "unknown"
     if equivalent_ids.get('bts:symbol'):
         return equivalent_ids.get('bts:symbol')[0]
-    elif equivalent_ids.get('bts:name'):
+    if equivalent_ids.get('bts:name'):
         return equivalent_ids.get('bts:name')[0]
-    else:
-        for v in equivalent_ids.values():
-            if v:
-                if isinstance(v, list):
-                    return v[0]
-                else:
-                    return v
-        return "unknown"
+    for v in equivalent_ids.values():
+        if v:
+            if isinstance(v, list):
+                return v[0]
+            else:
+                return v
+    return "unknown"
