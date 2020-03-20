@@ -24,7 +24,7 @@ class APIPreprocess():
     def __init__(self, json_doc, api_type, api_name=None):
         """
         Load json doc and api info.
-        
+
         :param: json_doc: the json_doc to be preprocessed
         :param: api_type: the type of api, e.g. biothings
         :param: api_name: optional, the name of api
@@ -44,13 +44,13 @@ class APIPreprocess():
             self.json_doc = {"data": self.json_doc}
         if self.api_type == 'biolink':
             return restructure_biolink_response(self.json_doc)
-        elif self.api_type == 'reasoner':
+        if self.api_type == 'reasoner':
             return restructure_reasoner_response(self.json_doc)
-        elif self.api_type == 'stanford':
+        if self.api_type == 'stanford':
             return restructure_stanford_response(self.json_doc)
-        elif self.api_type == 'ctd':
+        if self.api_type == 'ctd':
             return restructure_ctd_response(self.json_doc)
-        elif self.api_type == 'opentarget':
+        if self.api_type == 'opentarget':
             return restructure_opentarget_response(self.json_doc)
         return self.json_doc
 
