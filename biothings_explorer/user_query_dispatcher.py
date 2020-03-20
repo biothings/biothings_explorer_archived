@@ -54,7 +54,7 @@ class SingleEdgeQueryDispatcher():
         self.query_id = query_id
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
-        self.idc = IDResolver(registry=self.registry)
+        self.idr = IDResolver(registry=self.registry)
         semantic_types = self.metadata.list_all_semantic_types()
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
@@ -100,7 +100,7 @@ class SingleEdgeQueryDispatcher():
             raise Exception("The input_id is not valid. Valid input id types are {}".format(id_types))
         if not self.equivalent_ids:
             # find equivalent ids for the input value
-            equivalent_ids = self.idc.convert_ids([(self.values,
+            equivalent_ids = self.idr.resolve_ids([(self.values,
                                                    self.input_id,
                                                    self.input_cls)])
             if not self.input_label:
@@ -269,7 +269,7 @@ class SingleEdgeQueryDispatcher():
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
         # annotate nodes with its equivalent ids
-        self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idc)
+        self.G, out_equ_ids = add_equivalent_ids_to_nodes(self.G, self.idr)
         self.equivalent_ids.update(out_equ_ids)
         # merge equivalent nodes
         self.merge_equivalent_nodes()
