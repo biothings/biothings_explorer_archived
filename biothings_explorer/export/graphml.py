@@ -33,7 +33,7 @@ class GraphmlConverter():
                 del v['equivalent_ids']
         for _, v in self.G.nodes(data=True):
             for m, n in v.items():
-                if type(n) == list:
+                if isinstance(n, list):
                     v[m] = ','.join([str(_item) for _item in n])
 
     def restructure_edge_info(self):
