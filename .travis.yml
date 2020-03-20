@@ -1,6 +1,3 @@
-env:
-  global: 56435a01b3474518a03a65e74b4a4fb0
-    - secure:
 sudo: required
 dist: xenial
 language: python
@@ -17,4 +14,5 @@ after_script: cd ~
 after_success:
   - coverage run -m pytest
   - coverage xml -o coverage.xml
+  - export CODACY_PROJECT_TOKEN=56435a01b3474518a03a65e74b4a4fb0
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
