@@ -1,3 +1,8 @@
-pep257
+allow-shorthand: false
+
+inherits:
+  - strictness_medium
+
+pep257:
   disable:
     - D213
