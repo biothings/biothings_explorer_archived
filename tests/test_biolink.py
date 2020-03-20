@@ -19,6 +19,17 @@ class TestSingleHopQuery(unittest.TestCase):
                                          registry=reg)
         seqd.query()
         self.assertTrue('15859' in seqd.G or '21165' in seqd.G)
+
+    def test_phenotype2pathway(self):
+        seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
+                                         input_id='bts:hp',
+                                         output_cls='Pathway',
+                                         output_id='bts:reactome',
+                                         pred='bts:associatedWith',
+                                         values='HP:0004904',
+                                         registry=reg)
+        seqd.query()
+        self.assertTrue('R-HSA-210745' in seqd.G)
     """
 
     def test_disease2gene(self):
@@ -134,15 +145,3 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd.query()
         self.assertTrue('4195' in seqd.G)
 
-"""
-    def test_phenotype2pathway(self):
-        seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
-                                         input_id='bts:hp',
-                                         output_cls='Pathway',
-                                         output_id='bts:reactome',
-                                         pred='bts:associatedWith',
-                                         values='HP:0004904',
-                                         registry=reg)
-        seqd.query()
-        self.assertTrue('R-HSA-210745' in seqd.G)
-"""
