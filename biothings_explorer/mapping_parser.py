@@ -72,9 +72,9 @@ class MappingParser():
                     for _edge in itertools.product(input_id, obj_clsf['id']):
                         output_field = _pred[_edge[1]]
                         input_field = self.mapping[_edge[0]]
-                        if type(input_field) == list:
+                        if isinstance(input_field, list):
                             input_field = ','.join(input_field)
-                        if type(output_field) == list:
+                        if isinstance(output_field, list):
                             output_field = ','.join(output_field)
                         G.add_edge(_edge[0], _edge[1], label=predicate,
                                    mapping_key=predicate,

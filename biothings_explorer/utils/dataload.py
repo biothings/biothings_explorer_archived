@@ -12,13 +12,12 @@ def load_json_or_yaml(file_path):
     if isinstance(file_path, dict):
         return file_path
     # handle url
-    elif file_path.startswith("http"):
+    if file_path.startswith("http"):
         with requests.get(file_path) as url:
             # check if http requests returns a success status code
             if url.status_code != 200:
                 raise ValueError("Invalid URL!")
-            else:
-                _data = url.content
+            _data = url.content
     # handle file path
     else:
         try:
