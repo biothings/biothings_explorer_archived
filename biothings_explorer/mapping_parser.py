@@ -34,7 +34,8 @@ class MappingParser():
         # get all classes defined in biothings schema JSON-LD file
         self.defined_clses = [_item.name for _item in self.se.list_all_defined_classes()]
         # list of properties whose "range" is among defined classes
-        self.linked_prop_list = [_prop.name for _prop in self.se.list_all_defined_properties() if set([_item.name for _item in _prop.range]) & set(self.defined_clses)]
+        self.linked_prop_list = [_prop.name for _prop in self.se.list_all_defined_properties()
+                                 if set([_item.name for _item in _prop.range]) & set(self.defined_clses)]
         self.cls_prop_clsf = {}
 
     def load_mapping(self, mapping, api=None):
@@ -60,7 +61,7 @@ class MappingParser():
         clsf = self.classify_keys_in_json(self.mapping)
         # for each "links" properties, find its ids
         for predicate in clsf['links']:
-            if type(self.mapping[predicate]) == dict:
+            if isinstance(self.mapping[predicate], dict):
                 self.mapping[predicate] = [self.mapping[predicate]]
             for _pred in self.mapping[predicate]:
                 if "@type" in _pred:
