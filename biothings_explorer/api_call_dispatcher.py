@@ -41,8 +41,7 @@ class Dispatcher():
         if mapping_keys:
             mapping_keys += ["@type", "@context"]
             return {k: v for (k, v) in mapping_file.items() if k in mapping_keys}
-        else:
-            return mapping_file
+        return mapping_file
 
     @staticmethod
     def group_edges(edges):
@@ -114,7 +113,7 @@ class Dispatcher():
     def dispatch(self, edges, verbose=False):
         """Send request to and parse response from API."""
         results = {}
-        self.unique_apis = set([_edge['api'] for _edge in edges if _edge])
+        self.unique_apis = {_edge['api'] for _edge in edges if _edge}
         self.api_dict = {}
         for i, _api in enumerate(list(self.unique_apis)):
             self.api_dict[_api] = {'alphas': list(range(1, 10000)), 'num': str(i + 1)}
