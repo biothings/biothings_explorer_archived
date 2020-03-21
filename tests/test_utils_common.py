@@ -87,7 +87,7 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertEqual(res, 'kk:123')
         equivalent_ids = {}
         res = util.get_primary_id_from_equivalent_ids(equivalent_ids, 'Gene')
-        self.assertIsNone(res)
+        self.assertEqual(res, '')
 
     def test_get_name_from_equivalent_ids(self):
         equivalent_ids = {'bts:entrez': ['1017'],

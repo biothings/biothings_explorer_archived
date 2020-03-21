@@ -18,14 +18,11 @@ def create_specs_folder():
 
 def check_if_exists_x_bte_kgs_operation(specs):
     """Check if x-bte-kgs-operation field presents in smartapi specs.
-    
+
     :param: specs: the JSON smartapi specs
     """
-    if 'components' in specs and 'x-bte-kgs-operations' in specs['components']:
-        return True
-    else:
-        return False
-
+    return 'components' in specs and 'x-bte-kgs-operations' in specs['components']
+ 
 def get_api_title(specs):
     """Fetch the API title
 
@@ -50,17 +47,19 @@ def fetch_smartapi_docs():
         smartapi_docs = requests.get(SMARTAPI_URL).json()
     except ConnectionError:
         print("unable to fetch from smartapi")
-        return
+        return {}
     return smartapi_docs
 
 def main():
     """pull data from smartapi and write to local files"""
     create_specs_folder()
     smartapi_docs = fetch_smartapi_docs()
-    for _doc in smartapi_docs['hits']:
-        if check_if_exists_x_bte_kgs_operation(_doc):
-            title = get_api_title(_doc)
-            write_to_file(title, _doc)
+    if smartapi_docs:
+        for _doc in smartapi_docs['hits']:
+            if check_if_exists_x_bte_kgs_operation(_doc):
+                title = get_api_title(_doc)
+                write_to_file(title, _doc)
+
 
 if __name__ == '__main__':
     main()

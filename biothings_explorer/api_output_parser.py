@@ -4,7 +4,8 @@
 biothings_explorer.dispatcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This module contains code that biothings_explorer use to communicate to and receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
+This module contains code that biothings_explorer use to communicate to and \
+    receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
 """
 from .json_transformer import Transformer
 from .config import metadata
@@ -26,14 +27,14 @@ class OutputParser():
             new_res = {}
             for _res in self.response['hits']:
                 transformed_json = Transformer(_res, self.mapping).transform()
-                if type(transformed_json) == dict:
+                if isinstance(transformed_json, dict):
                     for k, v in transformed_json.items():
                         if k in ["@context", "@type"]:
                             new_res[k] = v
                         else:
                             if k not in new_res:
                                 new_res[k] = []
-                            if type(v) == list:
+                            if isinstance(v, list):
                                 new_res[k] += v
                             else:
                                 new_res[k].append(v)
@@ -45,28 +46,27 @@ class OutputParser():
         """Parse the API response from biothings API using POST method"""
         new_res = {}
         for _res in self.response:
-            if type(_res) != dict:
+            if not isinstance(_res, dict):
                 continue
             # handle case where the queried item is not found
-            elif _res.get('notfound'):
+            if _res.get('notfound'):
                 # check if the item is already in final res
                 if _res['query'] in new_res:
                     continue
-                else:
-                    new_res[_res['query']] = {}
+                new_res[_res['query']] = {}
             else:
                 transformed_json = Transformer(_res, self.mapping).transform()
                 if _res['query'] not in new_res:
                     new_res[_res['query']] = transformed_json
                 else:
-                    if type(transformed_json) == dict:
+                    if isinstance(transformed_json, dict):
                         for k, v in transformed_json.items():
                             if k in ["@context", "@type"]:
                                 new_res[_res['query']][k] = v
                             else:
                                 if k not in new_res[_res['query']]:
                                     new_res[_res['query']][k] = []
-                                if type(v) == list:
+                                if isinstance(v, list):
                                     new_res[_res['query']][k] += v
                                 else:
                                     new_res[_res['query']][k].append(v)
@@ -79,8 +79,6 @@ class OutputParser():
         if self.api in self.BIOTHINGS:
             if self.batch_mode:
                 return self.parse_biothings_post_res()
-            else:
-                return self.parse_biothings_get_res()
+            return self.parse_biothings_get_res()
         # parse the results from non-BioThings APIs
-        else:
-            return Transformer(self.response, self.mapping).transform()
+        return Transformer(self.response, self.mapping).transform()

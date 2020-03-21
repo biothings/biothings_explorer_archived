@@ -57,8 +57,7 @@ class IDResolver():
         input_fields = mapping_file.get(_type)
         if isinstance(input_fields, list):
             return input_fields[0]
-        else:
-            return input_fields
+        return input_fields
 
     def resolve_ids(self, inputs):
         """Main function to resolve identifiers.
@@ -109,22 +108,21 @@ class IDResolver():
                                  single_res['query']] = {'bts:' + _type:
                                                          [single_res['query']]}
                     continue
-                else:
-                    new_res = {}
-                    for k, v in _map.items():
-                        if not isinstance(v, list):
-                            v = [v]
-                        for _v in v:
-                            if _v in single_res:
-                                val = single_res[_v]
-                                if not isinstance(val, list):
-                                    val = [val]
-                                new_res[k] = val
-                    self.results[_type + ':' + single_res['query']] = new_res
+                new_res = {}
+                for k, v in _map.items():
+                    if not isinstance(v, list):
+                        v = [v]
+                    for _v in v:
+                        if _v in single_res:
+                            val = single_res[_v]
+                            if not isinstance(val, list):
+                                val = [val]
+                            new_res[k] = val
+                self.results[_type + ':' + single_res['query']] = new_res
 
     def construct_api_calls(self, api, _type, ids):
         """Construct API calls for BTE API call module.
-        
+
         :param: api: name of API
         :param: _type: the prefix type of ids
         :param: ids: the list of identifiers to resolve

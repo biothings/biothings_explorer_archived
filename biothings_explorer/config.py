@@ -1,3 +1,5 @@
+INTERNAL_KEYS = ["@context", "@type", "$input", "$source"]
+
 id_ranks = {
   'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
   'SequenceVariant': ['dbsnp', 'hgvs'],

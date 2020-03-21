@@ -44,7 +44,7 @@ class SingleEdgeQueryDispatcher():
     """
     def __init__(self, input_cls=None, input_id=None, values=None,
                  output_cls=None, output_id=None, pred=None,
-                 equivalent_ids=None, input_obj=None, prev_graph={}, query_id=1, registry=None):
+                 equivalent_ids=None, input_obj=None, prev_graph={}, query_id=1, reverse=False, registry=None):
         # load bte registry
         if not registry:
             self.registry = Registry()
@@ -59,7 +59,7 @@ class SingleEdgeQueryDispatcher():
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
-        if output_cls == ['BiologicalEntity'] or output_cls == 'BiologicalEntity':
+        if output_cls in (['BiologicalEntity'], 'BiologicalEntity'):
             self.output_cls = None
         else:
             self.output_cls = output_cls
@@ -76,6 +76,7 @@ class SingleEdgeQueryDispatcher():
         self.values = values
         self.equivalent_ids = equivalent_ids
         self.input_identifier = None
+        self.reverse = reverse
         if input_obj:
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = "bts:" + input_obj.get("primary").get("identifier")
@@ -171,17 +172,21 @@ class SingleEdgeQueryDispatcher():
             self.G.add_nodes_from(nodes_to_add)
             self.G.add_edges_from(edges_to_add)
     
-    def construct_internal_graph(self):
+    def construct_internal_graph(self, reverse=False):
         graph = defaultdict(list)
-        for sbj, obj, info in self.G.edges(data=True):
-            sbj_name = get_name_from_equivalent_ids(self.G.nodes[sbj]['equivalent_ids'], None)
-            sbj_id = get_primary_id_from_equivalent_ids(self.G.nodes[sbj]['equivalent_ids'],
-                                                        self.G.nodes[sbj]['type'])
-            obj_name = get_name_from_equivalent_ids(self.G.nodes[obj]['equivalent_ids'], None)
-            obj_id = get_primary_id_from_equivalent_ids(self.G.nodes[obj]['equivalent_ids'],
-                                                        self.G.nodes[obj]['type'])
-            sbj_label = str(self.query_id - 1) + '-' + self.G.nodes[sbj]['identifier'][4:] + ':' + str(sbj).upper()
-            obj_label = str(self.query_id) + '-' + self.G.nodes[obj]['identifier'][4:] + ':' + str(obj).upper()
+        if reverse:
+            g = self.G.reverse(copy=True)
+        else:
+            g = self.G
+        for sbj, obj, info in g.edges(data=True):
+            sbj_name = get_name_from_equivalent_ids(g.nodes[sbj]['equivalent_ids'], None)
+            sbj_id = get_primary_id_from_equivalent_ids(g.nodes[sbj]['equivalent_ids'],
+                                                        g.nodes[sbj]['type'])
+            obj_name = get_name_from_equivalent_ids(g.nodes[obj]['equivalent_ids'], None)
+            obj_id = get_primary_id_from_equivalent_ids(g.nodes[obj]['equivalent_ids'],
+                                                        g.nodes[obj]['type'])
+            sbj_label = str(self.query_id - 1) + '-' + g.nodes[sbj]['identifier'][4:] + ':' + str(sbj).upper()
+            obj_label = str(self.query_id) + '-' + g.nodes[obj]['identifier'][4:] + ':' + str(obj).upper()
             tmp = []
             if sbj_label in self.prev_graph:
                 prev_graph = copy.deepcopy(self.prev_graph[sbj_label])
@@ -195,13 +200,14 @@ class SingleEdgeQueryDispatcher():
                                      'output_id': obj_id})
                     tmp.append(prec_rec)
             else:
-                tmp = [[{'input': sbj_label,
-                         'output': obj_label,
-                         'info': info,
-                         'input_name': sbj_name,
-                         'input_id': sbj_id,
-                         'output_name': obj_name,
-                         'output_id': obj_id}]]
+                if not reverse:
+                    tmp = [[{'input': sbj_label,
+                            'output': obj_label,
+                            'info': info,
+                            'input_name': sbj_name,
+                            'input_id': sbj_id,
+                            'output_name': obj_name,
+                            'output_id': obj_id}]]
             graph[obj_label] += tmp
         self.current_graph = graph
 
@@ -267,7 +273,7 @@ class SingleEdgeQueryDispatcher():
         self.equivalent_ids.update(out_equ_ids)
         # merge equivalent nodes
         self.merge_equivalent_nodes()
-        self.construct_internal_graph()
+        self.construct_internal_graph(reverse=self.reverse)
         if verbose:
             print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
 
@@ -396,6 +402,7 @@ class Explain:
             self.ends = self.output_obj.get("primary").get("identifier") + self.output_obj.get("primary").get("value")
         self.G = nx.MultiDiGraph()
         self.seqd = {}
+        self.current_graph = {}
 
     def connect(self, verbose=False):
         if verbose:
@@ -419,6 +426,7 @@ class Explain:
             print("==========\n")
         self.seqd[1] = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
                                           output_cls=self.intermediate_cls,
+                                          query_id=1,
                                           registry=self.registry)
         self.seqd[1].query(verbose=verbose)
         self.G = copy.deepcopy(self.seqd[1].G)
@@ -438,12 +446,16 @@ class Explain:
                 print("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
                 print("==========\n")
             self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
-                                            output_cls=self.intermediate_cls,
-                                            registry=self.registry)
+                                                     output_cls=self.intermediate_cls,
+                                                     prev_graph=self.seqd[1].current_graph,
+                                                     query_id=2,
+                                                     reverse=True,
+                                                     registry=self.registry)
             self.seqd[2].query(verbose=verbose)
             self.seqd[2].G = self.seqd[2].G.reverse()
             self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
             self.sub_G = self.sub_graph()
+            self.current_graph = self.seqd[2].current_graph
             if verbose:
                 print("\n==========")
                 print("========== Final assembly of results ==========")
@@ -491,8 +503,7 @@ class Explain:
         if self.sub_G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.sub_G)
             return res
-        else:
-            return {}
+        return {}
 
     def show_all_nodes(self):
         """Show all nodes in the graph."""
@@ -534,8 +545,7 @@ class Explain:
         >>> df
 
         """
-        paths = self.show_path()
-        return networkx2pandas(self.G, paths)
+        return networkx2pandas(self.current_graph, self.input_obj['type'])
 
 
 class Predict:
@@ -608,8 +618,8 @@ class Predict:
             print("========== QUERY PARAMETER SUMMARY ==========")
             print("==========\n")
             print("BTE will find paths that join '{}' and '{}'. \
-                  Paths will have {} intermediate node.\n".format(self.starts, 
-                                                                  self.ends, 
+                  Paths will have {} intermediate node.\n".format(self.starts,
+                                                                  self.ends,
                                                                   len(self.intermediate_nodes)))
             for i, item in enumerate(self.intermediate_nodes):
                 print("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
@@ -688,13 +698,12 @@ class Predict:
         if self.G.number_of_nodes() > 0:
             res = nx.json_graph.node_link_data(self.G)
             return res
-        else:
-            return {}
+        return {}
 
     def show_path(self, remove_duplicate=True):
         # if the last query was not performed, return
         if not self.output_ids.get(str(len(self.paths))):
-            return 
+            return
         # gather all outputs from the last query
         final_outputs = set()
         for output_ids in self.output_ids.get(str(len(self.paths))).values():
@@ -730,14 +739,13 @@ class Predict:
                 for _path in paths:
                     new_paths.append(_path.split('||'))
             return new_paths
-        else:
-            paths = []
-            for _node in final_outputs:
-                for path in nx.all_simple_paths(self.G,
-                                                source=self.starts,
-                                                target=self.ends):
-                    paths.append(path)
-            return paths
+        paths = []
+        for _node in final_outputs:
+            for path in nx.all_simple_paths(self.G,
+                                            source=self.starts,
+                                            target=self.ends):
+                paths.append(path)
+        return paths
 
     def display_node_info(self, node):
         """show detailed node information
@@ -789,7 +797,7 @@ class Predict:
 
 class FindConnection:
     """Find relationships between one specific entity and another specific entity or other classes of entity types.
-        
+
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
                                 Examples: 
@@ -906,7 +914,7 @@ class FindConnection:
     
     def to_graphml(self, path):
         """Convert the output to graphml format.
-        
+
         parameters
             * path (str): the file path to store the graphml file
         """

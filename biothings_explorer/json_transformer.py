@@ -1,6 +1,7 @@
 from collections import defaultdict
 from jsonpath_rw import parse
 from .utils.common import find_longest_common_path, get_dict_values
+from .config import INTERNAL_KEYS
 
 
 class Transformer():
@@ -29,11 +30,12 @@ class Transformer():
 
     @staticmethod
     def fetch_all_paths_from_mapping_file(mapping_file):
+        """Fetch all paths from schema mapping file."""
         paths = []
         if not mapping_file or not isinstance(mapping_file, dict):
             return []
         for k, v in mapping_file.items():
-            if k not in ["@type", '$input', '$source']:
+            if k not in INTERNAL_KEYS:
                 if isinstance(v, list):
                     paths += v
                 elif isinstance(v, str):
@@ -64,12 +66,11 @@ class Transformer():
             else:
                 if isinstance(result, list):
                     result = result[_ele]
-                else:
-                    result = result
         return result
 
     @staticmethod
     def find_key_by_value(json_dict, value):
+        """Retrieve the key of a python dict based on the value"""
         for k, v in json_dict.items():
             if isinstance(v, list):
                 if value in v:
@@ -87,10 +88,10 @@ class Transformer():
         result 2: [{"bts:dd": 1, "bts:ee": 2}]
         case 3: {"a": }
         """
-        dict_values = get_dict_values(mapping_dict)
-        common_path = find_longest_common_path(dict_values)
+        all_paths = self.fetch_all_paths_from_mapping_file(mapping_dict)
+        common_path = find_longest_common_path(all_paths)
+        # Handle cases where a common prefix could be found among all paths
         if common_path:
-            all_paths = self.fetch_all_paths_from_mapping_file(mapping_dict)
             paths_jsonpaths_dict = {}
             jsonpaths_values_dict = {}
             for path in all_paths:
@@ -109,61 +110,63 @@ class Transformer():
                     schema_prop = self.find_key_by_value(mapping_dict,
                                                          _tuple[0])
                     _result[schema_prop].append(jsonpaths_values_dict[_tuple[1]])
-                for _item in ["@type", '$input', '$source']:
+                for _item in INTERNAL_KEYS:
                     if _item in mapping_dict:
                         _result[_item] = mapping_dict[_item]
                 result.append(dict(_result))
             return result
-        else:
-            result = {}
-            for k, v in mapping_dict.items():
-                if k not in ["@type", "$input", "$source"]:
-                    if isinstance(v, str):
-                        parser = self.generate_parser(v)
-                        result[k] = self.fetch_value_from_single_path(parser)
-                    elif isinstance(v, list):
-                        _res = []
-                        for path in v:
-                            parser = self.generate_parser(path)
-                            _res += self.fetch_value_from_single_path(parser)
-                        result[k] = _res
-                else:
-                    result[k] = v
-            return result
+        # Handle cases where all paths doesn't share a common prefix
+        result = {}
+        for k, v in mapping_dict.items():
+            if k not in INTERNAL_KEYS:
+                if isinstance(v, str):
+                    parser = self.generate_parser(v)
+                    result[k] = self.fetch_value_from_single_path(parser)
+                elif isinstance(v, list):
+                    _res = []
+                    for path in v:
+                        parser = self.generate_parser(path)
+                        _res += self.fetch_value_from_single_path(parser)
+                    result[k] = _res
+            else:
+                result[k] = v
+        return result
 
     def fetch_value_from_single_path(self, parser):
         return [match.value for match in parser.find(self.json_doc)]
 
     def fetch_value(self, key, paths):
-        if key in ["@context", "@type", "$input", "$source"]:
+        """Fetch value from API response.
+        
+        :param: key: the biolink property name.
+        :param: paths: the path to the field in API response.
+        """
+        # If key is one of the INTERNAL KEYS in BTE, return the value without processing it.
+        if key in INTERNAL_KEYS:
             return paths
+        # Handle only one field path correspond to the key.
         if isinstance(paths, str):
             parser = self.generate_parser(paths)
             return self.fetch_value_from_single_path(parser)
-        elif isinstance(paths, list):
+        # Handle more than one field paths correspond to the key.
+        if isinstance(paths, list):
             result = []
             for path in paths:
                 if isinstance(path, dict):
-                    _res = self.parse_dict(path)
-                    if isinstance(_res, list):
-                        result += _res
-                    else:
-                        result.append(_res)
+                    _res = self.parse_dict(path)          
                 elif isinstance(path, str):
                     parser = self.generate_parser(path)
                     _res = self.fetch_value_from_single_path(parser)
-                    if isinstance(_res, list):
-                        result += _res
-                    else:
-                        result.append(_res)
                 else:
                     raise ValueError('{} is not valid'.format(path))
+                if isinstance(_res, list):
+                    result += _res
+                else:
+                    result.append(_res)
             return result
-        elif isinstance(paths, dict):
-            result = self.parse_dict(paths)
-            return result
-        else:
-            return None
+        if isinstance(paths, dict):
+            return self.parse_dict(paths)
+        return None
 
     def transform(self):
         new_json_doc = {k: self.fetch_value(k, v) for k,v in self.mapping.items()}
