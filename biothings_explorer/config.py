@@ -1,9 +1,10 @@
+# these are keys internally used by BTE in the API response mapping file.
 INTERNAL_KEYS = ["@context", "@type", "$input", "$source"]
 
 id_ranks = {
   'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
   'SequenceVariant': ['dbsnp', 'hgvs'],
-  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'name', 'umls'],
+  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'smiles', 'name', 'umls'],
   'pathway': ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
   'DiseaseOrPhenotypicFeature': ['mondo', 'doid', 'umls', 'mesh', 'hp', 'name'],
   'PhenotypicFeature': ['hp', 'umls'],
@@ -54,9 +55,10 @@ metadata = {
     'api_name': "myvariant.info"
   },
   "mychem.info": {
-    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id',
-               'pubchem.cid', 'chembl.pref_name', 'drugbank.name',
-               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
+    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id', 'chembl.smiles', 'pubchem.smiles.canonical', 
+               'chebi.smiles','drugcentral.structures.smiles', 'pubchem.cid', 'chembl.pref_name', 'drugbank.name', 
+               'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", 
+               "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
     "id_ranks": ['chembl', 'drugbank', 'pubchem', 'mesh', 'chebi', 'name'],
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
@@ -73,7 +75,11 @@ metadata = {
       'drugcentral.xrefs.umlscui': 'umls',
       'drugcentral.xrefs.mesh_descriptor_ui': 'mesh',
       'chebi.id': 'chebi',
-      'drugcentral.xrefs.chebi': 'chebi'
+      'drugcentral.xrefs.chebi': 'chebi',
+      'chembl.smiles': 'smiles',
+      'pubchem.smiles.canonical': 'smiles',
+      'chebi.smiles': 'smiles',
+      'drugcentral.structures.smiles': 'smiles'
     },
     'api_name': "mychem.info"
   },
