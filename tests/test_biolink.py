@@ -1,36 +1,33 @@
 import unittest
 from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-
 reg = Registry()
 
 
 class TestSingleHopQuery(unittest.TestCase):
 
-    """
-    def test_anatomy2gene(self):
-        # test <chemical, interactswith, anatomy>
-        seqd = SingleEdgeQueryDispatcher(input_cls='AnatomicalEntity',
-                                         input_id='bts:uberon',
-                                         output_cls='Gene',
-                                         output_id='bts:hgnc',
-                                         pred='bts:associatedWith',
-                                         values='UBERON:0004720',
-                                         registry=reg)
-        seqd.query()
-        self.assertTrue('15859' in seqd.G or '21165' in seqd.G)
+    # def test_anatomy2gene(self):
+    #     # test <chemical, interactswith, anatomy>
+    #     seqd = SingleEdgeQueryDispatcher(input_cls='AnatomicalEntity',
+    #                                      input_id='bts:uberon',
+    #                                      output_cls='Gene',
+    #                                      output_id='bts:hgnc',
+    #                                      pred='bts:associatedWith',
+    #                                      values='UBERON:0004720',
+    #                                      registry=reg)
+    #     seqd.query()
+    #     self.assertTrue('15859' in seqd.G or '21165' in seqd.G)
 
-    def test_phenotype2pathway(self):
-        seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
-                                         input_id='bts:hp',
-                                         output_cls='Pathway',
-                                         output_id='bts:reactome',
-                                         pred='bts:associatedWith',
-                                         values='HP:0004904',
-                                         registry=reg)
-        seqd.query()
-        self.assertTrue('R-HSA-210745' in seqd.G)
-    """
+    # def test_phenotype2pathway(self):
+    #     seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
+    #                                      input_id='bts:hp',
+    #                                      output_cls='Pathway',
+    #                                      output_id='bts:reactome',
+    #                                      pred='bts:associatedWith',
+    #                                      values='HP:0004904',
+    #                                      registry=reg)
+    #     seqd.query()
+    #     self.assertTrue('R-HSA-210745' in seqd.G)
 
     def test_disease2gene(self):
         # test <chemical, interactswith, anatomy>
@@ -110,18 +107,17 @@ class TestSingleHopQuery(unittest.TestCase):
                                          registry=reg)
         seqd.query()
         self.assertTrue('MONDO:0018911' in seqd.G)
-    """
-    def test_pathway2phenotype(self):
-        seqd = SingleEdgeQueryDispatcher(input_cls='Pathway',
-                                         input_id='bts:reactome',
-                                         output_cls='PhenotypicFeature',
-                                         output_id='bts:hp',
-                                         pred='bts:associatedWith',
-                                         values='R-HSA-210745',
-                                         registry=reg)
-        seqd.query()
-        self.assertTrue('HP:0004904' in seqd.G)
-    """
+
+    # def test_pathway2phenotype(self):
+    #     seqd = SingleEdgeQueryDispatcher(input_cls='Pathway',
+    #                                      input_id='bts:reactome',
+    #                                      output_cls='PhenotypicFeature',
+    #                                      output_id='bts:hp',
+    #                                      pred='bts:associatedWith',
+    #                                      values='R-HSA-210745',
+    #                                      registry=reg)
+    #     seqd.query()
+    #     self.assertTrue('HP:0004904' in seqd.G)
 
     def test_phenotype2disease(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
@@ -144,4 +140,3 @@ class TestSingleHopQuery(unittest.TestCase):
                                          registry=reg)
         seqd.query()
         self.assertTrue('4195' in seqd.G)
-
