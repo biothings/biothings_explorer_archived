@@ -35,8 +35,28 @@ class MappingParser():
         self.defined_clses = [_item.name for _item in self.se.list_all_defined_classes()]
         # list of properties whose "range" is among defined classes
         self.linked_prop_list = [_prop.name for _prop in self.se.list_all_defined_properties()
-                                 if set([_item.name for _item in _prop.range]) & set(self.defined_clses)]
+                                 if {_item.name for _item in _prop.range} & set(self.defined_clses)]
         self.cls_prop_clsf = {}
+    
+    @staticmethod
+    def remove_prefix(json_doc, prefix):
+        if not prefix.endswith(":"):
+            prefix += ':'
+        if not json_doc:
+            return {}
+        for k, v in json_doc.items():
+            if isinstance(v, dict):
+                v = self.remove_prefix(v, prefix)
+                if k.startswith(prefix):
+                    json_doc[k[len(prefix):]] = v
+                    json_doc.pop(k)
+                else:
+                    json_doc[k] = v
+            elif isinstance(v, list):
+                #todo
+                pass
+        return json_doc
+
 
     def load_mapping(self, mapping, api=None):
         self.mapping = load_json_or_yaml(mapping)
