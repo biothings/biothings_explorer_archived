@@ -213,6 +213,7 @@ class SingleEdgeQueryDispatcher():
 
     def query(self, verbose=False):
         """Query APIs and organize outputs into networkx graph."""
+        self.current_graph = {}
         if verbose:
             print("==== Step #1: Query path planning ====")
             output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
