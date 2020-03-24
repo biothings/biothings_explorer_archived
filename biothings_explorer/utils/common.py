@@ -1,7 +1,7 @@
 """Some common utils functions for BioThings Explorer"""
 
 from os.path import commonprefix
-from ..config import id_ranks
+from ..config import id_ranks, INTERNAL_KEYS
 
 
 def add_s(num: int) -> str:
@@ -65,8 +65,7 @@ def find_longest_common_path(paths) -> str:
 
 
 def get_dict_values(py_dict: dict,
-                    excluded_keys: list = ["@type", "@input",
-                                           "$source"]) -> list:
+                    excluded_keys: list = INTERNAL_KEYS) -> list:
     """Retrieve the values of a python dictionary.
 
     :param: py_dict: a python dictionary
