@@ -9,10 +9,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2genefamily(self):
         # test <Gene, partOf, GeneFamily>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='bts:symbol',
+                                         input_id='symbol',
                                          output_cls='GeneFamily',
-                                         output_id='bts:panther',
-                                         pred='bts:partOf',
+                                         output_id='panther',
+                                         pred='partOf',
                                          values='CXCR4',
                                          registry=reg)
         seqd.query()

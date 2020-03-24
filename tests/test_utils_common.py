@@ -76,13 +76,13 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertSetEqual(set(res), set(['n', 'm', 'k', 'q']))
 
     def test_get_primary_id_from_equivalent_ids(self):
-        equivalent_ids = {'bts:entrez': ['1017'],
-                          'bts:ensembl': ['ENSG1234'],
-                          'bts:symbol': ['CDK7'],
-                          'bts:umls': ['C001234']}
+        equivalent_ids = {'entrez': ['1017'],
+                          'ensembl': ['ENSG1234'],
+                          'symbol': ['CDK7'],
+                          'umls': ['C001234']}
         res = util.get_primary_id_from_equivalent_ids(equivalent_ids, 'Gene')
         self.assertEqual(res, 'entrez:1017')
-        equivalent_ids = {'bts:kk': ['123']}
+        equivalent_ids = {'kk': ['123']}
         res = util.get_primary_id_from_equivalent_ids(equivalent_ids, 'Gene')
         self.assertEqual(res, 'kk:123')
         equivalent_ids = {}
@@ -90,16 +90,16 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertEqual(res, '')
 
     def test_get_name_from_equivalent_ids(self):
-        equivalent_ids = {'bts:entrez': ['1017'],
-                          'bts:ensembl': ['ENSG1234'],
-                          'bts:symbol': ['CDK7'],
-                          'bts:umls': ['C001234']}
+        equivalent_ids = {'entrez': ['1017'],
+                          'ensembl': ['ENSG1234'],
+                          'symbol': ['CDK7'],
+                          'umls': ['C001234']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'CDK7')
-        equivalent_ids = {'bts:name': ['Lung Cancer'], 'bts:mondo': ['MONDO:00023']}
+        equivalent_ids = {'name': ['Lung Cancer'], 'mondo': ['MONDO:00023']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'Lung Cancer')
-        equivalent_ids = {'bts:mondo': ['MONDO:000123']}
+        equivalent_ids = {'mondo': ['MONDO:000123']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'MONDO:000123')
         res = util.get_name_from_equivalent_ids({})
@@ -108,22 +108,22 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertEqual(res, 'kevin')
 
     def test_remove_prefix_flat_dict(self):
-        json_doc = {'bts:type': 'bts:gene', "@context": "http://schema.org"}
+        json_doc = {'type': 'gene', "@context": "http://schema.org"}
         json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
         self.assertDictEqual(json_doc_prefix_removed, {'type': 'gene', "@context": "http://schema.org"})
     
     def test_remove_prefix_lst_of_dicts(self):
-        json_doc = {'bts:type': [{'bts:name': 'bts:gene'}, {'bts:drug': 'bts:carol'}]}
+        json_doc = {'type': [{'name': 'gene'}, {'drug': 'carol'}]}
         json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
         self.assertDictEqual(json_doc_prefix_removed, {'type': [{'name': 'gene'},{'drug': 'carol'}]})
 
     def test_remove_prefix_int(self):
-        json_doc = {'bts:type': 1}
+        json_doc = {'type': 1}
         json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
         self.assertDictEqual(json_doc_prefix_removed, {'type': 1})
     
     def test_remove_prefix_non_json(self):
-        _input = 'bts:gene'
+        _input = 'gene'
         self.assertEqual(util.remove_prefix(_input, 'bts'), 'gene')
         _input = 12
         self.assertEqual(util.remove_prefix(_input, 'bts'), _input)

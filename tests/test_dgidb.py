@@ -9,10 +9,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_chemical2gene(self):
         # test <chemical, target, gene>
         seqd = SingleEdgeQueryDispatcher(input_cls='ChemicalSubstance',
-                                         input_id='bts:chembl',
+                                         input_id='chembl',
                                          output_cls='Gene',
-                                         output_id='bts:entrez',
-                                         pred='bts:target',
+                                         output_id='entrez',
+                                         pred='target',
                                          values='CHEMBL744',
                                          registry=reg)
         seqd.query()
@@ -21,10 +21,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2chemical(self):
         # test <gene, targetedBy, chemical>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='bts:symbol',
+                                         input_id='symbol',
                                          output_cls='ChemicalSubstance',
-                                         output_id='bts:chembl',
-                                         pred='bts:targetedBy',
+                                         output_id='chembl',
+                                         pred='targetedBy',
                                          values='CXCR4',
                                          registry=reg)
         seqd.query()
