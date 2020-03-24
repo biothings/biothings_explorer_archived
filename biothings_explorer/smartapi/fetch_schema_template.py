@@ -536,7 +536,7 @@ def fetch_smartapi_docs():
 def main():
     """pull data from smartapi and write to local files"""
     create_specs_folder()
-    smartapi_docs = fetch_smartapi_docs()
+    fetch_smartapi_docs()
 
 
 if __name__ == '__main__':
