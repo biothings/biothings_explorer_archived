@@ -45,7 +45,7 @@ def unlist(d: dict) -> dict:
         if len(d) == 1:
             return d[0]
         return d
-    elif isinstance(d, dict):
+    if isinstance(d, dict):
         for key, val in d.items():
             if isinstance(val, list):
                 if len(val) == 1:
@@ -94,6 +94,7 @@ def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
     for k, v in equivalent_ids.items():
         if v:
             return (k[4:] + ':' + str(v[0]))
+    return ''
 
 
 def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
@@ -114,6 +115,31 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
         if v:
             if isinstance(v, list):
                 return v[0]
-            else:
-                return v
+            return v
     return "unknown"
+
+def remove_prefix(_input, prefix):
+    """Remove all prefixes in the input.
+    
+    :param: _input: the input
+    :param: prefix: the prefix
+    """
+    if not prefix.endswith(":"):
+        prefix += ':'
+    if not _input:
+        return _input
+    if isinstance(_input, str):
+        if _input.startswith(prefix):
+            return _input[len(prefix):]
+        return _input
+    if isinstance(_input, dict):
+        new_result = {}
+        for k, v in _input.items():
+            if k.startswith(prefix):
+                new_result[k[len(prefix):]] = remove_prefix(v, prefix)
+            else:
+                new_result[k] = remove_prefix(v, prefix)
+        return new_result
+    if isinstance(_input, list):
+        return [remove_prefix(item, prefix) for item in _input]
+    return _input
