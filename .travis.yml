@@ -5,16 +5,10 @@ python:
 - '3.7'
 install:
 - pip install -r requirements.txt
-- pwd
-- ls
-- ls biothings_explorer
-- ls biothings_explorer/smartapi
-- ls biothings_explorer/smartapi/schema
-- pip freeze
 - pip install pytest
 - pip install coverage
 script: python -m pytest tests --disable-warnings
 after_success:
   - coverage run -m pytest tests
   - coverage xml -o coverage.xml
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
+  - bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
