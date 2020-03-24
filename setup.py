@@ -11,6 +11,7 @@ install_requires = [
     'graphviz>=0.11.1',
     'aiohttp',
     'pandas',
+    'pyyaml'
 ]
 
 
