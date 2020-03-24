@@ -21,7 +21,7 @@ def load_json_or_yaml(file_path):
     # handle file path
     else:
         try:
-            with open(file_path) as f:
+            with open(str(file_path)) as f:
                 _data = f.read()
         except FileNotFoundError:
             raise ValueError("Invalid File Path!")
