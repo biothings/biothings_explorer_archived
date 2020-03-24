@@ -69,7 +69,7 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertEqual(res, 'ensembl')
 
     def test_get_dict_values(self):
-        py_dict = {'m': 'n', 'k': 'm', '@type': 'k', '@input': 'q'}
+        py_dict = {'m': 'n', 'k': 'm', '@type': 'k', '$input': 'q'}
         res = util.get_dict_values(py_dict)
         self.assertSetEqual(set(res), set(['n', 'm']))
         res = util.get_dict_values(py_dict, excluded_keys=[])
