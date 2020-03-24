@@ -7,11 +7,10 @@ Storing metadata information and connectivity of APIs.
 
 """
 import networkx as nx
-from biothings_schema import Schema
-
 from .mapping_parser import MappingParser
 from .config import metadata
-
+from pathlib import Path
+CURRENT_PATH = Path(__file__)
 
 class Registry():
 
@@ -30,30 +29,21 @@ class Registry():
     def load_biothings(self):
         """Load biothings API into registry network graph."""
         # load biothings schema
-        BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
-        se = Schema(BIOTHINGS_SCHEMA_PATH)
-        self.mp = MappingParser(se)
+        self.mp = MappingParser()
         # loop through API metadata
         for _api, _info in metadata.items():
             # use the mapping parser module to load relationship of each API
             # into the network
             if 'mapping_url' in _info:
                 self.registry[_api] = {}
-                self.mp.load_mapping(_info['mapping_url'], _api)
+                self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent,
+                                                   'smartapi/schema', _api + '.json'),
+                                                   _api)
                 self.registry[_api]['mapping'] = self.mp.mapping
                 self.registry[_api]['graph'] = self.mp.connect()
                 self.registry[_api]['type'] = self.mp.type
                 self.G.add_edges_from(self.registry[_api]['graph'].edges(data=True))
         return self.G
-
-    def class2id(self, _cls):
-        """
-        Find identifiers associated with a class using biothings_schema.py package.
-
-        :param: _cls (str) : schema class name
-        """
-        scls = self.mp.se.get_class(_cls, output_type="curie")
-        return [_item['curie'] for _item in scls.list_properties(class_specific=False, group_by_class=False) if _item['curie'] in self.mp.id_list]
 
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):
         """

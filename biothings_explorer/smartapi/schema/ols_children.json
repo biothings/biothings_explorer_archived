@@ -1,0 +1,1 @@
+{"@context": "http://schema.org", "@type": "DiseaseOrPhenotypicFeature", "bts:doid": "results.id", "bts:hasChildren": {"@type": "DiseaseOrPhenotypicFeature", "bts:doid": "_embedded.terms.obo_id", "bts:name": "_embedded.terms.label", "bts:description": "_embedded.terms.description", "$input": "bts:doid", "$source": "disease ontology"}}

@@ -26,7 +26,7 @@ def networkx_json_to_visjs(res):
         res['links'] = new_links
         new_nodes = []
         for _node in res['nodes']:
-            _node['label'] = _node['identifier'][4:] + ':' + str(_node['id'])
+            _node['label'] = _node['identifier'] + ':' + str(_node['id'])
             _node['color'] = colors[_node['level']]
             if 'equivalent_ids' in _node:
                 equ_ids = []

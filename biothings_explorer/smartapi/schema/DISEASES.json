@@ -1,0 +1,1 @@
+{"@context": "http://schema.org", "@type": "DiseaseOrPhenotypicFeature", "bts:mondo": "_id", "bts:associatedWith": {"@type": "Gene", "bts:symbol": "DISEASES.associatedWith.symbol", "bts:category": "DISEASES.associatedWith.category", "$input": "bts:mondo", "$source": "DISEASES"}}

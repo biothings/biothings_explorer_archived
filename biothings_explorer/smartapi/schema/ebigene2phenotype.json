@@ -1,0 +1,1 @@
+{"@context": "http://schema.org", "@type": "Gene", "bts:hgnc": "_id", "bts:associatedWith": {"@type": "PhenotypicFeature", "bts:hp": "gene2phenotype.phenotypes", "bts:pubmed": "gene2phenotype.pmids", "bts:probability": "gene2phenotype.DDD_category", "$input": "bts:hgnc", "$source": "EBI"}}
