@@ -5,6 +5,7 @@ python:
 - '3.7'
 install:
 - pip install .
+- pip freeze
 - pip install pytest
 - pip install coverage
 script: python -m pytest tests --disable-warnings
