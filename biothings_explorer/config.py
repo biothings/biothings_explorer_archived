@@ -1,5 +1,11 @@
+from pathlib import Path
+CURRENT_PATH = Path(__file__)
 # these are keys internally used by BTE in the API response mapping file.
 INTERNAL_KEYS = ["@context", "@type", "$input", "$source"]
+
+PREFIX_TO_REMOVE = 'bts'
+
+BIOTHINGS_SCHEMA_URL = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
 
 id_ranks = {
   'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
@@ -23,7 +29,7 @@ metadata = {
     "api_type": "biothings",
     "method": "post",
     "url": "http://mygene.info/v3/query",
-    "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mygene.info/schema.json',
+    "mapping_url": Path.joinpath(CURRENT_PATH, 'smartapi/schema/mygene.info.json'),
     "hint": True,
     "fields": {
       'entrezgene': 'entrez',
@@ -46,7 +52,7 @@ metadata = {
     "hint": True,
     "api_type": "biothings",
     "url": 'http://myvariant.info/v1/query',
-    "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/myvariant.info/schema.json',
+    "mapping_url": Path.joinpath(CURRENT_PATH, 'smartapi/schema/myvariant.info.json'),
     "method": "post",
     "fields": {
       '_id': "hgvs",
@@ -64,7 +70,7 @@ metadata = {
     "api_type": "biothings",
     "hint": True,
     "url": "http://mychem.info/v1/query",
-    "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mychem.info/schema.json',
+    "mapping_url": Path.joinpath(CURRENT_PATH, 'smartapi/schema/mychem.info.json'),
     "method": "post",
     "fields": {
       'chembl.molecule_chembl_id': 'chembl',

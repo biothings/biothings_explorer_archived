@@ -9,10 +9,10 @@ class TestSingleHopQuery(unittest.TestCase):
     # def test_anatomy2gene(self):
     #     # test <chemical, interactswith, anatomy>
     #     seqd = SingleEdgeQueryDispatcher(input_cls='AnatomicalEntity',
-    #                                      input_id='bts:uberon',
+    #                                      input_id='uberon',
     #                                      output_cls='Gene',
-    #                                      output_id='bts:hgnc',
-    #                                      pred='bts:associatedWith',
+    #                                      output_id='hgnc',
+    #                                      pred='associatedWith',
     #                                      values='UBERON:0004720',
     #                                      registry=reg)
     #     seqd.query()
@@ -20,10 +20,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     # def test_phenotype2pathway(self):
     #     seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
-    #                                      input_id='bts:hp',
+    #                                      input_id='hp',
     #                                      output_cls='Pathway',
-    #                                      output_id='bts:reactome',
-    #                                      pred='bts:associatedWith',
+    #                                      output_id='reactome',
+    #                                      pred='associatedWith',
     #                                      values='HP:0004904',
     #                                      registry=reg)
     #     seqd.query()
@@ -32,10 +32,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_disease2gene(self):
         # test <chemical, interactswith, anatomy>
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
-                                         input_id='bts:mondo',
+                                         input_id='mondo',
                                          output_cls='Gene',
-                                         output_id='bts:hgnc',
-                                         pred='bts:associatedWith',
+                                         output_id='hgnc',
+                                         pred='associatedWith',
                                          values='MONDO:0010997',
                                          registry=reg)
         seqd.query()
@@ -43,10 +43,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_disease2pathway(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
-                                         input_id='bts:mondo',
+                                         input_id='mondo',
                                          output_cls='Pathway',
-                                         output_id='bts:reactome',
-                                         pred='bts:associatedWith',
+                                         output_id='reactome',
+                                         pred='associatedWith',
                                          values='MONDO:0010997',
                                          registry=reg)
         seqd.query()
@@ -54,10 +54,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_disease2phenotype(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
-                                         input_id='bts:mondo',
+                                         input_id='mondo',
                                          output_cls='PhenotypicFeature',
-                                         output_id='bts:mondo',
-                                         pred='bts:associatedWith',
+                                         output_id='mondo',
+                                         pred='associatedWith',
                                          values='MONDO:0010997',
                                          registry=reg)
         seqd.query()
@@ -65,10 +65,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_gene2anatomy(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='bts:entrez',
+                                         input_id='entrez',
                                          output_cls='AnatomicalEntity',
-                                         output_id='bts:uberon',
-                                         pred='bts:associatedWith',
+                                         output_id='uberon',
+                                         pred='associatedWith',
                                          values='13434',
                                          registry=reg)
         seqd.query()
@@ -76,10 +76,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_gene2phenotype(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='bts:entrez',
+                                         input_id='entrez',
                                          output_cls='PhenotypicFeature',
-                                         output_id='bts:hp',
-                                         pred='bts:associatedWith',
+                                         output_id='hp',
+                                         pred='associatedWith',
                                          values='13434',
                                          registry=reg)
         seqd.query()
@@ -87,10 +87,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_geneinteraction(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='bts:entrez',
+                                         input_id='entrez',
                                          output_cls='Gene',
-                                         output_id='bts:hp',
-                                         pred='bts:molecularlyInteractsWith',
+                                         output_id='hp',
+                                         pred='molecularlyInteractsWith',
                                          values='1838',
                                          registry=reg)
         seqd.query()
@@ -99,10 +99,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_pathway2disease(self):
         # test <chemical, interactswith, anatomy>
         seqd = SingleEdgeQueryDispatcher(input_cls='Pathway',
-                                         input_id='bts:reactome',
+                                         input_id='reactome',
                                          output_cls='DiseaseOrPhenotypicFeature',
-                                         output_id='bts:mondo',
-                                         pred='bts:associatedWith',
+                                         output_id='mondo',
+                                         pred='associatedWith',
                                          values='R-HSA-210745',
                                          registry=reg)
         seqd.query()
@@ -110,10 +110,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     # def test_pathway2phenotype(self):
     #     seqd = SingleEdgeQueryDispatcher(input_cls='Pathway',
-    #                                      input_id='bts:reactome',
+    #                                      input_id='reactome',
     #                                      output_cls='PhenotypicFeature',
-    #                                      output_id='bts:hp',
-    #                                      pred='bts:associatedWith',
+    #                                      output_id='hp',
+    #                                      pred='associatedWith',
     #                                      values='R-HSA-210745',
     #                                      registry=reg)
     #     seqd.query()
@@ -121,10 +121,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_phenotype2disease(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
-                                         input_id='bts:hp',
+                                         input_id='hp',
                                          output_cls='DiseaseOrPhenotypicFeature',
-                                         output_id='bts:mondo',
-                                         pred='bts:associatedWith',
+                                         output_id='mondo',
+                                         pred='associatedWith',
                                          values='HP:0004904',
                                          registry=reg)
         seqd.query()
@@ -132,10 +132,10 @@ class TestSingleHopQuery(unittest.TestCase):
 
     def test_phenotype2gene(self):
         seqd = SingleEdgeQueryDispatcher(input_cls='PhenotypicFeature',
-                                         input_id='bts:hp',
+                                         input_id='hp',
                                          output_cls='Gene',
-                                         output_id='bts:hgnc',
-                                         pred='bts:associatedWith',
+                                         output_id='hgnc',
+                                         pred='associatedWith',
                                          values='HP:0004904',
                                          registry=reg)
         seqd.query()

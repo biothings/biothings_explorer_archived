@@ -21,10 +21,10 @@ from .export.graphml import GraphmlConverter
 from .export.pandas import networkx2pandas
 from .export.graphviz import networkx2graphvis
 
-
-ID_RANK = {'Gene': 'bts:symbol',
-           'ChemicalSubstance': 'bts:name',
-           'DiseaseOrPhenotypicFeature': 'bts:name'}
+# TODO: remove ID_RANK
+ID_RANK = {'Gene': 'symbol',
+           'ChemicalSubstance': 'name',
+           'DiseaseOrPhenotypicFeature': 'name'}
 
 
 class SingleEdgeQueryDispatcher():
@@ -33,10 +33,10 @@ class SingleEdgeQueryDispatcher():
     params
     ------
     input_cls: str or list, the semantic type(s) of the input, e.g. Gene
-    input_id: str, the identifier type of the input, e.g. bts:entrez
+    input_id: str, the identifier type of the input, e.g. entrez
     values: str or list, the actual value of the input, e.g. CDK7
     output_cls: str or list or None, the semantic type(s) of the output, e.g. Gene. If None, search for all semantic type(s) which connect from the input
-    output_id: str, optional, the identifier type in which output ids will be, e.g. bts:chembl
+    output_id: str, optional, the identifier type in which output ids will be, e.g. chembl
     pred: str or list or None, the relationship between input and output. If None, search for all relationships between input and output
     input_obj: optional, a representation of the input from Hint Module
     prev_graph: the graph object coming from last query
@@ -69,7 +69,7 @@ class SingleEdgeQueryDispatcher():
             if self.output_cls and not isinstance(self.output_cls, list) and self.output_cls in ID_RANK:
                 self.output_id = [ID_RANK.get(self.output_cls)]
             else:
-                self.output_id = ["bts:symbol", "bts:name"]
+                self.output_id = ["symbol", "name"]
         if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
         self.pred = pred
@@ -79,14 +79,14 @@ class SingleEdgeQueryDispatcher():
         self.reverse = reverse
         if input_obj:
             self.input_cls = input_obj.get("primary").get("cls")
-            self.input_id = "bts:" + input_obj.get("primary").get("identifier")
+            self.input_id = input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
             if 'symbol' in input_obj:
                 self.input_label = input_obj.get("symbol")
-                self.input_identifier = 'bts:symbol'
+                self.input_identifier = 'symbol'
             elif 'name' in input_obj:
                 self.input_label = input_obj.get("name")
-                self.input_identifier = 'bts:name'
+                self.input_identifier = 'name'
             else:
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
                 self.input_identifier = input_obj.get("primary").get("identifier")
@@ -185,8 +185,8 @@ class SingleEdgeQueryDispatcher():
             obj_name = get_name_from_equivalent_ids(g.nodes[obj]['equivalent_ids'], None)
             obj_id = get_primary_id_from_equivalent_ids(g.nodes[obj]['equivalent_ids'],
                                                         g.nodes[obj]['type'])
-            sbj_label = str(self.query_id - 1) + '-' + g.nodes[sbj]['identifier'][4:] + ':' + str(sbj).upper()
-            obj_label = str(self.query_id) + '-' + g.nodes[obj]['identifier'][4:] + ':' + str(obj).upper()
+            sbj_label = str(self.query_id - 1) + '-' + g.nodes[sbj]['identifier'] + ':' + str(sbj).upper()
+            obj_label = str(self.query_id) + '-' + g.nodes[obj]['identifier'] + ':' + str(obj).upper()
             tmp = []
             if sbj_label in self.prev_graph:
                 prev_graph = copy.deepcopy(self.prev_graph[sbj_label])
@@ -251,7 +251,7 @@ class SingleEdgeQueryDispatcher():
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
                         output_id_types.append(m['output_id'])
-                    input_identifier = self.input_identifier if self.input_identifier else "bts:" + k.split(':', 1)[0]
+                    input_identifier = self.input_identifier if self.input_identifier else k.split(':', 1)[0]
                     self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
                                     identifier=input_identifier,
@@ -298,8 +298,6 @@ class SingleEdgeQueryDispatcher():
                     semantic_type = y['type']
                     if semantic_type not in result:
                         result[semantic_type] = {}
-                    if identifier.startswith('bts:'):
-                        identifier = identifier[4:]
                     curie = identifier + ':' + x
                     result[semantic_type][curie] = y['equivalent_ids']
         return result
@@ -709,10 +707,10 @@ class Predict:
         final_outputs = set()
         for output_ids in self.output_ids.get(str(len(self.paths))).values():
             for k, item in output_ids.items():
-                if item.get('bts:symbol'):
-                    final_outputs.add(item['bts:symbol'][0])
-                elif item.get('bts:name'):
-                    final_outputs.add(item['bts:name'][0])
+                if item.get('symbol'):
+                    final_outputs.add(item['symbol'][0])
+                elif item.get('name'):
+                    final_outputs.add(item['name'][0])
                 else:
                     splitted = k.split(':')
                     if len(splitted) == 2:

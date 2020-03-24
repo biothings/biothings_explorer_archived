@@ -52,7 +52,7 @@ class ReasonerConverter():
             return str(node)
         node_info = self.nodes[node]
         if "identifier" in node_info:
-            prefix = node_info["identifier"][4:]
+            prefix = node_info["identifier"]
             curie = prefix.upper() + ':' + node
             return curie
         return node
@@ -74,7 +74,7 @@ class ReasonerConverter():
             source_id = self.get_curie(k)
             target_id = self.get_curie(v)
             edge_source = o['info'].get('$api')
-            _type = o.get('label')[4:]
+            _type = o.get('label')
             _id = self.hash_id(source_id + target_id + edge_source + _type)
             edge = {"source_id": source_id,
                     "target_id": target_id,
@@ -89,7 +89,7 @@ class ReasonerConverter():
         """Reorganize the nodes into reasonerSTD format."""
         nodes = []
         for k, v in self.nodes:
-            name = v['equivalent_ids'].get("bts:name")
+            name = v['equivalent_ids'].get("name")
             if name and isinstance(name, list):
                 name = str(name[0])
             else:

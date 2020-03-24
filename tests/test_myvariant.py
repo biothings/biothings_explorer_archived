@@ -9,10 +9,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_variant2gene(self):
         # test <gene, enableMF, mf>
         seqd = SingleEdgeQueryDispatcher(input_cls='SequenceVariant',
-                                         input_id='bts:dbsnp',
+                                         input_id='dbsnp',
                                          output_cls='Gene',
-                                         output_id='bts:entrez',
-                                         pred='bts:variantAssociatedWithGene',
+                                         output_id='entrez',
+                                         pred='variantAssociatedWithGene',
                                          values='rs539316232',
                                          registry=reg)
         seqd.query()
@@ -21,10 +21,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_variant2disease(self):
         # test <gene, enableMF, mf>
         seqd = SingleEdgeQueryDispatcher(input_cls='SequenceVariant',
-                                         input_id='bts:dbsnp',
+                                         input_id='dbsnp',
                                          output_cls='DiseaseOrPhenotypicFeature',
-                                         output_id='bts:omim',
-                                         pred='bts:variantAssociatedWithCondition',
+                                         output_id='omim',
+                                         pred='variantAssociatedWithCondition',
                                          values='rs111364296',
                                          registry=reg)
         seqd.query()

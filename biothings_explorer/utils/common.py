@@ -1,7 +1,7 @@
 """Some common utils functions for BioThings Explorer"""
 
 from os.path import commonprefix
-from ..config import id_ranks
+from ..config import id_ranks, INTERNAL_KEYS
 
 
 def add_s(num: int) -> str:
@@ -45,7 +45,7 @@ def unlist(d: dict) -> dict:
         if len(d) == 1:
             return d[0]
         return d
-    elif isinstance(d, dict):
+    if isinstance(d, dict):
         for key, val in d.items():
             if isinstance(val, list):
                 if len(val) == 1:
@@ -65,8 +65,7 @@ def find_longest_common_path(paths) -> str:
 
 
 def get_dict_values(py_dict: dict,
-                    excluded_keys: list = ["@type", "@input",
-                                           "$source"]) -> list:
+                    excluded_keys: list = INTERNAL_KEYS) -> list:
     """Retrieve the values of a python dictionary.
 
     :param: py_dict: a python dictionary
@@ -88,12 +87,13 @@ def get_primary_id_from_equivalent_ids(equivalent_ids: dict, _type: str):
         id_rank = id_ranks.get(_type)
         # loop through id_rank, return the first found id
         for _item in id_rank:
-            if equivalent_ids.get('bts:' + _item):
-                return (_item + ':' + str(equivalent_ids['bts:' + _item][0]))
+            if equivalent_ids.get(_item):
+                return (_item + ':' + str(equivalent_ids[_item][0]))
     # if no id from id_rank found, return a random one from equivalent ids
     for k, v in equivalent_ids.items():
         if v:
-            return (k[4:] + ':' + str(v[0]))
+            return (k + ':' + str(v[0]))
+    return ''
 
 
 def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
@@ -106,14 +106,39 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
         return input_label
     if not equivalent_ids:
         return "unknown"
-    if equivalent_ids.get('bts:symbol'):
-        return equivalent_ids.get('bts:symbol')[0]
-    if equivalent_ids.get('bts:name'):
-        return equivalent_ids.get('bts:name')[0]
+    if equivalent_ids.get('symbol'):
+        return equivalent_ids.get('symbol')[0]
+    if equivalent_ids.get('name'):
+        return equivalent_ids.get('name')[0]
     for v in equivalent_ids.values():
         if v:
             if isinstance(v, list):
                 return v[0]
-            else:
-                return v
+            return v
     return "unknown"
+
+def remove_prefix(_input, prefix):
+    """Remove all prefixes in the input.
+    
+    :param: _input: the input
+    :param: prefix: the prefix
+    """
+    if not prefix.endswith(":"):
+        prefix += ':'
+    if not _input:
+        return _input
+    if isinstance(_input, str):
+        if _input.startswith(prefix):
+            return _input[len(prefix):]
+        return _input
+    if isinstance(_input, dict):
+        new_result = {}
+        for k, v in _input.items():
+            if k.startswith(prefix):
+                new_result[k[len(prefix):]] = remove_prefix(v, prefix)
+            else:
+                new_result[k] = remove_prefix(v, prefix)
+        return new_result
+    if isinstance(_input, list):
+        return [remove_prefix(item, prefix) for item in _input]
+    return _input

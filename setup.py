@@ -5,14 +5,13 @@ install_requires = [
     'jupyter',
     'notebook==5.7.5',
     'tornado==4.5.3',
-    'jsonschema>=3.0.1',
     'networkx==2.3',
     'jsonpath-rw>=1.4.0',
     'requests>=2.21.0',
     'graphviz>=0.11.1',
     'aiohttp',
     'pandas',
-    "biothings_schema @ git+https://github.com/biothings/biothings_schema.py"
+    'pyyaml'
 ]
 
 
@@ -47,5 +46,6 @@ setup(
     ],
     install_requires=install_requires,
     setup_requires=['pytest-runner'],
-    tests_require=['pytest']
+    tests_require=['pytest'],
+    include_package_data=True
 )

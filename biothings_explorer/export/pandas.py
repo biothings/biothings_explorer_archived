@@ -24,7 +24,7 @@ def networkx2pandas(current_graph, input_type):
                 if i == 0:
                     path_data['input'] = edge['input_name']
                     path_data['input_type'] = input_type
-                path_data['pred' + str(i + 1)] = edge['info']['label'][4:]
+                path_data['pred' + str(i + 1)] = edge['info']['label']
                 path_data['pred' + str(i + 1) +
                           '_source'] = retrieve_prop_from_edge(edge['info'],
                                                                'source')
@@ -57,7 +57,7 @@ def retrieve_prop_from_edge(edge_info, prop):
                 data = [data]
             return ','.join(data)
     elif prop == 'pubmed':
-        data = edge_info['info'].get('bts:pubmed')
+        data = edge_info['info'].get('pubmed')
         if data:
             if not isinstance(data, list):
                 data = [data]

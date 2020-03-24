@@ -11,35 +11,29 @@ from collections import defaultdict
 import itertools
 
 import networkx as nx
-from biothings_schema import Schema
-
+from .schema_parser import SchemaParser
 from .utils.dataload import load_json_or_yaml
-
-from .utils.common import find_longest_common_path, get_dict_values
-from .config import metadata
+from .utils.common import find_longest_common_path, get_dict_values, remove_prefix
+from .config import metadata, PREFIX_TO_REMOVE
 
 
 class MappingParser():
     """Parse the mapping file between biothings schema and biothings API"""
     BIOTHINGS_SCHEMA_PATH = 'https://raw.githubusercontent.com/data2health/schemas/biothings/biothings/biothings_curie_kevin.jsonld'
 
-    def __init__(self, se=None):
-        if not se:
-            self.se = Schema(self.BIOTHINGS_SCHEMA_PATH)
-        else:
-            self.se = se
+    def __init__(self):
+        self.se = SchemaParser()
         # list all properties which are descendants of identifiers
-        self.id_list = self.se.get_property("identifier",
-                                            output_type="curie").descendant_properties
+        self.id_list = self.se.ids
         # get all classes defined in biothings schema JSON-LD file
-        self.defined_clses = [_item.name for _item in self.se.list_all_defined_classes()]
+        self.defined_clses = self.se.clses
         # list of properties whose "range" is among defined classes
-        self.linked_prop_list = [_prop.name for _prop in self.se.list_all_defined_properties()
-                                 if set([_item.name for _item in _prop.range]) & set(self.defined_clses)]
+        self.linked_prop_list = self.se.properties.keys()
         self.cls_prop_clsf = {}
 
     def load_mapping(self, mapping, api=None):
         self.mapping = load_json_or_yaml(mapping)
+        self.mapping = remove_prefix(self.mapping, PREFIX_TO_REMOVE)
         self.api = api
 
     def classify_keys_in_json(self, json_doc):
@@ -65,7 +59,7 @@ class MappingParser():
                 self.mapping[predicate] = [self.mapping[predicate]]
             for _pred in self.mapping[predicate]:
                 if "@type" in _pred:
-                    sp = self.se.get_property(predicate)
+                    sp = self.se.properties.get(predicate)
                     obj_clsf = self.classify_keys_in_json(_pred)
                     common_prefix = find_longest_common_path(get_dict_values(_pred))
                     input_id = [_pred['$input']] if '$input' in _pred else clsf['id']
@@ -88,7 +82,7 @@ class MappingParser():
                                    output_type=_pred["@type"],
                                    output_field=common_prefix if common_prefix else output_field)
                         if metadata[self.api].get('api_type') == 'biothings':
-                            inverse_property = None if not sp.inverse_property else sp.inverse_property.name
+                            inverse_property = sp.get('inverse_property')
                             if not inverse_property:
                                 print(predicate)
                             G.add_edge(_edge[1], _edge[0], api=self.api,

@@ -56,7 +56,7 @@ class Metadata():
         for _, _, info in self.registry.G.edges(data=True):
             input_type = info['input_type']
             output_type = info['output_type']
-            predicate = info['label'][4:]
+            predicate = info['label']
             if input_type not in id_dict:
                 id_dict[input_type] = _id
                 result['nodes'].append({'id': _id,
@@ -121,9 +121,9 @@ class Metadata():
         edges = set()
         result = {'nodes': [], 'edges': []}
         for _, _, info in self.registry.G.edges(data=True):
-            input_type = info['input_id'][4:]
-            output_type = info['output_id'][4:]
-            predicate = info['label'][4:]
+            input_type = info['input_id']
+            output_type = info['output_id']
+            predicate = info['label']
             if input_type not in id_dict:
                 id_dict[input_type] = _id
                 result['nodes'].append({'id': _id,
