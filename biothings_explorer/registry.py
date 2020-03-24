@@ -11,6 +11,7 @@ from .mapping_parser import MappingParser
 from .config import metadata
 from pathlib import Path
 import sys
+CURRENT_PATH = Path(__file__)
 
 class Registry():
 
