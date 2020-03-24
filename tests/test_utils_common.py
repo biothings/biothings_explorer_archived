@@ -107,6 +107,27 @@ class TestUtilsCommon(unittest.TestCase):
         res = util.get_name_from_equivalent_ids({}, 'kevin')
         self.assertEqual(res, 'kevin')
 
+    def test_remove_prefix_flat_dict(self):
+        json_doc = {'bts:type': 'bts:gene', "@context": "http://schema.org"}
+        json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
+        self.assertDictEqual(json_doc_prefix_removed, {'type': 'gene', "@context": "http://schema.org"})
+    
+    def test_remove_prefix_lst_of_dicts(self):
+        json_doc = {'bts:type': [{'bts:name': 'bts:gene'}, {'bts:drug': 'bts:carol'}]}
+        json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
+        self.assertDictEqual(json_doc_prefix_removed, {'type': [{'name': 'gene'},{'drug': 'carol'}]})
+
+    def test_remove_prefix_int(self):
+        json_doc = {'bts:type': 1}
+        json_doc_prefix_removed = util.remove_prefix(json_doc, 'bts')
+        self.assertDictEqual(json_doc_prefix_removed, {'type': 1})
+    
+    def test_remove_prefix_non_json(self):
+        _input = 'bts:gene'
+        self.assertEqual(util.remove_prefix(_input, 'bts'), 'gene')
+        _input = 12
+        self.assertEqual(util.remove_prefix(_input, 'bts'), _input)
+
 
 if __name__ == '__main__':
     unittest.main()
