@@ -1,0 +1,1 @@
+{"@context": "http://schema.org", "@type": "SequenceVariant", "bts:dbsnp": "rsid", "bts:name": "rsid", "bts:variantAssociatedWithGene": {"@type": "Gene", "bts:symbol": "gene.name", "$input": "bts:dbsnp", "$source": "litvar"}}
