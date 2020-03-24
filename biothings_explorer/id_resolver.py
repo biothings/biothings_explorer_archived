@@ -40,7 +40,7 @@ class IDResolver():
         :param: mapping_file: schema mapping file from smartapi registry
         """
         return {k: v for (k, v) in mapping_file.items() if k
-                in (self.registry.mp.id_list + ["bts:name"])}
+                in (self.registry.mp.id_list + ["name"])}
 
     @staticmethod
     def get_output_fields(mapping_file):
@@ -73,15 +73,13 @@ class IDResolver():
             ids, _type, semantic_type = _input
             # convert id to list
             ids = self.preprocess_ids(ids, _type)
-            # if _type == 'bts:efo':
+            # if _type == 'efo':
             # ids = [i.split(':')[-1] for i in ids]
             api = self.semantic_type_api_mapping.get(semantic_type)
             # if id can not be converted, the equivalent id is itself
             if not api:
-                if _type.startswith("bts:"):
-                    _type = _type[4:]
                 for _id in ids:
-                    self.results[_type + ':' + _id] = {'bts:' + _type: [_id]}
+                    self.results[_type + ':' + _id] = {_type: [_id]}
             else:
                 self.construct_api_calls(api, _type, ids)
         # make API calls asynchronously and gather all outputs
@@ -96,8 +94,6 @@ class IDResolver():
         for _res, _map, _type in zip(self.responses,
                                      self.mapping_files,
                                      self.types):
-            if _type.startswith("bts:"):
-                _type = _type[4:]
             # if API response is empty, continue
             if not _res:
                 continue
@@ -105,7 +101,7 @@ class IDResolver():
                 # if query of the item returns no hit
                 if 'notfound' in single_res:
                     self.results[_type + ':' +
-                                 single_res['query']] = {'bts:' + _type:
+                                 single_res['query']] = {_type:
                                                          [single_res['query']]}
                     continue
                 new_res = {}
@@ -142,10 +138,8 @@ class IDResolver():
                 self.types.append(_type)
                 self.mapping_files.append(mapping_file)
         else:
-            if _type.startswith("bts:"):
-                _type = _type[4:]
             for _id in ids:
-                self.results[_type + ':' + _id] = {'bts:' + _type: [_id]}
+                self.results[_type + ':' + _id] = {_type: [_id]}
 
     def preprocess_ids(self, ids, _type):
         """Preprocess ids to become a list of strings.
@@ -159,6 +153,6 @@ class IDResolver():
         # make sure all ids in id list is str
         for _id in ids:
             if ' ' in str(_id):
-                self.results[_type[4:] + ':' + str(_id)] = {_type: [str(_id)]}
+                self.results[_type + ':' + str(_id)] = {_type: [str(_id)]}
         ids = [str(i) for i in ids if ' ' not in str(i)]
         return ids
