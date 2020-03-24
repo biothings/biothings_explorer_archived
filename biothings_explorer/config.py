@@ -52,7 +52,7 @@ metadata = {
     "hint": True,
     "api_type": "biothings",
     "url": 'http://myvariant.info/v1/query',
-    "mapping_url": Path.joinpath(CURRENT_PATH, 'smartapi/schema/myvariant.info.json'),,
+    "mapping_url": Path.joinpath(CURRENT_PATH, 'smartapi/schema/myvariant.info.json'),
     "method": "post",
     "fields": {
       '_id': "hgvs",
