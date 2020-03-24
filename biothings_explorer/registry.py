@@ -10,7 +10,7 @@ import networkx as nx
 from .mapping_parser import MappingParser
 from .config import metadata
 from pathlib import Path
-CURRENT_PATH = Path(__file__)
+import sys
 
 class Registry():
 
@@ -36,9 +36,14 @@ class Registry():
             # into the network
             if 'mapping_url' in _info:
                 self.registry[_api] = {}
-                self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent,
-                                                   'smartapi/schema', _api + '.json'),
-                                                   _api)
+                if sys.version.startswith('3.5'):
+                    self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent.parent,
+                                                       'smartapi/schema', _api + '.json'),
+                                                       _api)
+                else:
+                    self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent,
+                                                       'smartapi/schema', _api + '.json'),
+                                                       _api)
                 self.registry[_api]['mapping'] = self.mp.mapping
                 self.registry[_api]['graph'] = self.mp.connect()
                 self.registry[_api]['type'] = self.mp.type
