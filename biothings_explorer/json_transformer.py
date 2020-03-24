@@ -81,11 +81,11 @@ class Transformer():
 
     def parse_dict(self, mapping_dict):
         """
-        mapping: {"bts:dd": "a.b.c", "bts:ee": "a.b.d"}
+        mapping: {"dd": "a.b.c", "ee": "a.b.d"}
         case 1: {"a": {"b": {"c": 1, "d": 2}}}
-        result 1: {"bts:dd": 1, "bts:ee": 2}
+        result 1: {"dd": 1, "ee": 2}
         case 2: {"a": [{"b": {"c": 1, "d": 2}}, {"b": {"c": 3, "d": 4}}]}
-        result 2: [{"bts:dd": 1, "bts:ee": 2}]
+        result 2: [{"dd": 1, "ee": 2}]
         case 3: {"a": }
         """
         all_paths = self.fetch_all_paths_from_mapping_file(mapping_dict)

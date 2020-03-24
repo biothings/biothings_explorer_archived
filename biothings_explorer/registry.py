@@ -36,7 +36,9 @@ class Registry():
             # into the network
             if 'mapping_url' in _info:
                 self.registry[_api] = {}
-                self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent, 'smartapi/schema', _api + '.json'), _api)
+                self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent,
+                                                   'smartapi/schema', _api + '.json'),
+                                                   _api)
                 self.registry[_api]['mapping'] = self.mp.mapping
                 self.registry[_api]['graph'] = self.mp.connect()
                 self.registry[_api]['type'] = self.mp.type
