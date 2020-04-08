@@ -9,6 +9,7 @@ Storing metadata information and connectivity of APIs.
 import networkx as nx
 from .mapping_parser import MappingParser
 from .config import metadata
+from .utils.semmed import semmed
 from pathlib import Path
 CURRENT_PATH = Path(__file__)
 
@@ -26,6 +27,29 @@ class Registry():
         self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
         self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
 
+    @staticmethod
+    def _auto_generate_semmed_mapping(doc_type):
+        """Auto-generate schema mapping file for all SEMMED APIs
+        
+        :param: doc_type: the document type of the specific semmed API
+        """
+        res = {
+            "@context": "http://schema.org",
+            "@type": doc_type,
+            "umls": "umls"
+        }
+        for pred, output_types in semmed[doc_type].items():
+            res[pred] = []
+            for output_type in output_types:
+                res[pred].append({
+                    "@type": output_type,
+                    "umls": pred + '.umls',
+                    "pmid": pred + '.pmid',
+                    "$input": "umls",
+                    "$source": "semmed"
+                })
+        return res
+
     def load_biothings(self):
         """Load biothings API into registry network graph."""
         # load biothings schema
@@ -34,15 +58,23 @@ class Registry():
         for _api, _info in metadata.items():
             # use the mapping parser module to load relationship of each API
             # into the network
-            if 'mapping_url' in _info:
+            if _api in ['bp', 'cc', 'mf', 'pathway', 'umlschem', 'phenotype', 'anatomy']:
+                continue
+            if _info.get('api_name') == 'semmed':
+                mapping_file = self._auto_generate_semmed_mapping(_info.get('doc_type'))
+            elif 'mapping_url' in _info:
                 self.registry[_api] = {}
-                self.mp.load_mapping(Path.joinpath(CURRENT_PATH.parent,
-                                                   'smartapi/schema', _api + '.json'),
-                                                   _api)
-                self.registry[_api]['mapping'] = self.mp.mapping
-                self.registry[_api]['graph'] = self.mp.connect()
-                self.registry[_api]['type'] = self.mp.type
-                self.G.add_edges_from(self.registry[_api]['graph'].edges(data=True))
+                mapping_file = Path.joinpath(CURRENT_PATH.parent,
+                                             'smartapi/schema', _api + '.json')
+            else:
+                continue
+            self.mp.load_mapping(mapping_file, api=_api)
+            self.registry[_api] = {
+                'mapping': self.mp.mapping,
+                'graph': self.mp.connect(),
+                'type': self.mp.type
+            }
+            self.G.add_edges_from(self.registry[_api]['graph'].edges(data=True))
         return self.G
 
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):
