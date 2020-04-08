@@ -12,6 +12,7 @@ from .reasoner import restructure_reasoner_response
 from .stanford import restructure_stanford_response
 from .ctd import restructure_ctd_response
 from .opentarget import restructure_opentarget_response
+from .semmed import restructure_semmed_response
 
 class APIPreprocess():
 
@@ -21,18 +22,20 @@ class APIPreprocess():
     This is to make sure the JSON output from these APIs could be uniformly consumed by the jsontransform module
     """
 
-    def __init__(self, json_doc, api_type, api_name=None):
+    def __init__(self, json_doc, api_type, api_name=None, output_types=None):
         """
         Load json doc and api info.
 
         :param: json_doc: the json_doc to be preprocessed
         :param: api_type: the type of api, e.g. biothings
         :param: api_name: optional, the name of api
+        :param: output_types: specific for semmed api
 
         """
         self.api_type = api_type
         self.api_name = api_name
         self.json_doc = json_doc
+        self.output_types = output_types
 
     def restructure(self):
         """Restructue API response."""
@@ -52,5 +55,7 @@ class APIPreprocess():
             return restructure_ctd_response(self.json_doc)
         if self.api_type == 'opentarget':
             return restructure_opentarget_response(self.json_doc)
+        if self.api_name == 'semmed':
+            return restructure_semmed_response(self.json_doc, self.output_types)
         return self.json_doc
 
