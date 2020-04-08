@@ -17,7 +17,10 @@ def restructure_semmed_response(json_doc, output_types):
             for k, v in _res.items():
                 tmp_v = []
                 if isinstance(v, list):
-                    tmp_v = [item for item in v if item["@type"] in output_types]
+                    for item in v:
+                        if item["@type"] in  output_types:
+                            item['pubmed'] = item.pop('pmid')
+                            tmp_v.append(item)
                 if tmp_v != []:
                     tmp_res[k] = tmp_v
             new_res.append(tmp_res)
