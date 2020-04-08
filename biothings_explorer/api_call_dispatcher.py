@@ -124,7 +124,10 @@ class Dispatcher():
         if verbose:
             print("\n\n==== Step #3: Output normalization ====\n")
         for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
-            _res = APIPreprocess(_res, metadata[api]['api_type'], api).restructure()
+            output_types = []
+            if metadata[api]['api_name'] == 'semmed':
+                output_types = list(set(_item['output_type'] for _item in edges))
+            _res = APIPreprocess(_res, metadata[api]['api_type'], metadata[api]['api_name'], output_types).restructure()
             mapping = self.fetch_schema_mapping_file(api)
             subset_mapping = self.subset_mapping_file(edges, mapping)
             _res = OutputParser(_res, subset_mapping, batch, api).parse()
@@ -217,7 +220,7 @@ class Dispatcher():
                                         edges[0]['output_id']: [v],
                                         "$source": edges[0]['api'],
                                         "$api": edges[0]['api']}
-                                results[val][k1].append(item)
+                                results[m][k1].append(item)
                 if verbose:
                     if hits_cnt > 0:
                         print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))

@@ -58,8 +58,6 @@ class Registry():
         for _api, _info in metadata.items():
             # use the mapping parser module to load relationship of each API
             # into the network
-            if _api in ['bp', 'cc', 'mf', 'pathway', 'umlschem', 'phenotype', 'anatomy']:
-                continue
             if _info.get('api_name') == 'semmed':
                 mapping_file = self._auto_generate_semmed_mapping(_info.get('doc_type'))
             elif 'mapping_url' in _info:

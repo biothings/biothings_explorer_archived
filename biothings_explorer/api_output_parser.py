@@ -55,7 +55,10 @@ class OutputParser():
                     continue
                 new_res[_res['query']] = {}
             else:
-                transformed_json = Transformer(_res, self.mapping).transform()
+                if metadata[self.api].get('api_name') == 'semmed':
+                    transformed_json = _res
+                else:
+                    transformed_json = Transformer(_res, self.mapping).transform()
                 if _res['query'] not in new_res:
                     new_res[_res['query']] = transformed_json
                 else:

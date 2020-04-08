@@ -58,6 +58,7 @@ class MappingParser():
                         G.add_edge(
                             'umls', 'umls',
                             label=pred,
+                            mapping_key=pred,
                             api=self.api,
                             source='semmed',
                             input_field='umls',
@@ -102,7 +103,8 @@ class MappingParser():
                                 inverse_property = sp.get('inverse_property')
                                 if not inverse_property:
                                     print(predicate)
-                                G.add_edge(_edge[1], _edge[0], api=self.api,
+                                G.add_edge(_edge[1], _edge[0],
+                                            api=self.api,
                                             input_field=output_field,
                                             input_type=_pred["@type"],
                                             source=source,
