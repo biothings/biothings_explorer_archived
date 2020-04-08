@@ -9,7 +9,7 @@ Storing metadata information and connectivity of APIs.
 import networkx as nx
 from .mapping_parser import MappingParser
 from .config import metadata
-from .utils.semmed import semmed
+from .utils.simple_semmed import semmed
 from pathlib import Path
 CURRENT_PATH = Path(__file__)
 
