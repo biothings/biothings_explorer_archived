@@ -388,30 +388,6 @@ metadata = {
     'api_type': "biolink",
     'api_name': "biolink"
   },
-  "robokop_gene2chemical": {
-    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/chemical_substance/",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2chemical.json",
-    "method": "get",
-    "path": "hgnc_id",
-    'api_type': "reasoner",
-    'api_name': "robokop"
-  },
-  "robokop_gene2genefamily": {
-    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/gene_family/",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2genefamily.json",
-    "method": "get",
-    "path": "hgnc_id",
-    'api_type': "reasoner",
-    'api_name': "robokop"
-  },
-  "robokop_chemical2disease": {
-    "url": "https://robokop.renci.org/api/simple/expand/chemical_substance/CHEMBL:{hgnc_id}/disease_or_phenotypic_feature/",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/chemical2disease.json",
-    "method": "get",
-    "path": "hgnc_id",
-    'api_type': "reasoner",
-    'api_name': "robokop"
-  },
   "dgidb_gene2chemical": {
     "url": "http://www.dgidb.org/api/v2/interactions.json?genes={gene_id}",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/dgidb/schema/dgidb_gene2chemical.json",
@@ -451,14 +427,6 @@ metadata = {
     "path": "doid",
     'api_type': "other",
     'api_name': "ontology lookup service"
-  },
-  "cohd_disease2chemical": {
-    "url": "http://cohd.io/api/frequencies/associatedConceptDomainFreq?dataset_id=1&concept_id={cohd}&domain=Drug",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/cohd/schema/disease2chemical.json",
-    "method": "get",
-    "path": "cohd",
-    'api_type': "other",
-    'api_name': 'cohd'
   },
   "stanford_biosample_disease2sample": {
     "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:Disease={mondo}&limit=1000",
@@ -516,4 +484,40 @@ metadata = {
     "api_type": "other",
     "api_name": "RGD"
   }
+}
+
+
+METADATA_OPTIOINAL = {
+  "robokop_gene2chemical": {
+    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/chemical_substance/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2chemical.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
+  "robokop_gene2genefamily": {
+    "url": "https://robokop.renci.org/api/simple/expand/gene/HGNC:{hgnc_id}/gene_family/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/gene2genefamily.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
+  "robokop_chemical2disease": {
+    "url": "https://robokop.renci.org/api/simple/expand/chemical_substance/CHEMBL:{hgnc_id}/disease_or_phenotypic_feature/",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/robokop/chemical2disease.json",
+    "method": "get",
+    "path": "hgnc_id",
+    'api_type': "reasoner",
+    'api_name': "robokop"
+  },
+  "cohd_disease2chemical": {
+    "url": "http://cohd.io/api/frequencies/associatedConceptDomainFreq?dataset_id=1&concept_id={cohd}&domain=Drug",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/cohd/schema/disease2chemical.json",
+    "method": "get",
+    "path": "cohd",
+    'api_type': "other",
+    'api_name': 'cohd'
+  },
 }
