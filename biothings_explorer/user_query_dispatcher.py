@@ -701,7 +701,7 @@ class Predict:
                                                         prev_graph=self.prev_graph,
                                                         pred=None)
                         self.seqd[query_id].query(verbose=verbose)
-                        self.log.append(self.seqd[query_id].log)
+                        self.log += self.seqd[query_id].log
                         # print(seqd.G.nodes())
                         self.G = merge_two_networkx_graphs(self.G, self.seqd[query_id].G)
                         self.merge_output_ids(query_id, self.seqd[query_id].output_ids)
@@ -721,6 +721,7 @@ class Predict:
                                                                     prev_graph=self.prev_graph,
                                                                     pred=None)
                     self.seqd[i + 1].query(verbose=verbose)
+                    self.log += self.seqd[i + 1].log
                     self.G = merge_two_networkx_graphs(self.G, self.seqd[i + 1].G)
                     self.output_ids[str(i + 1)] = self.seqd[i + 1].output_ids
                     self.prev_graph.update(self.seqd[i + 1].current_graph)
