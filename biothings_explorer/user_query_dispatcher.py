@@ -676,15 +676,14 @@ class Predict:
                 equivalent_ids = copy.deepcopy(self.output_ids[str(i)])
                 input_obj = None
             if (i > 0 and equivalent_ids != {}) or i == 0:
-                if verbose:
-                    if input_obj:
-                        _input = copy.copy(self.starts)
-                    if output_cls == 'BiologicalEntity':
-                        _output = 'Biological Entities'
-                    else:
-                        if not isinstance(output_cls, list) or not isinstance(output_cls, tuple):
-                            output_cls = [output_cls]
-                        _output = ' AND '.join(output_cls) + ' entities'
+                if input_obj:
+                    _input = copy.copy(self.starts)
+                if output_cls == 'BiologicalEntity':
+                    _output = 'Biological Entities'
+                else:
+                    if not isinstance(output_cls, list) or not isinstance(output_cls, tuple):
+                        output_cls = [output_cls]
+                    _output = ' AND '.join(output_cls) + ' entities'
                 self.output_ids[str(i + 1)] = {}
                 if equivalent_ids:
                     for j, input_cls in enumerate(equivalent_ids.keys()):
