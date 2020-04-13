@@ -115,37 +115,43 @@ metadata = {
     "url": "http://pending.biothings.io/semmed/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmed/schema.json',
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'DiseaseOrPhenotypicFeature'
   },
   "semmedanatomy": {
     "url": "https://pending.biothings.io/semmed_anatomy/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedanatomy/schema.json',
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'AnatomicalEntity'
   },
   "semmedbp": {
     "url": "https://pending.biothings.io/semmedbp/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedbp/schema.json",
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'BiologicalProcess'
   },
   "semmedchemical": {
     "url": "https://pending.biothings.io/semmedchemical/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedchemical/schema.json",
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'ChemicalSubstance'
   },
   "semmedgene": {
     "url": "https://pending.biothings.io/semmedgene/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedgene/schema.json',
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'Gene'
   },
   "semmedphenotype": {
     "url": "https://pending.biothings.io/semmedphenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     'api_type': "biothings",
-    'api_name': 'semmed'
+    'api_name': 'semmed',
+    'doc_type': 'PhenotypicFeature'
   },
   "mgigene2phenotype": {
     "url": "https://pending.biothings.io/mgigene2phenotype/query",
@@ -188,8 +194,7 @@ metadata = {
       'kegg': 'kegg',
       'pharmgkb': 'pharmgkb',
       'biocarta': 'biocarta'
-    },
-    'api_name': 'semmed'
+    }
   },
   "mf": {
     "scopes": ['_id', 'name'],
@@ -204,8 +209,7 @@ metadata = {
     "fields":{
       'name': 'name',
       'go': 'go'
-    },
-    'api_name': 'semmed'
+    }
   },
   "cc": {
     "scopes": ['_id', 'name'],
@@ -221,8 +225,7 @@ metadata = {
       'name': 'name',
       'go': 'go',
       'umls': 'umls'
-    },
-    'api_name': 'semmed'
+    }
   },
   "bp": {
     "scopes": ['_id', 'name'],
@@ -238,8 +241,7 @@ metadata = {
       'name': 'name',
       'go': 'go',
       'umls': 'umls'
-    },
-    'api_name': 'semmed'
+    }
   },
   "anatomy": {
     "scopes": ['umls', 'name'],
@@ -252,11 +254,11 @@ metadata = {
     "fields": {
       "name": "name",
       "umls": "umls"
-    },
-    'api_name': 'semmed'
+    }
   },
   "phenotype": {
     "scopes": ['umls', 'name'],
+    "id_ranks": ['umls', 'name'],
     "doc_type": "PhenotypicFeature",
     "api_type": "biothings",
     "url": "http://pending.biothings.io/semmedphenotype/query",
@@ -266,8 +268,7 @@ metadata = {
       "name": "name",
       "umls": "umls"
     },
-    "hint": True,
-    'api_name': 'semmed'
+    "hint": True
   },
   "umlschem": {
     "scopes": ['umls', 'name'],
@@ -280,8 +281,7 @@ metadata = {
     "fields": {
       "name": "name",
       "umls": "umls"
-    },
-    'api_name': 'semmed'
+    }
   },
   "biolink_anatomy2gene": {
     "url": "https://api.monarchinitiative.org/api/bioentity/anatomy/{anatomy_id}/genes?rows=100",

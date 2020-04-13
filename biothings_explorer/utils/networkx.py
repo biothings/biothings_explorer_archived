@@ -45,6 +45,8 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                         if i in output_id_types and j:
                             output_type = _val.get("@type")
                             source = _val.get("$source")
+                            if not isinstance(j, list):
+                                j = [j]
                             j = [str(jj) for jj in j]
                             G.add_nodes_from(j,
                                              identifier=i,
