@@ -120,9 +120,10 @@ class Dispatcher():
         grped_edges = self.group_edges(edges)
         apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
         # print(apis, inputs, modes, vals, grped_edges)
-        responses = self.caller.call_apis(inputs, verbose=verbose)
+        responses, self.log = self.caller.call_apis(inputs, verbose=verbose)
         if verbose:
             print("\n\n==== Step #3: Output normalization ====\n")
+        self.log.append("\n\n==== Step #3: Output normalization ====\n")
         for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
             output_types = []
             if metadata[api]['api_name'] == 'semmed':
@@ -137,6 +138,7 @@ class Dispatcher():
                 if not _res:
                     if verbose:
                         print("{} {}: No hits".format(_input['query_id'], api))
+                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 if val not in results:
                     results[val] = {}
@@ -180,10 +182,15 @@ class Dispatcher():
                         print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
                         print("{} {}: No hits".format(_input['query_id'], api))
+                if hits_cnt > 0:
+                    self.log.append("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                else:
+                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
             else:
                 if not _res:
                     if verbose:
                         print("{} {}: No hits".format(_input['query_id'], api))
+                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 hits_cnt = 0
                 for m, n in _res.items():
@@ -226,4 +233,8 @@ class Dispatcher():
                         print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
                     else:
                         print("{} {}: No hits".format(_input['query_id'], api))
-        return dict(results)
+                if hits_cnt > 0:
+                    self.log.append("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                else:
+                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
+        return (dict(results), self.log)

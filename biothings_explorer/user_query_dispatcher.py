@@ -108,6 +108,8 @@ class SingleEdgeQueryDispatcher():
             self.equivalent_ids = equivalent_ids
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
+        self.log = []
+        self.summary = []
 
     @staticmethod
     def group_edges_by_input_id(edges):
@@ -214,11 +216,12 @@ class SingleEdgeQueryDispatcher():
     def query(self, verbose=False):
         """Query APIs and organize outputs into networkx graph."""
         self.current_graph = {}
+        output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
         if verbose:
             print("==== Step #1: Query path planning ====")
-            output_cls_name = ' AND '.join(self.output_cls) if self.output_cls else 'None'
-            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and \
-                  '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
+            print("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
+        self.log.append("==== Step #1: Query path planning ====")
+        self.log.append("\nBecause {} is of type '{}', BTE will query our meta-KG for APIs that can take '{}' as input and '{}' as output".format(self.input_label, self.input_cls, self.input_cls, output_cls_name))
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
@@ -226,6 +229,7 @@ class SingleEdgeQueryDispatcher():
             # print("No edges found for the <input, pred, output> you specified")
             if verbose:
                 print("We are sorry! We couln't find any APIs which can do the type of query for you!")
+            self.log.append("We are sorry! We couln't find any APIs which can do the type of query for you!")
             return
         
         grouped_edges = self.group_edges_by_input_id(edges)
@@ -262,10 +266,12 @@ class SingleEdgeQueryDispatcher():
         if not input_edges:
             if verbose:
                 print("We are sorry! We couln't find any APIs which can do the type of query for you!")
+            self.log.append("We are sorry! We couln't find any APIs which can do the type of query for you!")
             return
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
-        _res = self.dp.dispatch(input_edges, verbose=verbose)
+        (_res, log) = self.dp.dispatch(input_edges, verbose=verbose)
+        self.log += log
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(_res, self.G, mapping_keys,
                                       id_mapping, output_id_types)
@@ -277,6 +283,7 @@ class SingleEdgeQueryDispatcher():
         self.construct_internal_graph(reverse=self.reverse)
         if verbose:
             print ("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
+        self.log.append("\nAfter id-to-object translation, BTE retrieved {} unique objects.".format(len(self.G) - source_nodes_cnt))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -402,6 +409,7 @@ class Explain:
         self.G = nx.MultiDiGraph()
         self.seqd = {}
         self.current_graph = {}
+        self.log = []
 
     def connect(self, verbose=False):
         if verbose:
@@ -411,9 +419,16 @@ class Explain:
             print("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, self.intermediate_cls_cnt))
             if self.intermediate_cls_cnt > 0:
                 for i, item in enumerate(self.intermediate_cls):
-                    print("Intermediate node #{} will have these type \
-                          constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
+                    print("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
             print("==========")
+        self.log.append("==========")
+        self.log.append("========== QUERY PARAMETER SUMMARY ==========")
+        self.log.append("==========\n")
+        self.log.append("BTE will find paths that join '{}' and '{}'. Paths will have {} intermediate node.\n".format(self.starts, self.ends, self.intermediate_cls_cnt))
+        if self.intermediate_cls_cnt > 0:
+            for i, item in enumerate(self.intermediate_cls):
+                self.log.append("Intermediate node #{} will have these type constraints: {}\n\n".format(i+1, ','.join([str(j) for j in self.intermediate_cls])))
+        self.log.append("==========")
         if self.intermediate_cls_cnt == 0:
             output_cls = self.intermediate_cls
         elif self.intermediate_cls == ['BiologicalEntity']:
@@ -423,27 +438,37 @@ class Explain:
         if verbose:
             print("========== QUERY #1 -- fetch all {} linked to '{}' ==========".format(output_cls, self.starts))
             print("==========\n")
+        self.log.append("========== QUERY #1 -- fetch all {} linked to '{}' ==========".format(output_cls, self.starts))
+        self.log.append("==========\n")
         self.seqd[1] = SingleEdgeQueryDispatcher(input_obj=self.input_obj,
                                           output_cls=self.intermediate_cls,
                                           query_id=1,
                                           registry=self.registry)
         self.seqd[1].query(verbose=verbose)
+        self.log += self.seqd[1].log
         self.G = copy.deepcopy(self.seqd[1].G)
         if self.intermediate_cls_cnt == 0:
+            if self.ends in self.G:
+                found = ''
+            else:
+                found = 'did not '
             if verbose:
-                if self.ends in self.G:
-                    found = ''
-                else:
-                    found = 'did not '
                 print("\n==========")
                 print("========== Final assembly of results ==========")
                 print("==========\n\n")
                 print("BTE {}found direct connection between '{}' and '{}'".format(found, self.starts, self.ends))
+            self.log.append("\n==========")
+            self.log.append("========== Final assembly of results ==========")
+            self.log.append("==========\n\n")
+            self.log.append("BTE {}found direct connection between '{}' and '{}'".format(found, self.starts, self.ends))
         else:
             if verbose:
                 print("\n\n==========")
                 print("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
                 print("==========\n")
+            self.log.append("\n\n==========")
+            self.log.append("========== QUERY #2 -- fetch all {} linked to '{}' ==========".format(output_cls, self.ends))
+            self.log.append("==========\n")
             self.seqd[2] = SingleEdgeQueryDispatcher(input_obj=self.output_obj,
                                                      output_cls=self.intermediate_cls,
                                                      prev_graph=self.seqd[1].current_graph,
@@ -451,6 +476,7 @@ class Explain:
                                                      reverse=True,
                                                      registry=self.registry)
             self.seqd[2].query(verbose=verbose)
+            self.log += self.seqd[2].log
             self.seqd[2].G = self.seqd[2].G.reverse()
             self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
             self.sub_G = self.sub_graph()
@@ -460,6 +486,10 @@ class Explain:
                 print("========== Final assembly of results ==========")
                 print("==========\n\n")
                 print("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
+            self.log.append("\n==========")
+            self.log.append("========== Final assembly of results ==========")
+            self.log.append("==========\n\n")
+            self.log.append("BTE found {} unique intermediate nodes connecting '{}' and '{}'".format(len(self.sub_G), self.starts, self.ends))
     
     def summary(self, attr):
         """"""
@@ -596,6 +626,7 @@ class Predict:
         self.output_ids = {}
         self.current_graph = {}
         self.prev_graph = {}
+        self.log = []
 
     def merge_output_ids(self, query_id, output_ids):
         level = query_id.split('.')[0]
@@ -622,6 +653,15 @@ class Predict:
                                                                   len(self.intermediate_nodes)))
             for i, item in enumerate(self.intermediate_nodes):
                 print("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
+        self.log.append("==========")
+        self.log.append("========== QUERY PARAMETER SUMMARY ==========")
+        self.log.append("==========\n")
+        self.log.append("BTE will find paths that join '{}' and '{}'. \
+                  Paths will have {} intermediate node.\n".format(self.starts,
+                                                                  self.ends,
+                                                                  len(self.intermediate_nodes)))
+        for i, item in enumerate(self.intermediate_nodes):
+            self.log.append("Intermediate node #{} will have these type constraints: {}\n".format(i+1, item))
         for i, output_cls in enumerate(self.paths):
             if i == 0:
                 # if it's the first element in the path
@@ -652,6 +692,8 @@ class Predict:
                         if verbose:
                             print("\n\n========== QUERY #{} -- fetch all {} linked to {} entites ==========".format(query_id, _output, input_cls))
                             print("==========\n")
+                        self.log.append("\n\n========== QUERY #{} -- fetch all {} linked to {} entites ==========".format(query_id, _output, input_cls))
+                        self.log.append("==========\n")
                         self.seqd[query_id] = SingleEdgeQueryDispatcher(input_obj=input_obj,
                                                         equivalent_ids=equivalent_ids[input_cls],
                                                         input_cls=input_cls,
@@ -660,6 +702,7 @@ class Predict:
                                                         prev_graph=self.prev_graph,
                                                         pred=None)
                         self.seqd[query_id].query(verbose=verbose)
+                        self.log.append(self.seqd[query_id].log)
                         # print(seqd.G.nodes())
                         self.G = merge_two_networkx_graphs(self.G, self.seqd[query_id].G)
                         self.merge_output_ids(query_id, self.seqd[query_id].output_ids)
@@ -670,6 +713,8 @@ class Predict:
                     if verbose:
                         print("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
                         print("==========\n")
+                    self.log.append("\n\n========== QUERY #{} -- fetch all {} linked to {} ==========".format(i + 1, _output, _input))
+                    self.log.append("==========\n")
                     self.seqd[i + 1] = SingleEdgeQueryDispatcher(input_obj=input_obj,
                                                                     input_cls=input_cls,
                                                                     output_cls=output_cls,
@@ -691,6 +736,13 @@ class Predict:
                 if self.output_ids.get(str(i + 1)):
                     for output_cls, _ids in self.output_ids[str(i+1)].items():
                         print("In the #{} query, BTE found {} unique {} nodes".format(i+1, len(_ids), output_cls))
+        self.log.append("\n==========")
+        self.log.append("========== Final assembly of results ==========")
+        self.log.append("==========\n\n")
+        for i in range(len(self.paths)):
+            if self.output_ids.get(str(i + 1)):
+                for output_cls, _ids in self.output_ids[str(i+1)].items():
+                    self.log.append("In the #{} query, BTE found {} unique {} nodes".format(i+1, len(_ids), output_cls))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""

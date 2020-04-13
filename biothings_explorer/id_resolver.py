@@ -83,9 +83,9 @@ class IDResolver():
             else:
                 self.construct_api_calls(api, _type, ids)
         # make API calls asynchronously and gather all outputs
-        self.responses = self.caller.call_apis(self.api_call_inputs,
-                                               size=10,
-                                               dotfield=True)
+        self.responses, _ = self.caller.call_apis(self.api_call_inputs,
+                                                  size=10,
+                                                  dotfield=True)
         self.parse_api_responses()
         return self.results
 

@@ -158,6 +158,7 @@ class BioThingsCaller():
             return responses
 
     def call_apis(self, inputs, size=100, dotfield=False, verbose=False):
+        self.log = []
         if verbose:
             cnt = Counter()
             if inputs:
@@ -168,8 +169,13 @@ class BioThingsCaller():
                 print("\nBTE found {} apis:\n".format(len(self.unique_apis)))
                 for i, _api in enumerate(self.unique_apis):
                     print("API {}. {}({} API call{})".format(i + 1, _api, cnt[_api], add_s(cnt[_api])))
+            self.log.append("\nBTE found {} apis:\n".format(len(self.unique_apis)))
+            for i, _api in enumerate(self.unique_apis):
+                self.log.append("API {}. {}({} API call{})".format(i + 1, _api, cnt[_api], add_s(cnt[_api])))
             print("\n\n==== Step #2: Query path execution ====")
+            self.log.append("\n\n==== Step #2: Query path execution ====")
             print("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
+            self.log.append("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(inputs, size=size, dotfield=dotfield, verbose=verbose))
-        return loop.run_until_complete(future)
+        return (loop.run_until_complete(future), self.log)
