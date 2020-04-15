@@ -10,6 +10,7 @@ import networkx as nx
 from .mapping_parser import MappingParser
 from .config import metadata
 from .utils.simple_semmed import semmed
+from .utils.cord import cord, SEMANTIC_TYPE_ID_MAPPING
 from pathlib import Path
 CURRENT_PATH = Path(__file__)
 
@@ -26,6 +27,33 @@ class Registry():
         self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
         self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
         self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
+
+    @staticmethod
+    def _auto_generate_cord_mapping(doc_type):
+        """Auto-generate schema mapping file for all CORD APIs
+        
+        :param: doc_type: the document type of the specific cord API
+        """
+        res = {
+            "@context": "http://schema.org",
+            "@type": doc_type
+        }
+        for id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
+            res[id_type] = id_type
+        for pred, output_types in cord[doc_type].items():
+            res[pred] = []
+            for output_type in output_types:
+                tmp = {
+                    "@type": output_type,
+                    "$source": "CORD",
+                    "pmd": "associated_with.pmc",
+                }
+                for input_id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
+                    for output_id_type in SEMANTIC_TYPE_ID_MAPPING[output_type]:
+                        tmp[output_id_type] = "associated_with." + output_id_type
+                    tmp["$input"] = input_id_type
+                    res[pred].append(tmp)
+        return res
 
     @staticmethod
     def _auto_generate_semmed_mapping(doc_type):
