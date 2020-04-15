@@ -13,6 +13,7 @@ from .stanford import restructure_stanford_response
 from .ctd import restructure_ctd_response
 from .opentarget import restructure_opentarget_response
 from .semmed import restructure_semmed_response
+from .cord import restructure_cord_response
 
 class APIPreprocess():
 
@@ -57,5 +58,7 @@ class APIPreprocess():
             return restructure_opentarget_response(self.json_doc)
         if self.api_name == 'semmed':
             return restructure_semmed_response(self.json_doc, self.output_types)
+        if self.api_name == 'cord':
+            return restructure_cord_response(self.json_doc, self.output_types)
         return self.json_doc
 

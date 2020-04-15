@@ -136,5 +136,19 @@ cord = {
             "BiologicalProcess",
             "CellularComponent"
         ]
+    },
+    "ChemicalSubstance": {
+        "associated_with": [
+            "ChemicalSubstance",
+            "Cell",
+            "DiseaseOrPhenotypicFeature",
+            "MolecularActivity",
+            "Protein",
+            "GenomicEntity",
+            "Gene",
+            "AnatomicalEntity",
+            "BiologicalProcess",
+            "CellularComponent"
+        ]
     }
 }

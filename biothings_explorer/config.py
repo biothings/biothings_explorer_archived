@@ -10,7 +10,7 @@ BIOTHINGS_SCHEMA_URL = 'https://raw.githubusercontent.com/data2health/schemas/bi
 id_ranks = {
   'Gene': ['entrez', 'ensembl', 'symbol', 'umls'],
   'SequenceVariant': ['dbsnp', 'hgvs'],
-  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'mesh', 'smiles', 'name', 'umls'],
+  'ChemicalSubstance': ['chembl', 'drugbank', 'pubchem', 'chebi', 'mesh', 'smiles', 'name', 'umls'],
   'pathway': ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
   'DiseaseOrPhenotypicFeature': ['mondo', 'doid', 'umls', 'mesh', 'hp', 'name'],
   'PhenotypicFeature': ['hp', 'umls'],
@@ -61,7 +61,7 @@ metadata = {
     'api_name': "myvariant.info"
   },
   "mychem.info": {
-    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id', 'chembl.smiles', 'pubchem.smiles.canonical', 
+    "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id', 'chebi.xrefs.chembl', 'chembl.smiles', 'pubchem.smiles.canonical', 
                'chebi.smiles','drugcentral.structures.smiles', 'pubchem.cid', 'chembl.pref_name', 'drugbank.name', 
                'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", 
                "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
@@ -74,6 +74,7 @@ metadata = {
     "method": "post",
     "fields": {
       'chembl.molecule_chembl_id': 'chembl',
+      'chebi.xrefs.chembl': 'chembl',
       'drugbank.id': 'drugbank',
       'drugbank.name': 'name',
       'chembl.pref_name': 'name',
@@ -81,6 +82,7 @@ metadata = {
       'drugcentral.xrefs.umlscui': 'umls',
       'drugcentral.xrefs.mesh_descriptor_ui': 'mesh',
       'chebi.id': 'chebi',
+      'chebi.xrefs.pubchem.cid': 'pubchem',
       'drugcentral.xrefs.chebi': 'chebi',
       'chembl.smiles': 'smiles',
       'pubchem.smiles.canonical': 'smiles',
@@ -152,6 +154,66 @@ metadata = {
     'api_type': "biothings",
     'api_name': 'semmed',
     'doc_type': 'PhenotypicFeature'
+  },
+  "cordgene": {
+    "url": "https://biothings.ncats.io/cord_gene/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'Gene'
+  },
+  "cordprotein": {
+    "url": "https://biothings.ncats.io/cord_protein/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'Protein'
+  },
+  "cordchemical": {
+    "url": "https://biothings.ncats.io/cord_chemical/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'ChemicalSubstance'
+  },
+  "cordcell": {
+    "url": "https://biothings.ncats.io/cord_cell/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'Cell'
+  },
+  "corddisease": {
+    "url": "https://biothings.ncats.io/cord_disease/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'DiseaseOrPhenotypicFeature'
+  },
+  "cordma": {
+    "url": "https://biothings.ncats.io/cord_ma/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'MolecularActivity'
+  },
+  "cordbp": {
+    "url": "https://biothings.ncats.io/cord_bp/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'BiologicalProcess'
+  },
+  "cordgenomicentity": {
+    "url": "https://biothings.ncats.io/cord_genomic_entity/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'GenomicEntity'
+  },
+  "cordanatomy": {
+    "url": "https://biothings.ncats.io/cord_anatomy/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'AnatomicalEntity'
+  },
+  "cordcc": {
+    "url": "https://biothings.ncats.io/cord_cc/query",
+    'api_type': "biothings",
+    'api_name': 'cord',
+    'doc_type': 'CellularComponent'
   },
   "mgigene2phenotype": {
     "url": "https://pending.biothings.io/mgigene2phenotype/query",

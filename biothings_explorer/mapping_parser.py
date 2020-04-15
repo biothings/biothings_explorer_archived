@@ -14,6 +14,7 @@ import networkx as nx
 from .schema_parser import SchemaParser
 from .utils.dataload import load_json_or_yaml
 from .utils.common import find_longest_common_path, get_dict_values, remove_prefix
+from .utils.cord import cord, SEMANTIC_TYPE_ID_MAPPING
 from .config import metadata, PREFIX_TO_REMOVE
 
 
@@ -51,7 +52,25 @@ class MappingParser():
         G = nx.MultiDiGraph()
         # get the document type
         self.type = self.mapping.get("@type")
-        if metadata[self.api].get('api_name') == 'semmed':
+        if metadata[self.api].get('api_name') == 'cord':
+            for pred, info in cord[self.type].items():
+                for output_type in info:
+                    for input_id in SEMANTIC_TYPE_ID_MAPPING[self.type]:
+                        for output_id in SEMANTIC_TYPE_ID_MAPPING[output_type]:
+                            G.add_edge(
+                                input_id.lower(), output_id.lower(),
+                                label=pred,
+                                mapping_key=pred,
+                                api=self.api,
+                                source='cord',
+                                input_field=input_id.lower(),
+                                input_id=input_id.lower(),
+                                input_type=self.type,
+                                output_id=output_id.lower(),
+                                output_field=pred,
+                                output_type=output_type
+                            )
+        elif metadata[self.api].get('api_name') == 'semmed':
             for pred, info in self.mapping.items():
                 if pred not in ["@context", "@type", "umls"]:
                     for _info in info:
