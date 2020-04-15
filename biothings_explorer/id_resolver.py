@@ -56,7 +56,7 @@ class IDResolver():
     def get_input_fields(mapping_file, _type):
         input_fields = mapping_file.get(_type)
         if isinstance(input_fields, list):
-            return input_fields[0]
+            return ','.join(input_fields)
         return input_fields
 
     def resolve_ids(self, inputs):

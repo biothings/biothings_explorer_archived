@@ -126,7 +126,7 @@ class Dispatcher():
         self.log.append("\n\n==== Step #3: Output normalization ====\n")
         for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
             output_types = []
-            if metadata[api]['api_name'] == 'semmed':
+            if metadata[api]['api_name'] in ['semmed', 'cord']:
                 output_types = list(set(_item['output_type'] for _item in edges))
             _res = APIPreprocess(_res, metadata[api]['api_type'], metadata[api]['api_name'], output_types).restructure()
             mapping = self.fetch_schema_mapping_file(api)
@@ -193,6 +193,7 @@ class Dispatcher():
                     self.log.append("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 hits_cnt = 0
+                print("_res", _res)
                 for m, n in _res.items():
                     if m not in results:
                         results[m] = {}
@@ -222,6 +223,8 @@ class Dispatcher():
                                 v.update({'$api': edges[0]['api']})
                                 results[m][k1].append(v)
                             else:
+                                if k == 'query':
+                                    continue
                                 hits_cnt += len(v)
                                 item = {"@type": edges[0]['output_type'],
                                         edges[0]['output_id']: [v],

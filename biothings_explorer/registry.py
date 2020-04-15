@@ -39,7 +39,7 @@ class Registry():
             "@type": doc_type
         }
         for id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
-            res[id_type] = id_type
+            res[id_type.lower()] = id_type.lower()
         for pred, output_types in cord[doc_type].items():
             res[pred] = []
             for output_type in output_types:
@@ -50,8 +50,8 @@ class Registry():
                 }
                 for input_id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
                     for output_id_type in SEMANTIC_TYPE_ID_MAPPING[output_type]:
-                        tmp[output_id_type] = "associated_with." + output_id_type
-                    tmp["$input"] = input_id_type
+                        tmp[output_id_type.lower()] = "associated_with." + output_id_type.lower()
+                    tmp["$input"] = input_id_type.lower()
                     res[pred].append(tmp)
         return res
 
@@ -86,7 +86,9 @@ class Registry():
         for _api, _info in metadata.items():
             # use the mapping parser module to load relationship of each API
             # into the network
-            if _info.get('api_name') == 'semmed':
+            if _info.get('api_name') == "cord":
+                mapping_file = self._auto_generate_cord_mapping(_info.get('doc_type'))
+            elif _info.get('api_name') == 'semmed':
                 mapping_file = self._auto_generate_semmed_mapping(_info.get('doc_type'))
             elif 'mapping_url' in _info:
                 self.registry[_api] = {}

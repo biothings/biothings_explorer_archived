@@ -55,7 +55,9 @@ class OutputParser():
                     continue
                 new_res[_res['query']] = {}
             else:
-                if metadata[self.api].get('api_name') == 'semmed':
+                # the semmed and cord API are already structured to conform to biolink model
+                # so no json transform is needed
+                if metadata[self.api].get('api_name') in ['semmed', 'cord']:
                     transformed_json = _res
                 else:
                     transformed_json = Transformer(_res, self.mapping).transform()
@@ -66,6 +68,8 @@ class OutputParser():
                         for k, v in transformed_json.items():
                             if k in ["@context", "@type"]:
                                 new_res[_res['query']][k] = v
+                            elif k == 'query':
+                                continue
                             else:
                                 if k not in new_res[_res['query']]:
                                     new_res[_res['query']][k] = []
