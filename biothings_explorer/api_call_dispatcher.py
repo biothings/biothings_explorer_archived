@@ -209,7 +209,8 @@ class Dispatcher():
                                 hits_cnt += len(v)
                                 for _v in v:
                                     if isinstance(_v, dict):
-                                        _v.update({"$api": edges[0]['api']})
+                                        _v.update({"$api": edges[0]['api'],
+                                                   "$source": edges[0]['source']})
                                         results[m][k1].append(_v)
                                     else:
                                         item = {"@type": edges[0]['output_type'],
@@ -219,7 +220,8 @@ class Dispatcher():
                                         results[m][k1].append(item)
                             elif isinstance(v, dict):
                                 hits_cnt += len(v)
-                                v.update({'$api': edges[0]['api']})
+                                v.update({'$api': edges[0]['api'],
+                                          '$source': edges[0]['source']})
                                 results[m][k1].append(v)
                             else:
                                 if k == 'query':
