@@ -193,7 +193,6 @@ class Dispatcher():
                     self.log.append("{} {}: No hits".format(_input['query_id'], api))
                     continue
                 hits_cnt = 0
-                print("_res", _res)
                 for m, n in _res.items():
                     if m not in results:
                         results[m] = {}
