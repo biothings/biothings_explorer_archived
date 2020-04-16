@@ -1,0 +1,12 @@
+{
+    "@context": "http://schema.org",
+    "@type": "ChemicalSubstance", 
+    "bts:chebi": "chebi", 
+    "bts:associatedWith": {
+        "@type": "DiseaseOrPhenotypicFeature", 
+        "bts:mondo": "associated_with.mondo", 
+        "bts:doid": "associated_with.doid", 
+        "$input": "bts:chebi", 
+        "$source": "scibite"
+    }
+}
