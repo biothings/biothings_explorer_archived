@@ -1,0 +1,12 @@
+{
+    "@context": "http://schema.org",
+    "@type": "ChemicalSubstance", 
+    "bts:chebi": "chebi", 
+    "bts:associatedWith": {
+        "@type": "Gene", 
+        "bts:entrez": "associated_with.ncbigene", 
+        "bts:ensembl": "associated_with.ensembl", 
+        "$input": "bts:chebi", 
+        "$source": "scibite"
+    }
+}

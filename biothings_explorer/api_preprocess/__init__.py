@@ -14,6 +14,7 @@ from .ctd import restructure_ctd_response
 from .opentarget import restructure_opentarget_response
 from .semmed import restructure_semmed_response
 from .cord import restructure_cord_response
+from .scibite import restructure_scibite_response
 
 class APIPreprocess():
 
@@ -60,5 +61,7 @@ class APIPreprocess():
             return restructure_semmed_response(self.json_doc, self.output_types)
         if self.api_name == 'cord':
             return restructure_cord_response(self.json_doc, self.output_types)
+        if self.api_name == 'scibite':
+            return restructure_scibite_response(self.json_doc)
         return self.json_doc
 

@@ -68,8 +68,6 @@ class OutputParser():
                         for k, v in transformed_json.items():
                             if k in ["@context", "@type"]:
                                 new_res[_res['query']][k] = v
-                            elif k == 'query':
-                                continue
                             else:
                                 if k not in new_res[_res['query']]:
                                     new_res[_res['query']][k] = []
