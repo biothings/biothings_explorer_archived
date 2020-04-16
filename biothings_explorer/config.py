@@ -545,6 +545,54 @@ metadata = {
     "path": "rgd",
     "api_type": "other",
     "api_name": "RGD"
+  },
+  "scibite_gene2chemical": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:{entrez}",
+    "path": "entrez",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2chemical/schema.json"
+  },
+  "scibite_chemical2gene": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/chemical_substance/gene/{chebi}",
+    "path": "chebi",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2gene/schema.json"
+  },
+  "scibite_chemical2disease": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/chemical_substance/disease/{chebi}",
+    "path": "chebi",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2disease/schema.json"
+  },
+  "scibite_gene2disease": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/gene/disease/NCBIGene:{entrez}",
+    "path": "entrez",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2disease/schema.json"
+  },
+  "scibite_disease2gene": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/disease/gene/{mondo}",
+    "path": "mondo",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2gene/schema.json"
+  },
+  "scibite_disease2chemical": {
+    "url": "https://automat.renci.org/cord19_scibite_v2/disease/chemical_substance/{mondo}",
+    "path": "mondo",
+    "method": "get",
+    "api_type": "automat",
+    "api_name": "scibite",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2chemical/schema.json"
   }
 }
 
