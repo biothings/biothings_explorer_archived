@@ -25,13 +25,33 @@ This is the development repo for the python client of BioThings Explorer. This t
 
    - [MyGene.info API](https://mygene.info)
    - [MyVariant.info API](https://myvariant.info)
-
    - [MyChem.info API](https://mychem.info)
-
    - [MyDisease.info API](http://mydisease.info)
    - [Semmed API](https://pending.biothings.io/semmed)
    - [BioLink API](https://api.monarchinitiative.org/api)
    - [DGIdb API](http://dgidb.org/api)
+   - [CORD Gene API](https://biothings.ncats.io/cord_gene)
+   - [CORD Protein API](https://biothings.ncats.io/cord_protein)
+   - [CORD Chemical API](https://biothings.ncats.io/cord_chemical)
+   - [CORD Cell API](https://biothings.ncats.io/cord_cell)
+   - [CORD Disease API](https://biothings.ncats.io/cord_disease)
+   - [CORD Molecular Activity API](https://biothings.ncats.io/cord_ma)
+   - [CORD Biological Process API](https://biothings.ncats.io/cord_bp)
+   - [CORD Genomic Entity API](https://biothings.ncats.io/cord_genomic_entity)
+   - [CORD Anatomy API](https://biothings.ncats.io/cord_anatomy)
+   - [CORD Cellular Component API](https://biothings.ncats.io/cord_cc)
+   - [EBIgene2phenotype API](https://biothings.ncats.io/ebigene2phenotype)
+   - [DISEASES API](https://biothings.ncats.io/DISEASES)
+   - [PFOCR API](https://biothings.ncats.io/pfocr)
+   - [QuickGO API](https://www.ebi.ac.uk/QuickGO)
+   - [LitVar API](https://www.ncbi.nlm.nih.gov/CBBresearch/Lu/Demo/LitVar/#!?query=)
+   - [Ontology Lookup Service API](https://www.ebi.ac.uk/ols)
+   - [Stanford Biosample API](http://api.kp.metadatacenter.org/)
+   - [ChEMBL API](https://www.ebi.ac.uk/chembl)
+   - [CTD API](http://ctdbase.org)
+   - [OpenTarget API](https://platform-api.opentargets.io)
+   - [RGD API](https://rest.rgd.mcw.edu)
+   - [Automat CORD19 Scibite API](https://automat.renci.org)
 
 4. Schema Mapping File
 
