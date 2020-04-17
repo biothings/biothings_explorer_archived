@@ -41,7 +41,8 @@ metadata = {
       'HGNC': 'hgnc',
       "ensembl.gene": 'ensembl'
     },
-    'api_name': "mygene.info"
+    'api_name': "mygene.info",
+    'smart_api_id': "59dce17363dce279d389100834e43648"
   },
   "myvariant.info": {
     "scopes": ['dbsnp.rsid', '_id', 'clinvar.rsid',
@@ -58,7 +59,8 @@ metadata = {
       '_id': "hgvs",
       'dbsnp.rsid': 'dbsnp'
     },
-    'api_name': "myvariant.info"
+    'api_name': "myvariant.info",
+    'smart_api_id': "09c8782d9f4027712e65b95424adba79"
   },
   "mychem.info": {
     "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id', 'chebi.xrefs.chembl', 'chembl.smiles', 'pubchem.smiles.canonical', 
@@ -89,7 +91,8 @@ metadata = {
       'chebi.smiles': 'smiles',
       'drugcentral.structures.smiles': 'smiles'
     },
-    'api_name': "mychem.info"
+    'api_name': "mychem.info",
+    "smart_api_id": "8f08d1446e0bb9c2b323713ce83e2bd3"
   },
   "mydisease.info": {
     "scopes": ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
@@ -111,133 +114,154 @@ metadata = {
       'mondo.label': 'name',
       'disgenet.xrefs.disease_name': 'name'
     },
-    'api_name': "mydisease.info"
+    'api_name': "mydisease.info",
+    "smart_api_id": "f307760715d91908d0ae6de7f0810b22"
   },
   "semmeddisease": {
     "url": "http://pending.biothings.io/semmed/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmed/schema.json',
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'DiseaseOrPhenotypicFeature'
+    'doc_type': 'DiseaseOrPhenotypicFeature',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedanatomy": {
     "url": "https://pending.biothings.io/semmed_anatomy/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedanatomy/schema.json',
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'AnatomicalEntity'
+    'doc_type': 'AnatomicalEntity',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedbp": {
     "url": "https://pending.biothings.io/semmedbp/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedbp/schema.json",
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'BiologicalProcess'
+    'doc_type': 'BiologicalProcess',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedchemical": {
     "url": "https://pending.biothings.io/semmedchemical/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedchemical/schema.json",
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'ChemicalSubstance'
+    'doc_type': 'ChemicalSubstance',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedgene": {
     "url": "https://pending.biothings.io/semmedgene/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedgene/schema.json',
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'Gene'
+    'doc_type': 'Gene',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedphenotype": {
     "url": "https://pending.biothings.io/semmedphenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     'api_type': "biothings",
     'api_name': 'semmed',
-    'doc_type': 'PhenotypicFeature'
+    'doc_type': 'PhenotypicFeature',
+    "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "cordgene": {
     "url": "https://biothings.ncats.io/cord_gene/query",
     'api_type': "biothings",
     'api_name': 'cord',
-    'doc_type': 'Gene'
+    'doc_type': 'Gene',
+    "smart_api_id": "6bc54230a6fa7693b2cd113430387ca7"
   },
   "cordprotein": {
     "url": "https://biothings.ncats.io/cord_protein/query",
     'api_type': "biothings",
     'api_name': 'cord',
-    'doc_type': 'Protein'
+    'doc_type': 'Protein',
+    "smart_api_id": "1066244f2976e931654394581255630e"
   },
   "cordchemical": {
     "url": "https://biothings.ncats.io/cord_chemical/query",
     'api_type': "biothings",
     'api_name': 'cord',
-    'doc_type': 'ChemicalSubstance'
+    'doc_type': 'ChemicalSubstance',
+    "smart_api_id": "503e8c42d041aa5b8b1ffafaf612c298"
   },
   "cordcell": {
     "url": "https://biothings.ncats.io/cord_cell/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'Cell'
+    'api_name': 'CORD Cell API',
+    'doc_type': 'Cell',
+    "smart_api_id": "3d6bacf6e305bee5efdd25d1560996e1"
   },
   "corddisease": {
     "url": "https://biothings.ncats.io/cord_disease/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'DiseaseOrPhenotypicFeature'
+    'api_name': 'CORD DiseaseOrPhenotypicFeatur API',
+    'doc_type': 'DiseaseOrPhenotypicFeature',
+    "smart_api_id": "871d5b6761d91a7805572c47f016fe47"
   },
   "cordma": {
     "url": "https://biothings.ncats.io/cord_ma/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'MolecularActivity'
+    'api_name': 'CORD Molecular Activity API ',
+    'doc_type': 'MolecularActivity',
+    "smart_api_id": "066a2ef51223a5a95216355facaac9d0"
   },
   "cordbp": {
     "url": "https://biothings.ncats.io/cord_bp/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'BiologicalProcess'
+    'api_name': 'CORD Biological Process API',
+    'doc_type': 'BiologicalProcess',
+    "smart_api_id": "7cbc3ff9b2d09cb8075715bde740ce4f"
   },
   "cordgenomicentity": {
     "url": "https://biothings.ncats.io/cord_genomic_entity/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'GenomicEntity'
+    'api_name': 'CORD Genomic Entity API',
+    'doc_type': 'GenomicEntity',
+    "smart_api_id": "bffe279a1387ef956a423e2e8a133cf6"
   },
   "cordanatomy": {
     "url": "https://biothings.ncats.io/cord_anatomy/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'AnatomicalEntity'
+    'api_name': 'CORD Anatomy API',
+    'doc_type': 'AnatomicalEntity',
+    "smart_api_id": "52f5867b9cc9cf8664565cc9ef2af276"
   },
   "cordcc": {
     "url": "https://biothings.ncats.io/cord_cc/query",
     'api_type': "biothings",
-    'api_name': 'cord',
-    'doc_type': 'CellularComponent'
+    'api_name': 'CORD Cellular Component API',
+    'doc_type': 'CellularComponent',
+    "smart_api_id": "bf5aac143254714988018d87dc447a5c"
   },
   "mgigene2phenotype": {
     "url": "https://pending.biothings.io/mgigene2phenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mgigene2phenotype/schema.json",
     'api_type': "biothings",
-    'api_name': 'mgigene2phenotype'
+    'api_name': 'MGIgene2phenotype API',
+    "smart_api_id": "77ed27f111262d0289ed4f4071faa619"
   },
   "ebigene2phenotype": {
     "url": "https://pending.biothings.io/ebigene2phenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/ebigene2phenotype/schema.json",
     'api_type': "biothings",
-    'api_name': 'ebigene2phenotype'
+    'api_name': 'EBIgene2phenotype API',
+    "smart_api_id": "1f47552dabd67351d4c625adb0a10d00"
   },
   "DISEASES": {
     "url": "https://pending.biothings.io/DISEASES/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/DISEASES/schema.json",
     'api_type': "biothings",
-    'api_name': 'DISEASES'
+    'api_name': 'DISEASES API',
+    'smart_api_id': "a7f784626a426d054885a5f33f17d3f8"
   },
   "pfocr": {
     "url": "https://pending.biothings.io/pfocr/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/pfocr/schema.json",
     'api_type': "biothings",
-    'api_name': 'pfocr'
+    'api_name': 'pfocr API',
+    "smart_api_id": "edeb26858bd27d0322af93e7a9e08761"
   },
   "pathway": {
     "scopes": ['_id', 'name'],
@@ -351,7 +375,8 @@ metadata = {
     "method": "get",
     "path": "anatomy_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_disease2gene": {
     "url": "https://api.monarchinitiative.org/api/bioentity/disease/{disease_id}/genes?rows=100",
@@ -359,7 +384,8 @@ metadata = {
     "method": "get",
     "path": "disease_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
 
   "biolink_disease2pathway": {
@@ -368,7 +394,8 @@ metadata = {
     "method": "get",
     "path": "disease_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_disease2phenotype": {
     "url": "https://api.monarchinitiative.org/api/bioentity/disease/{disease_id}/phenotypes?rows=100",
@@ -376,7 +403,8 @@ metadata = {
     "method": "get",
     "path": "disease_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_gene2anatomy": {
     "url": "https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:{gene_id}/anatomy?rows=100",
@@ -384,7 +412,8 @@ metadata = {
     "method": "get",
     "path": "gene_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_gene2disease": {
     "url": "https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:{gene_id}/diseases?rows=100",
@@ -392,7 +421,8 @@ metadata = {
     "method": "get",
     "path": "gene_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_geneinteraction": {
     "url": "https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:{gene_id}/interactions?rows=100",
@@ -400,7 +430,8 @@ metadata = {
     "method": "get",
     "path": "gene_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_gene2phenotype": {
     "url": "https://api.monarchinitiative.org/api/bioentity/gene/NCBIGene:{gene_id}/phenotypes?rows=100",
@@ -408,7 +439,8 @@ metadata = {
     "method": "get",
     "path": "gene_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_pathway2disease": {
     "url": "https://api.monarchinitiative.org/api/bioentity/pathway/REACT:{pathway_id}/diseases?rows=100",
@@ -416,7 +448,8 @@ metadata = {
     "method": "get",
     "path": "pathway_id",
     'api_type': "biolink",
-    'api_name': 'biolink'
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_pathway2phenotype": {
     "url": "https://api.monarchinitiative.org/api/bioentity/pathway/REACT:{pathway_id}/phenotypes?rows=100",
@@ -424,7 +457,8 @@ metadata = {
     "method": "get",
     "path": "pathway_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_phenotype2disease": {
     "url": "https://api.monarchinitiative.org/api/bioentity/phenotype/{phenotype_id}/diseases?rows=100",
@@ -432,7 +466,8 @@ metadata = {
     "method": "get",
     "path": "phenotype_id",
     'api_type': "biolink",
-    'api_name': 'biolink'
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_phenotype2gene": {
     "url": "https://api.monarchinitiative.org/api/bioentity/phenotype/{phenotype_id}/genes?rows=100",
@@ -440,7 +475,8 @@ metadata = {
     "method": "get",
     "path": "phenotype_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "biolink_phenotype2pathway": {
     "url": "https://api.monarchinitiative.org/api/bioentity/phenotype/{phenotype_id}/pathways?rows=100",
@@ -448,7 +484,8 @@ metadata = {
     "method": "get",
     "path": "phenotype_id",
     'api_type': "biolink",
-    'api_name': "biolink"
+    'api_name': "BioLink API",
+    "smart_api_id": "d22b657426375a5295e7da8a303b9893"
   },
   "dgidb_gene2chemical": {
     "url": "http://www.dgidb.org/api/v2/interactions.json?genes={gene_id}",
@@ -456,7 +493,8 @@ metadata = {
     "method": "get",
     "path": "gene_id",
     'api_type': "other",
-    'api_name': "dgidb"
+    'api_name': "DGIdb API",
+    "smart_api_id": "e3edd325c76f2992a111b43a907a4870"
   },
   "dgidb_chemical2gene": {
     "url": "http://www.dgidb.org/api/v2/interactions.json?drugs={chembl_id}",
@@ -464,7 +502,8 @@ metadata = {
     "method": "get",
     "path": "chembl_id",
     'api_type': "other",
-    'api_name': "dgidb"
+    'api_name': "DGIdb API",
+    "smart_api_id": "e3edd325c76f2992a111b43a907a4870"
   },
   "quickgo_children": {
     "url": "https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/{goterm}/children",
@@ -472,7 +511,8 @@ metadata = {
     "method": "get",
     "path": "goterm",
     'api_type': "other",
-    'api_name': 'quickgo'
+    'api_name': 'QuickGO API',
+    "smart_api_id": "1f277e1563fcfd124bfae2cc3c4bcdec"
   },
   "litvar": {
     "url": "https://www.ncbi.nlm.nih.gov/research/bionlp/litvar/api/v1/entity/litvar/{dbsnp}##",
@@ -480,7 +520,8 @@ metadata = {
     "method": "get",
     "path": "dbsnp",
     'api_type': "other",
-    'api_name': 'litvar'
+    'api_name': 'LitVar API',
+    "smart_api_id": "dca415f2d792976af9d642b7e73f7a41"
   },
   "ols_children": {
     "url": "https://www.ebi.ac.uk/ols/api/ontologies/doid/children?id={doid}",
@@ -488,7 +529,8 @@ metadata = {
     "method": "get",
     "path": "doid",
     'api_type': "other",
-    'api_name': "ontology lookup service"
+    'api_name': "Ontology Lookup Service API",
+    "smart_api_id": "1c056ffc7ed0dd1229e71c4752239465"
   },
   "stanford_biosample_disease2sample": {
     "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:Disease={mondo}&limit=1000",
@@ -496,7 +538,8 @@ metadata = {
     "method": "get",
     "path": "mondo",
     "api_type": "stanford",
-    "api_name": "stanford_kp"
+    "api_name": "Stanford BioSample API",
+    "smart_api_id": "553a49d112bb19306253942ebd6377a9"
   },
   "stanford_biosample_cl2sample": {
     "url": "http://api.kp.metadatacenter.org/biosample/search?q=biolink:CellLine={clo}&limit=1000",
@@ -504,7 +547,8 @@ metadata = {
     "method": "get",
     "path": "clo",
     "api_type": "stanford",
-    "api_name": "stanford_kp"
+    "api_name": "Stanford BioSample API",
+    "smart_api_id": "553a49d112bb19306253942ebd6377a9"
   },
   "chembl_drug_mechanism": {
     "url": "https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id={chembl}",
@@ -512,7 +556,8 @@ metadata = {
     "method": "get",
     "path": "chembl",
     "api_type": "other",
-    "api_name": "ChEMBL"
+    "api_name": "ChEMBL API",
+    "smart_api_id": "71add13e7c8b26b0046cfb8cf5092395"
   },
   "ctd_chemical2gene": {
     "url": "http://ctdbase.org/tools/batchQuery.go?inputType=chem&inputTerms={mesh}|mercury&report=genes_curated&format=json",
@@ -520,7 +565,8 @@ metadata = {
     "method": "get",
     "path": "mesh",
     "api_type": "ctd",
-    "api_name": "CTD"
+    "api_name": "CTD API",
+    "smart_api_id": "0212611d1c670f9107baf00b77f0889a"
   },
   "ctd_gene2disease": {
     "url": "http://ctdbase.org/tools/batchQuery.go?inputType=gene&inputTerms={entrez}&report=diseases_curated&format=json",
@@ -528,7 +574,8 @@ metadata = {
     "method": "get",
     "path": "entrez",
     "api_type": "ctd",
-    "api_name": "CTD"
+    "api_name": "CTD API",
+    "smart_api_id": "0212611d1c670f9107baf00b77f0889a"
   },
   "opentarget": {
     "url": "https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target={ensembl}&datasource=chembl&size=15&fields=drug",
@@ -536,7 +583,8 @@ metadata = {
     "method": "get",
     "path": "ensembl",
     "api_type": "opentarget",
-    "api_name": "opentarget"
+    "api_name": "OpenTarget API",
+    "smart_api_id": "542ba165e1b4227854cf7c0a8addcc79"
   },
   "RGD": {
     "url": "https://rest.rgd.mcw.edu/rgdws/genes/{rgd}",
@@ -544,55 +592,62 @@ metadata = {
     "method": "get",
     "path": "rgd",
     "api_type": "other",
-    "api_name": "RGD"
+    "api_name": "RGD API",
+    "smart_api_id": "eb28713e2e23160e80e88f3a5dabcca4"
   },
   "scibite_gene2chemical": {
     "url": "https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:{entrez}",
     "path": "entrez",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2chemical/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2chemical/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   },
   "scibite_chemical2gene": {
     "url": "https://automat.renci.org/cord19_scibite_v2/chemical_substance/gene/{chebi}",
     "path": "chebi",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2gene/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2gene/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   },
   "scibite_chemical2disease": {
     "url": "https://automat.renci.org/cord19_scibite_v2/chemical_substance/disease/{chebi}",
     "path": "chebi",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2disease/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_chemical2disease/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   },
   "scibite_gene2disease": {
     "url": "https://automat.renci.org/cord19_scibite_v2/gene/disease/NCBIGene:{entrez}",
     "path": "entrez",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2disease/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_gene2disease/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   },
   "scibite_disease2gene": {
     "url": "https://automat.renci.org/cord19_scibite_v2/disease/gene/{mondo}",
     "path": "mondo",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2gene/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2gene/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   },
   "scibite_disease2chemical": {
     "url": "https://automat.renci.org/cord19_scibite_v2/disease/chemical_substance/{mondo}",
     "path": "mondo",
     "method": "get",
     "api_type": "automat",
-    "api_name": "scibite",
-    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2chemical/schema.json"
+    "api_name": "Automat CORD19 Scibite API",
+    "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/scibite_disease2chemical/schema.json",
+    "smart_api_id": "5c5a0b5bc77e5d25d1a04e1385f9fad7"
   }
 }
 
