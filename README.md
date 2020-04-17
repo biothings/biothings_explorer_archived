@@ -20,8 +20,6 @@ This is the development repo for the python client of BioThings Explorer. This t
 2. SmartAPI
 
    [SmartAPI](https://smart-api.info) aims to maximize the FAIRness (Findability, Accessibility, Interoperability, and Reusability) of web-based Application Programming Interfaces (APIs). Rich metadata is essential to properly describe your API so that it becomes discoverable, connected, and reusable. BioThings Explorer takes advantage of the rich metadata information described in SmartAPI and create a meta knowledge graph, allowing BioThings Explorer to autonomously query a distributed knowledge graph. The distributed knowledge graph is made up of biomedical APIs that have been annotated with semantically-precise descriptions of their inputs and outputs.
-   
-   ![BTE Metagraph](jupyer\ notebooks/img/smartapi_metagraph.png "BioThings Explorer metagraph")
 
 ### Current Integrated APIs
 
@@ -58,6 +56,15 @@ This is the development repo for the python client of BioThings Explorer. This t
 
 ### How to use the package
 
-Jupyter notebook demo is located at [this folder](https://github.com/kevinxin90/bte_schema/tree/master/jupyter%20notebooks). 
-
 Official Documentation is Available at [`//biothings-explorer.readthedocs.io`](https://biothings-explorer.readthedocs.io/en/latest/)
+
+Jupyter notebook demo is located at [this folder](https://github.com/kevinxin90/bte_schema/tree/master/jupyter%20notebooks).
+
+Some real world use cases of BioThings Explorer.
+
+   - [Why does imatinib have an effect on the treatment of chronic myelogenous leukemia (CML)?](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/EXPLAIN_demo.ipynb)
+   - [What drugs might be used to treat hyperphenylalaninemia?](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb)
+   - [Finding New Uses for Existing Drugs to Treat Parkinson’s Disease](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/TIDBIT%2002%20Finding%20New%20Uses%20for%20Existing%20Drugs%20to%20Treat%20Parkinson%E2%80%99s%20Disease.ipynb)
+   - [Finding Marketed Drugs that Might Treat an Unknown Syndrome by Perturbing the Disease Mechanism Pathway](https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/TIDBIT%2004%20Finding%20Marketed%20Drugs%20that%20Might%20Treat%20an%20Unknown%20Syndrome%20by%20Perturbing%20the%20Disease%20Mechanism%20Pathway.ipynb)
+
+
