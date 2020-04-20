@@ -32,5 +32,3 @@ def restructure_scibite_response(json_doc):
     for k, v in res.items():
         new_res[k] = list(v)
     return {'associated_with': new_res}
-
-
