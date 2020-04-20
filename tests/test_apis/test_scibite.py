@@ -59,7 +59,7 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('UACA' in seqd.G)
         self.assertTrue('CXCR4' in seqd.G)
 
-    def test_disease2gene(self):
+    def test_disease2chemical(self):
         """Test /disease/chemical_substance/{diseaseid} endpoint"""
         seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
                                          input_id='mondo',
