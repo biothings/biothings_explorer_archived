@@ -7,7 +7,7 @@ reg = Registry()
 class TestSingleHopQuery(unittest.TestCase):
 
     def test_gene2chemical(self):
-        # test <chemical, target, gene>
+        """Test /gene/chemical_substance/{geneid} endpoint"""
         seqd = SingleEdgeQueryDispatcher(output_cls='ChemicalSubstance',
                                          input_cls='Gene',
                                          input_id='entrez',
@@ -17,7 +17,7 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('ENFUVIRTIDE' in seqd.G)
 
     def test_chemical2disease(self):
-        # test <gene, targetedBy, chemical>
+        """Test /chemical_substance/disease/{chemicalid} endpoint"""
         seqd = SingleEdgeQueryDispatcher(input_cls='ChemicalSubstance',
                                          input_id='chebi',
                                          output_cls='DiseaseOrPhenotypicFeature',
@@ -28,7 +28,7 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('melanoma (disease)' in seqd.G)
 
     def test_chemical2gene(self):
-        # test <gene, targetedBy, chemical>
+        """Test /chemical_substance/gene/{chemicalid} endpoint"""
         seqd = SingleEdgeQueryDispatcher(input_cls='ChemicalSubstance',
                                          input_id='chebi',
                                          output_cls='Gene',
@@ -37,3 +37,35 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('HMGB1' in seqd.G)
         self.assertTrue('TP53' in seqd.G)
         self.assertTrue('TNF' in seqd.G)
+
+    def test_gene2disease(self):
+        """Test /gene/disease/{geneid} endpoint"""
+        seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
+                                         input_id='entrez',
+                                         output_cls='DiseaseOrPhenotypicFeature',
+                                         values='7852')
+        seqd.query()
+        self.assertTrue('epidermodysplasia verruciformis' in seqd.G)
+        self.assertTrue('Waldenstrom macroglobulinemia' in seqd.G)
+
+    def test_disease2gene(self):
+        """Test /disease/gene/{diseaseid} endpoint"""
+        seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
+                                         input_id='mondo',
+                                         output_cls='Gene',
+                                         values='MONDO:0007926')
+        seqd.query()
+        self.assertTrue('FBF1' in seqd.G)
+        self.assertTrue('UACA' in seqd.G)
+        self.assertTrue('CXCR4' in seqd.G)
+
+    def test_disease2gene(self):
+        """Test /disease/chemical_substance/{diseaseid} endpoint"""
+        seqd = SingleEdgeQueryDispatcher(input_cls='DiseaseOrPhenotypicFeature',
+                                         input_id='mondo',
+                                         output_cls='ChemicalSubstance',
+                                         values='MONDO:0007926')
+        seqd.query()
+        self.assertTrue('CHLORAMBUCIL' in seqd.G)
+        self.assertTrue('flunixin' in seqd.G)
+        self.assertTrue('HETASTARCH' in seqd.G)
