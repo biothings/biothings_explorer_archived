@@ -86,9 +86,9 @@ class Registry():
         for _api, _info in metadata.items():
             # use the mapping parser module to load relationship of each API
             # into the network
-            if _info.get('api_name') == "cord":
+            if _info.get('api_name') == 'CORD API':
                 mapping_file = self._auto_generate_cord_mapping(_info.get('doc_type'))
-            elif _info.get('api_name') == 'semmed':
+            elif _info.get('api_name') == 'SEMMED API':
                 mapping_file = self._auto_generate_semmed_mapping(_info.get('doc_type'))
             elif 'mapping_url' in _info:
                 self.registry[_api] = {}

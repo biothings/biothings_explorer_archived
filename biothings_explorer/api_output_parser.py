@@ -57,7 +57,7 @@ class OutputParser():
             else:
                 # the semmed and cord API are already structured to conform to biolink model
                 # so no json transform is needed
-                if metadata[self.api].get('api_name') in ['semmed', 'cord']:
+                if metadata[self.api].get('api_name') in ['SEMMED API', 'CORD API']:
                     transformed_json = _res
                 else:
                     transformed_json = Transformer(_res, self.mapping).transform()
