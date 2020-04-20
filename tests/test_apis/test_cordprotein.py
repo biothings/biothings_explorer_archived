@@ -87,8 +87,8 @@ class TestSingleHopQuery(unittest.TestCase):
         """Test protein-cell"""
         seqd = SingleEdgeQueryDispatcher(output_cls='Cell',
                                          input_cls='Protein',
-                                         input_id='PR:000008999',
-                                         values='3684')
+                                         input_id='pr',
+                                         values='PR:000008999')
         seqd.query()
         self.assertTrue('CL:0000094' in seqd.G)
 
@@ -99,4 +99,4 @@ class TestSingleHopQuery(unittest.TestCase):
                                          input_id='pr',
                                          values='PR:000008999')
         seqd.query()
-        self.assertTrue('scalp-ear-nipple syndrome' in seqd.G)
+        self.assertTrue('DOID:0111550' in seqd.G)
