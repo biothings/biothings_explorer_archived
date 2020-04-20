@@ -15,6 +15,7 @@ from .schema_parser import SchemaParser
 from .utils.dataload import load_json_or_yaml
 from .utils.common import find_longest_common_path, get_dict_values, remove_prefix
 from .utils.cord import cord, SEMANTIC_TYPE_ID_MAPPING
+from .utils.semmed import semmed
 from .config import metadata, PREFIX_TO_REMOVE
 
 
@@ -52,7 +53,7 @@ class MappingParser():
         G = nx.MultiDiGraph()
         # get the document type
         self.type = self.mapping.get("@type")
-        if metadata[self.api].get('api_name') == 'cord':
+        if metadata[self.api].get('api_name') == 'CORD API':
             for pred, info in cord[self.type].items():
                 for output_type in info:
                     for input_id in SEMANTIC_TYPE_ID_MAPPING[self.type]:
@@ -62,7 +63,7 @@ class MappingParser():
                                 label=pred,
                                 mapping_key=pred,
                                 api=self.api,
-                                source='cord',
+                                source='CORD API',
                                 input_field=input_id.lower(),
                                 input_id=input_id.lower(),
                                 input_type=self.type,
@@ -70,23 +71,22 @@ class MappingParser():
                                 output_field=pred,
                                 output_type=output_type
                             )
-        elif metadata[self.api].get('api_name') == 'semmed':
-            for pred, info in self.mapping.items():
-                if pred not in ["@context", "@type", "umls"]:
-                    for _info in info:
-                        G.add_edge(
-                            'umls', 'umls',
-                            label=pred,
-                            mapping_key=pred,
-                            api=self.api,
-                            source='semmed',
-                            input_field='umls',
-                            input_id='umls',
-                            input_type=self.type,
-                            output_id='umls',
-                            output_field=pred,
-                            output_type=_info['@type']
-                        )
+        elif metadata[self.api].get('api_name') == 'SEMMED API':
+            for pred, info in semmed[self.type].items():
+                for output_type in info:
+                    G.add_edge(
+                        'umls', 'umls',
+                        label=pred,
+                        mapping_key=pred,
+                        api=self.api,
+                        source='SEMMED API',
+                        input_field='umls',
+                        input_id='umls',
+                        input_type=self.type,
+                        output_id='umls',
+                        output_field=pred,
+                        output_type=output_type
+                    )
         else:
             # classify the keys in the JSON doc into IDs or Links
             clsf = self.classify_keys_in_json(self.mapping)
