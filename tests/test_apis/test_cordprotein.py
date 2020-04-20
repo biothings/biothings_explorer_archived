@@ -99,4 +99,4 @@ class TestSingleHopQuery(unittest.TestCase):
                                          input_id='pr',
                                          values='PR:000008999')
         seqd.query()
-        self.assertTrue('scalp-ear-nipple syndrome' in seqd.G)
+        self.assertTrue('DOID:0111550' in seqd.G)
