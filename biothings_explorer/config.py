@@ -118,7 +118,7 @@ metadata = {
     "smart_api_id": "f307760715d91908d0ae6de7f0810b22"
   },
   "semmeddisease": {
-    "url": "http://pending.biothings.io/semmed/query",
+    "url": "http://biothings.ncats.io/semmed/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmed/schema.json',
     'api_type': "biothings",
     'api_name': 'semmed',
@@ -126,7 +126,7 @@ metadata = {
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedanatomy": {
-    "url": "https://pending.biothings.io/semmed_anatomy/query",
+    "url": "https://biothings.ncats.io/semmed_anatomy/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedanatomy/schema.json',
     'api_type': "biothings",
     'api_name': 'SEMMED API',
@@ -134,7 +134,7 @@ metadata = {
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedbp": {
-    "url": "https://pending.biothings.io/semmedbp/query",
+    "url": "https://biothings.ncats.io/semmedbp/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedbp/schema.json",
     'api_type': "biothings",
     'api_name': 'SEMMED API',
@@ -142,7 +142,7 @@ metadata = {
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedchemical": {
-    "url": "https://pending.biothings.io/semmedchemical/query",
+    "url": "https://biothings.ncats.io/semmedchemical/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedchemical/schema.json",
     'api_type': "biothings",
     'api_name': 'SEMMED API',
@@ -150,7 +150,7 @@ metadata = {
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedgene": {
-    "url": "https://pending.biothings.io/semmedgene/query",
+    "url": "https://biothings.ncats.io/semmedgene/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedgene/schema.json',
     'api_type': "biothings",
     'api_name': 'SEMMED API',
@@ -158,7 +158,7 @@ metadata = {
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },
   "semmedphenotype": {
-    "url": "https://pending.biothings.io/semmedphenotype/query",
+    "url": "https://biothings.ncats.io/semmedphenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     'api_type': "biothings",
     'api_name': 'SEMMED API',
@@ -168,96 +168,96 @@ metadata = {
   "cordgene": {
     "url": "https://biothings.ncats.io/cord_gene/query",
     'api_type': "biothings",
-    'api_name': 'CORD Gene API',
+    'api_name': 'CORD API',
     'doc_type': 'Gene',
     "smart_api_id": "6bc54230a6fa7693b2cd113430387ca7"
   },
   "cordprotein": {
     "url": "https://biothings.ncats.io/cord_protein/query",
     'api_type': "biothings",
-    'api_name': 'CORD Protein API',
+    'api_name': 'CORD API',
     'doc_type': 'Protein',
     "smart_api_id": "1066244f2976e931654394581255630e"
   },
   "cordchemical": {
     "url": "https://biothings.ncats.io/cord_chemical/query",
     'api_type': "biothings",
-    'api_name': 'CORD Chemical API',
+    'api_name': 'CORD API',
     'doc_type': 'ChemicalSubstance',
     "smart_api_id": "503e8c42d041aa5b8b1ffafaf612c298"
   },
   "cordcell": {
     "url": "https://biothings.ncats.io/cord_cell/query",
     'api_type': "biothings",
-    'api_name': 'CORD Cell API',
+    'api_name': 'CORD API',
     'doc_type': 'Cell',
     "smart_api_id": "3d6bacf6e305bee5efdd25d1560996e1"
   },
   "corddisease": {
     "url": "https://biothings.ncats.io/cord_disease/query",
     'api_type': "biothings",
-    'api_name': 'CORD DiseaseOrPhenotypicFeatur API',
+    'api_name': 'CORD API',
     'doc_type': 'DiseaseOrPhenotypicFeature',
     "smart_api_id": "871d5b6761d91a7805572c47f016fe47"
   },
   "cordma": {
     "url": "https://biothings.ncats.io/cord_ma/query",
     'api_type': "biothings",
-    'api_name': 'CORD Molecular Activity API ',
+    'api_name': 'CORD API ',
     'doc_type': 'MolecularActivity',
     "smart_api_id": "066a2ef51223a5a95216355facaac9d0"
   },
   "cordbp": {
     "url": "https://biothings.ncats.io/cord_bp/query",
     'api_type': "biothings",
-    'api_name': 'CORD Biological Process API',
+    'api_name': 'CORD API',
     'doc_type': 'BiologicalProcess',
     "smart_api_id": "7cbc3ff9b2d09cb8075715bde740ce4f"
   },
   "cordgenomicentity": {
     "url": "https://biothings.ncats.io/cord_genomic_entity/query",
     'api_type': "biothings",
-    'api_name': 'CORD Genomic Entity API',
+    'api_name': 'CORD API',
     'doc_type': 'GenomicEntity',
     "smart_api_id": "bffe279a1387ef956a423e2e8a133cf6"
   },
   "cordanatomy": {
     "url": "https://biothings.ncats.io/cord_anatomy/query",
     'api_type': "biothings",
-    'api_name': 'CORD Anatomy API',
+    'api_name': 'CORD API',
     'doc_type': 'AnatomicalEntity',
     "smart_api_id": "52f5867b9cc9cf8664565cc9ef2af276"
   },
   "cordcc": {
     "url": "https://biothings.ncats.io/cord_cc/query",
     'api_type': "biothings",
-    'api_name': 'CORD Cellular Component API',
+    'api_name': 'CORD API',
     'doc_type': 'CellularComponent',
     "smart_api_id": "bf5aac143254714988018d87dc447a5c"
   },
   "mgigene2phenotype": {
-    "url": "https://pending.biothings.io/mgigene2phenotype/query",
+    "url": "https://biothings.ncats.io/mgigene2phenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/mgigene2phenotype/schema.json",
     'api_type': "biothings",
     'api_name': 'MGIgene2phenotype API',
     "smart_api_id": "77ed27f111262d0289ed4f4071faa619"
   },
   "ebigene2phenotype": {
-    "url": "https://pending.biothings.io/ebigene2phenotype/query",
+    "url": "https://biothings.ncats.io/ebigene2phenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/ebigene2phenotype/schema.json",
     'api_type': "biothings",
     'api_name': 'EBIgene2phenotype API',
     "smart_api_id": "1f47552dabd67351d4c625adb0a10d00"
   },
   "DISEASES": {
-    "url": "https://pending.biothings.io/DISEASES/query",
+    "url": "https://biothings.ncats.io/DISEASES/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/DISEASES/schema.json",
     'api_type': "biothings",
     'api_name': 'DISEASES API',
     'smart_api_id': "a7f784626a426d054885a5f33f17d3f8"
   },
   "pfocr": {
-    "url": "https://pending.biothings.io/pfocr/query",
+    "url": "https://biothings.ncats.io/pfocr/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/pfocr/schema.json",
     'api_type': "biothings",
     'api_name': 'pfocr API',
@@ -269,7 +269,7 @@ metadata = {
     "doc_type": "Pathway",
     "api_type": "biothings",
     "method": "get",
-    "url": "http://pending.biothings.io/geneset/query",
+    "url": "http://biothings.ncats.io/geneset/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/pathway_schema.json",
     "add": " AND type:pathway",
     "hint": True,
@@ -290,7 +290,7 @@ metadata = {
     "add": " AND type:mf",
     "method": "get",
     "hint": True,
-    "url": "http://pending.biothings.io/geneset/query",
+    "url": "http://biothings.ncats.io/geneset/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/mf_schema.json",
     "fields":{
       'name': 'name',
@@ -305,7 +305,7 @@ metadata = {
     "method": "get",
     "add": " AND type:cc",
     "hint": True,
-    "url": "http://pending.biothings.io/geneset/query",
+    "url": "http://biothings.ncats.io/geneset/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/cc_schema.json",
     "fields":{
       'name': 'name',
@@ -321,7 +321,7 @@ metadata = {
     "add": " AND type:bp",
     "method": "get",
     "hint": True,
-    "url": "http://pending.biothings.io/geneset/query",
+    "url": "http://biothings.ncats.io/geneset/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/bp_schema.json",
     "fields": {
       'name': 'name',
@@ -335,7 +335,7 @@ metadata = {
     "doc_type": "Anatomy",
     "api_type": "biothings",
     "hint": True,
-    "url": "http://pending.biothings.io/semmed_anatomy/query",
+    "url": "http://biothings.ncats.io/semmed_anatomy/query",
     "method": "post",
     "fields": {
       "name": "name",
@@ -347,7 +347,7 @@ metadata = {
     "id_ranks": ['umls', 'name'],
     "doc_type": "PhenotypicFeature",
     "api_type": "biothings",
-    "url": "http://pending.biothings.io/semmedphenotype/query",
+    "url": "http://biothings.ncats.io/semmedphenotype/query",
     "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
     "method": "post",
     "fields": {
@@ -362,7 +362,7 @@ metadata = {
     "doc_type": "ChemicalSubstance",
     "api_type": "biothings",
     "hint": True,
-    "url": "http://pending.biothings.io/umlschem/query",
+    "url": "http://biothings.ncats.io/umlschem/query",
     "method": "post",
     "fields": {
       "name": "name",
