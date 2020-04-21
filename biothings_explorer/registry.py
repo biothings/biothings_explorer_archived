@@ -42,6 +42,7 @@ class Registry():
                     op['output_id'],
                     label=op['predicate'],
                     api=api,
+                    api_type=op['api_type'],
                     input_type=op['input_type'],
                     output_type=op['output_type'],
                     operation=op
