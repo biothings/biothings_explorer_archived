@@ -63,6 +63,8 @@ class SingleEdgeQueryDispatcher():
             self.output_cls = None
         else:
             self.output_cls = output_cls
+        if isinstance(self.output_cls, str):
+            self.output_cls = [self.output_cls]
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
@@ -91,7 +93,7 @@ class SingleEdgeQueryDispatcher():
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
                 self.input_identifier = input_obj.get("primary").get("identifier")
         else:
-            self.input_label = None
+            self.input_label = str(input_id) + ':' + str(values)
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
@@ -122,7 +124,7 @@ class SingleEdgeQueryDispatcher():
         grouped_edges = defaultdict(list)
         for _edge in edges:
             # need to convert to tuple to make it immutable
-            grouped_edges[_edge['input_id']].append(dict2listoftuples(_edge))
+            grouped_edges[_edge['operation']['input_id']].append(dict2listoftuples(_edge))
         return grouped_edges
 
     def merge_equivalent_nodes(self):
@@ -225,6 +227,7 @@ class SingleEdgeQueryDispatcher():
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
+        print('edges', edges)
         if not edges:
             # print("No edges found for the <input, pred, output> you specified")
             if verbose:
@@ -254,7 +257,7 @@ class SingleEdgeQueryDispatcher():
                         m['value'] = v[p]
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
-                        output_id_types.append(m['output_id'])
+                        output_id_types.append(m['operation']['output_id'])
                     input_identifier = self.input_identifier if self.input_identifier else k.split(':', 1)[0]
                     self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
@@ -270,6 +273,7 @@ class SingleEdgeQueryDispatcher():
             return
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
+        print('input_edges', input_edges)
         (_res, log) = self.dp.dispatch(input_edges, verbose=verbose)
         self.log += log
         # load API outputs into the MultiDiGraph
