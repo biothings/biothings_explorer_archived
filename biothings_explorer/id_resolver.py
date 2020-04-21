@@ -67,9 +67,7 @@ class IDResolver():
             else:
                 self.construct_api_calls(semantic_type, _type, ids)
         # make API calls asynchronously and gather all outputs
-        self.responses, _ = self.caller.call_apis(self.api_call_inputs,
-                                                  size=10,
-                                                  dotfield=True)
+        self.responses, _ = self.caller.call_apis(self.api_call_inputs)
         self.parse_api_responses()
         return self.results
 
@@ -81,7 +79,7 @@ class IDResolver():
             # if API response is empty, continue
             if not _res:
                 continue
-            for single_res in _res:
+            for single_res in _res['result']:
                 # if query of the item returns no hit
                 if 'notfound' in single_res:
                     self.results[_type + ':' +
@@ -115,14 +113,27 @@ class IDResolver():
         api = ID_RESOLVING_APIS[semantic_type]["api_name"]
         if self.get_input_fields(mapping_file, id_type):
             for i in range(0, len(ids), 1000):
-                self.api_call_inputs.append({"api": api,
-                                             "input": self.get_input_fields(
-                                                        mapping_file, id_type),
-                                             "output": self.get_output_fields(
-                                                        mapping_file),
-                                             "values": ','.join(ids[i:i+1000]),
-                                             "batch_mode": True
-                                             })
+                self.api_call_inputs.append({
+                    "api": api,
+                    'operation': {
+                        'server': ID_RESOLVING_APIS[semantic_type]['url'],
+                        'path': '/query',
+                        'method': 'post',
+                        'parameters': {
+                            'fields': self.get_output_fields(mapping_file),
+                            'dotfield': "true"
+                        }, 
+                        'requestBody': {
+                            'body': {
+                                'q': '{inputs[0]}',
+                                'scopes': self.get_input_fields(mapping_file, id_type)
+                            }, 
+                            'header': 'application/x-www-form-urlencoded'
+                        }
+                    },
+                    "value": ','.join(ids[i:i+1000]),
+                    "internal_query_id": 1
+                })
                 self.types.append(id_type)
                 self.mapping_files.append(mapping_file)
         else:
