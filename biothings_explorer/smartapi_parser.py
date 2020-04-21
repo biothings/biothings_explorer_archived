@@ -8,6 +8,18 @@ class SmartAPIParser():
     def load_spec(self, spec=None):
         self.spec = load_json_or_yaml(spec)
 
+    @staticmethod
+    def determine_api_type(tags):
+        """Determine the type of API
+        
+        note: API type will be used in the api_preprocess module
+        """
+        types = ["biothings", "biolink", "reasoner", "ctd", "opentarget"]
+        for _type in types:
+            if _type in tags:
+                return _type
+        return "other"
+
     def fetch_api_name(self):
         """Fetch the name of the API.
         """
@@ -68,12 +80,15 @@ class SmartAPIParser():
         for _input in op['inputs']:
             for _output in op['outputs']:
                 tmp = deepcopy(op)
+                tags = self.fetch_api_tags()
+                api_type = self.determine_api_type(tags)
                 tmp.update(
                     {
                         'path': path,
                         'method': method,
                         'server': self.fetch_server_url(),
-                        'tags': self.fetch_api_tags(),
+                        'api_name': self.fetch_api_name(),
+                        'api_type': api_type,
                         "input_id": _input['id'],
                         "input_type": _input['semantic'],
                         "output_id": _output['id'],
