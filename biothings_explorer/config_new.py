@@ -7,7 +7,7 @@ ID_RESOLVING_APIS = {
         "scopes": ['entrezgene', 'symbol', 'name', 'HGNC', 'umls.cui', 'uniprot.Swiss-Prot', "ensembl.gene"],
         "semantic": "Gene",
         "api_name": "mygene.info",
-        "url": "http://mygene.info/v3/query",
+        "url": "http://mygene.info/v3",
         "mapping": {
             "NCBIGene": ["entrezgene"],
             "name": ["name"],
@@ -26,7 +26,7 @@ ID_RESOLVING_APIS = {
                 'clinvar.hgvs.genomic', 'clinvar.hgvs.protein'],
         "api_name": "myvariant.info",
         "semantic": "SequenceVariant",
-        "url": 'http://myvariant.info/v1/query',
+        "url": 'http://myvariant.info/v1',
         "mapping": {
             "MYVARIANT_HG19": ["_id"],
             "DBSNP": ["dbsnp.rsid", "clinvar.rsid", "dbnsfp.rsid"],
@@ -41,7 +41,7 @@ ID_RESOLVING_APIS = {
                 "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
         "semantic": "ChemicalSubstance",
         "api_name": "mychem.info",
-        "url": "http://mychem.info/v1/query",
+        "url": "http://mychem.info/v1",
         "mapping": {
             "CHEMBL.COMPOUND": ["chembl.molecule_chembl_id", "drugbank.xrefs.chembl", "drugcentral.xrefs.chembl_id"],
             "DRUGBANK": ["drugcentral.xrefs.drugbank_id", "pharmgkb.xrefs.drugbank", "chebi.xrefs.drugbank", "drugbank.id"],
@@ -59,7 +59,7 @@ ID_RESOLVING_APIS = {
                 'mondo.label', 'disgenet.xrefs.disease_name'],
         "semantic": "DiseaseOrPhenotypicFeature",
         "api_name": "mydisease.info",
-        "url": "http://mydisease.info/v1/query",
+        "url": "http://mydisease.info/v1",
         "mapping": {
             "MONDO": ["_id"],
             "DOID": ["mondo.xrefs.doid", "disgenet.xrefs.doid"],
