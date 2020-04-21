@@ -227,7 +227,6 @@ class SingleEdgeQueryDispatcher():
         # filter edges based on subject, object, predicate
         edges = self.registry.filter_edges(self.input_cls, self.output_cls,
                                            self.pred)
-        print('edges', edges)
         if not edges:
             # print("No edges found for the <input, pred, output> you specified")
             if verbose:
@@ -273,7 +272,6 @@ class SingleEdgeQueryDispatcher():
             return
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
-        print('input_edges', input_edges)
         (_res, log) = self.dp.dispatch(input_edges, verbose=verbose)
         self.log += log
         # load API outputs into the MultiDiGraph

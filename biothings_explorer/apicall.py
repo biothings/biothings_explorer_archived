@@ -6,6 +6,7 @@
 
 """
 
+from urllib.parse import urljoin
 import asyncio
 from aiohttp import ClientSession, TCPConnector
 from collections import Counter
@@ -65,81 +66,81 @@ class BioThingsCaller():
             return url + ' (POST "' + params + '")'
         return ''
 
-    async def call_one_biothings_api(self, _input, session, size, dotfield=False, verbose=False):
-        params = self.construct_query_param(_input['input'],
-                                            _input['output'],
-                                            _input['values'],
-                                            _input['batch_mode'],
-                                            size=size,
-                                            dotfield=dotfield)
-        if not _input['batch_mode']:
+    async def call_one_arbitrary_api(self, _input, session, verbose=False):
+        base_url = _input['operation']['server'] + _input['operation']['path']
+        method = _input['operation']['method']
+        request_body = _input['operation'].get("requestBody")
+        header = {'content-type': 'application/x-www-form-urlencoded'}
+        if request_body:
+            header = {'content-type': request_body.get("header")}
+            request_body = eval(str(request_body["body"]).replace('{inputs[0]}', _input['value']))
+        parameters = _input['operation'].get("parameters")
+        if parameters:
+            parameters = eval(str(parameters).replace('{inputs[0]}', _input['value']))
+        if method == "get":
             try:
-                async with session.get(metadata[_input['api']]['url'],
-                                       params=params) as res:
+                async with session.get(base_url, params=parameters) as res:
                     if verbose:
-                        print("{}: {}".format(_input['query_id'], self.print_request('GET', metadata[_input['api']]['url'], params)))
+                        print("{}: {}".format(1,2))
                     try:
-                        return await res.json()
-                    except Exception:
-                        print("Unable to fetch results from {}".format(_input['api']))
-                        return {}
+                        res = await res.json()
+                        return {
+                            'internal_query_id': _input['internal_query_id'],
+                            'result': res
+                        }
+                    except Exception as ex:
+                        m = await res.text()
+                        return {
+                            'result': json.loads(m),
+                            'internal_query_id': _input['internal_query_id']
+                        }
             except Exception:
                 if verbose:
                     print('{} failed'.format(_input['api']))
-                return {}
-        else:
-            headers = {'content-type': 'application/x-www-form-urlencoded'}
+                return {
+                    'internal_query_id': _input['internal_query_id'],
+                    'result': {}
+                }
+        elif method == "post":
             try:
-                async with session.post(metadata[_input['api']]['url'],
-                                        data=params,
-                                        headers=headers) as res:
-                    if verbose:
-                        print("{}: {}".format(_input['query_id'], self.print_request("POST", metadata[_input['api']]['url'], params)))
+                async with session.post(base_url,
+                                        params=parameters,
+                                        data=request_body,
+                                        headers=header) as res:
                     try:
-                        return await res.json()
-                    except:
+                        return {
+                            'result': await res.json(),
+                            'internal_query_id': _input['internal_query_id']
+                        }
+                    except Exception as ex1:
+                        print(ex1)
                         print("Unable to fetch results from {}".format(_input['api']))
-                        return {}
-            except Exception:
+                        return {
+                            'internal_query_id': _input['internal_query_id'],
+                            'result': {}
+                        }
+            except Exception as ex:
+                print(ex)
                 if verbose:
                     print('{} failed'.format(_input['api']))
-                return {}
+                return {
+                    'result': {},
+                    'internal_query_id': _input['internal_query_id']
+                }
 
-    async def call_one_non_biothings_api(self, _input, session, verbose=False):
-        api_url = metadata[_input['api']]['url']
-        api_param = metadata[_input['api']]['path']
-        path = self.construct_path(api_url, api_param, _input['values'])
-        try:
-            async with session.get(path) as res:
-                if verbose:
-                    print("{}: {}".format(_input['query_id'], path))
-                try:
-                    return await res.json()
-                except Exception as ex:
-                    print(ex)
-                    m = await res.text()
-                    return json.loads(m)
-        except Exception:
-            if verbose:
-                print('{} failed'.format(_input['api']))
-            return {}
 
-    async def call_one_api(self, _input, session, size, dotfield=False, verbose=False):
+    async def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
 
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
         :param: session (obj): a aiohttp session object
         """
         # check api type
-        api_type = metadata[_input['api']]['api_type']
-        if api_type == 'biothings':
-            res = await self.call_one_biothings_api(_input, session, size, dotfield=dotfield, verbose=verbose)
-        else:
-            res = await self.call_one_non_biothings_api(_input, session, verbose=verbose)
+        res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
 
 
-    async def run(self, inputs, size, dotfield=False, verbose=False):
+    async def run(self, inputs, verbose=False):
         """Asynchronously make a list of API calls.
 
         :param: inputs (list): list of python dicts containing three keys
@@ -149,15 +150,13 @@ class BioThingsCaller():
         async with ClientSession(connector=TCPConnector(verify_ssl=False)) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
-                                                               size=size,
-                                                               dotfield=dotfield,
                                                                verbose=verbose))
                 tasks.append(task)
             responses = await asyncio.gather(*tasks)
             # print(responses)
             return responses
 
-    def call_apis(self, inputs, size=100, dotfield=False, verbose=False):
+    def call_apis(self, inputs, verbose=False):
         self.log = []
         if verbose:
             cnt = Counter()
@@ -177,5 +176,5 @@ class BioThingsCaller():
             print("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
             self.log.append("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
         loop = asyncio.get_event_loop()
-        future = asyncio.ensure_future(self.run(inputs, size=size, dotfield=dotfield, verbose=verbose))
+        future = asyncio.ensure_future(self.run(inputs, verbose=verbose))
         return (loop.run_until_complete(future), self.log)
