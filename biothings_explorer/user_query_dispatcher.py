@@ -62,6 +62,8 @@ class SingleEdgeQueryDispatcher():
         if output_cls in (['BiologicalEntity'], 'BiologicalEntity'):
             self.output_cls = None
         else:
+            if isinstance(output_cls, str):
+                output_cls = [output_cls]
             self.output_cls = output_cls
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
