@@ -99,7 +99,7 @@ class IDResolver():
                 for m, n in new_res.items():
                     if m == 'name':
                         n = {item.upper() for item in n}
-                    final_res[m] = list(n)
+                    final_res[m] = sorted(n)
                 self.results[_type + ':' + single_res['query']] = final_res
 
     def construct_api_calls(self, semantic_type, id_type, ids):
