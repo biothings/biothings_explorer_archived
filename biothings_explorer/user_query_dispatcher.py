@@ -22,7 +22,7 @@ from .export.pandas import networkx2pandas
 from .export.graphviz import networkx2graphvis
 
 # TODO: remove ID_RANK
-ID_RANK = {'Gene': 'symbol',
+ID_RANK = {'Gene': 'SYMBOL',
            'ChemicalSubstance': 'name',
            'DiseaseOrPhenotypicFeature': 'name'}
 
@@ -71,7 +71,7 @@ class SingleEdgeQueryDispatcher():
             if self.output_cls and not isinstance(self.output_cls, list) and self.output_cls in ID_RANK:
                 self.output_id = [ID_RANK.get(self.output_cls)]
             else:
-                self.output_id = ["symbol", "name"]
+                self.output_id = ["SYMBOL", "name"]
         if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
         self.pred = pred
@@ -83,9 +83,9 @@ class SingleEdgeQueryDispatcher():
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
-            if 'symbol' in input_obj:
-                self.input_label = input_obj.get("symbol")
-                self.input_identifier = 'symbol'
+            if 'SYMBOL' in input_obj:
+                self.input_label = input_obj.get("SYMBOL")
+                self.input_identifier = 'SYMBOL'
             elif 'name' in input_obj:
                 self.input_label = input_obj.get("name")
                 self.input_identifier = 'name'
@@ -151,7 +151,10 @@ class SingleEdgeQueryDispatcher():
                     new_vals = None
                     for _id in self.output_id:
                         if equivalent_ids.get(_id):
-                            new_vals = equivalent_ids.get(_id)
+                            if _id == 'name':
+                                new_vals = [equivalent_ids.get(_id)[0]]
+                            else:
+                                new_vals = equivalent_ids.get(_id)
                             break
                     if new_vals:
                         # get n2's node info
@@ -394,16 +397,16 @@ class Explain:
             self.intermediate_cls_cnt = len(self.intermediate_cls)
         self.input_obj = input_obj
         # self.starts represents the display label of the input
-        if 'symbol' in input_obj:
-            self.starts = input_obj['symbol']
+        if 'SYMBOL' in input_obj:
+            self.starts = input_obj['SYMBOL']
         elif 'name' in input_obj:
             self.starts = input_obj['name']
         else:
             self.starts = self.input_obj.get("primary").get("identifier") + self.input_obj.get("primary").get("value")
         self.output_obj = output_obj
         # self.ends represents the display label of the output
-        if 'symbol' in output_obj:
-            self.ends = output_obj['symbol']
+        if 'SYMBOL' in output_obj:
+            self.ends = output_obj['SYMBOL']
         elif 'name' in output_obj:
             self.ends = output_obj['name']
         else:
@@ -611,8 +614,8 @@ class Predict:
         # append output_obj to the path
         self.paths.append(output_obj)
         self.input_obj = input_obj
-        if 'symbol' in input_obj:
-            self.starts = input_obj['symbol']
+        if 'SYMBOL' in input_obj:
+            self.starts = input_obj['SYMBOL']
         elif 'name' in input_obj:
             self.starts = input_obj['name']
         else:
@@ -761,8 +764,8 @@ class Predict:
         final_outputs = set()
         for output_ids in self.output_ids.get(str(len(self.paths))).values():
             for k, item in output_ids.items():
-                if item.get('symbol'):
-                    final_outputs.add(item['symbol'][0])
+                if item.get('SYMBOL'):
+                    final_outputs.add(item['SYMBOL'][0])
                 elif item.get('name'):
                     final_outputs.add(item['name'][0])
                 else:
