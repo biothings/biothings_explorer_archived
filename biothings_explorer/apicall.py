@@ -108,6 +108,7 @@ class BioThingsCaller():
                                         data=request_body,
                                         headers=header) as res:
                     try:
+                        print("{}: {}".format(base_url,parameters))
                         return {
                             'result': await res.json(),
                             'internal_query_id': _input['internal_query_id']
