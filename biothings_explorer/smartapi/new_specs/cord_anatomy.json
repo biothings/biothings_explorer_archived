@@ -281,10 +281,7 @@
                   }
                 }
               },
-              "description": "Query response objects with \"hits\" property",
-              "x-bte-response-mapping": {
-                "$ref": "#/components/x-bte-response-mapping/query-post"
-              }
+              "description": "Query response objects with \"hits\" property"
             }
           },
           "summary": "Make anatomy batch query and return matching anatomy hits",
