@@ -1,7 +1,9 @@
 API_LIST = [
     "mygene",
     "ctd",
-    "cord_gene"
+    "cord_gene",
+    "cord_protein",
+    "cord_chemical"
 ]
 
 ID_RESOLVING_APIS = {
