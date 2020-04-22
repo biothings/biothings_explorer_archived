@@ -1,5 +1,6 @@
 API_LIST = [
-    "mygene"
+    "mygene",
+    "ctd"
 ]
 
 ID_RESOLVING_APIS = {
@@ -53,11 +54,11 @@ ID_RESOLVING_APIS = {
             "name": ["chembl.pref_name", "drugbank.name", "umls.name", "ginas.preferred_name", "pharmgkb.name", "chebi.name"]
         }
     },
-    "DiseaseOrPhenotypicFeature": {
+    "Disease": {
         "scopes": ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
                 'mondo.xrefs.mesh', 'mondo.xrefs.umls',
                 'mondo.label', 'disgenet.xrefs.disease_name'],
-        "semantic": "DiseaseOrPhenotypicFeature",
+        "semantic": "Disease",
         "api_name": "mydisease.info",
         "url": "http://mydisease.info/v1",
         "mapping": {
