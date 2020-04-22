@@ -548,7 +548,7 @@
             "requestBody": {
               "body": {
                 "q": "{inputs[0]}",
-                "scopes": "mop"
+                "scopes": "go"
               },
               "header": "application/x-www-form-urlencoded"
             },
