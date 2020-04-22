@@ -67,7 +67,7 @@ class BioThingsCaller():
         return ''
 
     async def call_one_arbitrary_api(self, _input, session, verbose=False):
-        base_url = _input['operation']['server'] + _input['operation']['path']
+        base_url = _input['operation']['server'].strip('/') + _input['operation']['path']
         method = _input['operation']['method']
         request_body = _input['operation'].get("requestBody")
         header = {'content-type': 'application/x-www-form-urlencoded'}
