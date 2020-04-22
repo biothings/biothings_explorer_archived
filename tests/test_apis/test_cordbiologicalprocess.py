@@ -115,5 +115,5 @@ class TestSingleHopQuery(unittest.TestCase):
                                          values='GO:0019369')
         seqd.query()
         self.assertTrue('ASTHMA' in seqd.G)
-        edges = seqd.G['GO:GO:0019369']['ASTHMA'.upper()]
+        edges = seqd.G['GO:GO:0019369']['ASTHMA']
         self.assertTrue('CORD Biological Process API' in get_apis(edges))
