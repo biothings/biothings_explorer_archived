@@ -5,7 +5,8 @@ API_LIST = [
     "cord_protein",
     "cord_chemical",
     "cord_disease",
-    "cord_cell"
+    "cord_cell",
+    "cord_molecular_activity"
 ]
 
 ID_RESOLVING_APIS = {
