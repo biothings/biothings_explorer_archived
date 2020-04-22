@@ -1,6 +1,7 @@
 API_LIST = [
     "mygene",
-    "ctd"
+    "ctd",
+    "cord_gene"
 ]
 
 ID_RESOLVING_APIS = {
@@ -67,6 +68,33 @@ ID_RESOLVING_APIS = {
             "UMLS": ['mondo.xrefs.umls', "disgenet.xrefs.umls"],
             "name": ["mondo.label", "disgenet.xrefs.disease_name"],
             "MESH": ["mondo.xrefs.mesh", "ctd.mesh"]
+        }
+    },
+    "MolecularActivity": {
+        "semantic": "MolecularActivity",
+        "api_name": "geneset API",
+        "url": "http://biothings.ncats.io/geneset",
+        "mapping": {
+            "GO": ["go"],
+            "name": ["name"]
+        }
+    },
+    "BiologicalProcess": {
+        "semantic": "BiologicalProcess",
+        "api_name": "geneset API",
+        "url": "http://biothings.ncats.io/geneset",
+        "mapping": {
+            "GO": ["go"],
+            "name": ["name"]
+        }
+    },
+    "CellularComponent": {
+        "semantic": "CellularComponent",
+        "api_name": "geneset API",
+        "url": "http://biothings.ncats.io/geneset",
+        "mapping": {
+            "GO": ["go"],
+            "name": ["name"]
         }
     },
     "pathway": {
