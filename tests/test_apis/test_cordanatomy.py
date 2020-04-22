@@ -7,7 +7,7 @@ reg = Registry()
 
 class TestSingleHopQuery(unittest.TestCase):
 
-    def test_bp2protein(self):
+    def test_anatomy2protein(self):
         """Test gene-protein"""
         seqd = SingleEdgeQueryDispatcher(output_cls='Protein',
                                          input_cls='AnatomicalEntity',
@@ -19,7 +19,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']['PR:000004614']
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2genomicentity(self):
+    def test_anatomy2genomicentity(self):
         """Test gene-protein"""
         seqd = SingleEdgeQueryDispatcher(output_cls='GenomicEntity',
                                          input_cls='AnatomicalEntity',
@@ -30,7 +30,7 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('SO:0000140' in seqd.G)
         self.assertTrue('SO:0000999' in seqd.G)
 
-    def test_bp2chemicalsubstance(self):
+    def test_anatomy2chemicalsubstance(self):
         """Test gene-genomic entity"""
         seqd = SingleEdgeQueryDispatcher(output_cls='ChemicalSubstance',
                                          input_cls='AnatomicalEntity',
@@ -42,7 +42,7 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
         
 
-    def test_bp2gene(self):
+    def test_anatomy2gene(self):
         """Test gene-gene"""
         seqd = SingleEdgeQueryDispatcher(output_cls='Gene',
                                          input_cls='AnatomicalEntity',
@@ -54,7 +54,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']['HIF1A']
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2anatomy(self):
+    def test_anatomy2anatomy(self):
         """Test gene-anatomy"""
         seqd = SingleEdgeQueryDispatcher(output_cls='AnatomicalEntity',
                                          input_cls='AnatomicalEntity',
@@ -65,7 +65,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']['UBERON:0000057']
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2ma(self):
+    def test_anatomy2ma(self):
         """Test gene-molecular_activity"""
         seqd = SingleEdgeQueryDispatcher(output_cls='MolecularActivity',
                                          input_cls='AnatomicalEntity',
@@ -76,7 +76,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']["MOP:0000568"]
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2bp(self):
+    def test_anatomy2bp(self):
         """Test gene-biological_process"""
         seqd = SingleEdgeQueryDispatcher(output_cls='BiologicalProcess',
                                          input_cls='AnatomicalEntity',
@@ -87,7 +87,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']["lipid metabolic process".upper()]
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2cc(self):
+    def test_anatomy2cc(self):
         """Test gene-cellular_component"""
         seqd = SingleEdgeQueryDispatcher(output_cls='CellularComponent',
                                          input_cls='AnatomicalEntity',
@@ -98,7 +98,7 @@ class TestSingleHopQuery(unittest.TestCase):
         edges = seqd.G['UBERON:UBERON:0000013']['MEMBRANE']
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
 
-    def test_bp2cell(self):
+    def test_anatomy2cell(self):
         """Test gene-cell"""
         seqd = SingleEdgeQueryDispatcher(output_cls='Cell',
                                          input_cls='AnatomicalEntity',
@@ -107,7 +107,7 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd.query()
         self.assertTrue('CL:0007011' in seqd.G)
 
-    def test_bp2disease(self):
+    def test_anatomy2disease(self):
         """Test gene-disease"""
         seqd = SingleEdgeQueryDispatcher(output_cls='Disease',
                                          input_cls='AnatomicalEntity',
