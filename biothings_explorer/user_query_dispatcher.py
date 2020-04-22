@@ -123,7 +123,7 @@ class SingleEdgeQueryDispatcher():
                 'identifier': self.input_id,
                 'value': self.values
             }
-        }, intermediate=None, end={'type': self.output_cls})
+        }, intermediate=None, end={'type': self.output_cls[0]})
         rc.load_bte_output(self.G)
         return rc.generate_reasoner_response()
 
