@@ -91,7 +91,7 @@ class SingleEdgeQueryDispatcher():
                 self.input_label = input_obj.get("primary").get("identifier") + ":" + input_obj.get("primary").get("value")
                 self.input_identifier = input_obj.get("primary").get("identifier")
         else:
-            self.input_label = None
+            self.input_label = values
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
@@ -110,6 +110,20 @@ class SingleEdgeQueryDispatcher():
         self.G = nx.MultiDiGraph()
         self.log = []
         self.summary = []
+
+    def to_reasoner_std(self):
+        """Convert the output to reasoner api standard.
+        """
+        rc = ReasonerConverter()
+        rc.load_bte_query_path(start={
+            'type': self.input_cls,
+            'primary': {
+                'identifier': self.input_id,
+                'value': self.values
+            }
+        }, intermediate=None, end={'type': self.output_cls})
+        rc.load_bte_output(self.G)
+        return rc.generate_reasoner_response()
 
     @staticmethod
     def group_edges_by_input_id(edges):
