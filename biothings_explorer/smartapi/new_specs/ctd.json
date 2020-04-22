@@ -1,0 +1,162 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0",
+      "title": "CTD API",
+      "description": "The CTD API",
+      "termsOfService": "http://ctdbase.org/help/linking.jsp#batchqueries",
+      "contact": {
+        "name": "CTD help desk",
+        "x-role": "responsible developer",
+        "email": "help@ctd.org"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://ctdbase.org/tools",
+        "description": "Production server"
+      }
+    ],
+    "tags": [
+      {
+        "name": "translator"
+      },
+      {
+        "name": "ctd"
+      }
+    ],
+    "paths": {
+      "/batchQuery.go": {
+        "get": {
+          "summary": "retrieve relationship data",
+          "parameters": [
+            {
+              "name": "inputType",
+              "in": "query",
+              "description": "The Input type of query",
+              "required": true,
+              "example": "chem",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "inputTerms",
+              "in": "query",
+              "description": "The Input value of query, usually a mesh ID",
+              "required": true,
+              "example": "D003634",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "report",
+              "in": "query",
+              "description": "The Output of query",
+              "required": true,
+              "example": "genes_curated",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "format",
+              "in": "query",
+              "description": "The output format",
+              "required": true,
+              "example": "json",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "response object"
+            }
+          },
+          "x-bte-kgs-operations": [
+            {
+              "$ref": "#/components/x-bte-kgs-operations/gene2disease"
+            },
+            {
+              "$ref": "#/components/x-bte-kgs-operations/chemical2gene"
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "x-bte-kgs-operations": {
+        "gene2disease": [
+          {
+            "inputs": [
+              {
+                "id": "NCBIGene",
+                "semantic": "Gene"
+              }
+            ],
+            "predicate": "related_to",
+            "outputs": [
+              {
+                "id": "MESH",
+                "semantic": "Disease"
+              }
+            ],
+            "source": "CTD",
+            "parameters": {
+              "inputType": "gene",
+              "report": "diseases_curated",
+              "format": "json",
+              "inputTerms": "{inputs[0]}"
+            },
+            "supportBatch": false,
+            "response_mapping": {
+              "$ref": "#/components/x-bte-response-mapping/gene-disease"
+            }
+          }
+        ],
+        "chemical2gene": [
+          {
+            "inputs": [
+              {
+                "id": "MESH",
+                "semantic": "ChemicalSubstance"
+              }
+            ],
+            "predicate": "related_to",
+            "outputs": [
+              {
+                "id": "NCBIGene",
+                "semantic": "Gene"
+              }
+            ],
+            "source": "CTD",
+            "parameters": {
+              "inputType": "chem",
+              "report": "genes_curated",
+              "format": "json",
+              "inputTerms": "{inputs[0]}"
+            },
+            "supportBatch": false,
+            "response_mapping": {
+              "$ref": "#/components/x-bte-response-mapping/drug-gene"
+            }
+          }
+        ]
+      },
+      "x-bte-response-mapping": {
+        "gene-disease": {
+            "MESH": "data.DiseaseID",
+            "name": "data.DiseaseName",
+            "pubmed": "data.PubMedIDs"
+        },
+        "drug-gene": {
+            "NCBIGene": "data.GeneId",
+            "pubmed": "data.PubMedIds",
+            "inTaxon": "data.OrganismId"
+        }
+      }
+    }
+  }
