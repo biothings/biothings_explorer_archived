@@ -57,9 +57,9 @@ class APIPreprocess():
             return restructure_ctd_response(self.json_doc)
         if self.api_type == 'opentarget':
             return restructure_opentarget_response(self.json_doc)
-        if self.api_name == 'SEMMED API':
+        if self.api_name[:4] == 'semm':
             return restructure_semmed_response(self.json_doc, self.output_types)
-        if self.api_name == 'CORD API':
+        if self.api_name[:4] == 'cord':
             return restructure_cord_response(self.json_doc, self.output_types)
         if self.api_name == 'Automat CORD19 Scibite API':
             return restructure_scibite_response(self.json_doc)
