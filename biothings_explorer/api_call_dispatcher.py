@@ -71,24 +71,43 @@ class Dispatcher():
         return query_id2inputs_mapping
 
     @staticmethod
-    def add_metadata_to_output(operation, res):
+    def add_metadata_to_output(operation, res, output_id):
         if isinstance(res, dict):
-            res.update(
-                {
-                    "$api": operation['api_name'],
-                    "$source": operation.get("source"),
-                    "@type": operation['output_type']
-                }
-            )
-            return res
+            if output_id not in res:
+                return []
+            if not isinstance(res[output_id], list):
+                res[output_id] = [res[output_id]]
+            new_res = []
+            for val in res[output_id]:
+                tmp = deepcopy(res)
+                tmp[output_id] = val
+                tmp.update(
+                    {
+                        "$api": operation['api_name'],
+                        "$source": operation.get("source"),
+                        "@type": operation['output_type']
+                    }
+                )
+                new_res.append(tmp)
+            return new_res
         res = {
             "$api": operation['api_name'],
             "$source": operation.get("source"),
             "@type": operation['output_type'],
             operation['output_id']: [res]
         }
-        return res
-            
+        return [res]
+
+    @staticmethod
+    def count_hits(res):
+        cnt = 0
+        if not res:
+            return cnt
+        for pred_infos in res.values():
+            if pred_infos:
+                for info in pred_infos.values():
+                    cnt += len(info)
+        return cnt
 
     def dispatch(self, edges, verbose=False):
         """Send request to and parse response from API."""
@@ -110,7 +129,7 @@ class Dispatcher():
             query_id = response['internal_query_id']
             operation = query_id2inputs_mapping[query_id]['operation']
             api_name = query_id2inputs_mapping[query_id]['api']
-            if api_name in ['SEMMED API', 'CORD API']:
+            if api_name[:4] in ['semm', 'cord']:
                 output_types = [query_id2inputs_mapping[query_id]['output_type']]
             _res = APIPreprocess(response['result'], operation['api_type'], api_name, output_types).restructure()
             mapping = operation['response_mapping']
@@ -127,36 +146,23 @@ class Dispatcher():
                 if val not in results:
                     results[val] = {}
                 # loop through API call response
-                hits_cnt = 0
                 for k, v in _res.items():
                     # if key is not present in final res, create a list
                     if k not in results[val]:
                         results[val][k] = []
                     if isinstance(v, list):
-                        hits_cnt += len(v)
                         for _v in v:
-                            _v = self.add_metadata_to_output(operation, _v)
-                            results[val][k].append(_v)
+                            _v = self.add_metadata_to_output(operation, _v, operation['output_id'])
+                            results[val][k] += _v
                     else:
-                        hits_cnt += 1
-                        v = self.add_metadata_to_output(operation, v)
-                        results[val][k].append(v)
-                if verbose:
-                    if hits_cnt > 0:
-                        print("{} {}: {} hits".format(query_id, api_name, hits_cnt))
-                    else:
-                        print("{} {}: No hits".format(query_id, api_name))
-                if hits_cnt > 0:
-                    self.log.append("{} {}: {} hits".format(query_id, api_name, hits_cnt))
-                else:
-                    self.log.append("{} {}: No hits".format(query_id, api_name))
+                        v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                        results[val][k] += v
             else:
                 if not _res:
                     if verbose:
                         print("{} {}: No hits".format(query_id, api_name))
                     self.log.append("{} {}: No hits".format(query_id, api_name))
                     continue
-                hits_cnt = 0
                 for m, n in _res.items():
                     if m not in results:
                         results[m] = {}
@@ -164,26 +170,15 @@ class Dispatcher():
                         if k not in results[m]:
                             results[m][k] = []
                         if isinstance(v, list):
-                            hits_cnt += len(v)
                             for _v in v:
-                                _v = self.add_metadata_to_output(operation, _v)
-                                results[m][k].append(_v)
+                                _v = self.add_metadata_to_output(operation, _v, operation['output_id'])
+                                results[m][k] += _v
                         elif isinstance(v, dict):
-                            v = self.add_metadata_to_output(operation, v)
-                            results[m][k].append(v)
+                            v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                            results[m][k] += v
                         else:
                             if k == 'query':
                                 continue
-                            hits_cnt += len(v)
-                            v = self.add_metadata_to_output(operation, v)
-                            results[m][k].append(v)
-                if verbose:
-                    if hits_cnt > 0:
-                        print("{} {}: {} hits".format(query_id, api_name, hits_cnt))
-                    else:
-                        print("{} {}: No hits".format(query_id, api_name))
-                if hits_cnt > 0:
-                    self.log.append("{} {}: {} hits".format(query_id, api_name, hits_cnt))
-                else:
-                    self.log.append("{} {}: No hits".format(query_id, api_name))
+                            v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                            results[m][k] += v
         return (dict(results), self.log)
