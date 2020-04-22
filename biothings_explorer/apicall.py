@@ -81,7 +81,7 @@ class BioThingsCaller():
             try:
                 async with session.get(base_url, params=parameters) as res:
                     if verbose:
-                        print("{}: {}".format(1,2))
+                        print("{}: {}".format(base_url,parameters))
                     try:
                         res = await res.json()
                         return {
