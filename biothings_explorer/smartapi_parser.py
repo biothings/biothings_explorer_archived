@@ -37,6 +37,15 @@ class SmartAPIParser():
         return self.spec['servers'][0]['url']
 
     @staticmethod
+    def fetch_path_params(endpoint_spec: dict):
+        params = []
+        if 'parameters' in endpoint_spec:
+            for param in endpoint_spec['parameters']:
+                if param.get('in') == 'path':
+                    params.append(param.get('name'))
+        return params
+
+    @staticmethod
     def fetch_response_mapping_path(endpoint_spec):
         """Fetch the path of semantic mapping json doc.
         """
@@ -75,7 +84,7 @@ class SmartAPIParser():
         for op in operations:
             yield self.fetch_single_x_bte_kgs_operation(op["$ref"])
 
-    def parse_individual_operation(self, op, path, method):
+    def parse_individual_operation(self, op, path, method, path_params):
         res = []
         for _input in op['inputs']:
             for _output in op['outputs']:
@@ -85,6 +94,7 @@ class SmartAPIParser():
                 tmp.update(
                     {
                         'path': path,
+                        'path_params': path_params,
                         'method': method,
                         'server': self.fetch_server_url(),
                         'api_name': self.fetch_api_name(),
@@ -105,9 +115,10 @@ class SmartAPIParser():
         res = []
         for path, path_info in self.spec["paths"].items():
             for method, method_info in path_info.items():
+                path_params = self.fetch_path_params(method_info)
                 if "x-bte-kgs-operations" in method_info:
                     for op in self.fetch_x_bte_kgs_operations(method_info):
                         for _op in op:
-                            tmp = self.parse_individual_operation(_op, path, method)
+                            tmp = self.parse_individual_operation(_op, path, method, path_params)
                             res += tmp
         return res
