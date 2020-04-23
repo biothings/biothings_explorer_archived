@@ -79,28 +79,29 @@ class IDResolver():
             # if API response is empty, continue
             if not _res:
                 continue
+            new_res = defaultdict(set)
             for single_res in _res['result']:
                 # if query of the item returns no hit
+                res_id = _type + ':' + single_res['query']
                 if 'notfound' in single_res:
-                    self.results[_type + ':' +
-                                 single_res['query']] = {_type:
-                                                         [single_res['query']]}
+                    self.results[res_id] = {_type: [single_res['query']]}
                     continue
-                new_res = defaultdict(set)
+                elif res_id not in self.results:
+                    self.results[res_id] = defaultdict(set)
                 for k, v in _map.items():
                     for _v in v:
                         if _v in single_res:
                             val = single_res[_v]
                             if not isinstance(val, list):
-                                new_res[k].add(str(val))
+                                self.results[res_id][k].add(str(val))
                             else:
-                                new_res[k].update(set(val))
-                final_res = {}
-                for m, n in new_res.items():
+                                self.results[res_id][k].update(set(val))
+            for res_id, resolved_ids in self.results.items():
+                for m in resolved_ids.keys():
                     if m == 'name':
-                        n = {item.upper() for item in n}
-                    final_res[m] = sorted(n)
-                self.results[_type + ':' + single_res['query']] = final_res
+                        self.results[res_id][m] = sorted({item.upper() for item in resolved_ids[m]})
+                    else:
+                        self.results[res_id][m] = list(resolved_ids[m])
 
     def construct_api_calls(self, semantic_type, id_type, ids):
         """Construct API calls for BTE API call module.
