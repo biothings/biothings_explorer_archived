@@ -72,10 +72,16 @@ class BioThingsCaller():
         request_body = _input['operation'].get("requestBody")
         header = {'content-type': 'application/x-www-form-urlencoded'}
         if request_body:
-            header = {'content-type': request_body.get("header")}
+            if request_body.get("header"):
+                header = {'content-type': request_body.get("header")}
             request_body = eval(str(request_body["body"]).replace('{inputs[0]}', _input['value']))
         parameters = _input['operation'].get("parameters")
         if parameters:
+            if _input['operation'].get('path_params'):
+                for path_param in _input['operation']['path_params']:
+                    path_value_template = parameters.get(path_param)
+                    base_url = base_url.replace('{' + path_param + '}', path_value_template).replace('{inputs[0]}', _input['value'])
+                    parameters.pop(path_param)
             parameters = eval(str(parameters).replace('{inputs[0]}', _input['value']))
         if method == "get":
             try:
