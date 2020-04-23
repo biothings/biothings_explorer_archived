@@ -9,7 +9,17 @@ API_LIST = [
     "cord_molecular_activity",
     "cord_biological_process",
     "cord_cellular_component",
-    "cord_anatomy"
+    "cord_anatomy",
+    "cord_genomic_entity",
+    "semmed_gene",
+    "semmed_chemical",
+    "semmed_disease",
+    "semmed_biological_process",
+    "semmed_anatomy",
+    "semmed_phenotype",
+    "scibite",
+    "biolink",
+    "opentarget"
 ]
 
 ID_RESOLVING_APIS = {
@@ -72,7 +82,7 @@ ID_RESOLVING_APIS = {
         "url": "http://mydisease.info/v1",
         "mapping": {
             "MONDO": ["_id"],
-            "DOID": ["mondo.xrefs.doid", "disgenet.xrefs.doid"],
+            "DOID": ["mondo.xrefs.doid"],
             "UMLS": ['mondo.xrefs.umls', "disgenet.xrefs.umls"],
             "name": ["mondo.label", "disgenet.xrefs.disease_name"],
             "MESH": ["mondo.xrefs.mesh", "ctd.mesh"]
@@ -93,7 +103,8 @@ ID_RESOLVING_APIS = {
         "url": "http://biothings.ncats.io/geneset",
         "mapping": {
             "GO": ["go"],
-            "name": ["name"]
+            "name": ["name"],
+            "UMLS": ["umls"]
         }
     },
     "CellularComponent": {
@@ -102,100 +113,38 @@ ID_RESOLVING_APIS = {
         "url": "http://biothings.ncats.io/geneset",
         "mapping": {
             "GO": ["go"],
+            "name": ["name"],
+            "UMLS": ["umls"]
+        }
+    },
+    "Pathway": {
+        "semantic": "Pathway",
+        "api_name": "geneset API",
+        "url": "http://biothings.ncats.io/geneset",
+        "mapping": {
+            "REACTOME": ["reactome"],
+            "WIKIPATHWAYS": ["wikipathways"],
+            "KEGG": ["kegg"],
+            "PHARMGKB": ['pharmgkb'],
             "name": ["name"]
         }
     },
-    "pathway": {
-        "scopes": ['_id', 'name'],
-        "id_ranks": ['reactome', 'wikipathways', 'kegg', 'pharmgkb', 'biocarta', 'name'],
-        "doc_type": "Pathway",
-        "api_type": "biothings",
-        "method": "get",
-        "url": "http://biothings.ncats.io/geneset/query",
-        "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/pathway_schema.json",
-        "add": " AND type:pathway",
-        "hint": True,
-        "fields": {
-            'name': 'name',
-            'reactome': 'reactome',
-            'wikipathways': 'wikipathways',
-            'kegg': 'kegg',
-            'pharmgkb': 'pharmgkb',
-            'biocarta': 'biocarta'
+    "AnatomicalEntity": {
+        "semantic": "AnatomicalEntity",
+        "api_name": "Anatomy API",
+        "url": "http://biothings.ncats.io/semmed_anatomy",
+        "mapping": {
+            "name": ["name"],
+            "UMLS": ["umls"]
         }
     },
-    "mf": {
-        "scopes": ['_id', 'name'],
-        "id_ranks": ['go', 'name'],
-        "doc_type": "MolecularActivity",
-        "api_type": "biothings",
-        "add": " AND type:mf",
-        "method": "get",
-        "hint": True,
-        "url": "http://biothings.ncats.io/geneset/query",
-        "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/mf_schema.json",
-        "fields":{
-        'name': 'name',
-        'go': 'go'
+    "PhenotypicFeature": {
+        "semantic": "PhenotypicFeature",
+        "api_name": "Phenotype API",
+        "url": "http://biothings.ncats.io/semmedphenotype",
+        "mapping": {
+            "name": ["name"],
+            "UMLS": ["umls"]
         }
-    },
-    "cc": {
-        "scopes": ['_id', 'name'],
-        "id_ranks": ['go', 'umls', 'name'],
-        "doc_type": "CellularComponent",
-        "api_type": "biothings",
-        "method": "get",
-        "add": " AND type:cc",
-        "hint": True,
-        "url": "http://biothings.ncats.io/geneset/query",
-        "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/cc_schema.json",
-        "fields":{
-        'name': 'name',
-        'go': 'go',
-        'umls': 'umls'
-        }
-    },
-    "bp": {
-        "scopes": ['_id', 'name'],
-        "id_ranks": ['go', 'umls', 'name'],
-        "doc_type": "BiologicalProcess",
-        "api_type": "biothings",
-        "add": " AND type:bp",
-        "method": "get",
-        "hint": True,
-        "url": "http://biothings.ncats.io/geneset/query",
-        "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/geneset/bp_schema.json",
-        "fields": {
-        'name': 'name',
-        'go': 'go',
-        'umls': 'umls'
-        }
-    },
-    "anatomy": {
-        "scopes": ['umls', 'name'],
-        "id_ranks": ['umls', 'name'],
-        "doc_type": "Anatomy",
-        "api_type": "biothings",
-        "hint": True,
-        "url": "http://biothings.ncats.io/semmed_anatomy/query",
-        "method": "post",
-        "fields": {
-        "name": "name",
-        "umls": "umls"
-        }
-    },
-    "phenotype": {
-        "scopes": ['umls', 'name'],
-        "id_ranks": ['umls', 'name'],
-        "doc_type": "PhenotypicFeature",
-        "api_type": "biothings",
-        "url": "http://biothings.ncats.io/semmedphenotype/query",
-        "mapping_url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmedphenotype/schema.json",
-        "method": "post",
-        "fields": {
-        "name": "name",
-        "umls": "umls"
-        },
-        "hint": True
     }
 }
