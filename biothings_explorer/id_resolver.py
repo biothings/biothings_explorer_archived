@@ -79,14 +79,13 @@ class IDResolver():
             # if API response is empty, continue
             if not _res:
                 continue
-            new_res = defaultdict(set)
             for single_res in _res['result']:
                 # if query of the item returns no hit
                 res_id = _type + ':' + single_res['query']
                 if 'notfound' in single_res:
                     self.results[res_id] = {_type: [single_res['query']]}
                     continue
-                elif res_id not in self.results:
+                if res_id not in self.results:
                     self.results[res_id] = defaultdict(set)
                 for k, v in _map.items():
                     for _v in v:
@@ -122,7 +121,8 @@ class IDResolver():
                         'method': 'post',
                         'parameters': {
                             'fields': self.get_output_fields(mapping_file),
-                            'dotfield': "true"
+                            'dotfield': "true",
+                            'species': 'human'
                         }, 
                         'requestBody': {
                             'body': {
