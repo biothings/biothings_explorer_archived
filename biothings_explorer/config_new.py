@@ -21,7 +21,8 @@ API_LIST = [
     "biolink",
     "opentarget",
     "dgidb",
-    "mydisease"
+    "mydisease",
+    "mychem"
 ]
 
 ID_RESOLVING_APIS = {
