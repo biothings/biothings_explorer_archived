@@ -13,6 +13,8 @@ from collections import defaultdict
 class ReasonerConverter():
 
     """Convert the output of BTE to ReasonerAPIStd."""
+    def __init__(self):
+        self.result = defaultdict(list)
 
     def load_bte_query_path(self, start, intermediate, end):
         """Load bte input query in the form of path.
@@ -68,7 +70,6 @@ class ReasonerConverter():
 
     def fetch_edges(self):
         """Reorganize the edges into reasonerSTd format."""
-        self.result = defaultdict(list)
         edges = []
         for k, v, o in self.G.edges(data=True):
             source_id = self.get_curie(k)
@@ -155,6 +156,8 @@ class ReasonerConverter():
 
     def generate_result(self):
         result = {"node_bindings": [], "edge_bindings": []}
+        if not self.result:
+            return result
         for k, v in self.result.items():
             target_id = k.split('|||')[-1]
             result["node_bindings"].append({"qg_id": "n1", "kg_id": target_id})
