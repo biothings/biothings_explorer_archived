@@ -166,9 +166,8 @@ class SingleEdgeQueryDispatcher():
                             # set the original node to be removed
                             nodes_to_remove.add(n2)
                             # if this node is not in graph, add this node
-                            if _val not in self.G.nodes():
-                                nodes_to_add.append((_val, node_info))
-                                identifiers.append(_id)
+                            nodes_to_add.append((_val, node_info))
+                            identifiers.append(_id)
             # remove duplicate nodes
             for n in nodes_to_remove:
                 self.G.remove_node(n)
