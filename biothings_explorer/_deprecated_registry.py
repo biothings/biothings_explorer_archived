@@ -6,6 +6,8 @@ Storing metadata information and connectivity of APIs.
 
 
 """
+import json
+from copy import deepcopy
 import networkx as nx
 from .mapping_parser import MappingParser
 from .config import metadata
@@ -22,7 +24,7 @@ class Registry():
         """Initialize networkx graph and load biothings apis."""
         self.G = nx.MultiDiGraph()
         self.registry = {}
-        self.load_biothings()
+        # self.load_biothings()
         self.all_edges_info = self.G.edges(data=True)
         self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
         self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
@@ -55,28 +57,73 @@ class Registry():
                     res[pred].append(tmp)
         return res
 
+    def _auto_generate_semmed_operation_list(self, doc_type):
+        res = []
+        for pred, output_types in semmed[doc_type].items():
+            for output_type in output_types:
+                _id = '-'.join([doc_type, pred, output_type])
+                res.append({'$ref': "#/components/x-bte-kgs-operations/" + _id})
+        return res
+
+    def _auto_generate_semmed_operation(self, doc_type):
+        x_operation_template = {
+            "inputSeparator": ",",
+            "inputs": [
+                {
+                    "id": "UMLS"
+                }
+            ],
+            "method": "post",
+            "source": "SEMMED",
+            "outputs": [
+                {
+                    "id": "UMLS"
+                }
+            ],
+            "parameters": {
+                "fields": ""
+            },
+            "path": "/query",
+            "requestBody": {
+                "body": {
+                    "q": "{inputs[0]}",
+                    "scopes": "umls"
+                }
+            },
+            "supportBatch": True,
+            "response_mapping": {
+                "$ref": ""
+            }
+        }
+        res = {}
+        for pred, output_types in semmed[doc_type].items():
+            for output_type in output_types:
+                _id = '-'.join([doc_type, pred, output_type])
+                tmp = deepcopy(x_operation_template)
+                tmp['parameters']['fields'] = pred
+                tmp['inputs'][0]['semantic'] = doc_type
+                tmp['outputs'][0]['semantic'] = output_type
+                tmp['predicate'] = pred
+                tmp['response_mapping']["$ref"] = '#/components/x-bte-response-mapping/' + _id
+                res[_id] = [tmp]
+        return res
+
+
     @staticmethod
     def _auto_generate_semmed_mapping(doc_type):
         """Auto-generate schema mapping file for all SEMMED APIs
         
         :param: doc_type: the document type of the specific semmed API
         """
-        res = {
-            "@context": "http://schema.org",
-            "@type": doc_type,
-            "umls": "umls"
-        }
+        result = {}
         for pred, output_types in semmed[doc_type].items():
-            res[pred] = []
             for output_type in output_types:
-                res[pred].append({
-                    "@type": output_type,
+                _id = '-'.join([doc_type, pred, output_type])
+                result[_id] = {
                     "umls": pred + '.umls',
                     "pmid": pred + '.pmid',
-                    "$input": "umls",
-                    "$source": "semmed"
-                })
-        return res
+                }
+        return result
 
     def load_biothings(self):
         """Load biothings API into registry network graph."""
