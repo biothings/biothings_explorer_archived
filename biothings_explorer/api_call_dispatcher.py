@@ -53,21 +53,26 @@ class Dispatcher():
     def construct_api_calls(self, edges):
         """Construct API calls for apicall module using edge groups."""
         # store all API call inputs
-        internal_query_id = 0
+        # internal_query_id = 0
         query_id2inputs_mapping = {}
         for edge in edges:
+            api = edge['api']
             if edge.get('supportBatch'):
                 edge['value'] = edge['separator'].join(edge['value'])
+                # edge['internal_query_id'] = internal_query_id
+                internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
                 edge['internal_query_id'] = internal_query_id
                 query_id2inputs_mapping[internal_query_id] = edge
-                internal_query_id += 1
+                # internal_query_id += 1
             else:
                 for val in edge['value']:
                     new_edge = deepcopy(edge)
                     new_edge['value'] = val
+                    # new_edge['internal_query_id'] = internal_query_id
+                    internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
                     new_edge['internal_query_id'] = internal_query_id
                     query_id2inputs_mapping[internal_query_id] = new_edge
-                    internal_query_id += 1
+                    # internal_query_id += 1
         return query_id2inputs_mapping
 
     @staticmethod
