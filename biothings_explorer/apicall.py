@@ -89,6 +89,11 @@ class BioThingsCaller():
                     if verbose:
                         print("{}: {}".format(base_url,parameters))
                     try:
+                        if res.status == 400:
+                            return {
+                            'internal_query_id': _input['internal_query_id'],
+                            'result': {}
+                            }
                         res = await res.json()
                         return {
                             'internal_query_id': _input['internal_query_id'],
@@ -114,6 +119,11 @@ class BioThingsCaller():
                                         data=request_body,
                                         headers=header) as res:
                     try:
+                        if res.status == 400:
+                            return {
+                            'internal_query_id': _input['internal_query_id'],
+                            'result': {}
+                            }
                         print("{}: {}".format(base_url,parameters))
                         return {
                             'result': await res.json(),
