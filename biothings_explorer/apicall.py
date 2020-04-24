@@ -58,7 +58,7 @@ class BioThingsCaller():
             try:
                 async with session.get(base_url, params=parameters) as res:
                     if verbose:
-                        print("{}".format(query_url))
+                        print("{}: {}".format(_input['internal_query_id'], query_url))
                     try:
                         if res.status == 400:
                             return {
@@ -78,7 +78,7 @@ class BioThingsCaller():
                         }
             except Exception:
                 if verbose:
-                    print('{} failed'.format(_input['api']))
+                    print('{} {} failed'.format(_input['internal_query_id'], _input['api']))
                 return {
                     'internal_query_id': _input['internal_query_id'],
                     'result': {}
@@ -95,7 +95,8 @@ class BioThingsCaller():
                             'internal_query_id': _input['internal_query_id'],
                             'result': {}
                             }
-                        print("{}".format(query_url))
+                        if verbose:
+                            print("{}: {}".format(_input['internal_query_id'], query_url))
                         return {
                             'result': await res.json(),
                             'internal_query_id': _input['internal_query_id']
@@ -110,7 +111,7 @@ class BioThingsCaller():
             except Exception as ex:
                 print(ex)
                 if verbose:
-                    print('{} failed'.format(_input['api']))
+                    print('{}: {} failed'.format(_input['internal_query_id'], _input['api']))
                 return {
                     'result': {},
                     'internal_query_id': _input['internal_query_id']
