@@ -22,7 +22,8 @@ API_LIST = [
     "opentarget",
     "dgidb",
     "mydisease",
-    "mychem"
+    "mychem",
+    "myvariant"
 ]
 
 ID_RESOLVING_APIS = {
@@ -89,7 +90,8 @@ ID_RESOLVING_APIS = {
             "UMLS": ['mondo.xrefs.umls', "disgenet.xrefs.umls"],
             "name": ["mondo.label", "disgenet.xrefs.disease_name"],
             "MESH": ["mondo.xrefs.mesh", "ctd.mesh"],
-            "OMIM": ["mondo.xrefs.omim", "hpo.omim"]
+            "OMIM": ["mondo.xrefs.omim", "hpo.omim"],
+            "ORPHANET": ["hpo.orphanet", "mondo.xrefs.orphanet"]
         }
     },
     "MolecularActivity": {
