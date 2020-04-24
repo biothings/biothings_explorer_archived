@@ -23,12 +23,13 @@ API_LIST = [
     "dgidb",
     "mydisease",
     "mychem",
-    "myvariant"
+    "myvariant",
+    "DISEASES"
 ]
 
 ID_RESOLVING_APIS = {
     "Gene": {
-        "scopes": ['entrezgene', 'symbol', 'name', 'HGNC', 'umls.cui', 'uniprot.Swiss-Prot', "ensembl.gene"],
+        "id_ranks": ["NCBIGene", "ENSEMBL", "HGNC", "UMLS", "UNIPROTKB", "SYMBOL", "OMIM"],
         "semantic": "Gene",
         "api_name": "mygene.info",
         "url": "http://mygene.info/v3",
@@ -45,24 +46,19 @@ ID_RESOLVING_APIS = {
         }
     },
     "SequenceVariant": {
-        "scopes": ['dbsnp.rsid', '_id', 'clinvar.rsid',
-                'dbnsfp.rsid', 'clinvar.hgvs.coding',
-                'clinvar.hgvs.genomic', 'clinvar.hgvs.protein'],
+        "id_ranks": ["DBSNP", "MYVARIANT_HG19", "HGVS", "ClinVar"],
         "api_name": "myvariant.info",
         "semantic": "SequenceVariant",
         "url": 'http://myvariant.info/v1',
         "mapping": {
             "MYVARIANT_HG19": ["_id"],
             "DBSNP": ["dbsnp.rsid", "clinvar.rsid", "dbnsfp.rsid"],
-            "HGNC": ["clinvar.hgvs.genomic", "clinvar.hgvs.protein", "clinvar.hgvs.coding"],
+            "HGVS": ["clinvar.hgvs.genomic", "clinvar.hgvs.protein", "clinvar.hgvs.coding"],
             "ClinVar": ["clinvar.rcv.accession"]
         }
     },
     "ChemicalSubstance": {
-        "scopes": ['chembl.molecule_chembl_id', 'drugbank.id', 'chebi.id', 'chebi.xrefs.chembl', 'chembl.smiles', 'pubchem.smiles.canonical', 
-                'chebi.smiles','drugcentral.structures.smiles', 'pubchem.cid', 'chembl.pref_name', 'drugbank.name', 
-                'unii.unii', 'ginas.preferred_name', 'drugcentral.xrefs.umlscui', "drugcentral.synonyms", 
-                "ginas.name_list", "drugcentral.xrefs.chebi", "drugcentral.xrefs.mesh_descriptor_ui"],
+        "id_ranks": ["CHEBI", "CHEMBL.COMPOUND", "DRUGBANK", "PUBCHEM", "MESH", "UNII", "UMLS", "name"],
         "semantic": "ChemicalSubstance",
         "api_name": "mychem.info",
         "url": "http://mychem.info/v1",
@@ -78,9 +74,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "Disease": {
-        "scopes": ['_id', 'mondo.xrefs.doid', 'mondo.xrefs.hp',
-                'mondo.xrefs.mesh', 'mondo.xrefs.umls',
-                'mondo.label', 'disgenet.xrefs.disease_name'],
+        "id_ranks": ["MONDO", "DOID", "OMIM", "ORPHANET", "UMLS", "MESH", "name"],
         "semantic": "Disease",
         "api_name": "mydisease.info",
         "url": "http://mydisease.info/v1",
@@ -95,6 +89,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "MolecularActivity": {
+        "id_ranks": ["GO", "name"],
         "semantic": "MolecularActivity",
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
@@ -104,6 +99,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "BiologicalProcess": {
+        "id_ranks": ["GO", "UMLS", "name"],
         "semantic": "BiologicalProcess",
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
@@ -114,6 +110,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "CellularComponent": {
+        "id_ranks": ["GO", "UMLS", "name"],
         "semantic": "CellularComponent",
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
@@ -124,6 +121,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "Pathway": {
+        "id_ranks": ["REACTOME", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
         "semantic": "Pathway",
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
@@ -136,6 +134,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "AnatomicalEntity": {
+        "id_ranks": ["UMLS", "name"],
         "semantic": "AnatomicalEntity",
         "api_name": "Anatomy API",
         "url": "http://biothings.ncats.io/semmed_anatomy",
@@ -145,6 +144,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "PhenotypicFeature": {
+        "id_ranks": ["UMLS", "name"],
         "semantic": "PhenotypicFeature",
         "api_name": "Phenotype API",
         "url": "http://biothings.ncats.io/semmedphenotype",
