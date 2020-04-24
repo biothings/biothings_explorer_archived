@@ -19,51 +19,21 @@ from .utils.common import add_s
 class BioThingsCaller():
     """Call biothings APIs."""
 
-    def __init__(self, batch_mode=False):
-        """Set batch mode.
-        
-        :param: batch_mode (boolean): whether API support batch mode
-        """
-        self._batch_mode = batch_mode
-
-    @property
-    def batch_mode(self):
-        return self._batch_mode
-
-    @batch_mode.setter
-    def batch_mode(self, value):
-        self._batch_mode = value
-
     @staticmethod
-    def construct_query_param(input_fields, output_fields, value, batch_mode, size, dotfield=False):
-        """Construct query parameters with input, output and value."""
-        get_params = 'q={input}:{value}&fields={output}&species=human&size=' + str(size)
-        post_params = 'q={value}&scopes={input}&fields={output}&species=human&size=' + str(size)
-        if ',' in input_fields and not batch_mode:
-            _input = ' OR'.join([(_item + ':' + value) for _item in input_fields.split(',')])
-            if dotfield:
-                get_params += '&dotfield=true'
-            return get_params.replace('{input}:{value}', _input).replace('{output}', output_fields)
-        params = post_params if batch_mode else get_params
-        if dotfield:
-            params += '&dotfield=true'
-        return params.replace('{input}', input_fields).replace('{output}',output_fields).replace('{value}', value)
-
-    @staticmethod
-    def construct_path(url, param, value):
-        """Construct url."""
-        param = '{' + param + '}'
-        url = url.replace(param, value)
-        return url
-
-    @staticmethod
-    def print_request(method, url, params):
-        if method == "GET":
-            if params:
-                params = '?' + params
-            return url + params
-        if method == "POST":
-            return url + ' (POST "' + params + '")'
+    def print_request(method, url, params, request_body):
+        if params:
+            url += '?'
+            params = [(str(m) + '=' + str(n)) for m,n in params.items()]
+            url += '&'.join(params)
+        if method == "get":
+            return url
+        if method == "post":
+            if request_body:
+                url += ' (POST -d '
+                request_body = [(str(m) + '=' + str(n)) for m,n in request_body.items()]
+                url += '&'.join(request_body)
+                url += ')'
+            return url
         return ''
 
     async def call_one_arbitrary_api(self, _input, session, verbose=False):
@@ -83,11 +53,12 @@ class BioThingsCaller():
                     base_url = base_url.replace('{' + path_param + '}', path_value_template).replace('{inputs[0]}', _input['value'])
                     parameters.pop(path_param)
             parameters = eval(str(parameters).replace('{inputs[0]}', _input['value']))
+        query_url = self.print_request(method, base_url, parameters, request_body)
         if method == "get":
             try:
                 async with session.get(base_url, params=parameters) as res:
                     if verbose:
-                        print("{}: {}".format(base_url,parameters))
+                        print("{}".format(query_url))
                     try:
                         if res.status == 400:
                             return {
@@ -124,7 +95,7 @@ class BioThingsCaller():
                             'internal_query_id': _input['internal_query_id'],
                             'result': {}
                             }
-                        print("{}: {}".format(base_url,parameters))
+                        print("{}".format(query_url))
                         return {
                             'result': await res.json(),
                             'internal_query_id': _input['internal_query_id']
