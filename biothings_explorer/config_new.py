@@ -19,7 +19,9 @@ API_LIST = [
     "semmed_phenotype",
     "scibite",
     "biolink",
-    "opentarget"
+    "opentarget",
+    "dgidb",
+    "mydisease"
 ]
 
 ID_RESOLVING_APIS = {
@@ -85,7 +87,8 @@ ID_RESOLVING_APIS = {
             "DOID": ["mondo.xrefs.doid"],
             "UMLS": ['mondo.xrefs.umls', "disgenet.xrefs.umls"],
             "name": ["mondo.label", "disgenet.xrefs.disease_name"],
-            "MESH": ["mondo.xrefs.mesh", "ctd.mesh"]
+            "MESH": ["mondo.xrefs.mesh", "ctd.mesh"],
+            "OMIM": ["mondo.xrefs.omim", "hpo.omim"]
         }
     },
     "MolecularActivity": {
