@@ -23,7 +23,7 @@ class IDResolver():
             self.registry = Registry()
         else:
             self.registry = registry
-        self.caller = BioThingsCaller(batch_mode=True)
+        self.caller = BioThingsCaller()
 
     def fetch_id_mapping_file(self, semantic_type):
         """Fetch schema mapping file from the registry.
