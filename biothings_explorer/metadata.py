@@ -105,7 +105,7 @@ class Metadata():
             if output_type not in nodes:
                 nodes.add(output_type)
                 G.add_node(output_type, label=output_type)
-            api = metadata[info['api']]['api_name']
+            api = info['operation']['api_name']
             edge = input_type + '-' + api + '-' + output_type
             if edge not in edges:
                 edges.add(edge)
