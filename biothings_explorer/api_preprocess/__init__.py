@@ -61,7 +61,7 @@ class APIPreprocess():
             return restructure_semmed_response(self.json_doc, self.output_types)
         if self.api_name[:4] == 'cord':
             return restructure_cord_response(self.json_doc, self.output_types)
-        if self.api_name == 'scibite':
+        if self.api_name in ['scibite', 'scigraph', 'pharos', 'hmdb', 'hetio', 'chembio']:
             return restructure_scibite_response(self.json_doc)
         return self.json_doc
 
