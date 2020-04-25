@@ -54,7 +54,7 @@ class SingleEdgeQueryDispatcher():
         self.query_id = query_id
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
-        self.idr = IDResolver(registry=self.registry)
+        self.idr = IDResolver()
         semantic_types = self.metadata.list_all_semantic_types()
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
