@@ -42,7 +42,6 @@ ID_RESOLVING_APIS = {
             "NCBIGene": ["entrezgene"],
             "name": ["name"],
             "SYMBOL": ["symbol"],
-            "taxonomy": ["taxid"],
             "UMLS": ["umls.cui", "umls.protein_cui"],
             "HGNC": ["HGNC"],
             "UNIPROTKB": ["uniprot.Swiss-Prot"],
@@ -70,7 +69,7 @@ ID_RESOLVING_APIS = {
         "mapping": {
             "CHEMBL.COMPOUND": ["chembl.molecule_chembl_id", "drugbank.xrefs.chembl", "drugcentral.xrefs.chembl_id"],
             "DRUGBANK": ["drugcentral.xrefs.drugbank_id", "pharmgkb.xrefs.drugbank", "chebi.xrefs.drugbank", "drugbank.id"],
-            "PUBCHEM": ["pubchem.cid", "chebi.xrefs.pubchem.cid", "drugbank.xrefs.pubchem.cid", "drugcentral.xrefs.pubchem_cid", "pharmgkb.xrefs.pubchem.cid"],
+            "PUBCHEM": ["pubchem.cid", "drugbank.xrefs.pubchem.cid", "drugcentral.xrefs.pubchem_cid", "pharmgkb.xrefs.pubchem.cid"],
             "CHEBI": ["chebi.id", "chembl.chebi_par_id", "drugbank.xrefs.chebi", "drugcentral.xrefs.chebi"],
             "UMLS": ["drugcentral.xrefs.umlscui", "pharmgkb.xrefs.umls", "umls.cui"],
             "MESH": ["umls.mesh", "drugcentral.xrefs.mesh_descriptor_ui", "ginas.xrefs.MESH", "pharmgkb.xrefs.mesh"],
