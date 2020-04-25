@@ -125,7 +125,7 @@ ID_RESOLVING_APIS = {
         }
     },
     "Pathway": {
-        "id_ranks": ["REACTOME", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
+        "id_ranks": ["Reactome", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
         "semantic": "Pathway",
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
