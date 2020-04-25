@@ -6,13 +6,10 @@
 
 """
 
-from urllib.parse import urljoin
 import asyncio
 from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
-
-from .config import metadata
 from .utils.common import add_s
 
 
