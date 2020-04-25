@@ -60,7 +60,8 @@ class BioThingsCaller():
                     if verbose:
                         print("{}: {}".format(_input['internal_query_id'], query_url))
                     try:
-                        if res.status == 400:
+                        if res.status in [400, 404]:
+                            print('{} {} failed'.format(_input['internal_query_id'], _input['api']))
                             return {
                             'internal_query_id': _input['internal_query_id'],
                             'result': {}
@@ -90,7 +91,8 @@ class BioThingsCaller():
                                         data=request_body,
                                         headers=header) as res:
                     try:
-                        if res.status == 400:
+                        if res.status in [400, 404]:
+                            print('{} {} failed'.format(_input['internal_query_id'], _input['api']))
                             return {
                             'internal_query_id': _input['internal_query_id'],
                             'result': {}
