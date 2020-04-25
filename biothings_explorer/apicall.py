@@ -138,7 +138,7 @@ class BioThingsCaller():
         """
         tasks = []
         # timeout = ClientTimeout(total=15)
-        async with ClientSession(connector=TCPConnector(verify_ssl=False)) as session:
+        async with ClientSession(connector=TCPConnector(ssl=False)) as session:
             for i in inputs:
                 task = asyncio.ensure_future(self.call_one_api(i, session,
                                                                verbose=verbose))
