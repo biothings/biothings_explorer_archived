@@ -46,7 +46,7 @@ class Hint():
         res = ''
         for _id in self.ID_RESOLVING_APIS[semantic_type]["id_ranks"]:
             if _id in json_doc:
-                res += (_id + '(' + json_doc[_id]  + ') ')
+                res += (_id + '(' + str(json_doc[_id])  + ') ')
         return res.strip(' ')
 
     @staticmethod
