@@ -39,8 +39,8 @@ class TestSingleHopQuery(unittest.TestCase):
                                          values='1017',
                                          registry=reg)
         seqd.query()
-        self.assertTrue('R-HSA-1266738' in seqd.G)
-        self.assertTrue('WP1530' in seqd.G)
+        self.assertTrue('HEMOSTASIS' in seqd.G)
+        self.assertTrue('RETINOBLASTOMA GENE IN CANCER' in seqd.G)
 
     def test_gene2transcript(self):
         # test <gene, hasTranscript, transcript>
