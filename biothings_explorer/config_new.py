@@ -130,7 +130,7 @@ ID_RESOLVING_APIS = {
         "api_name": "geneset API",
         "url": "http://biothings.ncats.io/geneset",
         "mapping": {
-            "REACTOME": ["reactome"],
+            "Reactome": ["reactome"],
             "WIKIPATHWAYS": ["wikipathways"],
             "KEGG": ["kegg"],
             "PHARMGKB": ['pharmgkb'],
