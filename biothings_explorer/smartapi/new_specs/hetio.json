@@ -7,12 +7,12 @@
 		},
 		"description": "Scibite",
 		"termsOfService": "https://automat.renci.org",
-		"title": "Automat CORD19 Scibite API",
+		"title": "Automat Hetio API",
 		"version": "2.0"
 	},
 	"servers": [{
 		"description": "Production server",
-		"url": "https://automat.renci.org/cord19_scibite_v2"
+		"url": "https://automat.renci.org/hetio"
 	}],
 	"tags": [{
 			"name": "drug"
@@ -31,29 +31,6 @@
 		}
 	],
 	"paths": {
-		"/gene/chemical_substance/{geneid}": {
-			"get": {
-				"summary": "gene2chemical",
-				"parameters": [{
-					"description": "Put NCBIGene ID here, e.g. 1017",
-					"example": "NCBIGene:1017",
-					"in": "path",
-					"name": "geneid",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/gene2chemical"
-				}]
-			}
-		},
 		"/gene/disease/{geneid}": {
 			"get": {
 				"summary": "gene2disease",
@@ -77,52 +54,6 @@
 				}]
 			}
 		},
-		"/chemical_substance/disease/{chebi}": {
-			"get": {
-				"summary": "chemical2disease",
-				"parameters": [{
-					"description": "Put CHEBI ID here, e.g. \"CHEBI:661\"",
-					"example": "CHEBI:661",
-					"in": "path",
-					"name": "chebi",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/chemical2disease"
-				}]
-			}
-		},
-		"/chemical_substance/gene/{chebi}": {
-			"get": {
-				"summary": "chemical2gene",
-				"parameters": [{
-					"description": "Put CHEBI ID here, e.g. \"CHEBI:661\"",
-					"example": "CHEBI:661",
-					"in": "path",
-					"name": "chebi",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/chemical2gene"
-				}]
-			}
-		},
 		"/disease/gene/{mondo}": {
 			"get": {
 				"summary": "disease2gene",
@@ -143,29 +74,6 @@
 				},
 				"x-bte-kgs-operations": [{
 					"$ref": "#/components/x-bte-kgs-operations/disease2gene"
-				}]
-			}
-		},
-		"/disease/chemical_substance/{mondo}": {
-			"get": {
-				"summary": "disease2chemical",
-				"parameters": [{
-					"description": "Put DOID ID here, e.g. \"DOID:123\"",
-					"example": "DOID:123",
-					"in": "path",
-					"name": "mondo",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/disease2chemical"
 				}]
 			}
 		}

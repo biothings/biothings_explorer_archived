@@ -7,12 +7,12 @@
 		},
 		"description": "Scibite",
 		"termsOfService": "https://automat.renci.org",
-		"title": "Automat CORD19 Scibite API",
+		"title": "Automat CORD19 Scigraph API",
 		"version": "2.0"
 	},
 	"servers": [{
 		"description": "Production server",
-		"url": "https://automat.renci.org/cord19_scibite_v2"
+		"url": "https://automat.renci.org/cord19_scigraph_v2"
 	}],
 	"tags": [{
 			"name": "drug"

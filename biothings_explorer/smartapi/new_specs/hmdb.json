@@ -7,12 +7,12 @@
 		},
 		"description": "Scibite",
 		"termsOfService": "https://automat.renci.org",
-		"title": "Automat CORD19 Scibite API",
+		"title": "Automat HMDB API",
 		"version": "2.0"
 	},
 	"servers": [{
 		"description": "Production server",
-		"url": "https://automat.renci.org/cord19_scibite_v2"
+		"url": "https://automat.renci.org/hmdb"
 	}],
 	"tags": [{
 			"name": "drug"
@@ -51,29 +51,6 @@
 				},
 				"x-bte-kgs-operations": [{
 					"$ref": "#/components/x-bte-kgs-operations/gene2chemical"
-				}]
-			}
-		},
-		"/gene/disease/{geneid}": {
-			"get": {
-				"summary": "gene2disease",
-				"parameters": [{
-					"description": "Put NCBIGene ID here, e.g. 1017",
-					"example": "NCBIGene:1017",
-					"in": "path",
-					"name": "geneid",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/gene2disease"
 				}]
 			}
 		},
@@ -120,29 +97,6 @@
 				},
 				"x-bte-kgs-operations": [{
 					"$ref": "#/components/x-bte-kgs-operations/chemical2gene"
-				}]
-			}
-		},
-		"/disease/gene/{mondo}": {
-			"get": {
-				"summary": "disease2gene",
-				"parameters": [{
-					"description": "Put DOID ID here, e.g. \"DOID:123\"",
-					"example": "DOID:123",
-					"in": "path",
-					"name": "mondo",
-					"required": true,
-					"schema": {
-						"type": "string"
-					}
-				}],
-				"responses": {
-					"200": {
-						"description": "An association object"
-					}
-				},
-				"x-bte-kgs-operations": [{
-					"$ref": "#/components/x-bte-kgs-operations/disease2gene"
 				}]
 			}
 		},
