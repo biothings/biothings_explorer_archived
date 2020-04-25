@@ -24,7 +24,12 @@ API_LIST = [
     "mydisease",
     "mychem",
     "myvariant",
-    "DISEASES"
+    "DISEASES",
+    "scigraph",
+    "pharos",
+    "hmdb",
+    "hetio",
+    "chembio"
 ]
 
 ID_RESOLVING_APIS = {
