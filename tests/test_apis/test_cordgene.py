@@ -97,6 +97,7 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd = SingleEdgeQueryDispatcher(output_cls='Disease',
                                          input_cls='Gene',
                                          input_id='HGNC',
+                                         output_id='DOID',
                                          values='10115')
         seqd.query()
-        self.assertTrue('CONGENITAL CENTRAL HYPOVENTILATION SYNDROME' in seqd.G)
+        self.assertTrue('DOID:0060731' in seqd.G)

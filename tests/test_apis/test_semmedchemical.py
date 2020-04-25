@@ -86,6 +86,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          input_cls='ChemicalSubstance',
                                          pred='affects',
                                          input_id='UMLS',
+                                         output_id='UMLS',
                                          values='C0057606')
         seqd.query()
         self.assertTrue("C0005767" in seqd.G)

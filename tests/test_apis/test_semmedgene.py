@@ -86,6 +86,7 @@ class TestSingleHopQuery(unittest.TestCase):
                                          input_cls='Gene',
                                          pred='affects',
                                          input_id='UMLS',
+                                         output_id='UMLS',
                                          values='C0248868')
         seqd.query()
         self.assertTrue("C0233929" in seqd.G)
