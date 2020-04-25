@@ -7,22 +7,14 @@ Resolving Biomedical Identifiers through BioThings APIs.
 
 from collections import defaultdict
 from .config_new import ID_RESOLVING_APIS
-from .registry import Registry
 from .apicall import BioThingsCaller
 
 
 class IDResolver():
     """Resolving Biomedical Identifiers through BioThings APIs."""
 
-    def __init__(self, registry=None):
-        """Load BTE registry and BTE API caller.
-
-        :param: registry: BTE registry object
-        """
-        if not registry:
-            self.registry = Registry()
-        else:
-            self.registry = registry
+    def __init__(self):
+        """Load BTE registry and BTE API caller."""
         self.caller = BioThingsCaller()
 
     def fetch_id_mapping_file(self, semantic_type):
