@@ -748,7 +748,7 @@
 						},
 						"header": "application/x-www-form-urlencoded"
 					},
-					"separator": ",",
+					"inputSeparator": ",",
 					"supportBatch": true,
 					"response_mapping": {
 						"$ref": "#/components/x-bte-response-mapping/has_gene_product"
@@ -776,7 +776,7 @@
 						},
 						"header": "application/x-www-form-urlencoded"
 					},
-					"separator": ",",
+					"inputSeparator": ",",
 					"supportBatch": true,
 					"response_mapping": {
 						"$ref": "#/components/x-bte-response-mapping/has_gene_product"
@@ -803,7 +803,7 @@
 					},
 					"header": "application/x-www-form-urlencoded"
 				},
-				"separator": ",",
+				"inputSeparator": ",",
 				"supportBatch": true,
 				"response_mapping": {
 					"$ref": "#/components/x-bte-response-mapping/homologous_to"
@@ -829,7 +829,7 @@
 					},
 					"header": "application/x-www-form-urlencoded"
 				},
-				"separator": ",",
+				"inputSeparator": ",",
 				"supportBatch": true,
 				"response_mapping": {
 					"$ref": "#/components/x-bte-response-mapping/gene_to_transcript_relationship"
@@ -856,7 +856,7 @@
 					},
 					"header": "application/x-www-form-urlencoded"
 				},
-				"separator": ",",
+				"inputSeparator": ",",
 				"supportBatch": true,
 				"response_mapping": {
 					"$ref": "#/components/x-bte-response-mapping/functional_association_bp"
@@ -883,7 +883,7 @@
 					},
 					"header": "application/x-www-form-urlencoded"
 				},
-				"separator": ",",
+				"inputSeparator": ",",
 				"supportBatch": true,
 				"response_mapping": {
 					"$ref": "#/components/x-bte-response-mapping/functional_association_cc"
@@ -911,7 +911,7 @@
 						},
 						"header": "application/x-www-form-urlencoded"
 					},
-					"separator": ",",
+					"inputSeparator": ",",
 					"supportBatch": true,
 					"response_mapping": {
 						"$ref": "#/components/x-bte-response-mapping/functional_association_wikipathways"
@@ -940,7 +940,7 @@
 						},
 						"header": "application/x-www-form-urlencoded"
 					},
-					"separator": ",",
+					"inputSeparator": ",",
 					"supportBatch": true,
 					"response_mapping": {
 						"$ref": "#/components/x-bte-response-mapping/functional_association_reactome"
