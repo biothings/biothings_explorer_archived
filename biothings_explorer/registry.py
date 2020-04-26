@@ -19,19 +19,68 @@ class Registry():
     def __init__(self):
         """Initialize networkx graph and load biothings apis."""
         self.G = nx.MultiDiGraph()
-        self.registry = {}
         self.smp = SmartAPIParser()
+        self.registry = {}
+        self.api_list = API_LIST
         self.load_smartapis()
         self.all_edges_info = self.G.edges(data=True)
         self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
         self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
         self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
 
+    def _reload_registry(self):
+        """Reconstruct BTE Registry.
+        
+        note: This one is called everytime the API_LIST changes.
+        """
+        self.G = nx.MultiDiGraph()
+        self.load_smartapis()
+        self.all_edges_info = self.G.edges(data=True)
+        self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
+        self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
+        self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
+
+    def show_all_apis(self):
+        """List all APIs in the BTE Registry."""
+        return self.api_list
+
+    def remove_apis(self, apis):
+        """Remove one or a list of APIs from registry
+        
+        :param: apis: list of APIs to be removed from BTE Registry.
+        """
+        if not isinstance(apis, list):
+            apis = [apis]
+        for api in apis:
+            if api in self.api_list:
+                self.api_list.remove(api)
+                print("{} has been successfully removed!".format(api))
+            else:
+                raise ValueError("{} is not in the API list.".format(api))
+        self._reload_registry()
+
+    def refine_api_list(self, apis):
+        """Set the API List.
+        
+        :params: apis: list of APIs to include in the BTE Registry
+        """
+        if not isinstance(apis, list):
+            apis = [apis]
+        self.api_list = []
+        for api in apis:
+            if api in API_LIST:
+                self.api_list.append(api)
+            else:
+                self.api_list = API_LIST
+                self._reload_registry()
+                raise ValueError("{} is not in the API list.".format(api))
+        self._reload_registry()
+
     def load_smartapis(self):
         """Load biothings API into registry network graph."""
         # load biothings schema
         # loop through API metadata
-        for api in API_LIST:
+        for api in self.api_list:
             smartapi_file = Path.joinpath(CURRENT_PATH.parent,
                                           'smartapi/new_specs', api + '.json')
             self.smp.load_spec(smartapi_file)
