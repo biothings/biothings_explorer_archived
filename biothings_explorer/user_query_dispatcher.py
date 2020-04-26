@@ -97,9 +97,6 @@ class SingleEdgeQueryDispatcher():
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
-        # check if input_id is valid
-        if not self.equivalent_ids and self.input_id not in id_types:
-            raise Exception("The input_id is not valid. Valid input id types are {}".format(id_types))
         if not self.equivalent_ids:
             # find equivalent ids for the input value
             equivalent_ids = self.idr.resolve_ids([(self.values,
