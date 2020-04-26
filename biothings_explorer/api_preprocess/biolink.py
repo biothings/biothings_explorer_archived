@@ -27,7 +27,9 @@ def restructure_biolink_response(json_doc):
                 except ValueError:
                     pass
             # remove empty value
-            if not _doc['publications']:
+            if 'publications' not in _doc:
+                continue
+            elif not _doc.get('publications'):
                 _doc.pop('publications')
             elif not _doc['publications'][0]['id'].startswith('PMID'):
                 _doc.pop('publications')
@@ -36,8 +38,4 @@ def restructure_biolink_response(json_doc):
                     _item['id'] = _item['id'].split(':')[-1]
             if not _doc['provided_by']:
                 _doc.pop('provided_by')
-            else:
-                # extract the database name from uri
-                for i, _item in enumerate(_doc['provided_by']):
-                    _doc['provided_by'][i] = _item.split(".")[-2].split("/")[-1]
     return json_doc
