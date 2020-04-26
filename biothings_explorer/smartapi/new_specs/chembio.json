@@ -90,7 +90,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -108,7 +108,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -127,7 +127,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -145,7 +145,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -164,7 +164,7 @@
 					"semantic": "Gene"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -183,7 +183,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -201,7 +201,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -220,7 +220,7 @@
 					"semantic": "Gene"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},
@@ -239,7 +239,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},
@@ -257,7 +257,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "chembio",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},

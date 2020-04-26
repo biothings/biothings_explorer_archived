@@ -182,7 +182,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -200,7 +200,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -219,7 +219,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -237,7 +237,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"geneid": "NCBIGene:{inputs[0]}"
 				},
@@ -256,7 +256,7 @@
 					"semantic": "Gene"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -275,7 +275,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -293,7 +293,7 @@
 					"semantic": "Disease"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"chebi": "{inputs[0]}"
 				},
@@ -312,7 +312,7 @@
 					"semantic": "Gene"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},
@@ -331,7 +331,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},
@@ -349,7 +349,7 @@
 					"semantic": "ChemicalSubstance"
 				}],
 				"predicate": "related_to",
-				"source": "scibite",
+				"source": "scigraph",
 				"parameters": {
 					"mondo": "{inputs[0]}"
 				},
