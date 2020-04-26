@@ -87,7 +87,7 @@ class SmartAPIParser():
 
     @staticmethod
     def get_unique_edge_id(operation):
-        _id = '-'.join([operation['server'], operation['method']])
+        _id = '-'.join([operation['server'], operation['method'], operation['output_type'], operation['output_id']])
         request_body = operation.get("requestBody")
         if request_body and request_body.get("body"):
             for k in sorted(request_body.get('body').keys()):
