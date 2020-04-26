@@ -32,6 +32,21 @@ class Dispatcher():
         self.caller = BioThingsCaller()
 
     @staticmethod
+    def get_unique_edge_id(edge):
+        operation = edge['operation']
+        _id = '-'.join([str(edge['value']), operation['server'], operation['method']])
+        request_body = operation.get("requestBody")
+        if request_body and request_body.get("body"):
+            for k in sorted(request_body.get('body').keys()):
+                _id += ('-' + k + '-' + str(request_body.get("body")[k]))
+        parameters = operation.get("parameters")
+        if parameters:
+            for k in sorted(parameters.keys()):
+                _id += ('-' + k + '-' + str(parameters[k]))
+        return _id
+
+
+    @staticmethod
     def subset_mapping_file(edges, mapping_file):
         """Only maintain a subset of mapping file based on edge label."""
         mapping_keys = [_item.get('mapping_key') for _item in edges]
@@ -57,6 +72,7 @@ class Dispatcher():
         query_id2inputs_mapping = {}
         for edge in edges:
             api = edge['api']
+            print(self.get_unique_edge_id(edge))
             if edge.get('supportBatch'):
                 edge['value'] = edge['separator'].join(edge['value'])
                 # edge['internal_query_id'] = internal_query_id
@@ -139,6 +155,7 @@ class Dispatcher():
             _res = APIPreprocess(response['result'], operation['api_type'], api_name, output_types).restructure()
             mapping = operation['response_mapping']
             _res = OutputParser(_res, mapping, operation['supportBatch'], api_name, operation['api_type']).parse()
+            count_hits = 0
             if not operation['supportBatch']:
                 # preprocess biolink results
                 # if val is not present in results dict and _res is not empty
