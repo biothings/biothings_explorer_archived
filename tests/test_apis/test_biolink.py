@@ -76,13 +76,13 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_pathway2disease(self):
         # test <chemical, interactswith, anatomy>
         seqd = SingleEdgeQueryDispatcher(input_cls='Pathway',
-                                         input_id='REACTOME',
+                                         input_id='Reactome',
                                          output_cls='Disease',
                                          pred='related_to',
                                          values='R-HSA-210745')
         seqd.query()
         self.assertTrue('MATURITY ONSET DIABETES MELLITUS IN YOUNG' in seqd.G)
-        edges = seqd.G['REACTOME:R-HSA-210745']['MATURITY ONSET DIABETES MELLITUS IN YOUNG']
+        edges = seqd.G['Reactome:R-HSA-210745']['MATURITY ONSET DIABETES MELLITUS IN YOUNG']
         self.assertTrue('BioLink API' in get_apis(edges))
 
     # def test_pathway2phenotype(self):
