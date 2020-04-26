@@ -924,7 +924,7 @@
             },
             "inputs": [
               {
-                "id": "NCBIGenee",
+                "id": "NCBIGene",
                 "semantic": "Gene"
               }
             ],
