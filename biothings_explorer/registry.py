@@ -40,6 +40,7 @@ class Registry():
                 self.G.add_edge(
                     op['input_id'],
                     op['output_id'],
+                    operation_id=op['id'],
                     label=op['predicate'],
                     api=api,
                     api_type=op['api_type'],

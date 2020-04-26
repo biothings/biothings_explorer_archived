@@ -1,5 +1,6 @@
 from copy import deepcopy
 from .utils.dataload import load_json_or_yaml
+import hashlib
 
 
 class SmartAPIParser():
@@ -84,6 +85,19 @@ class SmartAPIParser():
         for op in operations:
             yield self.fetch_single_x_bte_kgs_operation(op["$ref"])
 
+    @staticmethod
+    def get_unique_edge_id(operation):
+        _id = '-'.join([operation['server'], operation['method']])
+        request_body = operation.get("requestBody")
+        if request_body and request_body.get("body"):
+            for k in sorted(request_body.get('body').keys()):
+                _id += ('-' + k + '-' + str(request_body.get("body")[k]))
+        parameters = operation.get("parameters")
+        if parameters:
+            for k in sorted(parameters.keys()):
+                _id += ('-' + k + '-' + str(parameters[k]))
+        return hashlib.sha224(_id.encode()).hexdigest()
+
     def parse_individual_operation(self, op, path, method, path_params):
         res = []
         for _input in op['inputs']:
@@ -108,6 +122,7 @@ class SmartAPIParser():
                         }
                     }
                 )
+                tmp['id'] = self.get_unique_edge_id(tmp)
                 res.append(tmp)
         return res
 
