@@ -106,8 +106,8 @@ def get_name_from_equivalent_ids(equivalent_ids, input_label=None):
         return input_label
     if not equivalent_ids:
         return "unknown"
-    if equivalent_ids.get('symbol'):
-        return equivalent_ids.get('symbol')[0]
+    if equivalent_ids.get('SYMBOL'):
+        return equivalent_ids.get('SYMBOL')[0]
     if equivalent_ids.get('name'):
         return equivalent_ids.get('name')[0]
     for v in equivalent_ids.values():
