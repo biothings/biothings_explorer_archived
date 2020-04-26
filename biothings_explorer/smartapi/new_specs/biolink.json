@@ -375,7 +375,7 @@
         "get": {
           "parameters": [
             {
-              "description": "CURIE identifier of REACTOME pathway IDs can be used with same results",
+              "description": "CURIE identifier of Reactome pathway IDs can be used with same results",
               "in": "path",
               "name": "pathway_id",
               "required": true,
@@ -415,7 +415,7 @@
         "get": {
           "parameters": [
             {
-              "description": "CURIE identifier of REACTOME pathway IDs can be used with same results",
+              "description": "CURIE identifier of Reactome pathway IDs can be used with same results",
               "in": "path",
               "name": "pathway_id",
               "example": "REACT:R-HSA-5387390",
@@ -601,7 +601,7 @@
             "taxid": "associations.object.taxon.id"
         },
         "disease-pathway": {
-            "REACTOME": "associations.object.REACT",
+            "Reactome": "associations.object.REACT",
             "name": "associations.object.label",
             "source": "associations.provided_by",
             "relation": "associations.relation.label",
@@ -682,7 +682,7 @@
             "pubmed": "associations.publications.id"
         },
         "phenotype-pathway": {
-            "REACTOME": "associations.object.REACT",
+            "Reactome": "associations.object.REACT",
             "name": "associations.object.label",
             "source": "associations.provided_by",
             "relation": "associations.relation.label",
@@ -793,7 +793,7 @@
             ],
             "outputs": [
               {
-                "id": "REACTOME",
+                "id": "Reactome",
                 "semantic": "Pathway"
               }
             ],
@@ -947,7 +947,7 @@
             },
             "inputs": [
               {
-                "id": "REACTOME",
+                "id": "Reactome",
                 "semantic": "Pathway"
               }
             ],
@@ -970,7 +970,7 @@
             },
             "inputs": [
               {
-                "id": "REACTOME",
+                "id": "Reactome",
                 "semantic": "Pathway"
               }
             ],
@@ -1067,7 +1067,7 @@
             ],
             "outputs": [
               {
-                "id": "REACTOME",
+                "id": "Reactome",
                 "semantic": "Pathway"
               }
             ],
