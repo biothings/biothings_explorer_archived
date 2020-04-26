@@ -92,12 +92,13 @@ class Dispatcher():
                 edge['value'] = edge['operation']['inputSeparator'].join(edge['value'])
                 edge_id = self.get_unique_edge_id(edge)
                 if edge_id in unique_edge_ids:
-                    edge['internal_query_id'] = edge_id2query_id_mapping[edge_id]
+                    internal_query_id = edge_id2query_id_mapping[edge_id]
                 else:
                     internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
                     edge['internal_query_id'] = internal_query_id
                     edge_id2query_id_mapping[edge_id] = internal_query_id
                     unique_edge_ids.add(edge_id)
+                edge['internal_query_id'] = internal_query_id
                 query_id2inputs_mapping[internal_query_id].append(edge)
                 # internal_query_id += 1
             else:
@@ -106,12 +107,12 @@ class Dispatcher():
                     new_edge['value'] = val
                     edge_id = self.get_unique_edge_id(new_edge)
                     if edge_id in unique_edge_ids:
-                        new_edge['internal_query_id'] = edge_id2query_id_mapping[edge_id]
+                        internal_query_id = edge_id2query_id_mapping[edge_id]
                     else:
                         internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
-                        new_edge['internal_query_id'] = internal_query_id
                         edge_id2query_id_mapping[edge_id] = internal_query_id
                         unique_edge_ids.add(edge_id)
+                    new_edge['internal_query_id'] = internal_query_id
                     query_id2inputs_mapping[internal_query_id].append(new_edge)
                     # internal_query_id += 1
         return query_id2inputs_mapping
