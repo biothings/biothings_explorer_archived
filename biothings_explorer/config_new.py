@@ -32,7 +32,8 @@ API_LIST = [
     "chembio",
     "mgi_gene2phenotype",
     "ebi_gene2phenotype",
-    "quickgo"
+    "quickgo",
+    "litvar"
 ]
 
 ID_RESOLVING_APIS = {
