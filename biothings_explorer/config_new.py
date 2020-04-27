@@ -30,7 +30,8 @@ API_LIST = [
     "hmdb",
     "hetio",
     "chembio",
-    "mgi_gene2phenotype"
+    "mgi_gene2phenotype",
+    "ebi_gene2phenotype"
 ]
 
 ID_RESOLVING_APIS = {
