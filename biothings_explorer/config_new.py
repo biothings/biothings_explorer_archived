@@ -33,7 +33,8 @@ API_LIST = [
     "mgi_gene2phenotype",
     "ebi_gene2phenotype",
     "quickgo",
-    "litvar"
+    "litvar",
+    "ontology_lookup_service"
 ]
 
 ID_RESOLVING_APIS = {
