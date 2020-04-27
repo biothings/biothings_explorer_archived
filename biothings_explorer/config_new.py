@@ -31,7 +31,8 @@ API_LIST = [
     "hetio",
     "chembio",
     "mgi_gene2phenotype",
-    "ebi_gene2phenotype"
+    "ebi_gene2phenotype",
+    "quickgo"
 ]
 
 ID_RESOLVING_APIS = {
