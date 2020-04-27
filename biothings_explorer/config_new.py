@@ -29,12 +29,13 @@ API_LIST = [
     "pharos",
     "hmdb",
     "hetio",
-    "chembio"
+    "chembio",
+    "mgi_gene2phenotype"
 ]
 
 ID_RESOLVING_APIS = {
     "Gene": {
-        "id_ranks": ["NCBIGene", "ENSEMBL", "HGNC", "UMLS", "UNIPROTKB", "SYMBOL", "OMIM"],
+        "id_ranks": ["NCBIGene", "ENSEMBL", "HGNC", "UMLS", "UNIPROTKB", "SYMBOL", "OMIM", "MGI"],
         "semantic": "Gene",
         "api_name": "mygene.info",
         "url": "http://mygene.info/v3",
@@ -46,7 +47,8 @@ ID_RESOLVING_APIS = {
             "HGNC": ["HGNC"],
             "UNIPROTKB": ["uniprot.Swiss-Prot"],
             "ENSEMBL": ["ensembl.gene"],
-            "OMIM": ["OMIM"]
+            "OMIM": ["OMIM"],
+            "MGI": ["MGI"]
         }
     },
     "SequenceVariant": {
