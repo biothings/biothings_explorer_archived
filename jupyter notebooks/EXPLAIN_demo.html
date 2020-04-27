@@ -13390,36 +13390,36 @@ Because chronic myelogenous leukemia is of type &#39;DiseaseOrPhenotypicFeature&
 
 BTE found 7 apis:
 
-API 1. mydisease.info(1 API call)
-API 2. DISEASES(1 API call)
-API 3. biolink_disease2gene(1 API call)
-API 4. mgigene2phenotype(1 API call)
-API 5. scibite_disease2gene(1 API call)
-API 6. semmeddisease(1 API call)
-API 7. corddisease(1 API call)
+API 1. biolink_disease2gene(1 API call)
+API 2. scibite_disease2gene(1 API call)
+API 3. mgigene2phenotype(1 API call)
+API 4. corddisease(1 API call)
+API 5. semmeddisease(1 API call)
+API 6. DISEASES(1 API call)
+API 7. mydisease.info(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.1: https://biothings.ncats.io/cord_disease/query (POST &#34;q=DOID:8552&amp;scopes=doid&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
-API 2.1: https://biothings.ncats.io/DISEASES/query (POST &#34;q=MONDO:0011996&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
-API 4.1: https://biothings.ncats.io/mgigene2phenotype/query (POST &#34;q=DOID:8552&amp;scopes=mgi.associated_with_disease.doid&amp;fields=_id&amp;species=human&amp;size=100&#34;)
-API 3.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=100
-API 1.1: http://mydisease.info/v1/query (POST &#34;q=C1292772,C0023473&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 5.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0011996
-API 6.1: http://biothings.ncats.io/semmed/query (POST &#34;q=C1292772,C0023473&amp;scopes=umls&amp;fields=physically_interacts_with,negatively_regulates,positively_regulated_by,disrupts,prevented_by,produced_by,preceded_by,subclass_of,affected_by,positively_regulates,negatively_regulated_by,derives_from,treated_by,related_to,predisposed_by,part_of,caused_by,has_subclass,coexists_with,precedes,affects,disrupted_by,has_part,manifestation_of,produces&amp;species=human&amp;size=100&#34;)
+API 6.1: https://biothings.ncats.io/DISEASES/query (POST &#34;q=MONDO:0011996&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
+API 3.1: https://biothings.ncats.io/mgigene2phenotype/query (POST &#34;q=DOID:8552&amp;scopes=mgi.associated_with_disease.doid&amp;fields=_id&amp;species=human&amp;size=100&#34;)
+API 4.1: https://biothings.ncats.io/cord_disease/query (POST &#34;q=DOID:8552&amp;scopes=doid&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
+API 1.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=100
+API 7.1: http://mydisease.info/v1/query (POST &#34;q=C1292772,C0023473&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
+API 2.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0011996
+API 5.1: http://biothings.ncats.io/semmed/query (POST &#34;q=C1292772,C0023473&amp;scopes=umls&amp;fields=produced_by,subclass_of,derives_from,manifestation_of,disrupted_by,preceded_by,negatively_regulates,related_to,positively_regulates,affected_by,caused_by,negatively_regulated_by,coexists_with,physically_interacts_with,has_subclass,precedes,treated_by,predisposed_by,has_part,affects,positively_regulated_by,prevented_by,part_of,disrupts,produces&amp;species=human&amp;size=100&#34;)
 
 
 ==== Step #3: Output normalization ====
 
-API 2.1 DISEASES: 3 hits
-API 3.1 biolink_disease2gene: 4 hits
-API 7.1 corddisease: 146 hits
-API 4.1 mgigene2phenotype: 8 hits
-API 1.1 mydisease.info: 52 hits
-API 5.1 scibite_disease2gene: 1 hits
-API 6.1 semmeddisease: 1139 hits
+API 6.1 DISEASES: 3 hits
+API 1.1 biolink_disease2gene: 4 hits
+API 4.1 corddisease: 146 hits
+API 3.1 mgigene2phenotype: 8 hits
+API 7.1 mydisease.info: 52 hits
+API 2.1 scibite_disease2gene: 1 hits
+API 5.1 semmeddisease: 1139 hits
 
 After id-to-object translation, BTE retrieved 842 unique objects.
 
@@ -13434,39 +13434,39 @@ Because Imatinib is of type &#39;ChemicalSubstance&#39;, BTE will query our meta
 
 BTE found 7 apis:
 
-API 1. dgidb_chemical2gene(1 API call)
+API 1. semmedchemical(1 API call)
 API 2. scibite_chemical2gene(1 API call)
-API 3. ctd_chemical2gene(1 API call)
+API 3. cordchemical(1 API call)
 API 4. chembl_drug_mechanism(1 API call)
-API 5. semmedchemical(1 API call)
-API 6. cordchemical(1 API call)
-API 7. mychem.info(2 API calls)
+API 5. dgidb_chemical2gene(1 API call)
+API 6. mychem.info(2 API calls)
+API 7. ctd_chemical2gene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 5.1: https://biothings.ncats.io/cord_chemical/query (POST &#34;q=CHEBI:45783&amp;scopes=chebi&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
-API 4.1: https://biothings.ncats.io/semmedchemical/query (POST &#34;q=C0935989&amp;scopes=umls&amp;fields=physically_interacts_with,affects,derives_info,subclass_of,negatively_regulates,affected_by,positively_regulated_by,disrupts,negatively_regulated_by,derives_from,part_of,positively_regulates,disrupted_by,has_part,produced_by,related_to,has_subclass,coexists_with,precedes,produces&amp;species=human&amp;size=100&#34;)
-API 7.1: https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id=CHEMBL941
-API 1.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
+API 3.1: https://biothings.ncats.io/cord_chemical/query (POST &#34;q=CHEBI:45783&amp;scopes=chebi&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
+API 1.1: https://biothings.ncats.io/semmedchemical/query (POST &#34;q=C0935989&amp;scopes=umls&amp;fields=coexists_with,produced_by,negatively_regulates,positively_regulated_by,part_of,derives_from,derives_info,subclass_of,related_to,positively_regulates,physically_interacts_with,has_subclass,affected_by,negatively_regulated_by,precedes,disrupted_by,has_part,disrupts,affects,produces&amp;species=human&amp;size=100&#34;)
+API 4.1: https://www.ebi.ac.uk/chembl/api/data/mechanism.json?molecule_chembl_id=CHEMBL941
+API 7.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877|mercury&amp;report=genes_curated&amp;format=json
+0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;, url=&#39;http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877%7Cmercury&amp;report=genes_curated&amp;format=json
 scibite_chemical2gene failed
 API 6.2: http://mychem.info/v1/query (POST &#34;q=DB00619&amp;scopes=drugbank.id&amp;fields=drugbank.enzymes,drugbank.targets&amp;species=human&amp;size=100&#34;)
 API 6.1: http://mychem.info/v1/query (POST &#34;q=CHEMBL941&amp;scopes=chembl.molecule_chembl_id,chebi.xrefs.chembl&amp;fields=drugcentral.bioactivity&amp;species=human&amp;size=100&#34;)
-API 3.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877|mercury&amp;report=genes_curated&amp;format=json
-0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;, url=&#39;http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877%7Cmercury&amp;report=genes_curated&amp;format=json
+API 5.1: http://www.dgidb.org/api/v2/interactions.json?drugs=CHEMBL941
 
 
 ==== Step #3: Output normalization ====
 
-API 7.1 chembl_drug_mechanism: No hits
-API 5.1 cordchemical: 172 hits
-API 3.1 ctd_chemical2gene: 910 hits
-API 1.1 dgidb_chemical2gene: 34 hits
+API 4.1 chembl_drug_mechanism: No hits
+API 3.1 cordchemical: 172 hits
+API 7.1 ctd_chemical2gene: 910 hits
+API 5.1 dgidb_chemical2gene: 34 hits
 API 6.1 mychem.info: 77 hits
 API 6.2 mychem.info: 18 hits
 API 2.1 scibite_chemical2gene: No hits
-API 4.1 semmedchemical: 802 hits
+API 1.1 semmedchemical: 802 hits
 
 After id-to-object translation, BTE retrieved 1298 unique objects.
 
@@ -13505,6 +13505,7 @@ BTE found 300 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="nb">filter</span><span class="p">]</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -13515,6 +13516,17 @@ BTE found 300 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(1621, 16)
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -13561,54 +13573,54 @@ BTE found 300 unique intermediate nodes connecting &#39;chronic myelogenous leuk
   </thead>
   <tbody>
     <tr>
-      <td>132</td>
+      <td>2087</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>DISEASES</td>
-      <td>DISEASES</td>
-      <td>None</td>
+      <td>disrupted_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>26734127</td>
+      <td>Gene</td>
+      <td>PTEN</td>
+      <td>entrez:5728</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>24091144</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>220</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>11979553,10498618,10822991,11368359,20809971,1...</td>
       <td>Gene</td>
       <td>ABL1</td>
       <td>entrez:25</td>
-      <td>associatedWith</td>
-      <td>ctd</td>
-      <td>ctd_chemical2gene</td>
-      <td>12446442,15039284,15107311,15329907,16849647,1...</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>21693657</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>621</td>
+      <td>341</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>corddisease</td>
-      <td>None</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>26476544,26476544</td>
       <td>Gene</td>
-      <td>BCR</td>
-      <td>entrez:613</td>
-      <td>target</td>
-      <td>drugbank</td>
-      <td>mychem.info</td>
-      <td>15206509,20072827,12600228,23226582</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>1798</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>corddisease</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>INS</td>
-      <td>entrez:3630</td>
+      <td>KDR</td>
+      <td>entrez:3791</td>
       <td>associated_with</td>
       <td>CORD API</td>
       <td>cordchemical</td>
@@ -13618,134 +13630,134 @@ BTE found 300 unique intermediate nodes connecting &#39;chronic myelogenous leuk
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>800</td>
+      <td>122</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>treated_by</td>
+      <td>associatedWith</td>
+      <td>scibite</td>
+      <td>scibite_disease2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>ABL1</td>
+      <td>entrez:25</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>12032135</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>2159</td>
+      <td>chronic myelogenous leukemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>2835901,11766349,12218235,12145676,12145676,12...</td>
+      <td>16263579,17064569,24726782,10979972,12496355,1...</td>
       <td>Gene</td>
-      <td>BCR</td>
-      <td>entrez:613</td>
+      <td>VEGFA</td>
+      <td>entrez:7422</td>
       <td>physically_interacts_with</td>
       <td>SEMMED API</td>
       <td>semmedchemical</td>
-      <td>22372463</td>
+      <td>18075302,24726782</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>857</td>
+      <td>208</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>predisposed_by</td>
+      <td>related_to</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>21039054</td>
+      <td>18406870</td>
       <td>Gene</td>
-      <td>CYP3A5</td>
-      <td>entrez:1577</td>
+      <td>ABL1</td>
+      <td>entrez:25</td>
       <td>coexists_with</td>
       <td>SEMMED API</td>
       <td>semmedchemical</td>
-      <td>23394475</td>
+      <td>26030291,26618175,26618175</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>2445</td>
+      <td>260</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
+      <td>affected_by</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>10590068,18202009</td>
+      <td>6686171</td>
       <td>Gene</td>
-      <td>CXCR4</td>
-      <td>entrez:7852</td>
-      <td>positively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedchemical</td>
-      <td>18202009,18202009,18202009</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>2221</td>
-      <td>chronic myelogenous leukemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>treated_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>2098290,2098290</td>
-      <td>Gene</td>
-      <td>IL2</td>
-      <td>entrez:3558</td>
+      <td>CA2</td>
+      <td>entrez:760</td>
       <td>associatedWith</td>
       <td>ctd</td>
       <td>ctd_chemical2gene</td>
-      <td>12730625</td>
+      <td>18237030</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>2230</td>
+      <td>410</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>24118457</td>
+      <td>associated_with</td>
+      <td>CORD API</td>
+      <td>corddisease</td>
+      <td>None</td>
       <td>Gene</td>
-      <td>MAFF</td>
-      <td>entrez:23764</td>
+      <td>KIT</td>
+      <td>entrez:3815</td>
       <td>associatedWith</td>
       <td>ctd</td>
       <td>ctd_chemical2gene</td>
-      <td>19937285</td>
+      <td>17420286,27793025</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>613</td>
+      <td>1974</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>disrupted_by</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>16778200,18203007,21714205,19878872,20194843,2...</td>
+      <td>18184863</td>
       <td>Gene</td>
-      <td>BCR</td>
-      <td>entrez:613</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>AKT1</td>
+      <td>entrez:207</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>12481435,12672043,17999742,18794444</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>2273</td>
+      <td>1983</td>
       <td>chronic myelogenous leukemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>has_part</td>
+      <td>caused_by</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>11146162,11146162,9746786,11756187,10973491,10...</td>
+      <td>24598853</td>
       <td>Gene</td>
-      <td>CD34</td>
-      <td>entrez:947</td>
+      <td>AKT1</td>
+      <td>entrez:207</td>
       <td>physically_interacts_with</td>
       <td>SEMMED API</td>
       <td>semmedchemical</td>
-      <td>20621681,22829973</td>
+      <td>25182956</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
@@ -13996,6 +14008,24 @@ http://pubmed.gov/15329907
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0, message=&#39;Attempt to decode JSON with unexpected mimetype: text/plain;charset=utf-8&#39;, url=&#39;http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;inputTerms=D000068877%7Cmercury&amp;report=genes_curated&amp;format=json
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -14009,6 +14039,7 @@ http://pubmed.gov/15329907
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="nb">filter</span><span class="p">]</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -14019,6 +14050,17 @@ http://pubmed.gov/15329907
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(1757, 16)
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -14065,32 +14107,13 @@ http://pubmed.gov/15329907
   </thead>
   <tbody>
     <tr>
-      <td>152</td>
+      <td>500</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>scibite</td>
-      <td>scibite_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>KIT</td>
-      <td>entrez:3815</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>145</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>scibite</td>
-      <td>scibite_disease2gene</td>
-      <td>None</td>
+      <td>has_part</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>15062876,18822692,21835435</td>
       <td>Gene</td>
       <td>KIT</td>
       <td>entrez:3815</td>
@@ -14103,26 +14126,26 @@ http://pubmed.gov/15329907
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>148</td>
+      <td>1105</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>DISEASES</td>
-      <td>DISEASES</td>
-      <td>None</td>
+      <td>disrupted_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>12918066</td>
       <td>Gene</td>
       <td>KIT</td>
       <td>entrez:3815</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>18515176,26779618,21475850,21566433</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>162</td>
+      <td>2070</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -14130,8 +14153,122 @@ http://pubmed.gov/15329907
       <td>DISEASES</td>
       <td>None</td>
       <td>Gene</td>
+      <td>TP53</td>
+      <td>entrez:7157</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>20094798,29115375</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>967</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>treated_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>15717993,16740027,17534660,16596277,19466511,1...</td>
+      <td>Gene</td>
       <td>KIT</td>
       <td>entrez:3815</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>25174682</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>1908</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>treated_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>26078569</td>
+      <td>Gene</td>
+      <td>PECAM1</td>
+      <td>entrez:5175</td>
+      <td>associatedWith</td>
+      <td>ctd</td>
+      <td>ctd_chemical2gene</td>
+      <td>15867366</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>312</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>DISEASES</td>
+      <td>DISEASES</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PDGFRA</td>
+      <td>entrez:5156</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>17437861</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>1164</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>scibite</td>
+      <td>scibite_disease2gene</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>KIT</td>
+      <td>entrez:3815</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>16818499,14531349,16614006,17363509,15139047,1...</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>1239</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>produces</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>15223958,15223958,18265649,26191287,11012738</td>
+      <td>Gene</td>
+      <td>KIT</td>
+      <td>entrez:3815</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedchemical</td>
+      <td>12441322,15846297,16797704,21586300,21249321,2...</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>chembl:CHEMBL941</td>
+    </tr>
+    <tr>
+      <td>1765</td>
+      <td>gastrointestinal stromal tumor</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>has_part</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>28862263,28862263</td>
+      <td>Gene</td>
+      <td>NF1</td>
+      <td>entrez:4763</td>
       <td>associated_with</td>
       <td>CORD API</td>
       <td>cordchemical</td>
@@ -14141,115 +14278,20 @@ http://pubmed.gov/15329907
       <td>chembl:CHEMBL941</td>
     </tr>
     <tr>
-      <td>375</td>
+      <td>2140</td>
       <td>gastrointestinal stromal tumor</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>corddisease</td>
-      <td>None</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>14614641,14614641,12949061,16029637,16029637,1...</td>
       <td>Gene</td>
-      <td>TP53</td>
-      <td>entrez:7157</td>
+      <td>ZNRD2</td>
+      <td>entrez:10534</td>
       <td>physically_interacts_with</td>
       <td>SEMMED API</td>
       <td>semmedchemical</td>
-      <td>20876800</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>180</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>scibite</td>
-      <td>scibite_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>KIT</td>
-      <td>entrez:3815</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedchemical</td>
-      <td>16143881,17208434,17372901,18234488,21442641,2...</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>173</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>scibite</td>
-      <td>scibite_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>KIT</td>
-      <td>entrez:3815</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedchemical</td>
-      <td>24369323,24369323,28334365</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>50</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>DISEASES</td>
-      <td>DISEASES</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PDGFRA</td>
-      <td>entrez:5156</td>
-      <td>target</td>
-      <td>dgidb</td>
-      <td>dgidb_chemical2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>291</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>corddisease</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>KIT</td>
-      <td>entrez:3815</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED API</td>
-      <td>semmedchemical</td>
-      <td>23637779</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>chembl:CHEMBL941</td>
-    </tr>
-    <tr>
-      <td>32</td>
-      <td>gastrointestinal stromal tumor</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>DISEASES</td>
-      <td>DISEASES</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PDGFRA</td>
-      <td>entrez:5156</td>
-      <td>target</td>
-      <td>drugcentral</td>
-      <td>mychem.info</td>
-      <td>None</td>
+      <td>18974147</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>chembl:CHEMBL941</td>
@@ -14289,16 +14331,16 @@ http://pubmed.gov/15329907
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>KIT       120
-PDGFRA     52
-ABL1       18
-BCR        15
-TP53       14
-FIP1L1     12
-MTTP        9
-BRAF        8
-CD34        6
-EGFR        6
+<pre>KIT       810
+PDGFRA    255
+BCR        51
+TP53       49
+CD34       48
+EGFR       36
+VEGFA      36
+ABL1       28
+BRAF       25
+MTOR       18
 Name: node1_name, dtype: int64</pre>
 </div>
 

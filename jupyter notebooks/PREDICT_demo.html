@@ -13338,30 +13338,30 @@ Because hyperphenylalaninemia is of type &#39;DiseaseOrPhenotypicFeature&#39;, B
 
 BTE found 5 apis:
 
-API 1. scibite_disease2gene(1 API call)
-API 2. biolink_disease2gene(1 API call)
-API 3. semmeddisease(1 API call)
-API 4. DISEASES(1 API call)
-API 5. mydisease.info(1 API call)
+API 1. semmeddisease(1 API call)
+API 2. scibite_disease2gene(1 API call)
+API 3. mydisease.info(1 API call)
+API 4. biolink_disease2gene(1 API call)
+API 5. DISEASES(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 5.1: http://mydisease.info/v1/query (POST &#34;q=C0751436,C0751435&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 4.1: https://biothings.ncats.io/DISEASES/query (POST &#34;q=MONDO:0016543&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
-API 2.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=100
-API 3.1: http://biothings.ncats.io/semmed/query (POST &#34;q=C0751436,C0751435&amp;scopes=umls&amp;fields=negatively_regulated_by,prevented_by,has_part,produced_by,coexists_with,positively_regulates,preceded_by,manifestation_of,treated_by,affects,disrupted_by,disrupts,subclass_of,produces,negatively_regulates,has_subclass,physically_interacts_with,affected_by,related_to,caused_by,predisposed_by,derives_from,positively_regulated_by,precedes,part_of&amp;species=human&amp;size=100&#34;)
-API 1.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0016543
+API 3.1: http://mydisease.info/v1/query (POST &#34;q=C0751436,C0751435&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
+API 1.1: http://biothings.ncats.io/semmed/query (POST &#34;q=C0751436,C0751435&amp;scopes=umls&amp;fields=affected_by,physically_interacts_with,precedes,has_subclass,negatively_regulates,predisposed_by,caused_by,positively_regulated_by,preceded_by,derives_from,disrupts,treated_by,part_of,manifestation_of,coexists_with,negatively_regulated_by,positively_regulates,disrupted_by,produced_by,subclass_of,prevented_by,produces,related_to,affects,has_part&amp;species=human&amp;size=100&#34;)
+API 5.1: https://biothings.ncats.io/DISEASES/query (POST &#34;q=MONDO:0016543&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
+API 4.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=100
+API 2.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0016543
 
 
 ==== Step #3: Output normalization ====
 
-API 4.1 DISEASES: No hits
-API 2.1 biolink_disease2gene: 4 hits
-API 5.1 mydisease.info: 10 hits
-API 1.1 scibite_disease2gene: 1 hits
-API 3.1 semmeddisease: 41 hits
+API 5.1 DISEASES: No hits
+API 4.1 biolink_disease2gene: 4 hits
+API 3.1 mydisease.info: 10 hits
+API 2.1 scibite_disease2gene: 1 hits
+API 1.1 semmeddisease: 41 hits
 
 After id-to-object translation, BTE retrieved 33 unique objects.
 
@@ -13375,127 +13375,127 @@ Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that
 
 BTE found 6 apis:
 
-API 1. cordgene(1 API call)
-API 2. scibite_gene2chemical(16 API calls)
-API 3. opentarget(16 API calls)
+API 1. opentarget(16 API calls)
+API 2. semmedgene(1 API call)
+API 3. dgidb_gene2chemical(16 API calls)
 API 4. mychem.info(3 API calls)
-API 5. semmedgene(1 API call)
-API 6. dgidb_gene2chemical(16 API calls)
+API 5. scibite_gene2chemical(16 API calls)
+API 6. cordgene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 6.1: http://www.dgidb.org/api/v2/interactions.json?genes=PCBD1
-API 6.3: http://www.dgidb.org/api/v2/interactions.json?genes=AKR1B10
-API 6.2: http://www.dgidb.org/api/v2/interactions.json?genes=HAL
-API 6.4: http://www.dgidb.org/api/v2/interactions.json?genes=LRIT1
-API 6.6: http://www.dgidb.org/api/v2/interactions.json?genes=APOB
-API 6.5: http://www.dgidb.org/api/v2/interactions.json?genes=CACNA1A
-API 6.7: http://www.dgidb.org/api/v2/interactions.json?genes=COG2
-API 6.10: http://www.dgidb.org/api/v2/interactions.json?genes=PAM
-API 6.8: http://www.dgidb.org/api/v2/interactions.json?genes=PAH
-API 6.9: http://www.dgidb.org/api/v2/interactions.json?genes=PTS
-API 1.1: https://biothings.ncats.io/cord_gene/query (POST &#34;q=5237,603,9689,4194,1388,29547,23404,620,382,8646,4806,4193,8582,9752,8596,6546&amp;scopes=hgnc&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
-API 6.11: http://www.dgidb.org/api/v2/interactions.json?genes=QDPR
-API 6.13: http://www.dgidb.org/api/v2/interactions.json?genes=GCHFR
-API 6.12: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
-API 6.14: http://www.dgidb.org/api/v2/interactions.json?genes=SHCBP1
-API 6.16: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
-API 6.15: http://www.dgidb.org/api/v2/interactions.json?genes=APP
-API 5.1: https://biothings.ncats.io/semmedgene/query (POST &#34;q=C1705543,C1418296,C0002085,C0030016,C1419129,C1456413,C1456357,C1364818,C1418251,C0020239,C1416822,C0041491,C1415013,C0284927,C1335144,C1539766,C0031456,C1415012,C0314604,C1428072,C0017361,C1412471,C1412323,C1415465,C0018293,C1419182,C1710338,C0074350,C0014442,C0072774,C1415760,C0012312,C0017337&amp;scopes=umls&amp;fields=negatively_regulates,has_subclass,derives_info,preceded_by,negatively_regulated_by,derives_from,positively_regulated_by,affects,physically_interacts_with,affected_by,has_part,part_of,disrupted_by,coexists_with,disrupts,produced_by,related_to,positively_regulates,produces,subclass_of&amp;species=human&amp;size=100&#34;)
-API 3.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171241&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135775&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145730&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000170606&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151552&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137880&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142192&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084110&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000148602&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.13: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084674&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.15: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198074&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166228&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.14: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141837&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.16: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000150787&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.1: http://mychem.info/v1/query (POST &#34;q=HAL,LRIT1,COG2,PTS,PAM,QDPR,SHCBP1,GCH1,PCBD1,AKR1B10,CACNA1A,APOB,PAH,HSPA4,GCHFR,APP&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 3.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131979&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.3: http://mychem.info/v1/query (POST &#34;q=HAL,LRIT1,COG2,PTS,PAM,QDPR,SHCBP1,GCH1,PCBD1,AKR1B10,CACNA1A,APOB,PAH,HSPA4,GCHFR,APP&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id,chebi.xrefs.chembl&amp;species=human&amp;size=100&#34;)
-API 4.2: http://mychem.info/v1/query (POST &#34;q=HAL,LRIT1,COG2,PTS,PAM,QDPR,SHCBP1,GCH1,PCBD1,AKR1B10,CACNA1A,APOB,PAH,HSPA4,GCHFR,APP&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 2.3: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3034
-API 2.6: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:22796
-API 2.7: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:79801
-API 2.8: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5092
-API 2.2: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:351
-API 2.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3308
-API 2.12: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:773
-API 2.13: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
-API 2.4: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5860
-API 2.11: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2643
-API 2.9: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:26103
-API 2.5: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2644
-API 2.10: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5805
-API 2.14: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:338
-API 2.15: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5066
-API 2.16: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:57016
+API 3.2: http://www.dgidb.org/api/v2/interactions.json?genes=PAM
+API 3.6: http://www.dgidb.org/api/v2/interactions.json?genes=QDPR
+API 3.4: http://www.dgidb.org/api/v2/interactions.json?genes=PTS
+API 3.1: http://www.dgidb.org/api/v2/interactions.json?genes=CACNA1A
+API 3.8: http://www.dgidb.org/api/v2/interactions.json?genes=LRIT1
+API 3.11: http://www.dgidb.org/api/v2/interactions.json?genes=COG2
+API 3.3: http://www.dgidb.org/api/v2/interactions.json?genes=SHCBP1
+API 3.7: http://www.dgidb.org/api/v2/interactions.json?genes=GCHFR
+API 3.5: http://www.dgidb.org/api/v2/interactions.json?genes=HAL
+API 3.10: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
+API 3.13: http://www.dgidb.org/api/v2/interactions.json?genes=PAH
+API 3.15: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
+API 3.16: http://www.dgidb.org/api/v2/interactions.json?genes=AKR1B10
+API 3.9: http://www.dgidb.org/api/v2/interactions.json?genes=PCBD1
+API 3.12: http://www.dgidb.org/api/v2/interactions.json?genes=APOB
+API 3.14: http://www.dgidb.org/api/v2/interactions.json?genes=APP
+API 6.1: https://biothings.ncats.io/cord_gene/query (POST &#34;q=23404,603,8582,620,5237,382,8596,6546,9752,29547,1388,4193,9689,4806,8646,4194&amp;scopes=hgnc&amp;fields=associated_with&amp;species=human&amp;size=100&#34;)
+API 2.1: https://biothings.ncats.io/semmedgene/query (POST &#34;q=C0030016,C0017337,C0072774,C1418251,C1418296,C1456413,C1415012,C0012312,C1364818,C0284927,C0074350,C0018293,C1416822,C1419182,C0020239,C0041491,C0014442,C1705543,C1428072,C0314604,C1419129,C1335144,C1710338,C0017361,C1415013,C1456357,C0031456,C1412323,C1415465,C1412471,C1415760,C0002085,C1539766&amp;scopes=umls&amp;fields=affected_by,physically_interacts_with,positively_regulated_by,preceded_by,derives_info,derives_from,produces,disrupts,negatively_regulated_by,related_to,positively_regulates,has_part,affects,has_subclass,negatively_regulates,part_of,disrupted_by,subclass_of,produced_by,coexists_with&amp;species=human&amp;size=100&#34;)
+API 1.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084674&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000150787&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135775&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198074&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131979&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166228&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000148602&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145730&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151552&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084110&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171241&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.13: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142192&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.14: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137880&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 1.16: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000170606&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 4.1: http://mychem.info/v1/query (POST &#34;q=PTS,HAL,LRIT1,GCH1,APOB,COG2,HSPA4,AKR1B10,CACNA1A,PAM,SHCBP1,QDPR,GCHFR,PCBD1,PAH,APP&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 4.3: http://mychem.info/v1/query (POST &#34;q=PTS,HAL,LRIT1,GCH1,APOB,COG2,HSPA4,AKR1B10,CACNA1A,PAM,SHCBP1,QDPR,GCHFR,PCBD1,PAH,APP&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id,chebi.xrefs.chembl&amp;species=human&amp;size=100&#34;)
+API 4.2: http://mychem.info/v1/query (POST &#34;q=PTS,HAL,LRIT1,GCH1,APOB,COG2,HSPA4,AKR1B10,CACNA1A,PAM,SHCBP1,QDPR,GCHFR,PCBD1,PAH,APP&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
+API 1.15: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141837&amp;datasource=chembl&amp;size=15&amp;fields=drug
+API 5.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2643
+API 5.2: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3034
+API 5.9: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5805
+API 5.16: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5092
+API 5.10: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:26103
+API 5.5: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:338
+API 5.6: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:773
+API 5.4: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:57016
+API 5.12: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3308
+API 5.7: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5066
+API 5.3: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2644
+API 5.8: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
+API 5.14: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:22796
+API 5.13: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:79801
+API 5.11: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:351
+API 5.15: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5860
 
 
 ==== Step #3: Output normalization ====
 
-API 1.1 cordgene: 723 hits
-API 6.1 dgidb_gene2chemical: 1 hits
-API 6.2 dgidb_gene2chemical: 1 hits
-API 6.3 dgidb_gene2chemical: 3 hits
-API 6.4 dgidb_gene2chemical: No hits
-API 6.5 dgidb_gene2chemical: 11 hits
-API 6.6 dgidb_gene2chemical: 17 hits
-API 6.7 dgidb_gene2chemical: No hits
-API 6.8 dgidb_gene2chemical: 8 hits
-API 6.9 dgidb_gene2chemical: No hits
-API 6.10 dgidb_gene2chemical: 1 hits
-API 6.11 dgidb_gene2chemical: 1 hits
-API 6.12 dgidb_gene2chemical: 35 hits
-API 6.13 dgidb_gene2chemical: No hits
-API 6.14 dgidb_gene2chemical: No hits
-API 6.15 dgidb_gene2chemical: 22 hits
-API 6.16 dgidb_gene2chemical: 1 hits
+API 6.1 cordgene: 723 hits
+API 3.1 dgidb_gene2chemical: 11 hits
+API 3.2 dgidb_gene2chemical: 1 hits
+API 3.3 dgidb_gene2chemical: No hits
+API 3.4 dgidb_gene2chemical: No hits
+API 3.5 dgidb_gene2chemical: 1 hits
+API 3.6 dgidb_gene2chemical: 1 hits
+API 3.7 dgidb_gene2chemical: No hits
+API 3.8 dgidb_gene2chemical: No hits
+API 3.9 dgidb_gene2chemical: 1 hits
+API 3.10 dgidb_gene2chemical: 1 hits
+API 3.11 dgidb_gene2chemical: No hits
+API 3.12 dgidb_gene2chemical: 17 hits
+API 3.13 dgidb_gene2chemical: 8 hits
+API 3.14 dgidb_gene2chemical: 22 hits
+API 3.15 dgidb_gene2chemical: 35 hits
+API 3.16 dgidb_gene2chemical: 3 hits
 API 4.1 mychem.info: 4 hits
 API 4.2 mychem.info: 51 hits
 API 4.3 mychem.info: 15 hits
-API 3.1 opentarget: 15 hits
-API 3.2 opentarget: No hits
-API 3.3 opentarget: No hits
-API 3.4 opentarget: No hits
-API 3.5 opentarget: No hits
-API 3.6 opentarget: No hits
-API 3.7 opentarget: 15 hits
-API 3.8 opentarget: No hits
-API 3.9 opentarget: No hits
-API 3.10 opentarget: No hits
-API 3.11 opentarget: No hits
-API 3.12 opentarget: No hits
-API 3.13 opentarget: 6 hits
-API 3.14 opentarget: 15 hits
-API 3.15 opentarget: No hits
-API 3.16 opentarget: No hits
-API 2.1 scibite_gene2chemical: 1 hits
-API 2.2 scibite_gene2chemical: 1 hits
-API 2.3 scibite_gene2chemical: No hits
-API 2.4 scibite_gene2chemical: No hits
-API 2.5 scibite_gene2chemical: 1 hits
-API 2.6 scibite_gene2chemical: No hits
-API 2.7 scibite_gene2chemical: No hits
-API 2.8 scibite_gene2chemical: No hits
-API 2.9 scibite_gene2chemical: No hits
-API 2.10 scibite_gene2chemical: No hits
-API 2.11 scibite_gene2chemical: 1 hits
-API 2.12 scibite_gene2chemical: No hits
-API 2.13 scibite_gene2chemical: 1 hits
-API 2.14 scibite_gene2chemical: 1 hits
-API 2.15 scibite_gene2chemical: No hits
-API 2.16 scibite_gene2chemical: 1 hits
-API 5.1 semmedgene: 40990 hits
+API 1.1 opentarget: 6 hits
+API 1.2 opentarget: No hits
+API 1.3 opentarget: No hits
+API 1.4 opentarget: No hits
+API 1.5 opentarget: No hits
+API 1.6 opentarget: No hits
+API 1.7 opentarget: No hits
+API 1.8 opentarget: No hits
+API 1.9 opentarget: 15 hits
+API 1.10 opentarget: No hits
+API 1.11 opentarget: No hits
+API 1.12 opentarget: No hits
+API 1.13 opentarget: 15 hits
+API 1.14 opentarget: No hits
+API 1.15 opentarget: 15 hits
+API 1.16 opentarget: No hits
+API 5.1 scibite_gene2chemical: 1 hits
+API 5.2 scibite_gene2chemical: No hits
+API 5.3 scibite_gene2chemical: 1 hits
+API 5.4 scibite_gene2chemical: 1 hits
+API 5.5 scibite_gene2chemical: 1 hits
+API 5.6 scibite_gene2chemical: No hits
+API 5.7 scibite_gene2chemical: No hits
+API 5.8 scibite_gene2chemical: 1 hits
+API 5.9 scibite_gene2chemical: No hits
+API 5.10 scibite_gene2chemical: No hits
+API 5.11 scibite_gene2chemical: 1 hits
+API 5.12 scibite_gene2chemical: 1 hits
+API 5.13 scibite_gene2chemical: No hits
+API 5.14 scibite_gene2chemical: No hits
+API 5.15 scibite_gene2chemical: No hits
+API 5.16 scibite_gene2chemical: No hits
+API 2.1 semmedgene: 40990 hits
 
 After id-to-object translation, BTE retrieved 9490 unique objects.
 
@@ -13543,6 +13543,7 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
 <span class="n">filter3</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel3</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">filter3</span><span class="p">]</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -13553,6 +13554,17 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(4541, 16)
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -13599,26 +13611,7 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>40959</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>scibite</td>
-      <td>scibite_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>GCHFR</td>
-      <td>entrez:2644</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>2615775</td>
-      <td>ChemicalSubstance</td>
-      <td>SODIUM LAURYL SULFATE</td>
-      <td>chembl:CHEMBL23393</td>
-    </tr>
-    <tr>
-      <td>55741</td>
+      <td>41005</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -13628,41 +13621,79 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
       <td>Gene</td>
       <td>PTS</td>
       <td>entrez:5805</td>
+      <td>negatively_regulated_by</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>1945499</td>
+      <td>ChemicalSubstance</td>
+      <td>SORBITOL</td>
+      <td>chembl:CHEMBL1682</td>
+    </tr>
+    <tr>
+      <td>43003</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>10874306</td>
+      <td>Gene</td>
+      <td>PTS</td>
+      <td>entrez:5805</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>108676,21172059</td>
+      <td>ChemicalSubstance</td>
+      <td>Ferrocenyl Sugar</td>
+      <td>chembl:CHEMBL442737</td>
+    </tr>
+    <tr>
+      <td>55373</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PTS</td>
+      <td>entrez:5805</td>
       <td>coexists_with</td>
       <td>SEMMED API</td>
       <td>semmedgene</td>
-      <td>1704167,1704167,25107546</td>
+      <td>28020651,28020651</td>
       <td>ChemicalSubstance</td>
-      <td>FLECAINIDE</td>
-      <td>chembl:CHEMBL652</td>
+      <td>LETROZOLE</td>
+      <td>chembl:CHEMBL1444</td>
     </tr>
     <tr>
-      <td>2726</td>
+      <td>59131</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
+      <td>associatedWith</td>
+      <td>disgenet</td>
+      <td>mydisease.info</td>
+      <td>None</td>
       <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>27363580</td>
+      <td>PTS</td>
+      <td>entrez:5805</td>
+      <td>associated_with</td>
+      <td>CORD API</td>
+      <td>cordgene</td>
+      <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>DEFEROXAMINE</td>
-      <td>chembl:CHEMBL556</td>
+      <td>cysteinate(2-)</td>
+      <td>pubchem:5460962</td>
     </tr>
     <tr>
-      <td>60077</td>
+      <td>58626</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>treated_by</td>
+      <td>caused_by</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>9634518</td>
+      <td>1301201,8892014,10495930,10495930</td>
       <td>Gene</td>
       <td>PAH</td>
       <td>entrez:5053</td>
@@ -13671,30 +13702,49 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
       <td>cordgene</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>cellobiose</td>
-      <td>pubchem:439178</td>
+      <td>CHEBI:35222</td>
+      <td>chebi:CHEBI:35222</td>
     </tr>
     <tr>
-      <td>37575</td>
+      <td>59580</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>caused_by</td>
       <td>SEMMED API</td>
       <td>semmeddisease</td>
-      <td>28794131</td>
+      <td>1867197,2742800,12443929,14743689,1301201,8892...</td>
       <td>Gene</td>
-      <td>HSPA4</td>
-      <td>entrez:3308</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>7784180</td>
+      <td>PAH</td>
+      <td>entrez:5053</td>
+      <td>targetedBy</td>
+      <td>dgidb</td>
+      <td>dgidb_gene2chemical</td>
+      <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>CYCLOHEXIMIDE</td>
-      <td>chembl:CHEMBL123292</td>
+      <td>SAPROPTERIN</td>
+      <td>chembl:CHEMBL1201774</td>
     </tr>
     <tr>
-      <td>39356</td>
+      <td>50266</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>10874306</td>
+      <td>Gene</td>
+      <td>PTS</td>
+      <td>entrez:5805</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>25308323</td>
+      <td>ChemicalSubstance</td>
+      <td>BUPROPION</td>
+      <td>chembl:CHEMBL894</td>
+    </tr>
+    <tr>
+      <td>44541</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>related_to</td>
@@ -13707,51 +13757,13 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
       <td>physically_interacts_with</td>
       <td>SEMMED API</td>
       <td>semmedgene</td>
-      <td>27392820</td>
+      <td>22696871,28694255</td>
       <td>ChemicalSubstance</td>
-      <td>MELATONIN</td>
-      <td>chembl:CHEMBL45</td>
+      <td>BROXURIDINE</td>
+      <td>chembl:CHEMBL222280</td>
     </tr>
     <tr>
-      <td>59064</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>10585341,11388593,11694255,25525159,7493990,22...</td>
-      <td>Gene</td>
-      <td>PTS</td>
-      <td>entrez:5805</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>cordgene</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>D-galactosaminate</td>
-      <td>pubchem:16738705</td>
-    </tr>
-    <tr>
-      <td>59473</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>caused_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>10874306</td>
-      <td>Gene</td>
-      <td>PTS</td>
-      <td>entrez:5805</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>cordgene</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>fulminate</td>
-      <td>chembl:CHEMBL2220234</td>
-    </tr>
-    <tr>
-      <td>50999</td>
+      <td>38417</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
       <td>associatedWith</td>
@@ -13764,29 +13776,29 @@ In the #2 query, BTE found 9490 unique ChemicalSubstance nodes
       <td>coexists_with</td>
       <td>SEMMED API</td>
       <td>semmedgene</td>
-      <td>28016559</td>
+      <td>6406427,17302798,7380558,2999295</td>
       <td>ChemicalSubstance</td>
-      <td>EXEMESTANE</td>
-      <td>chembl:CHEMBL1200374</td>
+      <td>DEXTROSE</td>
+      <td>chembl:CHEMBL1614854</td>
     </tr>
     <tr>
-      <td>41006</td>
+      <td>60591</td>
       <td>hyperphenylalaninemia</td>
       <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PTS</td>
-      <td>entrez:5805</td>
-      <td>negatively_regulated_by</td>
+      <td>disrupted_by</td>
       <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>1945499</td>
+      <td>semmeddisease</td>
+      <td>10051643</td>
+      <td>Gene</td>
+      <td>SHCBP1</td>
+      <td>entrez:79801</td>
+      <td>associated_with</td>
+      <td>CORD API</td>
+      <td>cordgene</td>
+      <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>SORBITOL</td>
-      <td>chembl:CHEMBL1682</td>
+      <td>L-phenylalanine</td>
+      <td>chembl:CHEMBL301523</td>
     </tr>
   </tbody>
 </table>
@@ -13845,13 +13857,13 @@ UREA                   28
 ALCOHOL                25
 SODIUM CHLORIDE        24
 DOPAMINE               23
-OXYGEN                 22
 Ferrocenyl Sugar       22
-SAPROPTERIN            21
+OXYGEN                 22
 CISPLATIN              21
+SAPROPTERIN            21
 ESTROGEN               19
 CHEBI:24433            19
-DB01109                18
+WATER                  18
 Name: output_name, dtype: int64</pre>
 </div>
 
