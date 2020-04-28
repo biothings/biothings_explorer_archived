@@ -27,4 +27,5 @@ def visualize(df):
                 tmp_link.append(item[edge_id])
         links.append(tmp_link)
     G = dtp.build_explanitory_graph(nodes, links)
-    return dtp.draw_explanitory_graph(G)
+    dtp.draw_explanitory_graph(G)
+    return
