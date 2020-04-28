@@ -74,14 +74,14 @@
             }
           },
           "x-bte-kgs-operations": [{
-            "$ref": "#/components/x-bte-kgs-operations/associatedWith"
+            "$ref": "#/components/x-bte-kgs-operations/gene_related_to_chemical"
           }]
         }
       }
     },
     "components": {
       "x-bte-kgs-operations": {
-        "associatedWith": [{
+        "gene_related_to_chemical": [{
           "inputs": [
             {
               "id": "ENSEMBL",
