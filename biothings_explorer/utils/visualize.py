@@ -28,4 +28,3 @@ def visualize(df):
         links.append(tmp_link)
     G = dtp.build_explanitory_graph(nodes, links)
     dtp.draw_explanitory_graph(G)
-    return
