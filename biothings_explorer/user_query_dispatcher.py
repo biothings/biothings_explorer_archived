@@ -103,7 +103,7 @@ class SingleEdgeQueryDispatcher():
                                                    self.input_id,
                                                    self.input_cls)])
             if not self.input_label:
-                self.input_label = self.input_id + ':' + self.input_cls
+                self.input_label = self.input_id + ':' + values
             self.equivalent_ids = equivalent_ids
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
