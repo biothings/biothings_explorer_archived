@@ -41,11 +41,10 @@ setup(
         "Operating System :: OS Independent",
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
-        "Topic :: Utilities",
+        "Topic :: Utilities", 
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
-    dependency_links=['https://github.com/mmayers12/data_tools#egg=data_tools'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     include_package_data=True
