@@ -90,16 +90,16 @@ class TestUtilsCommon(unittest.TestCase):
         self.assertEqual(res, '')
 
     def test_get_name_from_equivalent_ids(self):
-        equivalent_ids = {'entrez': ['1017'],
-                          'ensembl': ['ENSG1234'],
-                          'symbol': ['CDK7'],
-                          'umls': ['C001234']}
+        equivalent_ids = {'NCBIGene': ['1017'],
+                          'ENSEMBL': ['ENSG1234'],
+                          'SYMBOL': ['CDK7'],
+                          'UMLS': ['C001234']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'CDK7')
-        equivalent_ids = {'name': ['Lung Cancer'], 'mondo': ['MONDO:00023']}
+        equivalent_ids = {'name': ['Lung Cancer'], 'MONDO': ['MONDO:00023']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'Lung Cancer')
-        equivalent_ids = {'mondo': ['MONDO:000123']}
+        equivalent_ids = {'MONDO': ['MONDO:000123']}
         res = util.get_name_from_equivalent_ids(equivalent_ids)
         self.assertEqual(res, 'MONDO:000123')
         res = util.get_name_from_equivalent_ids({})
