@@ -45,7 +45,7 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
-    dependency_links=['https://github.com/mmayers12/data_tools#egg=data_tools'],
+    dependency_links=['https://github.com/mmayers12/data_tools@master#egg=data_tools'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     include_package_data=True
