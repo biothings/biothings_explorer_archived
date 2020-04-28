@@ -5,4 +5,4 @@ graphviz>=0.11.1
 aiohttp
 pandas
 pyyaml
--e git+https://github.com/mmayers12/data_tools/master#egg=data_tools
+-e git+https://github.com/mmayers12/data_tools#egg=data_tools
