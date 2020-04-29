@@ -143,7 +143,7 @@ class Hint():
                     }, 
                     'requestBody': {
                         'body': {
-                            'q': '{inputs[0]}',
+                            'q': '"{inputs[0]}"',
                             'scopes': query_fields
                         }, 
                         'header': 'application/x-www-form-urlencoded'
