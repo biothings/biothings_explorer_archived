@@ -163,9 +163,6 @@ class BioThingsCaller():
             self.log.append("\n\n==== Step #2: Query path execution ====")
             print("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
             self.log.append("NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.\n")
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = asyncio.get_event_loop()
+        loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(inputs, verbose=verbose))
         return (loop.run_until_complete(future), self.log)
