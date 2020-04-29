@@ -632,7 +632,7 @@
             "source": "associations.provided_by",
             "relation": "associations.relation.label",
             "pubmed": "associations.publications.id",
-            "taxid": "associations.object.taxon.id",
+            "taxid": "associations.object.taxon.id"
         },
         "gene-interaction-ncbigene": {
             "NCBIGene": "associations.object.NCBIGene",

@@ -32,7 +32,7 @@ class Dispatcher():
     @staticmethod
     def get_unique_edge_id(edge):
         operation = edge['operation']
-        _id = '-'.join([str(edge['value']), operation['server'], operation['method']])
+        _id = '-'.join([str(edge['value']), operation['server'], operation['method'], operation['path']])
         request_body = operation.get("requestBody")
         if request_body and request_body.get("body"):
             for k in sorted(request_body.get('body').keys()):
