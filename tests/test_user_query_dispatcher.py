@@ -4,7 +4,7 @@ from biothings_explorer.hint import Hint
 
 ht = Hint()
 
-class TestSingleHopQuery(unittest.TestCase):
+class TestUserQueryDispatcher(unittest.TestCase):
 
     def test_result_section(self):
         """Find connection between TMPRSS2 and pentamidine through all intermediate nodes """
