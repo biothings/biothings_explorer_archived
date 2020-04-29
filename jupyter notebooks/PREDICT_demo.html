@@ -13250,7 +13250,7 @@ You should consider upgrading via the &#39;pip install --upgrade pip&#39; comman
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import modules from biothings_explorer</span>
@@ -13274,14 +13274,14 @@ You should consider upgrading via the &#39;pip install --upgrade pip&#39; comman
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
 <span class="c1"># find all potential representations of hyperphenylalaninemia</span>
 <span class="n">hyperphenylalaninemia_hint</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;hyperphenylalaninemia&quot;</span><span class="p">)</span>
 <span class="c1"># select the correct representation of hyperphenylalaninemia</span>
-<span class="n">hyperphenylalaninemia</span> <span class="o">=</span> <span class="n">hyperphenylalaninemia_hint</span><span class="p">[</span><span class="s1">&#39;DiseaseOrPhenotypicFeature&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">hyperphenylalaninemia</span> <span class="o">=</span> <span class="n">hyperphenylalaninemia_hint</span><span class="p">[</span><span class="s1">&#39;Disease&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">hyperphenylalaninemia</span>
 </pre></div>
 
@@ -13295,20 +13295,21 @@ You should consider upgrading via the &#39;pip install --upgrade pip&#39; comman
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;mondo&#39;: &#39;MONDO:0016543&#39;,
- &#39;umls&#39;: &#39;C0751435&#39;,
+<pre>{&#39;MONDO&#39;: &#39;MONDO:0016543&#39;,
+ &#39;UMLS&#39;: &#39;C0751435&#39;,
  &#39;name&#39;: &#39;hyperphenylalaninemia&#39;,
- &#39;display&#39;: &#39;mondo(MONDO:0016543) umls(C0751435) name(hyperphenylalaninemia) &#39;,
- &#39;type&#39;: &#39;DiseaseOrPhenotypicFeature&#39;,
- &#39;primary&#39;: {&#39;identifier&#39;: &#39;mondo&#39;,
-  &#39;cls&#39;: &#39;DiseaseOrPhenotypicFeature&#39;,
-  &#39;value&#39;: &#39;MONDO:0016543&#39;}}</pre>
+ &#39;ORPHANET&#39;: &#39;238583&#39;,
+ &#39;primary&#39;: {&#39;identifier&#39;: &#39;MONDO&#39;,
+  &#39;cls&#39;: &#39;Disease&#39;,
+  &#39;value&#39;: &#39;MONDO:0016543&#39;},
+ &#39;display&#39;: &#39;MONDO(MONDO:0016543) ORPHANET(238583) UMLS(C0751435) name(hyperphenylalaninemia)&#39;,
+ &#39;type&#39;: &#39;Disease&#39;}</pre>
 </div>
 
 </div>
@@ -13394,7 +13395,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">hyperphenylalaninemia</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">])</span>
@@ -13416,7 +13417,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set verbose=True will display all steps which BTE takes to find the connection</span>
@@ -13441,7 +13442,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;hyperphenylalaninemia&#39; and &#39;ChemicalSubstance&#39;. Paths will have 1 intermediate node.
+BTE will find paths that join &#39;hyperphenylalaninemia&#39; and &#39;ChemicalSubstance&#39;.                   Paths will have 1 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
@@ -13452,33 +13453,70 @@ Intermediate node #1 will have these type constraints: Gene
 
 ==== Step #1: Query path planning ====
 
-Because hyperphenylalaninemia is of type &#39;DiseaseOrPhenotypicFeature&#39;, BTE will query our meta-KG for APIs that can take &#39;DiseaseOrPhenotypicFeature&#39; as input and &#39;Gene&#39; as output
+Because hyperphenylalaninemia is of type &#39;Disease&#39;, BTE will query our meta-KG for APIs that can take &#39;Disease&#39; as input and &#39;Gene&#39; as output
 
-BTE found 4 apis:
+BTE found 7 apis:
 
-API 1. biolink_disease2gene(1 API call)
-API 2. DISEASES(1 API call)
-API 3. mydisease.info(1 API call)
-API 4. semmeddisease(1 API call)
+API 1. hetio(1 API call)
+API 2. scigraph(1 API call)
+API 3. semmed_disease(15 API calls)
+API 4. pharos(1 API call)
+API 5. scibite(1 API call)
+API 6. biolink(1 API call)
+API 7. mydisease(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 3.1: http://mydisease.info/v1/query (POST &#34;q=C0751435,C0751436&amp;scopes=mondo.xrefs.umls,disgenet.xrefs.umls&amp;fields=disgenet.genes_related_to_disease&amp;species=human&amp;size=100&#34;)
-API 1.1: http://pending.biothings.io/semmed/query (POST &#34;q=C0751435,C0751436&amp;scopes=umls&amp;fields=ASSOCIATED_WITH_reverse.gene,AFFECTS.protein,AFFECTS_reverse.protein,AFFECTS.gene,ASSOCIATED_WITH.gene,CAUSES_reverse.gene,AFFECTS_reverse.gene&amp;species=human&amp;size=100&#34;)
-API 2.1: https://pending.biothings.io/DISEASES/query (POST &#34;q=MONDO:0016543&amp;scopes=_id&amp;fields=DISEASES.associatedWith&amp;species=human&amp;size=100&#34;)
-API 4.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=100
+API 7.1: http://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0751435,C0751436&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
+API 3.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 3.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0751435,C0751436&amp;scopes=umls)
+API 6.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=200
+API 5.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0016543
+API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0016543
+API 4.1: https://automat.renci.org/pharos/disease/gene/MONDO:0016543
+API 1.1: https://automat.renci.org/hetio/disease/gene/MONDO:0016543
 
 
 ==== Step #3: Output normalization ====
 
-API 2.1 DISEASES: No hits
-API 4.1 biolink_disease2gene: 4 hits
-API 3.1 mydisease.info: 10 hits
-API 1.1 semmeddisease: 19 hits
+API 3.1 semmed_disease: No hits
+API 3.2 semmed_disease: No hits
+API 3.3 semmed_disease: No hits
+API 3.4 semmed_disease: No hits
+API 3.5 semmed_disease: No hits
+API 3.6 semmed_disease: 6 hits
+API 3.7 semmed_disease: No hits
+API 4.1 pharos: 1 hits
+API 3.8 semmed_disease: No hits
+API 2.1 scigraph: No hits
+API 3.9 semmed_disease: 3 hits
+API 7.1 mydisease: 10 hits
+API 3.10 semmed_disease: No hits
+API 5.1 scibite: 1 hits
+API 1.1 hetio: No hits
+API 3.11 semmed_disease: No hits
+API 3.12 semmed_disease: 14 hits
+API 3.13 semmed_disease: No hits
+API 3.14 semmed_disease: 17 hits
+API 6.1 biolink: 4 hits
+API 3.15 semmed_disease: No hits
 
-After id-to-object translation, BTE retrieved 17 unique objects.
+After id-to-object translation, BTE retrieved 33 unique objects.
 
 
 ========== QUERY #2.1 -- fetch all ChemicalSubstance entities linked to Gene entites ==========
@@ -13488,112 +13526,289 @@ After id-to-object translation, BTE retrieved 17 unique objects.
 
 Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that can take &#39;Gene&#39; as input and &#39;ChemicalSubstance&#39; as output
 
-BTE found 5 apis:
+BTE found 10 apis:
 
-API 1. mychem.info(3 API calls)
-API 2. opentarget(12 API calls)
-API 3. robokop_gene2chemical(12 API calls)
-API 4. dgidb_gene2chemical(12 API calls)
-API 5. semmedgene(1 API call)
+API 1. semmed_gene(10 API calls)
+API 2. scigraph(16 API calls)
+API 3. hmdb(16 API calls)
+API 4. mychem(3 API calls)
+API 5. dgidb(16 API calls)
+API 6. pharos(16 API calls)
+API 7. scibite(16 API calls)
+API 8. opentarget(16 API calls)
+API 9. chembio(16 API calls)
+API 10. cord_gene(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 4.11: http://www.dgidb.org/api/v2/interactions.json?genes=QDPR
-API 4.1: http://www.dgidb.org/api/v2/interactions.json?genes=COG2
-API 2.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131979&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.10: http://www.dgidb.org/api/v2/interactions.json?genes=APOB
-API 4.4: http://www.dgidb.org/api/v2/interactions.json?genes=AKR1B10
-API 2.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198074&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000170606&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.3: http://www.dgidb.org/api/v2/interactions.json?genes=HAL
-API 2.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084110&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142192&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.5: http://www.dgidb.org/api/v2/interactions.json?genes=APP
-API 4.2: http://www.dgidb.org/api/v2/interactions.json?genes=CACNA1A
-API 4.9: http://www.dgidb.org/api/v2/interactions.json?genes=GCH1
-API 1.1: http://mychem.info/v1/query (POST &#34;q=COG2,CACNA1A,HAL,AKR1B10,APP,HSPA4,PTS,PCBD1,GCH1,APOB,QDPR,PAH&amp;scopes=drugbank.enzymes.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 4.8: http://www.dgidb.org/api/v2/interactions.json?genes=PCBD1
-API 2.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166228&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 4.12: http://www.dgidb.org/api/v2/interactions.json?genes=PAH
-API 4.7: http://www.dgidb.org/api/v2/interactions.json?genes=PTS
-API 5.1: https://pending.biothings.io/semmedgene/query (POST &#34;q=C1419182,C1418251,C0002085,C1418296,C1415760,C1364818,C1412323,C1415012,C0314604,C0017337,C1412471,C1415465,C1705543,C0017361,C1456413,C1416822,C1419129&amp;scopes=umls&amp;fields=interacts_with_reverse.chemical_substance,associated_with.chemical_substance,affects_reverse.chemical_substance,affects.chemical_substance,associated_with_reverse.chemical_substance,interacts_with.chemical_substance&amp;species=human&amp;size=100&#34;)
-API 4.6: http://www.dgidb.org/api/v2/interactions.json?genes=HSPA4
-API 1.3: http://mychem.info/v1/query (POST &#34;q=COG2,CACNA1A,HAL,AKR1B10,APP,HSPA4,PTS,PCBD1,GCH1,APOB,QDPR,PAH&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol&amp;fields=chembl.molecule_chembl_id&amp;species=human&amp;size=100&#34;)
-API 1.2: http://mychem.info/v1/query (POST &#34;q=COG2,CACNA1A,HAL,AKR1B10,APP,HSPA4,PTS,PCBD1,GCH1,APOB,QDPR,PAH&amp;scopes=drugbank.targets.gene_name&amp;fields=drugbank.id&amp;species=human&amp;size=100&#34;)
-API 2.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000150787&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135775&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141837&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084674&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 2.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151552&amp;datasource=chembl&amp;size=15&amp;fields=drug
-API 3.3: https://robokop.renci.org/api/simple/expand/gene/HGNC:5237/chemical_substance/
-API 3.2: https://robokop.renci.org/api/simple/expand/gene/HGNC:620/chemical_substance/
-API 3.4: https://robokop.renci.org/api/simple/expand/gene/HGNC:382/chemical_substance/
-API 3.8: https://robokop.renci.org/api/simple/expand/gene/HGNC:1388/chemical_substance/
-API 3.7: https://robokop.renci.org/api/simple/expand/gene/HGNC:6546/chemical_substance/
-API 3.1: https://robokop.renci.org/api/simple/expand/gene/HGNC:8646/chemical_substance/
-API 3.9: https://robokop.renci.org/api/simple/expand/gene/HGNC:4806/chemical_substance/
-API 3.12: https://robokop.renci.org/api/simple/expand/gene/HGNC:9752/chemical_substance/
-API 3.11: https://robokop.renci.org/api/simple/expand/gene/HGNC:9689/chemical_substance/
-API 3.5: https://robokop.renci.org/api/simple/expand/gene/HGNC:8582/chemical_substance/
-API 3.6: https://robokop.renci.org/api/simple/expand/gene/HGNC:603/chemical_substance/
-API 3.10: https://robokop.renci.org/api/simple/expand/gene/HGNC:4193/chemical_substance/
+API 7.15: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145730&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166228&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137880&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151552&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.13: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000148602&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198074&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141837&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131979&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000150787&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000170606&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.16: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135775&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142192&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 5.13: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=AKR1B10
+API 5.7: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=CACNA1A
+API 5.14: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAH
+API 5.8: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PTS
+API 5.9: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAM
+API 5.11: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=HSPA4
+API 5.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=GCHFR
+API 5.3: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=GCH1
+API 5.5: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=QDPR
+API 5.6: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=LRIT1
+API 5.16: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=COG2
+API 5.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PCBD1
+API 5.12: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=APP
+API 6.16: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:338
+API 8.1: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:57016
+API 2.7: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:3308
+API 4.8: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:2644
+API 4.7: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:3308
+API 6.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:57016
+API 6.13: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2643
+API 6.10: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:351
+API 4.2: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5860
+API 6.6: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5805
+API 6.3: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:773
+API 6.15: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5066
+API 2.5: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5092
+API 2.14: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:26103
+API 2.2: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5860
+API 4.1: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:57016
+API 2.11: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:3034
+API 4.5: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5092
+API 5.15: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=SHCBP1
+API 6.4: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:22796
+API 2.8: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:2644
+API 2.12: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5053
+API 5.4: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=HAL
+API 3.2: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugbank.enzymes.gene_name)
+API 3.1: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugbank.targets.gene_name)
+API 6.9: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:79801
+API 6.7: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3308
+API 5.10: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=APOB
+API 7.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084674&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 2.9: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:79801
+API 6.2: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5860
+API 6.5: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5092
+API 6.14: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:26103
+API 6.8: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2644
+API 2.16: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:338
+API 6.11: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3034
+API 7.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171241&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 4.6: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5805
+API 6.12: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
+API 4.12: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5053
+API 2.4: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:22796
+API 7.14: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084110&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 3.3: https://mychem.info/v1/query?fields=chembl.molecule_chembl_id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol)
+API 2.1: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:57016
+API 2.13: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:2643
+API 4.9: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:79801
+API 8.2: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5860
+API 4.3: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:773
+API 9.6: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5805
+API 8.7: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:3308
+API 4.13: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:2643
+API 4.4: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:22796
+API 2.15: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5066
+API 2.3: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:773
+API 4.14: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:26103
+API 4.11: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:3034
+API 2.10: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:351
+API 4.15: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5066
+API 8.3: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:773
+API 8.9: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:79801
+API 4.16: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:338
+API 8.8: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:2644
+API 8.4: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:22796
+API 8.15: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5066
+API 8.5: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5092
+API 8.6: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5805
+API 8.10: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:351
+API 2.6: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5805
+API 8.11: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:3034
+API 8.14: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:26103
+API 8.13: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:2643
+API 4.10: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:351
+API 9.4: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:22796
+API 8.12: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5053
+API 8.16: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:338
+API 9.1: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:57016
+API 10.1: https://biothings.ncats.io/cord_gene/query?fields=associated_with (POST -d q=4193,6546,5237,9689,1388,603,4194,382,4806,29547,8646,8596,9752,23404,620,8582&amp;scopes=hgnc)
+API 9.7: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:3308
+API 9.8: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:2644
+API 9.9: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:79801
+API 9.3: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:773
+API 9.5: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5092
+API 9.2: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5860
+API 9.12: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5053
+API 9.10: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:351
+API 9.11: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:3034
+API 9.14: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:26103
+API 9.15: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5066
+API 9.13: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:2643
+API 9.16: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:338
+API 1.1: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulates (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.6: https://biothings.ncats.io/semmedgene/query?fields=positively_regulated_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.4: https://biothings.ncats.io/semmedgene/query?fields=affected_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.9: https://biothings.ncats.io/semmedgene/query?fields=disrupted_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.8: https://biothings.ncats.io/semmedgene/query?fields=disrupts (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.7: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulated_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.10: https://biothings.ncats.io/semmedgene/query?fields=positively_regulates (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.5: https://biothings.ncats.io/semmedgene/query?fields=related_to (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.3: https://biothings.ncats.io/semmedgene/query?fields=affects (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 1.2: https://biothings.ncats.io/semmedgene/query?fields=physically_interacts_with (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
 
 
 ==== Step #3: Output normalization ====
 
-API 4.1 dgidb_gene2chemical: No hits
-API 4.2 dgidb_gene2chemical: 11 hits
-API 4.3 dgidb_gene2chemical: 1 hits
-API 4.4 dgidb_gene2chemical: 3 hits
-API 4.5 dgidb_gene2chemical: 22 hits
-API 4.6 dgidb_gene2chemical: 35 hits
-API 4.7 dgidb_gene2chemical: No hits
-API 4.8 dgidb_gene2chemical: 1 hits
-API 4.9 dgidb_gene2chemical: 1 hits
-API 4.10 dgidb_gene2chemical: 17 hits
-API 4.11 dgidb_gene2chemical: 1 hits
-API 4.12 dgidb_gene2chemical: 8 hits
-API 1.1 mychem.info: 3 hits
-API 1.2 mychem.info: 47 hits
-API 1.3 mychem.info: 15 hits
-API 2.1 opentarget: No hits
-API 2.2 opentarget: No hits
-API 2.3 opentarget: 15 hits
-API 2.4 opentarget: No hits
-API 2.5 opentarget: 15 hits
-API 2.6 opentarget: 15 hits
-API 2.7 opentarget: No hits
-API 2.8 opentarget: No hits
-API 2.9 opentarget: 6 hits
-API 2.10 opentarget: No hits
-API 2.11 opentarget: No hits
-API 2.12 opentarget: No hits
-API 3.1 robokop_gene2chemical: No hits
-API 3.2 robokop_gene2chemical: 12 hits
-API 3.3 robokop_gene2chemical: No hits
-API 3.4 robokop_gene2chemical: 14 hits
-API 3.5 robokop_gene2chemical: 5 hits
-API 3.6 robokop_gene2chemical: 1 hits
-API 3.7 robokop_gene2chemical: No hits
-API 3.8 robokop_gene2chemical: 1 hits
-API 3.9 robokop_gene2chemical: 3 hits
-API 3.10 robokop_gene2chemical: 5 hits
-API 3.11 robokop_gene2chemical: 3 hits
-API 3.12 robokop_gene2chemical: 3 hits
-API 5.1 semmedgene: 5497 hits
+API 7.1 opentarget: No hits
+API 7.2 opentarget: 7 hits
+API 7.3 opentarget: No hits
+API 7.4 opentarget: 59 hits
+API 7.5 opentarget: No hits
+API 7.6 opentarget: No hits
+API 7.7 opentarget: No hits
+API 7.8 opentarget: 42 hits
+API 7.9 opentarget: No hits
+API 7.10 opentarget: No hits
+API 7.11 opentarget: 19 hits
+API 7.12 opentarget: No hits
+API 7.13 opentarget: No hits
+API 7.14 opentarget: No hits
+API 7.15 opentarget: No hits
+API 7.16 opentarget: No hits
+API 6.1 scibite: 1 hits
+API 6.2 scibite: No hits
+API 6.3 scibite: No hits
+API 6.4 scibite: No hits
+API 6.5 scibite: No hits
+API 6.6 scibite: No hits
+API 6.7 scibite: 1 hits
+API 6.8 scibite: 1 hits
+API 6.9 scibite: No hits
+API 6.10 scibite: 9 hits
+API 6.11 scibite: No hits
+API 6.12 scibite: 1 hits
+API 6.13 scibite: 1 hits
+API 6.14 scibite: No hits
+API 6.15 scibite: No hits
+API 6.16 scibite: 3 hits
+API 1.1 semmed_gene: 2007 hits
+API 1.2 semmed_gene: 15441 hits
+API 1.3 semmed_gene: 1 hits
+API 1.4 semmed_gene: 9 hits
+API 2.1 scigraph: No hits
+API 2.2 scigraph: No hits
+API 2.3 scigraph: No hits
+API 2.4 scigraph: No hits
+API 2.5 scigraph: No hits
+API 2.6 scigraph: 442 hits
+API 2.7 scigraph: No hits
+API 2.8 scigraph: No hits
+API 2.9 scigraph: No hits
+API 2.10 scigraph: 56 hits
+API 2.11 scigraph: 1 hits
+API 2.12 scigraph: 52 hits
+API 2.13 scigraph: No hits
+API 2.14 scigraph: No hits
+API 2.15 scigraph: 19 hits
+API 2.16 scigraph: 16 hits
+API 1.5 semmed_gene: No hits
+API 5.1 dgidb: 1 hits
+API 5.2 dgidb: No hits
+API 5.3 dgidb: 1 hits
+API 5.4 dgidb: 1 hits
+API 5.5 dgidb: 1 hits
+API 5.6 dgidb: No hits
+API 5.7 dgidb: 11 hits
+API 5.8 dgidb: No hits
+API 5.9 dgidb: 1 hits
+API 5.10 dgidb: 17 hits
+API 5.11 dgidb: 35 hits
+API 5.12 dgidb: 22 hits
+API 5.13 dgidb: 3 hits
+API 5.14 dgidb: 8 hits
+API 5.15 dgidb: No hits
+API 5.16 dgidb: No hits
+API 1.6 semmed_gene: 4883 hits
+API 3.1 mychem: 51 hits
+API 10.1 cord_gene: 723 hits
+API 1.7 semmed_gene: 6577 hits
+API 4.1 pharos: 44 hits
+API 4.2 pharos: 3 hits
+API 4.3 pharos: 1 hits
+API 4.4 pharos: No hits
+API 4.5 pharos: No hits
+API 4.6 pharos: No hits
+API 4.7 pharos: No hits
+API 4.8 pharos: No hits
+API 4.9 pharos: No hits
+API 4.10 pharos: 358 hits
+API 4.11 pharos: No hits
+API 4.12 pharos: 2 hits
+API 4.13 pharos: No hits
+API 4.14 pharos: No hits
+API 4.15 pharos: 5 hits
+API 4.16 pharos: 49 hits
+API 1.8 semmed_gene: 2 hits
+API 8.1 chembio: 5 hits
+API 8.2 chembio: 1 hits
+API 8.3 chembio: 1 hits
+API 8.4 chembio: No hits
+API 8.5 chembio: 2 hits
+API 8.6 chembio: 2 hits
+API 8.7 chembio: 6 hits
+API 8.8 chembio: 4 hits
+API 8.9 chembio: 1 hits
+API 8.10 chembio: 29 hits
+API 8.11 chembio: 3 hits
+API 8.12 chembio: 1 hits
+API 8.13 chembio: 4 hits
+API 8.14 chembio: No hits
+API 8.15 chembio: 7 hits
+API 8.16 chembio: 6 hits
+API 3.2 mychem: 4 hits
+API 1.9 semmed_gene: No hits
+API 9.1 hmdb: 18 hits
+API 9.2 hmdb: 11 hits
+API 9.3 hmdb: 4 hits
+API 9.4 hmdb: No hits
+API 9.5 hmdb: 5 hits
+API 9.6 hmdb: 6 hits
+API 9.7 hmdb: No hits
+API 9.8 hmdb: 2 hits
+API 9.9 hmdb: No hits
+API 9.10 hmdb: 5 hits
+API 9.11 hmdb: 3 hits
+API 9.12 hmdb: 11 hits
+API 9.13 hmdb: 8 hits
+API 9.14 hmdb: No hits
+API 9.15 hmdb: 5 hits
+API 9.16 hmdb: 4 hits
+API 3.3 mychem: 15 hits
+API 1.10 semmed_gene: 2314 hits
 
-After id-to-object translation, BTE retrieved 2891 unique objects.
+After id-to-object translation, BTE retrieved 9449 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-In the #1 query, BTE found 17 unique Gene nodes
-In the #2 query, BTE found 2891 unique ChemicalSubstance nodes
+In the #1 query, BTE found 33 unique Gene nodes
+In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 </pre>
 </div>
 </div>
@@ -13613,17 +13828,339 @@ In the #2 query, BTE found 2891 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
 
 <span class="c1"># because UMLS is not currently well-integrated in our ID-to-object translation system, removing UMLS-only outputs here</span>
-<span class="n">patternDel</span> <span class="o">=</span> <span class="s2">&quot;^umls:C\d+&quot;</span>
+<span class="n">patternDel</span> <span class="o">=</span> <span class="s2">&quot;^UMLS:C\d+&quot;</span>
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">output_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="nb">filter</span><span class="p">]</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>input</th>
+      <th>input_type</th>
+      <th>pred1</th>
+      <th>pred1_source</th>
+      <th>pred1_api</th>
+      <th>pred1_pubmed</th>
+      <th>node1_type</th>
+      <th>node1_name</th>
+      <th>node1_id</th>
+      <th>pred2</th>
+      <th>pred2_source</th>
+      <th>pred2_api</th>
+      <th>pred2_pubmed</th>
+      <th>output_type</th>
+      <th>output_name</th>
+      <th>output_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>16504</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>10727395</td>
+      <td>Gene</td>
+      <td>C0014442</td>
+      <td>UMLS:C0014442</td>
+      <td>negatively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>11839529,19443747</td>
+      <td>ChemicalSubstance</td>
+      <td>U 0126</td>
+      <td>name:U 0126</td>
+    </tr>
+    <tr>
+      <td>8209</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>9675155</td>
+      <td>Gene</td>
+      <td>C0017337</td>
+      <td>UMLS:C0017337</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>21984199,26086415</td>
+      <td>ChemicalSubstance</td>
+      <td>ISOFLURANE</td>
+      <td>name:ISOFLURANE</td>
+    </tr>
+    <tr>
+      <td>31798</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>9222755,9667588</td>
+      <td>Gene</td>
+      <td>C0017337</td>
+      <td>UMLS:C0017337</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>17684401,18412988,17693008</td>
+      <td>ChemicalSubstance</td>
+      <td>MICRONUTRIENT</td>
+      <td>name:MICRONUTRIENT</td>
+    </tr>
+    <tr>
+      <td>1929</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>10874306</td>
+      <td>Gene</td>
+      <td>PTS</td>
+      <td>NCBIGene:5805</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>.BETA.-D-GLUCOPYRANOSE</td>
+      <td>name:.BETA.-D-GLUCOPYRANOSE</td>
+    </tr>
+    <tr>
+      <td>10532</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>699146</td>
+      <td>Gene</td>
+      <td>C0030016</td>
+      <td>UMLS:C0030016</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>11731036</td>
+      <td>ChemicalSubstance</td>
+      <td>GENISTEIN</td>
+      <td>name:GENISTEIN</td>
+    </tr>
+    <tr>
+      <td>35512</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>10727395</td>
+      <td>Gene</td>
+      <td>C0014442</td>
+      <td>UMLS:C0014442</td>
+      <td>positively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>4291334,7358701,11980911</td>
+      <td>ChemicalSubstance</td>
+      <td>DEOXYCHOLATE</td>
+      <td>name:DEOXYCHOLATE</td>
+    </tr>
+    <tr>
+      <td>40287</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>8841415</td>
+      <td>Gene</td>
+      <td>PTS</td>
+      <td>NCBIGene:5805</td>
+      <td>related_to</td>
+      <td>scigraph</td>
+      <td>Automat CORD19 Scigraph API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>CHLORAMBUCIL</td>
+      <td>name:CHLORAMBUCIL</td>
+    </tr>
+    <tr>
+      <td>40027</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>15133828</td>
+      <td>Gene</td>
+      <td>AKR1B10</td>
+      <td>NCBIGene:57016</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>28322780</td>
+      <td>ChemicalSubstance</td>
+      <td>TIAPROFENIC ACID</td>
+      <td>name:TIAPROFENIC ACID</td>
+    </tr>
+    <tr>
+      <td>22054</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>28794131</td>
+      <td>Gene</td>
+      <td>HSPA4</td>
+      <td>NCBIGene:3308</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>26307981</td>
+      <td>ChemicalSubstance</td>
+      <td>MALONALDEHYDE</td>
+      <td>name:MALONALDEHYDE</td>
+    </tr>
+    <tr>
+      <td>45089</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>1301201,8892014,10495930,10495930</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>CHEBI:46756</td>
+      <td>CHEBI:CHEBI:46756</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While most results are based on edges from <a href="https://skr3.nlm.nih.gov/SemMed/">semmed</a>, edges from <a href="http://www.dgidb.org/">DGIdb</a>, <a href="https://monarchinitiative.org/">biolink</a>, <a href="http://www.disgenet.org/">disgenet</a>, and <a href="https://mychem.info">mychem.info</a> were also retrieved from their respective APIs.</p>
+<p>Next, let's examine which chemical compounds were most frequently mentioned.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>PHARMACEUTICAL PREPARATIONS    122
+HYDROGEN PEROXIDE              119
+.BETA.-D-GLUCOPYRANOSE         116
+NADH                           105
+NITRIC OXIDE                   101
+BINDING SITE                    97
+3-METHYLADENINE DNA             94
+CHOLESTEROL                     94
+OXYGEN SPECIES, REACTIVE        92
+ALCOHOL                         91
+Name: output_name, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hyperphenylalaninemia is a condition characterized by elevated levels of phenylalanine in the blood. This phenotype is strongly associated with phenylketonuria (PKU), an inherited, genetic disorder that affects the ability to metabolize phenylalanine.  <strong>Sapropterin</strong> is a naturally-occurring cofactor associated with several enzymatic processes, including the metabolism of phenylalanine to tyrosine. It has been <a href="https://www.centerwatch.com/drug-information/fda-approved-drugs/drug/972/kuvan-sapropterin-dihydrochloride">FDA-approved</a> as a treatment for PKU patients.  Tyrosine is also a precursor to several neurotransmitters, including <strong>norepinephrine</strong> and <strong>dopamine</strong>.</p>
+<p>While several of the listed compounds would be considered positive controls, others on the list could be viewed as <strong>testable hypotheses and discovery opportunities</strong> to be evaluated by domain experts. For example, let's examine which genes link hyperphenylalaninemia to nitric oxide.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">==</span><span class="s2">&quot;NITRIC OXIDE&quot;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13679,595 +14216,217 @@ In the #2 query, BTE found 2891 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>9078</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>None</td>
+      <td>2318</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>25261586,25261586</td>
       <td>Gene</td>
-      <td>symbol:QDPR</td>
-      <td>symbol:QDPR</td>
-      <td>targetedBy</td>
-      <td>mychem.info</td>
-      <td>mychem.info</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>drugbank:DB03814</td>
-      <td>drugbank:DB03814</td>
-    </tr>
-    <tr>
-      <td>2623</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>symbol:COG2</td>
-      <td>symbol:COG2</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>18640465</td>
-      <td>ChemicalSubstance</td>
-      <td>PITAVASTATIN</td>
-      <td>name:PITAVASTATIN</td>
-    </tr>
-    <tr>
-      <td>3405</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>symbol:COG2</td>
-      <td>symbol:COG2</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>11406909,11376309,12648030,9627539,17577472,15...</td>
-      <td>ChemicalSubstance</td>
-      <td>ATORVASTATIN</td>
-      <td>name:ATORVASTATIN</td>
-    </tr>
-    <tr>
-      <td>8642</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:PAH</td>
-      <td>symbol:PAH</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19905008</td>
-      <td>ChemicalSubstance</td>
-      <td>LACTIC ACID</td>
-      <td>name:LACTIC ACID</td>
-    </tr>
-    <tr>
-      <td>8484</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9222755,9667588</td>
-      <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>7737473</td>
-      <td>ChemicalSubstance</td>
-      <td>OLEANDOMYCIN</td>
-      <td>name:OLEANDOMYCIN</td>
-    </tr>
-    <tr>
-      <td>3312</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16917891</td>
-      <td>Gene</td>
-      <td>umls:C0002085</td>
-      <td>umls:C0002085</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>12937870</td>
-      <td>ChemicalSubstance</td>
-      <td>MEXILETINE</td>
-      <td>name:MEXILETINE</td>
-    </tr>
-    <tr>
-      <td>3346</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>16917891</td>
-      <td>Gene</td>
-      <td>umls:C0002085</td>
-      <td>umls:C0002085</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>28023164,28021968</td>
-      <td>ChemicalSubstance</td>
-      <td>TAMOXIFEN</td>
-      <td>name:TAMOXIFEN</td>
-    </tr>
-    <tr>
-      <td>8526</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9222755,9667588</td>
-      <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19689802</td>
-      <td>ChemicalSubstance</td>
-      <td>SALICYLIC ACID</td>
-      <td>name:SALICYLIC ACID</td>
-    </tr>
-    <tr>
-      <td>8465</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:PAH</td>
-      <td>symbol:PAH</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>2226440</td>
-      <td>ChemicalSubstance</td>
-      <td>NOREPINEPHRINE</td>
-      <td>name:NOREPINEPHRINE</td>
-    </tr>
-    <tr>
-      <td>8190</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9222755,9667588</td>
-      <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>18595847</td>
-      <td>ChemicalSubstance</td>
-      <td>CIANIDANOL</td>
-      <td>name:CIANIDANOL</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>While most results are based on edges from <a href="https://skr3.nlm.nih.gov/SemMed/">semmed</a>, edges from <a href="http://www.dgidb.org/">DGIdb</a>, <a href="https://monarchinitiative.org/">biolink</a>, <a href="http://www.disgenet.org/">disgenet</a>, and <a href="https://mychem.info">mychem.info</a> were also retrieved from their respective APIs.</p>
-<p>Next, let's examine which chemical compounds were most frequently mentioned.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[8]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>DEXTROSE           25
-ALCOHOL            20
-NOREPINEPHRINE     19
-HYDROCORTISONE     17
-DOPAMINE           17
-SODIUM CHLORIDE    17
-SAPROPTERIN        15
-QUERCETIN          15
-VITAMIN E          14
-NITRIC OXIDE       14
-Name: output_name, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Hyperphenylalaninemia is a condition characterized by elevated levels of phenylalanine in the blood. This phenotype is strongly associated with phenylketonuria (PKU), an inherited, genetic disorder that affects the ability to metabolize phenylalanine.  <strong>Sapropterin</strong> is a naturally-occurring cofactor associated with several enzymatic processes, including the metabolism of phenylalanine to tyrosine. It has been <a href="https://www.centerwatch.com/drug-information/fda-approved-drugs/drug/972/kuvan-sapropterin-dihydrochloride">FDA-approved</a> as a treatment for PKU patients.  Tyrosine is also a precursor to several neurotransmitters, including <strong>norepinephrine</strong> and <strong>dopamine</strong>.</p>
-<p>While several of the listed compounds would be considered positive controls, others on the list could be viewed as <strong>testable hypotheses and discovery opportunities</strong> to be evaluated by domain experts. For example, let's examine which genes link hyperphenylalaninemia to nitric oxide.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">==</span><span class="s2">&quot;NITRIC OXIDE&quot;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[9]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>input</th>
-      <th>input_type</th>
-      <th>pred1</th>
-      <th>pred1_source</th>
-      <th>pred1_api</th>
-      <th>pred1_pubmed</th>
-      <th>node1_type</th>
-      <th>node1_name</th>
-      <th>node1_id</th>
-      <th>pred2</th>
-      <th>pred2_source</th>
-      <th>pred2_api</th>
-      <th>pred2_pubmed</th>
-      <th>output_type</th>
-      <th>output_name</th>
-      <th>output_id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>2472</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>umls:C1705543</td>
-      <td>umls:C1705543</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>9388488,25706765</td>
+      <td>C1710338</td>
+      <td>UMLS:C1710338</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>23769841</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2473</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
+      <td>2319</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>25261586,25261586</td>
       <td>Gene</td>
-      <td>umls:C1705543</td>
-      <td>umls:C1705543</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19779140,22384120,26665235</td>
+      <td>C1710338</td>
+      <td>UMLS:C1710338</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>15265010</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2474</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9675155</td>
+      <td>2320</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>25261586,25261586</td>
       <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8720483,8874195,9220344,8642187,1665333,104325...</td>
+      <td>C1710338</td>
+      <td>UMLS:C1710338</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>25049660,23072349</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2475</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9222755,9667588</td>
+      <td>2321</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>25261586,25261586</td>
       <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8720483,8874195,9220344,8642187,1665333,104325...</td>
+      <td>C1710338</td>
+      <td>UMLS:C1710338</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>23806552,16831427</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2476</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9675155</td>
+      <td>2322</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>25261586,25261586</td>
       <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8874195,7945348,12687343,12381414,9853913,9853...</td>
+      <td>C1710338</td>
+      <td>UMLS:C1710338</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>10952392</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2477</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>9222755,9667588</td>
-      <td>Gene</td>
-      <td>umls:C0017337</td>
-      <td>umls:C0017337</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8874195,7945348,12687343,12381414,9853913,9853...</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <td>2478</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:GCH1</td>
-      <td>symbol:GCH1</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>18671723</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2479</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:GCH1</td>
-      <td>symbol:GCH1</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>18671723</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2481</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>biolink</td>
-      <td>biolink_disease2gene</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:GCH1</td>
-      <td>symbol:GCH1</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20870896,19447893</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2482</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>disgenet</td>
-      <td>mydisease.info</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>symbol:GCH1</td>
-      <td>symbol:GCH1</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>20870896,19447893</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2484</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>symbol:COG2</td>
-      <td>symbol:COG2</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>16060915</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2485</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>associatedWith</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>symbol:APP</td>
-      <td>symbol:APP</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>19779140,22384120,26665235</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
-    </tr>
-    <tr>
-      <td>2486</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
+      <td>2422</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
       <td>28794131</td>
       <td>Gene</td>
-      <td>symbol:HSPA4</td>
-      <td>symbol:HSPA4</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>8706913</td>
+      <td>HSPA4</td>
+      <td>NCBIGene:3308</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>7544743,9085348,9085348,9276725,10805410,10805...</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
     <tr>
-      <td>2487</td>
-      <td>HYPERPHENYLALANINEMIA</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>causedBy</td>
-      <td>semmed</td>
-      <td>semmeddisease</td>
+      <td>2423</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
       <td>28794131</td>
       <td>Gene</td>
-      <td>symbol:HSPA4</td>
-      <td>symbol:HSPA4</td>
-      <td>molecularlyInteractsWith</td>
-      <td>semmed</td>
-      <td>semmedgene</td>
-      <td>22288105,27264883</td>
+      <td>HSPA4</td>
+      <td>NCBIGene:3308</td>
+      <td>positively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>11374865</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>name:NITRIC OXIDE</td>
+    </tr>
+    <tr>
+      <td>2424</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>caused_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>7766952</td>
+      <td>Gene</td>
+      <td>CACNA1A</td>
+      <td>NCBIGene:773</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>23949212</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>name:NITRIC OXIDE</td>
+    </tr>
+    <tr>
+      <td>2425</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GCHFR</td>
+      <td>NCBIGene:2644</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>18372436,18372436,18372436</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>name:NITRIC OXIDE</td>
+    </tr>
+    <tr>
+      <td>2426</td>
+      <td>HYPERPHENYLALANINAEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>GCHFR</td>
+      <td>NCBIGene:2644</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>21693765</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
       <td>name:NITRIC OXIDE</td>
     </tr>
   </tbody>
 </table>
+<p>101 rows × 16 columns</p>
 </div>
 </div>
 
