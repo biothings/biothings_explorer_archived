@@ -640,7 +640,7 @@
         "gene_related_to_phenotype": {
             "HP": "gene2phenotype.phenotypes",
             "pubmed": "gene2phenotype.pmids",
-            "probability": "gene2phenotype.DDD_category",
+            "probability": "gene2phenotype.DDD_category"
         },
         "phenotype_related_to_gene": {
             "HGNC": "_id"

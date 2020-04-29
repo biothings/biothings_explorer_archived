@@ -40,7 +40,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('GRAPHENE' in seqd.G)
         edges = seqd.G['CL:CL:0000060']['GRAPHENE']
         self.assertTrue('CORD Cell API' in get_apis(edges))
-        
 
     def test_cell2gene(self):
         """Test gene-gene"""

@@ -64,9 +64,9 @@ class Hint():
         """
         if semantic_type:
             if semantic_type not in ID_RESOLVING_APIS:
-                raise ValueError("{} is not a valid semantic type to resolve. Available semantic types are {}".format(semantic_type, ','.join(ID_RESOLVING_APIS.keys())))
-            else:
-                self.ID_RESOLVING_APIS = {semantic_type: ID_RESOLVING_APIS[semantic_type]}
+                raise ValueError("{} is not a valid semantic type to resolve. Available semantic types are {}".format(semantic_type,
+            ','.join(ID_RESOLVING_APIS.keys())))
+            self.ID_RESOLVING_APIS = {semantic_type: ID_RESOLVING_APIS[semantic_type]}
         else:
             self.ID_RESOLVING_APIS = ID_RESOLVING_APIS
         self.construct_api_calls(_input)
@@ -112,7 +112,7 @@ class Hint():
                 tmp['type'] = semantic_type
                 parsed_response[semantic_type].append(tmp)
 
-        return parsed_response                
+        return parsed_response              
                     
     def construct_api_calls(self, _id):
         """Construct API calls for BTE API call module.
@@ -140,7 +140,7 @@ class Hint():
                         'dotfield': "true",
                         'species': 'human',
                         'size': "5"
-                    }, 
+                    },
                     'requestBody': {
                         'body': {
                             'q': '"{inputs[0]}"',

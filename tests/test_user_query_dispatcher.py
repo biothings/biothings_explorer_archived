@@ -13,4 +13,3 @@ class TestUserQueryDispatcher(unittest.TestCase):
         fc = FindConnection(input_obj=tmprss2, output_obj=pentamidine, intermediate_nodes=['BiologicalEntity'], registry=None)
         fc.connect(verbose=True)
         self.assertIn('PLXNA2', fc.fc.G)
-

@@ -40,7 +40,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('CHEBI:25212' in seqd.G)
         edges = seqd.G['GO:GO:0019369']['CHEBI:25212']
         self.assertTrue('CORD Biological Process API' in get_apis(edges))
-        
 
     def test_bp2gene(self):
         """Test gene-gene"""

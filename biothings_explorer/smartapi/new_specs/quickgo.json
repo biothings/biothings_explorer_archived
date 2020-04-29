@@ -81,7 +81,7 @@
         "ma_has_subclass_ma": {
             "GO": "results.children.id",
             "name": "results.children.name",
-            "relation": "results.children.relation",
+            "relation": "results.children.relation"
         }
       }
     }

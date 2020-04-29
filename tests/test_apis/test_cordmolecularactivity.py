@@ -40,7 +40,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('PHENOLS' in seqd.G)
         edges = seqd.G['GO:GO:0050626']['PHENOLS']
         self.assertTrue('CORD Molecular Activity API' in get_apis(edges))
-        
 
     def test_ma2gene(self):
         """Test gene-gene"""

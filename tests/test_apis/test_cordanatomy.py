@@ -40,7 +40,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('CHEBI:22563' in seqd.G)
         edges = seqd.G['UBERON:UBERON:0000013']['CHEBI:22563']
         self.assertTrue('CORD Anatomy API' in get_apis(edges))
-        
 
     def test_anatomy2gene(self):
         """Test gene-gene"""

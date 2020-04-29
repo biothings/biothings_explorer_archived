@@ -86,7 +86,7 @@
         "disease_has_subclass_disease": {
             "DOID": "_embedded.terms.obo_id",
             "name": "_embedded.terms.label",
-            "description": "_embedded.terms.description",
+            "description": "_embedded.terms.description"
           
         }
       }

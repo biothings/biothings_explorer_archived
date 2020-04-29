@@ -17,7 +17,8 @@ class IDResolver():
         """Load BTE registry and BTE API caller."""
         self.caller = BioThingsCaller()
 
-    def fetch_id_mapping_file(self, semantic_type):
+    @staticmethod
+    def fetch_id_mapping_file(semantic_type):
         """Fetch schema mapping file from the registry.
 
         :param: semantic_type: the id semantic type.

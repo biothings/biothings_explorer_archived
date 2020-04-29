@@ -611,7 +611,7 @@
             "UBERON": "associations.object.UBERON",
             "source": "associations.provided_by",
             "pubmed": "associations.publications.id",
-            "relation": "associations.relation.label",
+            "relation": "associations.relation.label"
         },
         "gene-disease": {
             "MONDO": "associations.object.MONDO",
@@ -639,7 +639,7 @@
             "source": "associations.provided_by",
             "relation": "associations.relation.label",
             "pubmed": "associations.publications.id",
-            "taxid": "associations.object.taxon.id",
+            "taxid": "associations.object.taxon.id"
         },
         "pathway-disease": {
             "MONDO": "associations.object.MONDO",
@@ -653,14 +653,14 @@
             "name": "associations.object.label",
             "source": "associations.provided_by",
             "pubmed": "associations.publications.id",
-            "relation": "associations.relation.label",
+            "relation": "associations.relation.label"
         },
         "disease-phenotype": {
           "HP": "associations.object.HP",
           "name": "associations.object.label",
           "source": "associations.provided_by",
           "pubmed": "associations.publications.id",
-          "relation": "associations.relation.label",
+          "relation": "associations.relation.label"
       },
         "phenotype-disease": {
             "MONDO": "associations.object.MONDO",
@@ -686,7 +686,7 @@
             "name": "associations.object.label",
             "source": "associations.provided_by",
             "relation": "associations.relation.label",
-            "pubmed": "associations.publications.id",
+            "pubmed": "associations.publications.id"
         }
       },
       "x-bte-kgs-operations": {

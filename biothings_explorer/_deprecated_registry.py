@@ -6,10 +6,9 @@ Storing metadata information and connectivity of APIs.
 
 
 """
-import json
 from copy import deepcopy
 import networkx as nx
-from .mapping_parser import MappingParser
+from ._deprecated_mapping_parser import MappingParser
 from .config import metadata
 from .utils.simple_semmed import semmed
 from .utils.cord import cord, SEMANTIC_TYPE_ID_MAPPING
@@ -57,7 +56,8 @@ class Registry():
                     res[pred].append(tmp)
         return res
 
-    def _auto_generate_semmed_operation_list(self, doc_type):
+    @staticmethod
+    def _auto_generate_semmed_operation_list(doc_type):
         res = []
         for pred, output_types in semmed[doc_type].items():
             for output_type in output_types:
@@ -65,7 +65,8 @@ class Registry():
                 res.append({'$ref': "#/components/x-bte-kgs-operations/" + _id})
         return res
 
-    def _auto_generate_semmed_operation(self, doc_type):
+    @staticmethod
+    def _auto_generate_semmed_operation(doc_type):
         x_operation_template = {
             "inputSeparator": ",",
             "inputs": [

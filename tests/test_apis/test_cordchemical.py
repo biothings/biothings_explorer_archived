@@ -42,7 +42,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('IMIQUIMOD' in seqd.G)
         edges = seqd.G['CHEBI:CHEBI:28640']['IMIQUIMOD']
         self.assertTrue('CORD Chemical API' in get_apis(edges))
-        
 
     def test_chemical2gene(self):
         """Test gene-gene"""

@@ -1,5 +1,4 @@
 import unittest
-from biothings_explorer.registry import Registry
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 from .utils import get_apis
 

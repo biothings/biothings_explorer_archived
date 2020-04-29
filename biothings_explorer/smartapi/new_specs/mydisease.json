@@ -582,7 +582,7 @@
             },
             "disease-variant":{
               "DBSNP": "disgenet.variants_related_to_disease.rsid",
-              "pubmed": "disgenet.variants_related_to_disease.pubmed",
+              "pubmed": "disgenet.variants_related_to_disease.pubmed"
             },
             "disease-phenotype": {
               "HP": "hpo.phenotype_related_to_disease.hpo_id",
@@ -590,11 +590,11 @@
             },
             "disease-chemical":{
               "MESH": "ctd.chemical_related_to_disease.mesh_chemical_id",
-              "pubmed": "ctd.chemical_related_to_disease.pubmed",
+              "pubmed": "ctd.chemical_related_to_disease.pubmed"
             },
             "disease-bp": {
               "GO": "ctd.bp_related_to_disease.go_id",
-              "name": "ctd.bp_related_to_disease.go_name",
+              "name": "ctd.bp_related_to_disease.go_name"
             },
             "umls": {
                 "UMLS": "disgenet.xrefs.umls"

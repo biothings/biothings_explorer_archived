@@ -40,7 +40,6 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue('MIRABEGRON' in seqd.G)
         edges = seqd.G['DOID:DOID:12143']['MIRABEGRON']
         self.assertTrue('CORD Disease API' in get_apis(edges))
-        
 
     def test_disease2gene(self):
         """Test gene-gene"""

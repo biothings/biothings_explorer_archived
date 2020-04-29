@@ -122,13 +122,13 @@
             "CHEMBL.COMPOUND": "matchedTerms.interactions.drugChemblId",
             "name": "matchedTerms.interactions.drugName",
             "source": "matchedTerms.interactions.sources",
-            "publication": "matchedTerms.interactions.pmids",
+            "publication": "matchedTerms.interactions.pmids"
         },
         "drug-gene": {
             "NCBIGene": "matchedTerms.interactions.geneEntrezId",
             "name": "matchedTerms.interactions.geneLongName",
             "source": "matchedTerms.interactions.sources",
-            "publication": "matchedTerms.interactions.pmids",
+            "publication": "matchedTerms.interactions.pmids"
         }
       }
     }
