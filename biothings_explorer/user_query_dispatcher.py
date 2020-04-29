@@ -447,6 +447,9 @@ class Explain:
                                           registry=self.registry)
         self.seqd[1].query(verbose=verbose)
         self.log += self.seqd[1].log
+        if len(self.seqd[1].G) < 2:
+            print("The first query doesn't return any result. So BTE does not find any connection between your input and output")
+            return
         self.G = copy.deepcopy(self.seqd[1].G)
         if self.intermediate_cls_cnt == 0:
             if self.ends in self.G:
@@ -477,6 +480,9 @@ class Explain:
                                                      reverse=True,
                                                      registry=self.registry)
             self.seqd[2].query(verbose=verbose)
+            if len(self.seqd[2].G) < 2:
+                print("The second query doesn't return any result. So BTE does not find any connection between your input and output")
+                return
             self.log += self.seqd[2].log
             self.seqd[2].G = self.seqd[2].G.reverse()
             self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
