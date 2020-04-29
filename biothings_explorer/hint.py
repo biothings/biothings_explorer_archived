@@ -154,9 +154,6 @@ class Hint():
         >>> ht = Hint()
         >>> ht.query('CXCR4')
         """
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = asyncio.get_event_loop()
+        loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self.run(_input))
         return loop.run_until_complete(future)
