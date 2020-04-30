@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Gene", "bts:entrez": "data.GeneID", "bts:associatedWith": {"@type": "DiseaseOrPhenotypicFeature", "bts:mesh": "data.DiseaseID", "bts:name": "data.DiseaseName", "bts:pubmed": "data.PubMedIDs", "$input": "bts:entrez", "$source": "CTD"}}

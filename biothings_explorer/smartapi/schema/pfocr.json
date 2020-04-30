@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Pathway", "bts:pathwayFigureID": "_id", "bts:associatedWith": {"@type": "Gene", "bts:entrez": "associatedWith.genes", "bts:pmc": "associatedWith.pmc", "$input": "bts:pathwayFigureID", "$source": "PFOCR"}}

@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Gene", "bts:hgnc": "literature_co-occurrence.source_id", "bts:associatedWith": {"@type": "ChemicalSubstance", "bts:chembl": "literature_co-occurrence.chembl", "bts:source": "literature_co-occurrence.source_database", "$input": "bts:hgnc", "$source": "robokop"}}

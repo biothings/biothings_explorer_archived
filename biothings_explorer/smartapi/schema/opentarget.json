@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Gene", "bts:ensembl": "ensembl", "bts:associatedWith": {"@type": "ChemicalSubstance", "bts:chembl": "data.drug.id", "bts:moleculeType": "data.drug.molecule_type", "bts:name": "data.drug.molecule_name", "$input": "bts:ensembl", "$source": "CHEMBL"}}

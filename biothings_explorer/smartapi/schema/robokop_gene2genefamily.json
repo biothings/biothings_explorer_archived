@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Gene", "bts:hgnc": "part_of.source_id", "bts:partOf": {"@type": "GeneFamily", "bts:panther": "part_of.panther", "bts:source": "part_of.source_database", "bts:pubmed": "part_of.publications", "$input": "bts:hgnc", "$source": "panther"}}

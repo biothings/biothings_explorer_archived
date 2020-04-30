@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "MolecularActivity", "bts:go": "results.id", "bts:name": "results.name", "bts:hasChildren": {"@type": "MolecularActivity", "bts:go": "results.children.id", "bts:name": "results.children.name", "bts:relation": "results.children.relation", "$input": "bts:go", "$source": "gene ontology"}}

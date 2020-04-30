@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "ChemicalSubstance", "bts:mesh": "mesh", "bts:associatedWith": {"@type": "Gene", "bts:entrez": "data.GeneId", "bts:pubmed": "data.PubMedIds", "bts:taxonomy": "data.OrganismId", "$input": "bts:mesh", "$source": "ctd"}}

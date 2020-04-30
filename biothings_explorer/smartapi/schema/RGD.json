@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Gene", "bts:rgd": "rgd", "bts:hasHomolog": {"@type": "Gene", "bts:symbol": "ensemblGeneSymbol", "$input": "bts:rgd", "$source": "RGD"}}

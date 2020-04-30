@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "ChemicalSubstance", "bts:chembl": "chembl", "bts:target": {"@type": "Gene", "bts:chembl": "mechanisms.target_chembl_id", "bts:action": "mechanisms.action_type", "bts:mechanism": "mechanisms.mechanism_of_action", "$input": "bts:chembl", "$source": "chembl"}}

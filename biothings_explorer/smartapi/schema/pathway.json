@@ -1,1 +1,0 @@
-{"@context": "http://schema.org", "@type": "Pathway", "bts:kegg": "kegg", "bts:biocarta": "biocarta", "bts:netpath": "netpath", "bts:pharmgkb": "pharmgkb", "bts:smpdb": "smpdb", "bts:reactome": "reactome", "bts:wikipathways": "wikipathways", "bts:yeastcyc": "yeastcyc", "bts:umls": "umls", "bts:name": "name"}
