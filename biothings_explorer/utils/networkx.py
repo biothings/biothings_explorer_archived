@@ -82,7 +82,7 @@ def add_equivalent_ids_to_nodes(G, IDResolver):
     idc_inputs = []
     output_ids_dict = defaultdict(list)
     for _id in output_ids:
-        type_identifier = G.node[_id]['type'] + ',' + G.node[_id]['identifier']
+        type_identifier = G.nodes[_id]['type'] + ',' + G.nodes[_id]['identifier']
         output_ids_dict[type_identifier].append(_id)
     # construct inputs for IDConverter
     for k, v in output_ids_dict.items():
@@ -92,7 +92,7 @@ def add_equivalent_ids_to_nodes(G, IDResolver):
     equivalent_ids = IDResolver.resolve_ids(idc_inputs)
     # populate nodes with equivalent ids
     for m, n in equivalent_ids.items():
-        G.node[m.split(':', 1)[-1]]['equivalent_ids'] = n
+        G.nodes[m.split(':', 1)[-1]]['equivalent_ids'] = n
     return (G, equivalent_ids)
 
 
