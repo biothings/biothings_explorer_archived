@@ -2,7 +2,6 @@ import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 from .utils import get_apis
 
-reg = Registry()
 
 class TestSingleHopQuery(unittest.TestCase):
 
