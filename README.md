@@ -52,6 +52,10 @@ This is the development repo for the python client of BioThings Explorer. This t
    - [OpenTarget API](https://platform-api.opentargets.io)
    - [RGD API](https://rest.rgd.mcw.edu)
    - [Automat CORD19 Scibite API](https://automat.renci.org)
+   - [Automat CORD19 Scigraph API](https://automat.renci.org)
+   - [Automat CORD19 Pharos API](https://automat.renci.org)
+   - [Automat CORD19 hetio API](https://automat.renci.org)
+   - [Automat CORD19 HMDB API](https://automat.renci.org)
 
 
 ### How to use the package
