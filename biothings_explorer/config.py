@@ -121,7 +121,7 @@ metadata = {
     "url": "http://biothings.ncats.io/semmed/query",
     "mapping_url": 'https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/openapi_2.0/semmed/schema.json',
     'api_type': "biothings",
-    'api_name': 'semmed',
+    'api_name': 'SEMMED API',
     'doc_type': 'DiseaseOrPhenotypicFeature',
     "smart_api_id": "e99229fc6ccb9ad9889bcc9c77a36bad"
   },

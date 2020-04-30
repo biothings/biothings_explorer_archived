@@ -13018,42 +13018,7 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
-    
-/* Temporary definitions which will become obsolete with Notebook release 5.0 */
-.ansi-black-fg { color: #3E424D; }
-.ansi-black-bg { background-color: #3E424D; }
-.ansi-black-intense-fg { color: #282C36; }
-.ansi-black-intense-bg { background-color: #282C36; }
-.ansi-red-fg { color: #E75C58; }
-.ansi-red-bg { background-color: #E75C58; }
-.ansi-red-intense-fg { color: #B22B31; }
-.ansi-red-intense-bg { background-color: #B22B31; }
-.ansi-green-fg { color: #00A250; }
-.ansi-green-bg { background-color: #00A250; }
-.ansi-green-intense-fg { color: #007427; }
-.ansi-green-intense-bg { background-color: #007427; }
-.ansi-yellow-fg { color: #DDB62B; }
-.ansi-yellow-bg { background-color: #DDB62B; }
-.ansi-yellow-intense-fg { color: #B27D12; }
-.ansi-yellow-intense-bg { background-color: #B27D12; }
-.ansi-blue-fg { color: #208FFB; }
-.ansi-blue-bg { background-color: #208FFB; }
-.ansi-blue-intense-fg { color: #0065CA; }
-.ansi-blue-intense-bg { background-color: #0065CA; }
-.ansi-magenta-fg { color: #D160C4; }
-.ansi-magenta-bg { background-color: #D160C4; }
-.ansi-magenta-intense-fg { color: #A03196; }
-.ansi-magenta-intense-bg { background-color: #A03196; }
-.ansi-cyan-fg { color: #60C6C8; }
-.ansi-cyan-bg { background-color: #60C6C8; }
-.ansi-cyan-intense-fg { color: #258F8F; }
-.ansi-cyan-intense-bg { background-color: #258F8F; }
-.ansi-white-fg { color: #C5C1B4; }
-.ansi-white-bg { background-color: #C5C1B4; }
-.ansi-white-intense-fg { color: #A1A6B2; }
-.ansi-white-intense-bg { background-color: #A1A6B2; }
-
-.ansi-bold { font-weight: bold; }
+    .container { width:98% !important; }
 
     </style>
 
@@ -13144,94 +13109,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install git+https://github.com/biothings/biothings_explorer#egg<span class="o">=</span>biothings_explorer
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">biothings</span><span class="o">/</span><span class="n">biothings_explorer</span><span class="c1">#egg=biothings_explorer</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Requirement already satisfied: biothings_explorer from git+https://github.com/biothings/biothings_explorer#egg=biothings_explorer in ./ENV/lib/python3.7/site-packages (0.0.1)
-Requirement already satisfied: jsonpath-rw&gt;=1.4.0 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (1.4.0)
-Requirement already satisfied: networkx==2.3 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (2.3)
-Requirement already satisfied: requests&gt;=2.21.0 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (2.22.0)
-Requirement already satisfied: aiohttp in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (3.5.4)
-Requirement already satisfied: pandas in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.25.1)
-Requirement already satisfied: jsonschema&gt;=3.0.1 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (3.0.1)
-Requirement already satisfied: biothings-schema@ git+https://github.com/biothings/biothings_schema.py from git+https://github.com/biothings/biothings_schema.py in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.0.1)
-Requirement already satisfied: tornado==4.5.3 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (4.5.3)
-Requirement already satisfied: notebook==5.7.5 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (5.7.5)
-Requirement already satisfied: jupyter in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (1.0.0)
-Requirement already satisfied: graphviz&gt;=0.11.1 in ./ENV/lib/python3.7/site-packages (from biothings_explorer) (0.11.1)
-Requirement already satisfied: six in ./ENV/lib/python3.7/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (1.12.0)
-Requirement already satisfied: ply in ./ENV/lib/python3.7/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (3.11)
-Requirement already satisfied: decorator in ./ENV/lib/python3.7/site-packages (from jsonpath-rw&gt;=1.4.0-&gt;biothings_explorer) (4.4.0)
-Requirement already satisfied: certifi&gt;=2017.4.17 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2019.3.9)
-Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (3.0.4)
-Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (1.25.3)
-Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in ./ENV/lib/python3.7/site-packages (from requests&gt;=2.21.0-&gt;biothings_explorer) (2.8)
-Requirement already satisfied: multidict&lt;5.0,&gt;=4.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (4.5.2)
-Requirement already satisfied: async-timeout&lt;4.0,&gt;=3.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (3.0.1)
-Requirement already satisfied: attrs&gt;=17.3.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (19.1.0)
-Requirement already satisfied: yarl&lt;2.0,&gt;=1.0 in ./ENV/lib/python3.7/site-packages (from aiohttp-&gt;biothings_explorer) (1.3.0)
-Requirement already satisfied: pytz&gt;=2017.2 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (2019.2)
-Requirement already satisfied: python-dateutil&gt;=2.6.1 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (2.8.0)
-Requirement already satisfied: numpy&gt;=1.13.3 in ./ENV/lib/python3.7/site-packages (from pandas-&gt;biothings_explorer) (1.17.0)
-Requirement already satisfied: setuptools in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (41.0.1)
-Requirement already satisfied: pyrsistent&gt;=0.14.0 in ./ENV/lib/python3.7/site-packages (from jsonschema&gt;=3.0.1-&gt;biothings_explorer) (0.15.2)
-Requirement already satisfied: PyYAML&gt;=5.1 in ./ENV/lib/python3.7/site-packages (from biothings-schema@ git+https://github.com/biothings/biothings_schema.py-&gt;biothings_explorer) (5.1.1)
-Requirement already satisfied: strict-rfc3339 in ./ENV/lib/python3.7/site-packages (from biothings-schema@ git+https://github.com/biothings/biothings_schema.py-&gt;biothings_explorer) (0.7)
-Requirement already satisfied: jupyter-core&gt;=4.4.0 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.4.0)
-Requirement already satisfied: terminado&gt;=0.8.1 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.8.2)
-Requirement already satisfied: prometheus-client in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.7.0)
-Requirement already satisfied: pyzmq&gt;=17 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (18.0.1)
-Requirement already satisfied: traitlets&gt;=4.2.1 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.3.2)
-Requirement already satisfied: ipython-genutils in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (0.2.0)
-Requirement already satisfied: nbformat in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (4.4.0)
-Requirement already satisfied: nbconvert in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (5.5.0)
-Requirement already satisfied: Send2Trash in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (1.5.0)
-Requirement already satisfied: ipykernel in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (5.1.1)
-Requirement already satisfied: jinja2 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (2.10.1)
-Requirement already satisfied: jupyter-client&gt;=5.2.0 in ./ENV/lib/python3.7/site-packages (from notebook==5.7.5-&gt;biothings_explorer) (5.2.4)
-Requirement already satisfied: qtconsole in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (4.5.1)
-Requirement already satisfied: ipywidgets in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (7.4.2)
-Requirement already satisfied: jupyter-console in ./ENV/lib/python3.7/site-packages (from jupyter-&gt;biothings_explorer) (6.0.0)
-Requirement already satisfied: ptyprocess; os_name != &#34;nt&#34; in ./ENV/lib/python3.7/site-packages (from terminado&gt;=0.8.1-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.6.0)
-Requirement already satisfied: testpath in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.4.2)
-Requirement already satisfied: defusedxml in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.6.0)
-Requirement already satisfied: mistune&gt;=0.8.1 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.8.4)
-Requirement already satisfied: bleach in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (3.1.0)
-Requirement already satisfied: pandocfilters&gt;=1.4.1 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (1.4.2)
-Requirement already satisfied: entrypoints&gt;=0.2.2 in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.3)
-Requirement already satisfied: pygments in ./ENV/lib/python3.7/site-packages (from nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (2.4.2)
-Requirement already satisfied: ipython&gt;=5.0.0 in ./ENV/lib/python3.7/site-packages (from ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (7.5.0)
-Requirement already satisfied: MarkupSafe&gt;=0.23 in ./ENV/lib/python3.7/site-packages (from jinja2-&gt;notebook==5.7.5-&gt;biothings_explorer) (1.1.1)
-Requirement already satisfied: widgetsnbextension~=3.4.0 in ./ENV/lib/python3.7/site-packages (from ipywidgets-&gt;jupyter-&gt;biothings_explorer) (3.4.2)
-Requirement already satisfied: prompt-toolkit&lt;2.1.0,&gt;=2.0.0 in ./ENV/lib/python3.7/site-packages (from jupyter-console-&gt;jupyter-&gt;biothings_explorer) (2.0.9)
-Requirement already satisfied: webencodings in ./ENV/lib/python3.7/site-packages (from bleach-&gt;nbconvert-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.5.1)
-Requirement already satisfied: pexpect; sys_platform != &#34;win32&#34; in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (4.7.0)
-Requirement already satisfied: appnope; sys_platform == &#34;darwin&#34; in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.1.0)
-Requirement already satisfied: pickleshare in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.7.5)
-Requirement already satisfied: backcall in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.1.0)
-Requirement already satisfied: jedi&gt;=0.10 in ./ENV/lib/python3.7/site-packages (from ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.13.3)
-Requirement already satisfied: wcwidth in ./ENV/lib/python3.7/site-packages (from prompt-toolkit&lt;2.1.0,&gt;=2.0.0-&gt;jupyter-console-&gt;jupyter-&gt;biothings_explorer) (0.1.7)
-Requirement already satisfied: parso&gt;=0.3.0 in ./ENV/lib/python3.7/site-packages (from jedi&gt;=0.10-&gt;ipython&gt;=5.0.0-&gt;ipykernel-&gt;notebook==5.7.5-&gt;biothings_explorer) (0.4.0)
-<span class="ansi-yellow-fg">WARNING: You are using pip version 19.1.1, however version 20.0.2 is available.
-You should consider upgrading via the &#39;pip install --upgrade pip&#39; command.</span>
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13356,7 +13238,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
     
     Args:
         input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                            Examples: 
+                            Examples:
                 Hint().query(&#34;Fanconi anemia&#34;)[&#39;DiseaseOrPhenotypicFeature&#39;][0]
                 Hint().query(&#34;acetaminophen&#34;)[&#39;ChemicalSubstance&#39;][0]
     
@@ -13838,6 +13720,15 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">output_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="nb">filter</span><span class="p">]</span>
 
+<span class="n">patternDel2</span> <span class="o">=</span> <span class="s2">&quot;^InChI=&quot;</span>
+<span class="n">filter2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel2</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">filter2</span><span class="p">]</span>
+
+<span class="n">patternDel3</span> <span class="o">=</span> <span class="s2">&quot;^umls:C\d+&quot;</span>
+<span class="n">filter3</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel3</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">filter3</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -14108,7 +13999,7 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14232,7 +14123,7 @@ Name: output_name, dtype: int64</pre>
       <td>23769841</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2319</td>
@@ -14251,7 +14142,7 @@ Name: output_name, dtype: int64</pre>
       <td>15265010</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2320</td>
@@ -14270,7 +14161,7 @@ Name: output_name, dtype: int64</pre>
       <td>25049660,23072349</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2321</td>
@@ -14289,7 +14180,7 @@ Name: output_name, dtype: int64</pre>
       <td>23806552,16831427</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2322</td>
@@ -14308,7 +14199,7 @@ Name: output_name, dtype: int64</pre>
       <td>10952392</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>...</td>
@@ -14346,7 +14237,7 @@ Name: output_name, dtype: int64</pre>
       <td>7544743,9085348,9085348,9276725,10805410,10805...</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2423</td>
@@ -14365,7 +14256,7 @@ Name: output_name, dtype: int64</pre>
       <td>11374865</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2424</td>
@@ -14384,7 +14275,7 @@ Name: output_name, dtype: int64</pre>
       <td>23949212</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2425</td>
@@ -14403,7 +14294,7 @@ Name: output_name, dtype: int64</pre>
       <td>18372436,18372436,18372436</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
     <tr>
       <td>2426</td>
@@ -14422,7 +14313,349 @@ Name: output_name, dtype: int64</pre>
       <td>21693765</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>name:NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39812</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>28794131</td>
+      <td>Gene</td>
+      <td>HSPA4</td>
+      <td>entrez:3308</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>7544743,9085348,9085348,9276725,10805410,10805...</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39813</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>28794131</td>
+      <td>Gene</td>
+      <td>HSPA4</td>
+      <td>entrez:3308</td>
+      <td>positively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>11374865</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39814</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>28794131</td>
+      <td>Gene</td>
+      <td>HSPA4</td>
+      <td>entrez:3308</td>
+      <td>produces</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>10849439,16521562,24395610</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39815</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>caused_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>7766952</td>
+      <td>Gene</td>
+      <td>CACNA1A</td>
+      <td>entrez:773</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>23949212</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39816</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>disrupted_by</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>10051643</td>
+      <td>Gene</td>
+      <td>PAM</td>
+      <td>entrez:5066</td>
+      <td>associated_with</td>
+      <td>CORD API</td>
+      <td>cordgene</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39817</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>27612877</td>
+      <td>Gene</td>
+      <td>COG2</td>
+      <td>entrez:22796</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>16060915</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39818</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>27612877</td>
+      <td>Gene</td>
+      <td>COG2</td>
+      <td>entrez:22796</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>25224628</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39819</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>27612877</td>
+      <td>Gene</td>
+      <td>COG2</td>
+      <td>entrez:22796</td>
+      <td>positively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>27919363</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39820</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>27612877</td>
+      <td>Gene</td>
+      <td>COG2</td>
+      <td>entrez:22796</td>
+      <td>produces</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>26847282</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39821</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>27612877</td>
+      <td>Gene</td>
+      <td>APOB</td>
+      <td>entrez:338</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>9593815</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39822</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>20021361,22810094</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39823</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>coexists_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>20936504</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39824</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>has_part</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>15371443</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39825</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>20936504,21073661,22426388,26819495</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39826</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>19779140,22384120,26665235</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39827</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>positively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>23915297,23915297</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39828</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>positively_regulates</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>9915130,9915130,9576964,10648444,17365664,1917...</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
+    </tr>
+    <tr>
+      <td>39829</td>
+      <td>hyperphenylalaninemia</td>
+      <td>DiseaseOrPhenotypicFeature</td>
+      <td>related_to</td>
+      <td>SEMMED API</td>
+      <td>semmeddisease</td>
+      <td>25260610</td>
+      <td>Gene</td>
+      <td>APP</td>
+      <td>entrez:351</td>
+      <td>produces</td>
+      <td>SEMMED API</td>
+      <td>semmedgene</td>
+      <td>11027218,9915130,11241130,12944390,21718498</td>
+      <td>ChemicalSubstance</td>
+      <td>NITRIC OXIDE</td>
+      <td>chembl:CHEMBL1200689</td>
     </tr>
   </tbody>
 </table>
@@ -14439,7 +14672,7 @@ Name: output_name, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BTE identifies the genes <a href="https://www.ncbi.nlm.nih.gov/gene/3308">HSPA4</a> and <a href="https://www.ncbi.nlm.nih.gov/gene/2643">GCH1</a> as being the key nodes that join hyperphenylalaninemia with nitric oxide.</p>
+<p>BTE identifies a number of genes, including <a href="https://www.ncbi.nlm.nih.gov/gene/3308">HSPA4</a> and <a href="https://www.ncbi.nlm.nih.gov/gene/2643">GCH1</a>, as being the key nodes that join hyperphenylalaninemia with nitric oxide.</p>
 
 </div>
 </div>
