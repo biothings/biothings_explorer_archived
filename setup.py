@@ -5,7 +5,7 @@ install_requires = [
     'jupyter',
     'notebook==5.7.5',
     'tornado==4.5.3',
-    'networkx==2.3',
+    'networkx==2.4',
     'jsonpath-rw>=1.4.0',
     'requests>=2.21.0',
     'graphviz>=0.11.1',
