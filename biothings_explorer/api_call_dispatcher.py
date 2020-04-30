@@ -6,16 +6,15 @@ Make API calls.
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 
 """
-
+from collections import defaultdict
+from copy import deepcopy
 from itertools import groupby
 from operator import itemgetter
 from .registry import Registry
 from .apicall import BioThingsCaller
 from .api_output_parser import OutputParser
-from .config import metadata
 from .api_preprocess import APIPreprocess
 
-BIOTHINGS_APIs = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
 
 class Dispatcher():
@@ -30,9 +29,45 @@ class Dispatcher():
             self.registry = registry.registry
         self.caller = BioThingsCaller()
 
-    def fetch_schema_mapping_file(self, api):
-        """Fetch schema mapping file from the registry."""
-        return self.registry[api]['mapping']
+    @staticmethod
+    def get_unique_edge_id(edge):
+        operation = edge['operation']
+        _id = '-'.join([str(edge['value']), operation['server'], operation['method'], operation['path']])
+        request_body = operation.get("requestBody")
+        if request_body and request_body.get("body"):
+            for k in sorted(request_body.get('body').keys()):
+                _id += ('-' + k + '-' + str(request_body.get("body")[k]))
+        parameters = operation.get("parameters")
+        if parameters:
+            for k in sorted(parameters.keys()):
+                _id += ('-' + k + '-' + str(parameters[k]))
+        return _id
+
+    @staticmethod
+    def get_all_edges(query_id2inputs_mapping):
+        res = []
+        for v in query_id2inputs_mapping.values():
+            if isinstance(v, list) and len(v) > 0:
+                res.append(v[0])
+        return res
+
+    @staticmethod
+    def group_edges(edges):
+        grouper = itemgetter("operation_id")
+        new_edges = []
+        # group all edges based on their API and input_field value
+        for _, grp in groupby(sorted(edges, key=grouper), grouper):
+            grp = list(grp)
+            new_edge = deepcopy(grp[0])
+            values = set()
+            for edge in grp:
+                if isinstance(edge['value'], list):
+                    values |= set(edge['value'])
+                else:
+                    values.add(edge['value'])
+            new_edge['value'] = values
+            new_edges.append(new_edge)
+        return new_edges
 
     @staticmethod
     def subset_mapping_file(edges, mapping_file):
@@ -43,72 +78,81 @@ class Dispatcher():
             return {k: v for (k, v) in mapping_file.items() if k in mapping_keys}
         return mapping_file
 
-    @staticmethod
-    def group_edges(edges):
-        """Group edges based on API and API input."""
-        grouper = itemgetter("api", "input_field")
-        groups = []
-        # group all edges based on their API and input_field value
-        for _, grp in groupby(sorted(edges, key=grouper), grouper):
-            groups.append(list(grp))
-        return groups
-
-    def construct_api_calls(self, edge_groups):
+    def construct_api_calls(self, edges):
         """Construct API calls for apicall module using edge groups."""
-        # store all API call inputs
-        api_call_inputs = []
-        apis = []
-        batch_modes = []
-        input_values = []
-        edges = []
-        # loop through each edge group
-        for grp in edge_groups:
-            outputs = set()
-            values = set()
-            # loop through edges in each edge group
-            for _item in grp:
-                api = _item['api']
-                input_field = _item['input_field']
-                # add output fields
-                if isinstance(_item['output_field'], list):
-                    for i in _item['output_field']:
-                        outputs.add(i)
+        unique_edge_ids = set()
+        edge_id2query_id_mapping = {}
+        query_id2inputs_mapping = defaultdict(list)
+        edges = self.group_edges(edges)
+        for edge in edges:
+            api = edge['api']
+            if edge['operation'].get('supportBatch'):
+                edge['value'] = edge['operation']['inputSeparator'].join(edge['value'])
+                edge_id = self.get_unique_edge_id(edge)
+                if edge_id in unique_edge_ids:
+                    internal_query_id = edge_id2query_id_mapping[edge_id]
                 else:
-                    outputs.add(_item['output_field'])
-                # add values
-                if isinstance(_item['value'], list):
-                    values |= set(_item['value'])
-                else:
-                    values.add(_item['value'])
-            # if API is BioThings API, use batch query feature
-            if api in BIOTHINGS_APIs:
-                # construct API call inputs for each edge group
-                api_call_inputs.append({"api": api,
-                                        "input": input_field,
-                                        "output": ','.join(outputs),
-                                        "values": ','.join(set(values)),
-                                        "batch_mode": True,
-                                        "query_id": 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
-                                        })
-                apis.append(api)
-                batch_modes.append(True)
-                input_values.append(values)
-                edges.append(grp)
-            # if API is non-BioThings APIs, query each input one by one
+                    internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
+                    edge['internal_query_id'] = internal_query_id
+                    edge_id2query_id_mapping[edge_id] = internal_query_id
+                    unique_edge_ids.add(edge_id)
+                edge['internal_query_id'] = internal_query_id
+                query_id2inputs_mapping[internal_query_id].append(edge)
+                # internal_query_id += 1
             else:
-                for _value in values:
-                    api_call_inputs.append({"api": api,
-                                            "input": input_field,
-                                            "output": ','.join(set(outputs)),
-                                            "values": _value,
-                                            "batch_mode": False,
-                                            "query_id": 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
-                                            })
-                    apis.append(api)
-                    batch_modes.append(False)
-                    input_values.append(_value)
-                    edges.append(grp)
-        return (apis, api_call_inputs, batch_modes, input_values, edges)
+                for val in edge['value']:
+                    new_edge = deepcopy(edge)
+                    new_edge['value'] = val
+                    edge_id = self.get_unique_edge_id(new_edge)
+                    if edge_id in unique_edge_ids:
+                        internal_query_id = edge_id2query_id_mapping[edge_id]
+                    else:
+                        internal_query_id = 'API ' + self.api_dict[api]['num'] + '.' + str(self.api_dict[api]['alphas'].pop(0))
+                        edge_id2query_id_mapping[edge_id] = internal_query_id
+                        unique_edge_ids.add(edge_id)
+                    new_edge['internal_query_id'] = internal_query_id
+                    query_id2inputs_mapping[internal_query_id].append(new_edge)
+                    # internal_query_id += 1
+        return query_id2inputs_mapping
+
+    @staticmethod
+    def add_metadata_to_output(operation, res, output_id):
+        if isinstance(res, dict):
+            if output_id not in res:
+                return []
+            if not isinstance(res[output_id], list):
+                res[output_id] = [res[output_id]]
+            new_res = []
+            for val in res[output_id]:
+                tmp = deepcopy(res)
+                tmp[output_id] = val
+                tmp.update(
+                    {
+                        "$api": operation['api_name'],
+                        "$source": operation.get("source"),
+                        "@type": operation['output_type']
+                    }
+                )
+                new_res.append(tmp)
+            return new_res
+        res = {
+            "$api": operation['api_name'],
+            "$source": operation.get("source"),
+            "@type": operation['output_type'],
+            operation['output_id']: [res]
+        }
+        return [res]
+
+    @staticmethod
+    def count_hits(res):
+        cnt = 0
+        if not res:
+            return cnt
+        for pred_infos in res.values():
+            if pred_infos:
+                for info in pred_infos.values():
+                    cnt += len(info)
+        return cnt
 
     def dispatch(self, edges, verbose=False):
         """Send request to and parse response from API."""
@@ -117,128 +161,79 @@ class Dispatcher():
         self.api_dict = {}
         for i, _api in enumerate(list(self.unique_apis)):
             self.api_dict[_api] = {'alphas': list(range(1, 10000)), 'num': str(i + 1)}
-        grped_edges = self.group_edges(edges)
-        apis, inputs, modes, vals, grped_edges = self.construct_api_calls(grped_edges)
+        query_id2inputs_mapping = self.construct_api_calls(edges)
         # print(apis, inputs, modes, vals, grped_edges)
-        responses, self.log = self.caller.call_apis(inputs, verbose=verbose)
+        responses, self.log = self.caller.call_apis(self.get_all_edges(query_id2inputs_mapping), verbose=verbose)
         if verbose:
             print("\n\n==== Step #3: Output normalization ====\n")
         self.log.append("\n\n==== Step #3: Output normalization ====\n")
-        for api, _res, batch, val, edges, _input in zip(apis, responses, modes, vals, grped_edges, inputs):
+        for response in responses:
+            if response['result'] == {}:
+                continue
             output_types = []
-            if metadata[api]['api_name'] in ['SEMMED API', 'CORD API']:
-                output_types = list(set(_item['output_type'] for _item in edges))
-            _res = APIPreprocess(_res, metadata[api]['api_type'], metadata[api]['api_name'], output_types).restructure()
-            mapping = self.fetch_schema_mapping_file(api)
-            subset_mapping = self.subset_mapping_file(edges, mapping)
-            _res = OutputParser(_res, subset_mapping, batch, api).parse()
-            if not batch:
-                # preprocess biolink results
-                # if val is not present in results dict and _res is not empty
-                if not _res:
-                    if verbose:
-                        print("{} {}: No hits".format(_input['query_id'], api))
-                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
-                    continue
-                if val not in results:
-                    results[val] = {}
-                # loop through API call response
-                hits_cnt = 0
-                for k, v in _res.items():
-                    k1 = k
-                    # if key is "@context", "@type", keep the value
-                    if k1 in ["@context", "@type"]:
-                        results[val][k1] = v
-                    else:
-                        if edges[0]['label'] != edges[0]['mapping_key']:
-                            k1 = edges[0]['label']
+            query_id = response['internal_query_id']
+            total_hits = 0
+            for edge in query_id2inputs_mapping[query_id]:
+                operation = edge['operation']
+                api_name = edge['api']
+                if api_name[:4] in ['semm', 'cord']:
+                    output_types = [edge['output_type']]
+                _res = APIPreprocess(response['result'], operation['api_type'], api_name, output_types).restructure()
+                mapping = operation['response_mapping']
+                _res = OutputParser(_res, mapping, operation['supportBatch'], api_name, operation['api_type']).parse()
+                if not operation['supportBatch']:
+                    # preprocess biolink results
+                    # if val is not present in results dict and _res is not empty
+                    if not _res:
+                        continue
+                    val = edge['value']
+                    if val not in results:
+                        results[val] = {}
+                    # loop through API call response
+                    for k, v in _res.items():
                         # if key is not present in final res, create a list
-                        if k1 not in results[val]:
-                            results[val][k1] = []
+                        if k not in results[val]:
+                            results[val][k] = []
                         if isinstance(v, list):
-                            hits_cnt += len(v)
                             for _v in v:
-                                if isinstance(_v, dict):
-                                    _v.update({"$api": edges[0]['api']})
-                                    results[val][k1].append(_v)
-                                else:
-                                    item = {"@type": edges[0]['output_type'],
-                                        edges[0]['output_id']: [_v],
-                                        "$source": edges[0]['api'], "$api": edges[0]['api']}
-                                    results[val][k1].append(item)
-                        elif isinstance(v, dict):
-                            hits_cnt += 1
-                            v.update({"$api": edges[0]['api']})
-                            results[val][k1].append(v)
+                                _v = self.add_metadata_to_output(operation, _v, operation['output_id'])
+                                total_hits += len(_v)
+                                results[val][k] += _v
                         else:
-                            hits_cnt += 1
-                            item = {"@type": edges[0]['output_type'],
-                                    edges[0]['output_id']: [v],
-                                    "$source": edges[0]['api'],
-                                    "$api": edges[0]['api']}
-                            results[val][k1].append(item)
-                if verbose:
-                    if hits_cnt > 0:
-                        print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
-                    else:
-                        print("{} {}: No hits".format(_input['query_id'], api))
-                if hits_cnt > 0:
-                    self.log.append("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                            v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                            total_hits += len(v)
+                            results[val][k] += v
                 else:
-                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
-            else:
-                if not _res:
-                    if verbose:
-                        print("{} {}: No hits".format(_input['query_id'], api))
-                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
-                    continue
-                hits_cnt = 0
-                for m, n in _res.items():
-                    if m not in results:
-                        results[m] = {}
-                    for k, v in n.items():
-                        k1 = k
-                        if k1 in ["@context", "@type"]:
-                            results[m][k1] = v
-                        else:
-                            if edges[0]['label'] != edges[0]['mapping_key']:
-                                k1 = edges[0]['label']
-                            if k1 not in results[m]:
-                                results[m][k1] = []
+                    if not _res:
+                        continue
+                    for m, n in _res.items():
+                        if m not in results:
+                            results[m] = {}
+                        for k, v in n.items():
+                            if k not in results[m]:
+                                results[m][k] = []
                             if isinstance(v, list):
-                                hits_cnt += len(v)
                                 for _v in v:
-                                    if isinstance(_v, dict):
-                                        _v.update({"$api": edges[0]['api'],
-                                                   "$source": edges[0]['source']})
-                                        results[m][k1].append(_v)
-                                    else:
-                                        item = {"@type": edges[0]['output_type'],
-                                            edges[0]['output_id']: [_v],
-                                            "$source": edges[0]['api'],
-                                            "$api": edges[0]['api']}
-                                        results[m][k1].append(item)
+                                    _v = self.add_metadata_to_output(operation, _v, operation['output_id'])
+                                    total_hits += len(_v)
+                                    results[m][k] += _v
                             elif isinstance(v, dict):
-                                hits_cnt += len(v)
-                                v.update({'$api': edges[0]['api'],
-                                          '$source': edges[0]['source']})
-                                results[m][k1].append(v)
+                                v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                                total_hits += len(v)
+                                results[m][k] += v
                             else:
                                 if k == 'query':
                                     continue
-                                hits_cnt += len(v)
-                                item = {"@type": edges[0]['output_type'],
-                                        edges[0]['output_id']: [v],
-                                        "$source": edges[0]['api'],
-                                        "$api": edges[0]['api']}
-                                results[m][k1].append(item)
-                if verbose:
-                    if hits_cnt > 0:
-                        print("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
-                    else:
-                        print("{} {}: No hits".format(_input['query_id'], api))
-                if hits_cnt > 0:
-                    self.log.append("{} {}: {} hits".format(_input['query_id'], api, hits_cnt))
+                                v = self.add_metadata_to_output(operation, v, operation['output_id'])
+                                total_hits += len(v)
+                                results[m][k] += v
+            if verbose:
+                if total_hits > 0:
+                    print("{} {}: {} hits".format(query_id, api_name, total_hits))
                 else:
-                    self.log.append("{} {}: No hits".format(_input['query_id'], api))
+                    print("{} {}: No hits".format(query_id, api_name))
+            if total_hits > 0:
+                self.log.append("{} {}: {} hits".format(query_id, api_name, total_hits))
+            else:
+                self.log.append("{} {}: No hits".format(query_id, api_name))
         return (dict(results), self.log)

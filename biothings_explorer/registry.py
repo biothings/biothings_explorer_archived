@@ -7,10 +7,8 @@ Storing metadata information and connectivity of APIs.
 
 """
 import networkx as nx
-from .mapping_parser import MappingParser
-from .config import metadata
-from .utils.simple_semmed import semmed
-from .utils.cord import cord, SEMANTIC_TYPE_ID_MAPPING
+from .config_new import API_LIST
+from .smartapi_parser import SmartAPIParser
 from pathlib import Path
 CURRENT_PATH = Path(__file__)
 
@@ -21,88 +19,84 @@ class Registry():
     def __init__(self):
         """Initialize networkx graph and load biothings apis."""
         self.G = nx.MultiDiGraph()
+        self.smp = SmartAPIParser()
         self.registry = {}
-        self.load_biothings()
+        self.api_list = API_LIST
+        self.load_smartapis()
         self.all_edges_info = self.G.edges(data=True)
         self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
         self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
         self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
 
-    @staticmethod
-    def _auto_generate_cord_mapping(doc_type):
-        """Auto-generate schema mapping file for all CORD APIs
+    def _reload_registry(self):
+        """Reconstruct BTE Registry.
         
-        :param: doc_type: the document type of the specific cord API
+        note: This one is called everytime the API_LIST changes.
         """
-        res = {
-            "@context": "http://schema.org",
-            "@type": doc_type
-        }
-        for id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
-            res[id_type.lower()] = id_type.lower()
-        for pred, output_types in cord[doc_type].items():
-            res[pred] = []
-            for output_type in output_types:
-                tmp = {
-                    "@type": output_type,
-                    "$source": "CORD",
-                    "pmd": "associated_with.pmc",
-                }
-                for input_id_type in SEMANTIC_TYPE_ID_MAPPING[doc_type]:
-                    for output_id_type in SEMANTIC_TYPE_ID_MAPPING[output_type]:
-                        tmp[output_id_type.lower()] = "associated_with." + output_id_type.lower()
-                    tmp["$input"] = input_id_type.lower()
-                    res[pred].append(tmp)
-        return res
+        self.G = nx.MultiDiGraph()
+        self.load_smartapis()
+        self.all_edges_info = self.G.edges(data=True)
+        self.all_labels = {d[-1]['label'] for d in self.all_edges_info}
+        self.all_inputs = {d[-1]['input_type'] for d in self.all_edges_info}
+        self.all_outputs = {d[-1]['output_type'] for d in self.all_edges_info}
 
-    @staticmethod
-    def _auto_generate_semmed_mapping(doc_type):
-        """Auto-generate schema mapping file for all SEMMED APIs
+    def show_all_apis(self):
+        """List all APIs in the BTE Registry."""
+        return self.api_list
+
+    def remove_apis(self, apis):
+        """Remove one or a list of APIs from registry
         
-        :param: doc_type: the document type of the specific semmed API
+        :param: apis: list of APIs to be removed from BTE Registry.
         """
-        res = {
-            "@context": "http://schema.org",
-            "@type": doc_type,
-            "umls": "umls"
-        }
-        for pred, output_types in semmed[doc_type].items():
-            res[pred] = []
-            for output_type in output_types:
-                res[pred].append({
-                    "@type": output_type,
-                    "umls": pred + '.umls',
-                    "pmid": pred + '.pmid',
-                    "$input": "umls",
-                    "$source": "semmed"
-                })
-        return res
+        if not isinstance(apis, list):
+            apis = [apis]
+        for api in apis:
+            if api in self.api_list:
+                self.api_list.remove(api)
+                print("{} has been successfully removed!".format(api))
+            else:
+                raise ValueError("{} is not in the API list.".format(api))
+        self._reload_registry()
 
-    def load_biothings(self):
+    def refine_api_list(self, apis):
+        """Set the API List.
+        
+        :params: apis: list of APIs to include in the BTE Registry
+        """
+        if not isinstance(apis, list):
+            apis = [apis]
+        self.api_list = []
+        for api in apis:
+            if api in API_LIST:
+                self.api_list.append(api)
+            else:
+                self.api_list = API_LIST
+                self._reload_registry()
+                raise ValueError("{} is not in the API list.".format(api))
+        self._reload_registry()
+
+    def load_smartapis(self):
         """Load biothings API into registry network graph."""
         # load biothings schema
-        self.mp = MappingParser()
         # loop through API metadata
-        for _api, _info in metadata.items():
-            # use the mapping parser module to load relationship of each API
-            # into the network
-            if _info.get('api_name') == 'CORD API':
-                mapping_file = self._auto_generate_cord_mapping(_info.get('doc_type'))
-            elif _info.get('api_name') == 'SEMMED API':
-                mapping_file = self._auto_generate_semmed_mapping(_info.get('doc_type'))
-            elif 'mapping_url' in _info:
-                self.registry[_api] = {}
-                mapping_file = Path.joinpath(CURRENT_PATH.parent,
-                                             'smartapi/schema', _api + '.json')
-            else:
-                continue
-            self.mp.load_mapping(mapping_file, api=_api)
-            self.registry[_api] = {
-                'mapping': self.mp.mapping,
-                'graph': self.mp.connect(),
-                'type': self.mp.type
-            }
-            self.G.add_edges_from(self.registry[_api]['graph'].edges(data=True))
+        for api in self.api_list:
+            smartapi_file = Path.joinpath(CURRENT_PATH.parent,
+                                          'smartapi/new_specs', api + '.json')
+            self.smp.load_spec(smartapi_file)
+            ops = self.smp.fetch_endpoint_info()
+            for op in ops:
+                self.G.add_edge(
+                    op['input_id'],
+                    op['output_id'],
+                    operation_id=op['id'],
+                    label=op['predicate'],
+                    api=api,
+                    api_type=op['api_type'],
+                    input_type=op['input_type'],
+                    output_type=op['output_type'],
+                    operation=op
+                )
         return self.G
 
     def filter_edges(self, input_cls=None, output_cls=None, edge_label=None):

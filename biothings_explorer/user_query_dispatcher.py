@@ -22,7 +22,7 @@ from .export.pandas import networkx2pandas
 from .export.graphviz import networkx2graphvis
 
 # TODO: remove ID_RANK
-ID_RANK = {'Gene': 'symbol',
+ID_RANK = {'Gene': 'SYMBOL',
            'ChemicalSubstance': 'name',
            'DiseaseOrPhenotypicFeature': 'name'}
 
@@ -54,7 +54,7 @@ class SingleEdgeQueryDispatcher():
         self.query_id = query_id
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
-        self.idr = IDResolver(registry=self.registry)
+        self.idr = IDResolver()
         semantic_types = self.metadata.list_all_semantic_types()
         id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
@@ -65,13 +65,15 @@ class SingleEdgeQueryDispatcher():
             if isinstance(output_cls, str):
                 output_cls = [output_cls]
             self.output_cls = output_cls
+        if isinstance(self.output_cls, str):
+            self.output_cls = [self.output_cls]
         self.output_id = output_id
         # if output id is not specified, use the default id for this type
         if not output_id:
             if self.output_cls and not isinstance(self.output_cls, list) and self.output_cls in ID_RANK:
                 self.output_id = [ID_RANK.get(self.output_cls)]
             else:
-                self.output_id = ["symbol", "name"]
+                self.output_id = ["SYMBOL", "name"]
         if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
         self.pred = pred
@@ -83,9 +85,9 @@ class SingleEdgeQueryDispatcher():
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = input_obj.get("primary").get("identifier")
             self.values = input_obj.get("primary").get("value")
-            if 'symbol' in input_obj:
-                self.input_label = input_obj.get("symbol")
-                self.input_identifier = 'symbol'
+            if 'SYMBOL' in input_obj:
+                self.input_label = input_obj.get("SYMBOL")
+                self.input_identifier = 'SYMBOL'
             elif 'name' in input_obj:
                 self.input_label = input_obj.get("name")
                 self.input_identifier = 'name'
@@ -97,16 +99,13 @@ class SingleEdgeQueryDispatcher():
         # check if input_cls is valid
         if self.input_cls not in semantic_types:
             raise Exception("The input_cls is not valid. Valid input classes are {}".format(semantic_types))
-        # check if input_id is valid
-        if not self.equivalent_ids and self.input_id not in id_types:
-            raise Exception("The input_id is not valid. Valid input id types are {}".format(id_types))
         if not self.equivalent_ids:
             # find equivalent ids for the input value
             equivalent_ids = self.idr.resolve_ids([(self.values,
                                                    self.input_id,
                                                    self.input_cls)])
             if not self.input_label:
-                self.input_label = self.input_id + ':' + self.input_cls
+                self.input_label = self.input_id + ':' + values
             self.equivalent_ids = equivalent_ids
         self.dp = Dispatcher(registry=self.registry)
         self.G = nx.MultiDiGraph()
@@ -138,7 +137,7 @@ class SingleEdgeQueryDispatcher():
         grouped_edges = defaultdict(list)
         for _edge in edges:
             # need to convert to tuple to make it immutable
-            grouped_edges[_edge['input_id']].append(dict2listoftuples(_edge))
+            grouped_edges[_edge['operation']['input_id']].append(dict2listoftuples(_edge))
         return grouped_edges
 
     def merge_equivalent_nodes(self):
@@ -165,7 +164,10 @@ class SingleEdgeQueryDispatcher():
                     new_vals = None
                     for _id in self.output_id:
                         if equivalent_ids.get(_id):
-                            new_vals = equivalent_ids.get(_id)
+                            if _id == 'name':
+                                new_vals = [equivalent_ids.get(_id)[0]]
+                            else:
+                                new_vals = equivalent_ids.get(_id)
                             break
                     if new_vals:
                         # get n2's node info
@@ -177,9 +179,8 @@ class SingleEdgeQueryDispatcher():
                             # set the original node to be removed
                             nodes_to_remove.add(n2)
                             # if this node is not in graph, add this node
-                            if _val not in self.G.nodes():
-                                nodes_to_add.append((_val, node_info))
-                                identifiers.append(_id)
+                            nodes_to_add.append((_val, node_info))
+                            identifiers.append(_id)
             # remove duplicate nodes
             for n in nodes_to_remove:
                 self.G.remove_node(n)
@@ -270,7 +271,7 @@ class SingleEdgeQueryDispatcher():
                         m['value'] = v[p]
                         mapping_keys.append(m['label'])
                         input_edges.append(m)
-                        output_id_types.append(m['output_id'])
+                        output_id_types.append(m['operation']['output_id'])
                     input_identifier = self.input_identifier if self.input_identifier else k.split(':', 1)[0]
                     self.G.add_node(get_name_from_equivalent_ids(v, self.input_label),
                                     type=self.input_cls,
@@ -408,16 +409,16 @@ class Explain:
             self.intermediate_cls_cnt = len(self.intermediate_cls)
         self.input_obj = input_obj
         # self.starts represents the display label of the input
-        if 'symbol' in input_obj:
-            self.starts = input_obj['symbol']
+        if 'SYMBOL' in input_obj:
+            self.starts = input_obj['SYMBOL']
         elif 'name' in input_obj:
             self.starts = input_obj['name']
         else:
             self.starts = self.input_obj.get("primary").get("identifier") + self.input_obj.get("primary").get("value")
         self.output_obj = output_obj
         # self.ends represents the display label of the output
-        if 'symbol' in output_obj:
-            self.ends = output_obj['symbol']
+        if 'SYMBOL' in output_obj:
+            self.ends = output_obj['SYMBOL']
         elif 'name' in output_obj:
             self.ends = output_obj['name']
         else:
@@ -462,6 +463,9 @@ class Explain:
                                           registry=self.registry)
         self.seqd[1].query(verbose=verbose)
         self.log += self.seqd[1].log
+        if len(self.seqd[1].G) < 2:
+            print("The first query doesn't return any result. So BTE does not find any connection between your input and output")
+            return
         self.G = copy.deepcopy(self.seqd[1].G)
         if self.intermediate_cls_cnt == 0:
             if self.ends in self.G:
@@ -492,6 +496,9 @@ class Explain:
                                                      reverse=True,
                                                      registry=self.registry)
             self.seqd[2].query(verbose=verbose)
+            if len(self.seqd[2].G) < 2:
+                print("The second query doesn't return any result. So BTE does not find any connection between your input and output")
+                return
             self.log += self.seqd[2].log
             self.seqd[2].G = self.seqd[2].G.reverse()
             self.G = merge_two_networkx_graphs(self.G, self.seqd[2].G)
@@ -625,8 +632,8 @@ class Predict:
         # append output_obj to the path
         self.paths.append(output_obj)
         self.input_obj = input_obj
-        if 'symbol' in input_obj:
-            self.starts = input_obj['symbol']
+        if 'SYMBOL' in input_obj:
+            self.starts = input_obj['SYMBOL']
         elif 'name' in input_obj:
             self.starts = input_obj['name']
         else:
@@ -775,8 +782,8 @@ class Predict:
         final_outputs = set()
         for output_ids in self.output_ids.get(str(len(self.paths))).values():
             for k, item in output_ids.items():
-                if item.get('symbol'):
-                    final_outputs.add(item['symbol'][0])
+                if item.get('SYMBOL'):
+                    final_outputs.add(item['SYMBOL'][0])
                 elif item.get('name'):
                     final_outputs.add(item['name'][0])
                 else:

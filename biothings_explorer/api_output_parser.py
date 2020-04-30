@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
 biothings_explorer.dispatcher
@@ -8,38 +8,36 @@ This module contains code that biothings_explorer use to communicate to and \
     receive from APIs. It serves as a glue between "apicall" module and "api_output_parser" module.
 """
 from .json_transformer import Transformer
-from .config import metadata
 
 
 class OutputParser():
-    def __init__(self, res, mapping, batch_mode=False, api=None):
+    def __init__(self, res, mapping, batch_mode=False, api=None, api_type=None):
         self.api = api
+        self.api_type = api_type
         self.response = res
         self.mapping = mapping
         self.batch_mode = batch_mode
-        self.BIOTHINGS = [k for k, v in metadata.items() if v.get("api_type") == 'biothings']
 
     def parse_biothings_get_res(self):
         """Parse the API response from biothings API using GET method"""
         if self.response['total'] == 0:
             return None
-        else:
-            new_res = {}
-            for _res in self.response['hits']:
-                transformed_json = Transformer(_res, self.mapping).transform()
-                if isinstance(transformed_json, dict):
-                    for k, v in transformed_json.items():
-                        if k in ["@context", "@type"]:
-                            new_res[k] = v
+        new_res = {}
+        for _res in self.response['hits']:
+            transformed_json = Transformer(_res, self.mapping).transform()
+            if isinstance(transformed_json, dict):
+                for k, v in transformed_json.items():
+                    if k in ["@context", "@type"]:
+                        new_res[k] = v
+                    else:
+                        if k not in new_res:
+                            new_res[k] = []
+                        if isinstance(v, list):
+                            new_res[k] += v
                         else:
-                            if k not in new_res:
-                                new_res[k] = []
-                            if isinstance(v, list):
-                                new_res[k] += v
-                            else:
-                                new_res[k].append(v)
-                else:
-                    continue
+                            new_res[k].append(v)
+            else:
+                continue
             return new_res
 
     def parse_biothings_post_res(self):
@@ -57,7 +55,7 @@ class OutputParser():
             else:
                 # the semmed and cord API are already structured to conform to biolink model
                 # so no json transform is needed
-                if metadata[self.api].get('api_name') in ['SEMMED API', 'CORD API']:
+                if self.api[:4] in ['semm', 'cord']:
                     transformed_json = _res
                 else:
                     transformed_json = Transformer(_res, self.mapping).transform()
@@ -81,7 +79,7 @@ class OutputParser():
         if not self.response:
             return None
         # parse the results from BioThings APIs
-        if self.api in self.BIOTHINGS:
+        if self.api_type == 'biothings':
             if self.batch_mode:
                 return self.parse_biothings_post_res()
             return self.parse_biothings_get_res()

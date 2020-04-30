@@ -3,28 +3,28 @@ semmed = {
         "affected_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
         "affects": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
         "disrupted_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "has_part": [
@@ -32,13 +32,13 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "has_subclass": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature"
         ],
         "located_in": [
@@ -51,7 +51,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -60,7 +60,7 @@ semmed = {
             "BiologicalProcess"
         ],
         "manifested_by": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "negatively_regulated_by": [
             "ChemicalSubstance"
@@ -74,7 +74,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "physically_interacts_with": [
@@ -90,49 +90,49 @@ semmed = {
             "Gene"
         ],
         "preceded_by": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "precedes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
         "produces": [
             "ChemicalSubstance",
             "AnatomicalEntity",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "related_to": [
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "subclass_of": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "BiologicalProcess": {
@@ -140,7 +140,7 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -150,7 +150,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -160,20 +160,20 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -189,7 +189,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -198,7 +198,7 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -206,7 +206,7 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -215,7 +215,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -225,7 +225,7 @@ semmed = {
             "Cell"
         ],
         "manifestation_of": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
@@ -233,40 +233,40 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "CellularComponent"
         ],
         "negatively_regulated_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "negatively_regulates": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "part_of": [
             "AnatomicalEntity",
             "Cell",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
         "physically_interacts_with": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
         "positively_regulated_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "positively_regulates": [
@@ -278,26 +278,26 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature"
         ],
         "precedes": [
             "AnatomicalEntity",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -306,7 +306,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -315,18 +315,18 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "subclass_of": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "Cell": {
@@ -334,23 +334,23 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "affects": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Cell"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
             "Cell",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -360,7 +360,7 @@ semmed = {
         "disrupted_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -373,7 +373,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -388,17 +388,17 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "manifestation_of": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "manifested_by": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "negatively_regulated_by": [
             "ChemicalSubstance"
@@ -412,7 +412,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -429,12 +429,12 @@ semmed = {
             "Gene"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -442,28 +442,28 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "related_to": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "subclass_of": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "CellularComponent": {
         "affected_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -472,18 +472,18 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
             "CellularComponent",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "derives_from": [
@@ -498,12 +498,12 @@ semmed = {
         "disrupted_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "disrupts": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Cell"
         ],
@@ -511,7 +511,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -526,7 +526,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -549,7 +549,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -557,7 +557,7 @@ semmed = {
         "physically_interacts_with": [
             "CellularComponent",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "positively_regulated_by": [
@@ -571,12 +571,12 @@ semmed = {
             "Gene"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -585,29 +585,29 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "related_to": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "AnatomicalEntity",
             "BiologicalProcess"
         ],
         "subclass_of": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "ChemicalSubstance": {
         "affected_by": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
@@ -616,13 +616,13 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
@@ -630,7 +630,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -638,7 +638,7 @@ semmed = {
         "derives_from": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -647,7 +647,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -660,7 +660,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -669,7 +669,7 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -677,7 +677,7 @@ semmed = {
         "has_subclass": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -692,7 +692,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -702,7 +702,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -712,7 +712,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -722,7 +722,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -732,7 +732,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -742,31 +742,31 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "preceded_by": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "precedes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -782,27 +782,27 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "subclass_of": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
-    "DiseaseOrPhenotypicFeature": {
+    "Disease": {
         "affected_by": [
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -812,7 +812,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -822,13 +822,13 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
@@ -836,7 +836,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -851,7 +851,7 @@ semmed = {
         "disrupted_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -860,7 +860,7 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -870,7 +870,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -880,7 +880,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -894,12 +894,12 @@ semmed = {
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "manifested_by": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Cell",
             "BiologicalProcess",
             "PhenotypicFeature"
@@ -907,14 +907,14 @@ semmed = {
         "negatively_regulated_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "negatively_regulates": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "part_of": [
@@ -922,7 +922,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -930,19 +930,19 @@ semmed = {
         "physically_interacts_with": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "positively_regulated_by": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "positively_regulates": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
@@ -950,14 +950,14 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "precedes": [
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -966,30 +966,30 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevented_by": [
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "AnatomicalEntity",
             "Cell",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -998,7 +998,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1008,7 +1008,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1017,7 +1017,7 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -1026,20 +1026,20 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "Gene": {
         "affected_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -1048,13 +1048,13 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
@@ -1062,7 +1062,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1077,14 +1077,14 @@ semmed = {
         "derives_info": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "disrupted_by": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
@@ -1093,7 +1093,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1103,13 +1103,13 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
         "has_subclass": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1120,7 +1120,7 @@ semmed = {
             "Cell"
         ],
         "manifested_by": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "PhenotypicFeature"
         ],
@@ -1129,7 +1129,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1137,7 +1137,7 @@ semmed = {
         "negatively_regulates": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1147,7 +1147,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1157,7 +1157,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1167,7 +1167,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1177,31 +1177,31 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
         ],
         "preceded_by": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "precedes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1211,7 +1211,7 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene",
             "CellularComponent"
@@ -1221,42 +1221,42 @@ semmed = {
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "subclass_of": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     },
     "PhenotypicFeature": {
         "affected_by": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "affects": [
             "CellularComponent",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Cell"
         ],
         "causes": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "coexists_with": [
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
@@ -1270,23 +1270,23 @@ semmed = {
         ],
         "disrupted_by": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "disrupts": [
             "CellularComponent",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Cell"
         ],
         "has_part": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "CellularComponent",
             "Gene"
         ],
         "has_subclass": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature"
         ],
         "located_in": [
@@ -1295,12 +1295,12 @@ semmed = {
             "Cell"
         ],
         "manifestation_of": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess",
             "Gene"
         ],
         "manifested_by": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "negatively_regulated_by": [
             "ChemicalSubstance",
@@ -1309,19 +1309,19 @@ semmed = {
         "negatively_regulates": [
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "part_of": [
             "AnatomicalEntity",
             "Cell",
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "CellularComponent"
         ],
         "physically_interacts_with": [
             "ChemicalSubstance",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "positively_regulated_by": [
@@ -1333,23 +1333,23 @@ semmed = {
             "Gene"
         ],
         "preceded_by": [
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "BiologicalProcess"
         ],
         "precedes": [
             "BiologicalProcess"
         ],
         "predisposes": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "prevents": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ],
         "produced_by": [
             "Cell",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene",
             "CellularComponent"
         ],
@@ -1361,19 +1361,19 @@ semmed = {
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "Gene"
         ],
         "subclass_of": [
             "AnatomicalEntity",
             "ChemicalSubstance",
             "BiologicalProcess",
-            "DiseaseOrPhenotypicFeature",
+            "Disease",
             "PhenotypicFeature",
             "Gene"
         ],
         "treats": [
-            "DiseaseOrPhenotypicFeature"
+            "Disease"
         ]
     }
 }

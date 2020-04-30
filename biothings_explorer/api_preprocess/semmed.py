@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 def restructure_semmed_response(json_doc, output_types):
     """Restructure the JSON output from semmed API.
 
@@ -18,11 +21,12 @@ def restructure_semmed_response(json_doc, output_types):
                 tmp_v = []
                 if isinstance(v, list):
                     for item in v:
-                        if item["@type"] in  output_types:
-                            item['pubmed'] = item.pop('pmid')
-                            tmp_v.append(item)
+                        if item["@type"] in output_types or (item["@type"] == 'DiseaseOrPhenotypicFeature' and output_types == ['Disease']):
+                            item_copy = deepcopy(item)
+                            item_copy['UMLS'] = item_copy.pop('umls')
+                            item_copy['pubmed'] = item_copy.pop('pmid')
+                            tmp_v.append(item_copy)
                 if tmp_v != []:
                     tmp_res[k] = tmp_v
-            new_res.append(tmp_res)
+        new_res.append(tmp_res)
     return new_res
-

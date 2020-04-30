@@ -1,7 +1,6 @@
 from collections import defaultdict
 from jsonpath_rw import parse
-from .utils.common import find_longest_common_path, get_dict_values
-from .config import INTERNAL_KEYS
+from .utils.common import find_longest_common_path
 
 
 class Transformer():
@@ -34,14 +33,13 @@ class Transformer():
         paths = []
         if not mapping_file or not isinstance(mapping_file, dict):
             return []
-        for k, v in mapping_file.items():
-            if k not in INTERNAL_KEYS:
-                if isinstance(v, list):
-                    paths += v
-                elif isinstance(v, str):
-                    paths.append(v)
-                else:
-                    raise ValueError("The data type of each path should be either list or str")
+        for v in mapping_file.values():
+            if isinstance(v, list):
+                paths += v
+            elif isinstance(v, str):
+                paths.append(v)
+            else:
+                raise ValueError("The data type of each path should be either list or str")
         return paths
 
     @staticmethod
@@ -110,26 +108,20 @@ class Transformer():
                     schema_prop = self.find_key_by_value(mapping_dict,
                                                          _tuple[0])
                     _result[schema_prop].append(jsonpaths_values_dict[_tuple[1]])
-                for _item in INTERNAL_KEYS:
-                    if _item in mapping_dict:
-                        _result[_item] = mapping_dict[_item]
                 result.append(dict(_result))
             return result
         # Handle cases where all paths doesn't share a common prefix
         result = {}
         for k, v in mapping_dict.items():
-            if k not in INTERNAL_KEYS:
-                if isinstance(v, str):
-                    parser = self.generate_parser(v)
-                    result[k] = self.fetch_value_from_single_path(parser)
-                elif isinstance(v, list):
-                    _res = []
-                    for path in v:
-                        parser = self.generate_parser(path)
-                        _res += self.fetch_value_from_single_path(parser)
-                    result[k] = _res
-            else:
-                result[k] = v
+            if isinstance(v, str):
+                parser = self.generate_parser(v)
+                result[k] = self.fetch_value_from_single_path(parser)
+            elif isinstance(v, list):
+                _res = []
+                for path in v:
+                    parser = self.generate_parser(path)
+                    _res += self.fetch_value_from_single_path(parser)
+                result[k] = _res
         return result
 
     def fetch_value_from_single_path(self, parser):
@@ -141,9 +133,6 @@ class Transformer():
         :param: key: the biolink property name.
         :param: paths: the path to the field in API response.
         """
-        # If key is one of the INTERNAL KEYS in BTE, return the value without processing it.
-        if key in INTERNAL_KEYS:
-            return paths
         # Handle only one field path correspond to the key.
         if isinstance(paths, str):
             parser = self.generate_parser(paths)

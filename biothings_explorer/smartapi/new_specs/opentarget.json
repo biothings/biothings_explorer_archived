@@ -1,0 +1,119 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0",
+      "title": "OpenTarget API",
+      "description": "The Opentarget API",
+      "termsOfService": "http://www.opentarget.org",
+      "contact": {
+        "name": "opentarget help desk",
+        "x-role": "responsible developer",
+        "email": "help@opentarget.org"
+      }
+    },
+    "servers": [
+      {
+        "url": "https://platform-api.opentargets.io/v3",
+        "description": "Production server"
+      }
+    ],
+    "tags": [
+      {
+        "name": "translator"
+      },
+      {
+        "name": "opentarget"
+      }
+    ],
+    "paths": {
+      "/platform/public/evidence/filter": {
+        "get": {
+          "summary": "retrieve evidence",
+          "parameters": [
+            {
+              "name": "target",
+              "in": "query",
+              "description": "ensembl gene id",
+              "required": true,
+              "example": "ENSG00000088832",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "size",
+              "in": "query",
+              "description": "size of the output",
+              "example": 100,
+              "schema": {
+                "type": "integer"
+              }
+            },
+            {
+              "name": "fields",
+              "in": "query",
+              "description": "the output field",
+              "example": "drug",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "datasource",
+              "in": "query",
+              "description": "the data source",
+              "example": "chembl",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A biosample object"
+            }
+          },
+          "x-bte-kgs-operations": [{
+            "$ref": "#/components/x-bte-kgs-operations/gene_related_to_chemical"
+          }]
+        }
+      }
+    },
+    "components": {
+      "x-bte-kgs-operations": {
+        "gene_related_to_chemical": [{
+          "inputs": [
+            {
+              "id": "ENSEMBL",
+              "semantic": "Gene"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "CHEMBL.COMPOUND",
+              "semantic": "ChemicalSubstance"
+            }
+          ],
+          "predicate": "related_to",
+          "source": "CHEMBL",
+          "parameters": {
+            "target": "{inputs[0]}",
+            "datasource": "chembl",
+            "size": 100,
+            "fields": "drug"
+          },
+          "supportBatch": false,
+          "response_mapping": {
+            "$ref": "#/components/x-bte-response-mapping/gene-drug"
+          }
+        }]
+      },
+      "x-bte-response-mapping": {
+        "gene-drug": {
+            "CHEMBL.COMPOUND": "data.drug.id",
+            "moleculeType": "data.drug.molecule_type",
+            "name": "data.drug.molecule_name"
+        }
+      }
+    }
+  }

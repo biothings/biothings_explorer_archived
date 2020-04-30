@@ -9,10 +9,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2mf(self):
         # test <gene, enableMF, mf>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='MolecularActivity',
                                          output_id='go',
-                                         pred='enablesMF',
+                                         pred='functional_association',
                                          values='1017',
                                          registry=reg)
         seqd.query()
@@ -21,10 +21,10 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2bp(self):
         # test <gene, involvedInBP, bp>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='BiologicalProcess',
                                          output_id='go',
-                                         pred='involvedInBP',
+                                         pred='functional_association',
                                          values='1017',
                                          registry=reg)
         seqd.query()
@@ -33,23 +33,21 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2pathway(self):
         # test <gene, involvedInpathway, pathway>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='Pathway',
-                                         output_id='reactome',
-                                         pred='involvedInPathway',
+                                         pred='functional_association',
                                          values='1017',
                                          registry=reg)
         seqd.query()
-        self.assertTrue('R-HSA-1266738' in seqd.G)
-        self.assertTrue('WP1530' in seqd.G)
+        self.assertTrue('HEMOSTASIS' in seqd.G)
+        self.assertTrue('RETINOBLASTOMA GENE IN CANCER' in seqd.G)
 
     def test_gene2transcript(self):
         # test <gene, hasTranscript, transcript>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='Transcript',
-                                         output_id='ensembl',
-                                         pred='hasTranscript',
+                                         pred='gene_to_transcript_relationship',
                                          values='1017',
                                          registry=reg)
         seqd.query()
@@ -59,10 +57,9 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2protein(self):
         # test <gene, hasGeneProduct, protein>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='Protein',
-                                         output_id='ensembl',
-                                         pred='hasGeneProduct',
+                                         pred="has_gene_product",
                                          values='1017',
                                          registry=reg)
         seqd.query()
@@ -73,14 +70,11 @@ class TestSingleHopQuery(unittest.TestCase):
     def test_gene2homolog(self):
         # test <gene, hasTranscript, transcript>
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
-                                         input_id='entrez',
+                                         input_id='NCBIGene',
                                          output_cls='Gene',
-                                         output_id='mgi',
-                                         pred='hasHomolog',
+                                         pred='homologous_to',
                                          values='1017',
                                          registry=reg)
         seqd.query()
         self.assertTrue('104772' in seqd.G)
-        self.assertTrue('FBgn0004107' in seqd.G)
-        self.assertTrue('19338' in seqd.G)
 

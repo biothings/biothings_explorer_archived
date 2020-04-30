@@ -11,45 +11,44 @@ class TestHint(unittest.TestCase):
         self.assertIsNotNone(res.get('Gene'))
         self.assertIsNotNone(res.get('Gene')[0])
         bioentity = res.get('Gene')[0]
-        self.assertEqual(bioentity['entrez'], '1017')
+        self.assertEqual(bioentity['NCBIGene'], '1017')
         self.assertEqual(bioentity['type'], 'Gene')
-        self.assertEqual(bioentity['primary']['identifier'], 'entrez')
+        self.assertEqual(bioentity['primary']['identifier'], 'NCBIGene')
         self.assertEqual(bioentity['primary']['value'], '1017')
-        self.assertEqual(bioentity['symbol'], 'CDK2')
+        self.assertEqual(bioentity['SYMBOL'], 'CDK2')
 
     def myvariant_test(self, res):
         self.assertIsNotNone(res)
         self.assertIsNotNone(res.get('SequenceVariant'))
         self.assertIsNotNone(res.get('SequenceVariant')[0])
         bioentity = res.get('SequenceVariant')[0]
-        self.assertEqual(bioentity['dbsnp'], 'rs12190874')
+        self.assertEqual(bioentity['DBSNP'], 'rs12190874')
         self.assertEqual(bioentity['type'], 'SequenceVariant')
-        self.assertEqual(bioentity['primary']['identifier'], 'dbsnp')
+        self.assertEqual(bioentity['primary']['identifier'], 'DBSNP')
         self.assertEqual(bioentity['primary']['value'], 'rs12190874')
-        self.assertEqual(bioentity['hgvs'], 'chr6:g.42454850G>A')
 
-    def test_gene_entrez_id_as_input(self):
-        """Test the output of Hint query when providing gene entrez id as input."""
+    def test_gene_NCBIGene_id_as_input(self):
+        """Test the output of Hint query when providing gene NCBIGene id as input."""
         res = self.ht.query('1017')
         self.mygene_test(res)
 
-    def test_gene_symbol_as_input(self):
-        """Test the output of Hint query when providing gene symbol as input."""
+    def test_gene_SYMBOL_as_input(self):
+        """Test the output of Hint query when providing gene SYMBOL as input."""
         res = self.ht.query('CDK2')
         self.mygene_test(res)
 
-    def test_gene_umls_id_as_input(self):
-        """Test the output of Hint query when providing gene umls id as input."""
+    def test_gene_UMLS_id_as_input(self):
+        """Test the output of Hint query when providing gene UMLS id as input."""
         res = self.ht.query('C1332823')
         self.assertIsNotNone(res)
         self.assertIsNotNone(res.get('Gene'))
         self.assertIsNotNone(res.get('Gene')[0])
         bioentity = res.get('Gene')[0]
-        self.assertEqual(bioentity['umls'], 'C1332823')
+        self.assertEqual(bioentity['UMLS'], 'C1332823')
         self.assertEqual(bioentity['type'], 'Gene')
-        self.assertEqual(bioentity['primary']['identifier'], 'entrez')
+        self.assertEqual(bioentity['primary']['identifier'], 'NCBIGene')
         self.assertEqual(bioentity['primary']['value'], '7852')
-        self.assertEqual(bioentity['symbol'], 'CXCR4')
+        self.assertEqual(bioentity['SYMBOL'], 'CXCR4')
 
     def test_gene_hgnc_id_as_input(self):
         """Test the output of Hint query when providing gene hgnc id as input."""

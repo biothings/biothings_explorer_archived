@@ -1,0 +1,135 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "contact": {
+        "email": "help@dgidb.org",
+        "name": "Malachi Griffith",
+        "x-id": "https://github.com/malachig",
+        "x-role": "responsible developer"
+      },
+      "description": "Drug gene interaction database",
+      "termsOfService": "http://dgidb.genome.wustl.edu/contact",
+      "title": "DGIdb API",
+      "version": "2.0"
+    },
+    "servers": [
+      {
+        "description": "Production server",
+        "url": "http://dgidb.genome.wustl.edu/api/v2"
+      }
+    ],
+    "tags": [
+      {
+        "name": "drug"
+      },
+      {
+        "name": "gene"
+      },
+      {
+        "name": "annotation"
+      },
+      {
+        "name": "translator"
+      }
+    ],
+    "paths": {
+      "/interactions.json": {
+        "get": {
+          "parameters": [
+            {
+              "description": "Put drug names here, e.g. riluzole",
+              "in": "query",
+              "name": "drugs",
+              "example": "riluzole",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "description": "Put gene names here, e.g. CXCR4",
+              "in": "query",
+              "name": "genes",
+              "example": "CXCR4",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A query response object with \"matchedTerm\" property"
+            }
+          },
+          "summary": "return interactions for a drug with a gene",
+          "x-bte-kgs-operations": [{
+              "$ref": "#/components/x-bte-kgs-operations/targetedBy"
+            },{
+              "$ref": "#/components/x-bte-kgs-operations/target"
+            }
+        ]
+        }
+      }
+    },
+    "components": {
+      "x-bte-kgs-operations": {
+        "targetedBy": [{
+          "inputs": [
+            {
+              "id": "SYMBOL",
+              "semantic": "Gene"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "CHEMBL.COMPOUND",
+              "semantic": "ChemicalSubstance"
+            }
+          ],
+          "parameters": {
+            "genes": "{inputs[0]}"
+          },
+          "supportBatch": false,
+          "predicate": "physically_interacts_with",
+          "response_mapping": {
+            "$ref": "#/components/x-bte-response-mapping/gene-drug"
+          }
+        }],
+        "target": [{
+          "inputs": [
+            {
+              "id": "CHEMBL.COMPOUND",
+              "semantic": "ChemicalSubstance"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "NCBIGene",
+              "semantic": "Gene"
+            }
+          ],
+          "parameters": {
+            "drugs": "{inputs[0]}"
+          },
+          "supportBatch": false,
+          "predicate": "physically_interacts_with",
+          "response_mapping": {
+            "$ref": "#/components/x-bte-response-mapping/drug-gene"
+          }
+        }]
+      },
+      "x-bte-response-mapping": {
+        "gene-drug": {
+            "CHEMBL.COMPOUND": "matchedTerms.interactions.drugChemblId",
+            "name": "matchedTerms.interactions.drugName",
+            "source": "matchedTerms.interactions.sources",
+            "publication": "matchedTerms.interactions.pmids"
+        },
+        "drug-gene": {
+            "NCBIGene": "matchedTerms.interactions.geneEntrezId",
+            "name": "matchedTerms.interactions.geneLongName",
+            "source": "matchedTerms.interactions.sources",
+            "publication": "matchedTerms.interactions.pmids"
+        }
+      }
+    }
+  }

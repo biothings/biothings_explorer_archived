@@ -5,59 +5,37 @@ Resolving Biomedical Identifiers through BioThings APIs.
 .. moduleauthor:: Jiwen Xin <kevinxin@scripps.edu>
 """
 
-from .config import metadata
-from .registry import Registry
+from collections import defaultdict
+from .config_new import ID_RESOLVING_APIS
 from .apicall import BioThingsCaller
 
 
 class IDResolver():
     """Resolving Biomedical Identifiers through BioThings APIs."""
 
-    def __init__(self, registry=None):
-        """Load BTE registry and BTE API caller.
+    def __init__(self):
+        """Load BTE registry and BTE API caller."""
+        self.caller = BioThingsCaller()
 
-        :param: registry: BTE registry object
-        """
-        if not registry:
-            self.registry = Registry()
-        else:
-            self.registry = registry
-        self.caller = BioThingsCaller(batch_mode=True)
-        self.semantic_type_api_mapping = {v['doc_type']: k for k, v
-                                          in metadata.items()
-                                          if 'hint' in v and k != 'umlschem'}
-
-    def fetch_schema_mapping_file(self, api):
+    @staticmethod
+    def fetch_id_mapping_file(semantic_type):
         """Fetch schema mapping file from the registry.
 
-        :param: api: the name of API.
+        :param: semantic_type: the id semantic type.
         """
-        return self.registry.registry[api]['mapping']
-
-    def subset_mapping_file(self, mapping_file):
-        """Retrieve a subset of the mapping file which only contains ids.
-
-        :param: mapping_file: schema mapping file from smartapi registry
-        """
-        return {k: v for (k, v) in mapping_file.items() if k
-                in (self.registry.mp.id_list + ["name"])}
+        return ID_RESOLVING_APIS[semantic_type]["mapping"]
 
     @staticmethod
     def get_output_fields(mapping_file):
         fields = []
         for v in mapping_file.values():
-            if isinstance(v, list):
-                fields += v
-            elif isinstance(v, str):
-                fields.append(v)
+            fields += v
         return ','.join(fields)
 
     @staticmethod
     def get_input_fields(mapping_file, _type):
         input_fields = mapping_file.get(_type)
-        if isinstance(input_fields, list):
-            return ','.join(input_fields)
-        return input_fields
+        return ','.join(input_fields) if input_fields else None
 
     def resolve_ids(self, inputs):
         """Main function to resolve identifiers.
@@ -75,17 +53,14 @@ class IDResolver():
             ids = self.preprocess_ids(ids, _type)
             # if _type == 'efo':
             # ids = [i.split(':')[-1] for i in ids]
-            api = self.semantic_type_api_mapping.get(semantic_type)
             # if id can not be converted, the equivalent id is itself
-            if not api:
+            if semantic_type not in ID_RESOLVING_APIS:
                 for _id in ids:
                     self.results[_type + ':' + _id] = {_type: [_id]}
             else:
-                self.construct_api_calls(api, _type, ids)
+                self.construct_api_calls(semantic_type, _type, ids)
         # make API calls asynchronously and gather all outputs
-        self.responses, _ = self.caller.call_apis(self.api_call_inputs,
-                                                  size=10,
-                                                  dotfield=True)
+        self.responses, _ = self.caller.call_apis(self.api_call_inputs)
         self.parse_api_responses()
         return self.results
 
@@ -97,49 +72,67 @@ class IDResolver():
             # if API response is empty, continue
             if not _res:
                 continue
-            for single_res in _res:
+            for single_res in _res['result']:
                 # if query of the item returns no hit
+                res_id = _type + ':' + single_res['query']
                 if 'notfound' in single_res:
-                    self.results[_type + ':' +
-                                 single_res['query']] = {_type:
-                                                         [single_res['query']]}
+                    self.results[res_id] = {_type: [single_res['query']]}
                     continue
-                new_res = {}
+                if res_id not in self.results:
+                    self.results[res_id] = defaultdict(set)
                 for k, v in _map.items():
-                    if not isinstance(v, list):
-                        v = [v]
                     for _v in v:
                         if _v in single_res:
                             val = single_res[_v]
                             if not isinstance(val, list):
-                                val = [val]
-                            new_res[k] = val
-                self.results[_type + ':' + single_res['query']] = new_res
+                                self.results[res_id][k].add(str(val))
+                            else:
+                                self.results[res_id][k].update(set(val))
+            for res_id, resolved_ids in self.results.items():
+                for m in resolved_ids.keys():
+                    if m == 'name':
+                        self.results[res_id][m] = sorted({item.upper() for item in resolved_ids[m]})
+                    else:
+                        self.results[res_id][m] = list(resolved_ids[m])
 
-    def construct_api_calls(self, api, _type, ids):
+    def construct_api_calls(self, semantic_type, id_type, ids):
         """Construct API calls for BTE API call module.
 
         :param: api: name of API
         :param: _type: the prefix type of ids
         :param: ids: the list of identifiers to resolve
         """
-        mapping_file = self.fetch_schema_mapping_file(api)
-        mapping_file = self.subset_mapping_file(mapping_file)
-        if self.get_input_fields(mapping_file, _type):
+        mapping_file = self.fetch_id_mapping_file(semantic_type)
+        api = ID_RESOLVING_APIS[semantic_type]["api_name"]
+        if self.get_input_fields(mapping_file, id_type):
             for i in range(0, len(ids), 1000):
-                self.api_call_inputs.append({"api": api,
-                                             "input": self.get_input_fields(
-                                                        mapping_file, _type),
-                                             "output": self.get_output_fields(
-                                                        mapping_file),
-                                             "values": ','.join(ids[i:i+1000]),
-                                             "batch_mode": True
-                                             })
-                self.types.append(_type)
+                self.api_call_inputs.append({
+                    "api": api,
+                    'operation': {
+                        'server': ID_RESOLVING_APIS[semantic_type]['url'],
+                        'path': '/query',
+                        'method': 'post',
+                        'parameters': {
+                            'fields': self.get_output_fields(mapping_file),
+                            'dotfield': "true",
+                            'species': 'human'
+                        }, 
+                        'requestBody': {
+                            'body': {
+                                'q': '{inputs[0]}',
+                                'scopes': self.get_input_fields(mapping_file, id_type)
+                            }, 
+                            'header': 'application/x-www-form-urlencoded'
+                        }
+                    },
+                    "value": ','.join(ids[i:i+1000]),
+                    "internal_query_id": 1
+                })
+                self.types.append(id_type)
                 self.mapping_files.append(mapping_file)
         else:
             for _id in ids:
-                self.results[_type + ':' + _id] = {_type: [_id]}
+                self.results[id_type + ':' + _id] = {id_type: [_id]}
 
     def preprocess_ids(self, ids, _type):
         """Preprocess ids to become a list of strings.
