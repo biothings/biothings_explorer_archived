@@ -10,9 +10,10 @@ import hashlib
 from collections import defaultdict
 
 
-class ReasonerConverter():
+class ReasonerConverter:
 
     """Convert the output of BTE to ReasonerAPIStd."""
+
     def __init__(self):
         self.result = defaultdict(list)
 
@@ -23,8 +24,17 @@ class ReasonerConverter():
         :param: intermediate : the intermediate nodes connecting input and output
         :param: end : the output of user query
         """
-        self.path = [start.get('type')]
+        self.path = [start.get("type")]
         self.start = start
+        if ":" in self.start["primary"]["value"]:
+            self.start_node_curie = self.start["primary"]["value"]
+        else:
+            self.start_node_curie = (
+                self.start["primary"]["identifier"]
+                + ":"
+                + self.start["primary"]["value"]
+            )
+
         if intermediate:
             if isinstance(intermediate, list):
                 self.path += intermediate
@@ -35,7 +45,7 @@ class ReasonerConverter():
         elif isinstance(end, list):
             self.path.append(tuple(end))
         elif isinstance(end, dict):
-            self.path.append(end.get('type'))
+            self.path.append(end.get("type"))
 
     def load_bte_output(self, G):
         """Load bte output in the format of networkx graph into class.
@@ -55,7 +65,11 @@ class ReasonerConverter():
         node_info = self.nodes[node]
         if "identifier" in node_info:
             prefix = node_info["identifier"]
-            curie = prefix.upper() + ':' + node
+            # if the node id is already in curie format
+            # then no need to add prefix again
+            if ":" in node:
+                return node
+            curie = prefix + ":" + node
             return curie
         return node
 
@@ -74,15 +88,17 @@ class ReasonerConverter():
         for k, v, o in self.G.edges(data=True):
             source_id = self.get_curie(k)
             target_id = self.get_curie(v)
-            edge_source = o['info'].get('$api')
-            _type = o.get('label')
+            edge_source = o["info"].get("$api")
+            _type = o.get("label")
             _id = self.hash_id(source_id + target_id + edge_source + _type)
-            edge = {"source_id": source_id,
-                    "target_id": target_id,
-                    "edge_source": edge_source,
-                    "id": _id,
-                    "type": _type}
-            self.result[source_id + '|||' + target_id].append(_id)
+            edge = {
+                "source_id": source_id,
+                "target_id": target_id,
+                "edge_source": edge_source,
+                "id": _id,
+                "type": _type,
+            }
+            self.result[source_id + "|||" + target_id].append(_id)
             edges.append(edge)
         return edges
 
@@ -90,15 +106,17 @@ class ReasonerConverter():
         """Reorganize the nodes into reasonerSTD format."""
         nodes = []
         for k, v in self.nodes:
-            name = v['equivalent_ids'].get("name")
+            name = v["equivalent_ids"].get("name")
             if name and isinstance(name, list):
                 name = str(name[0])
             else:
                 name = str(self.get_curie(k))
-            node = {"id": self.get_curie(k),
-                    "name": name,
-                    "type": v["type"],
-                    "equivalent_identifiers": v['equivalent_ids']}
+            node = {
+                "id": self.get_curie(k),
+                "name": name,
+                "type": v["type"],
+                "equivalent_identifiers": v["equivalent_ids"],
+            }
             nodes.append(node)
         return nodes
 
@@ -106,8 +124,7 @@ class ReasonerConverter():
         """Reorganize the nodes and edges into reasonerSTD format."""
         if len(self.G) == 0:
             return {"nodes": [], "edges": []}
-        return {"nodes": self.fetch_nodes(),
-                "edges": self.fetch_edges()}
+        return {"nodes": self.fetch_nodes(), "edges": self.fetch_edges()}
 
     def generate_question_graph(self):
         if not self.path:
@@ -122,51 +139,56 @@ class ReasonerConverter():
 
         for i, node in enumerate(self.path):
             if isinstance(node, str):
-                nodes.append({"id": "n" + str(node_id),
-                              "type": node})
-                node2idmapping[str(i) + '-' + node + '-0'] = "n" + str(node_id)
+                nodes.append({"id": "n" + str(node_id), "type": node})
+                node2idmapping[str(i) + "-" + node + "-0"] = "n" + str(node_id)
                 node_id += 1
             elif isinstance(node, tuple):
                 for j, _n in enumerate(node):
-                    nodes.append({"id": "n" + str(node_id),
-                                  "type": _n})
-                    node2idmapping[str(i) + '-' + _n + '-' + str(j)] = "n" + str(node_id)
+                    nodes.append({"id": "n" + str(node_id), "type": _n})
+                    node2idmapping[str(i) + "-" + _n + "-" + str(j)] = "n" + str(
+                        node_id
+                    )
                     node_id += 1
-            nodes[0]['curie'] = [self.start['primary']['identifier'] + ':' + self.start['primary']['value']]
-
+            nodes[0]["curie"] = self.start_node_curie
 
         for i in range(0, len(self.path) - 1):
             source_node = self.path[i]
-            target_node = self.path[i+1]
+            target_node = self.path[i + 1]
             if isinstance(source_node, str):
                 source_node = [source_node]
             if isinstance(target_node, str):
                 target_node = [target_node]
             for p, _s in enumerate(source_node):
                 for q, _t in enumerate(target_node):
-                    source_id = node2idmapping[str(i) + '-' + _s + '-' + str(p)]
-                    target_id = node2idmapping[str(i+1) + '-' + _t + '-' + str(q)]
-                    edges.append({"id": "e" + str(edge_id),
-                                  "source_id": source_id,
-                                  "target_id": target_id,
-                                  "directed": True})
+                    source_id = node2idmapping[str(i) + "-" + _s + "-" + str(p)]
+                    target_id = node2idmapping[str(i + 1) + "-" + _t + "-" + str(q)]
+                    edges.append(
+                        {
+                            "id": "e" + str(edge_id),
+                            "source_id": source_id,
+                            "target_id": target_id,
+                            "directed": True,
+                        }
+                    )
                     edge_id += 1
-        return {"edges": edges,
-                "nodes": nodes}
+        return {"edges": edges, "nodes": nodes}
 
     def generate_result(self):
         result = {"node_bindings": [], "edge_bindings": []}
         if not self.result:
             return result
+        result["node_bindings"].append({"qg_id": "n0", "kg_id": self.start_node_curie})
         for k, v in self.result.items():
-            target_id = k.split('|||')[-1]
+            target_id = k.split("|||")[-1]
             result["node_bindings"].append({"qg_id": "n1", "kg_id": target_id})
             result["edge_bindings"].append({"qg_id": "e1", "kg_id": v})
         return result
 
     def generate_reasoner_response(self):
         """Generate reasoner response."""
-        response = {"query_graph": self.generate_question_graph(),
-                    "knowledge_graph": self.generate_knowledge_graph()}
-        response['results'] = self.generate_result()
+        response = {
+            "query_graph": self.generate_question_graph(),
+            "knowledge_graph": self.generate_knowledge_graph(),
+        }
+        response["results"] = self.generate_result()
         return response
