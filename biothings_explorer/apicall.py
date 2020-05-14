@@ -155,7 +155,7 @@ class BioThingsCaller:
         # timeout = ClientTimeout(total=15)
         async with ClientSession(connector=TCPConnector(ssl=False)) as session:
             for i in inputs:
-                task = asyncio.ensure_future(
+                task = asyncio.create_task(
                     self.call_one_api(i, session, verbose=verbose)
                 )
                 tasks.append(task)
@@ -197,11 +197,11 @@ class BioThingsCaller:
         print(
             "Is event loop running in thread {0}\n".format(current_thread().getName())
         )
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            print("new event loop started")
-            loop = asyncio.new_event_loop()
+        # try:
+        #     loop = asyncio.get_event_loop()
+        # except RuntimeError:
+        #     print("new event loop started")
+        loop = asyncio.new_event_loop()
         return (loop.run_until_complete(self.run(inputs, verbose=verbose)), self.log)
         # future = asyncio.ensure_future(self.run(inputs, verbose=verbose))
         # return (loop.run_until_complete(future), self.log)
