@@ -42,7 +42,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["NCBIGene", "ENSEMBL", "HGNC", "UMLS", "UNIPROTKB", "SYMBOL", "OMIM", "MGI"],
         "semantic": "Gene",
         "api_name": "mygene.info",
-        "url": "http://mygene.info/v3",
+        "url": "https://mygene.info/v3",
         "mapping": {
             "NCBIGene": ["entrezgene"],
             "name": ["name"],
@@ -59,7 +59,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["DBSNP", "MYVARIANT_HG19", "HGVS", "ClinVar"],
         "api_name": "myvariant.info",
         "semantic": "SequenceVariant",
-        "url": 'http://myvariant.info/v1',
+        "url": 'https://myvariant.info/v1',
         "mapping": {
             "MYVARIANT_HG19": ["_id"],
             "DBSNP": ["dbsnp.rsid", "clinvar.rsid", "dbnsfp.rsid"],
@@ -71,7 +71,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["CHEBI", "CHEMBL.COMPOUND", "DRUGBANK", "PUBCHEM", "MESH", "UNII", "UMLS", "name"],
         "semantic": "ChemicalSubstance",
         "api_name": "mychem.info",
-        "url": "http://mychem.info/v1",
+        "url": "https://mychem.info/v1",
         "mapping": {
             "CHEMBL.COMPOUND": ["chembl.molecule_chembl_id", "drugbank.xrefs.chembl", "drugcentral.xrefs.chembl_id"],
             "DRUGBANK": ["drugcentral.xrefs.drugbank_id", "pharmgkb.xrefs.drugbank", "chebi.xrefs.drugbank", "drugbank.id"],
@@ -102,7 +102,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "name"],
         "semantic": "MolecularActivity",
         "api_name": "geneset API",
-        "url": "http://biothings.ncats.io/geneset",
+        "url": "https://biothings.ncats.io/geneset",
         "mapping": {
             "GO": ["go"],
             "name": ["name"]
@@ -112,7 +112,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "UMLS", "name"],
         "semantic": "BiologicalProcess",
         "api_name": "geneset API",
-        "url": "http://biothings.ncats.io/geneset",
+        "url": "https://biothings.ncats.io/geneset",
         "mapping": {
             "GO": ["go"],
             "name": ["name"],
@@ -123,7 +123,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "UMLS", "name"],
         "semantic": "CellularComponent",
         "api_name": "geneset API",
-        "url": "http://biothings.ncats.io/geneset",
+        "url": "https://biothings.ncats.io/geneset",
         "mapping": {
             "GO": ["go"],
             "name": ["name"],
@@ -134,7 +134,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["Reactome", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
         "semantic": "Pathway",
         "api_name": "geneset API",
-        "url": "http://biothings.ncats.io/geneset",
+        "url": "https://biothings.ncats.io/geneset",
         "mapping": {
             "Reactome": ["reactome"],
             "WIKIPATHWAYS": ["wikipathways"],
@@ -147,7 +147,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["UMLS", "name"],
         "semantic": "AnatomicalEntity",
         "api_name": "Anatomy API",
-        "url": "http://biothings.ncats.io/semmed_anatomy",
+        "url": "https://biothings.ncats.io/semmed_anatomy",
         "mapping": {
             "name": ["name"],
             "UMLS": ["umls"]
@@ -157,7 +157,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["UMLS", "name"],
         "semantic": "PhenotypicFeature",
         "api_name": "Phenotype API",
-        "url": "http://biothings.ncats.io/semmedphenotype",
+        "url": "https://biothings.ncats.io/semmedphenotype",
         "mapping": {
             "name": ["name"],
             "UMLS": ["umls"]
