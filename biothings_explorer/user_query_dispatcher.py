@@ -66,7 +66,9 @@ class SingleEdgeQueryDispatcher:
         query_id=1,
         reverse=False,
         registry=None,
+        loop=None
     ):
+        self.loop = loop
         # load bte registry
         if not registry:
             self.registry = Registry()
@@ -134,7 +136,7 @@ class SingleEdgeQueryDispatcher:
         if not self.equivalent_ids:
             # find equivalent ids for the input value
             equivalent_ids = self.idr.resolve_ids(
-                [(self.values, self.input_id, self.input_cls)]
+                [(self.values, self.input_id, self.input_cls)], loop=self.loop
             )
             if not self.input_label:
                 self.input_label = self.input_id + ":" + values
@@ -373,7 +375,7 @@ class SingleEdgeQueryDispatcher:
             return
         source_nodes_cnt = len(self.G)
         # make API calls and restructure API outputs
-        (_res, log) = self.dp.dispatch(input_edges, verbose=verbose)
+        (_res, log) = self.dp.dispatch(input_edges, verbose=verbose, loop=self.loop)
         self.log += log
         # load API outputs into the MultiDiGraph
         self.G = load_res_to_networkx(

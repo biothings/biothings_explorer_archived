@@ -10,7 +10,7 @@ from .config_new import ID_RESOLVING_APIS
 from .apicall import BioThingsCaller
 
 
-class IDResolver():
+class IDResolver:
     """Resolving Biomedical Identifiers through BioThings APIs."""
 
     def __init__(self):
@@ -30,14 +30,14 @@ class IDResolver():
         fields = []
         for v in mapping_file.values():
             fields += v
-        return ','.join(fields)
+        return ",".join(fields)
 
     @staticmethod
     def get_input_fields(mapping_file, _type):
         input_fields = mapping_file.get(_type)
-        return ','.join(input_fields) if input_fields else None
+        return ",".join(input_fields) if input_fields else None
 
-    def resolve_ids(self, inputs):
+    def resolve_ids(self, inputs, loop=None):
         """Main function to resolve identifiers.
         
         :param: inputs: A list of tuples, [(ids, prefix, semantic_type), ...]
@@ -56,27 +56,25 @@ class IDResolver():
             # if id can not be converted, the equivalent id is itself
             if semantic_type not in ID_RESOLVING_APIS:
                 for _id in ids:
-                    self.results[_type + ':' + _id] = {_type: [_id]}
+                    self.results[_type + ":" + _id] = {_type: [_id]}
             else:
                 self.construct_api_calls(semantic_type, _type, ids)
         # make API calls asynchronously and gather all outputs
-        self.responses, _ = self.caller.call_apis(self.api_call_inputs)
+        self.responses, _ = self.caller.call_apis(self.api_call_inputs, loop=loop)
         self.parse_api_responses()
         return self.results
 
     def parse_api_responses(self):
         """Parse the API responses from APICall module in BTE."""
-        for _res, _map, _type in zip(self.responses,
-                                     self.mapping_files,
-                                     self.types):
+        for _res, _map, _type in zip(self.responses, self.mapping_files, self.types):
             # if API response is empty, continue
             if not _res:
                 continue
-            for single_res in _res['result']:
+            for single_res in _res["result"]:
                 # if query of the item returns no hit
-                res_id = _type + ':' + single_res['query']
-                if 'notfound' in single_res:
-                    self.results[res_id] = {_type: [single_res['query']]}
+                res_id = _type + ":" + single_res["query"]
+                if "notfound" in single_res:
+                    self.results[res_id] = {_type: [single_res["query"]]}
                     continue
                 if res_id not in self.results:
                     self.results[res_id] = defaultdict(set)
@@ -90,8 +88,10 @@ class IDResolver():
                                 self.results[res_id][k].update(set(val))
             for res_id, resolved_ids in self.results.items():
                 for m in resolved_ids.keys():
-                    if m == 'name':
-                        self.results[res_id][m] = sorted({item.upper() for item in resolved_ids[m]})
+                    if m == "name":
+                        self.results[res_id][m] = sorted(
+                            {item.upper() for item in resolved_ids[m]}
+                        )
                     else:
                         self.results[res_id][m] = list(resolved_ids[m])
 
@@ -106,33 +106,37 @@ class IDResolver():
         api = ID_RESOLVING_APIS[semantic_type]["api_name"]
         if self.get_input_fields(mapping_file, id_type):
             for i in range(0, len(ids), 1000):
-                self.api_call_inputs.append({
-                    "api": api,
-                    'operation': {
-                        'server': ID_RESOLVING_APIS[semantic_type]['url'],
-                        'path': '/query',
-                        'method': 'post',
-                        'parameters': {
-                            'fields': self.get_output_fields(mapping_file),
-                            'dotfield': "true",
-                            'species': 'human'
-                        }, 
-                        'requestBody': {
-                            'body': {
-                                'q': '{inputs[0]}',
-                                'scopes': self.get_input_fields(mapping_file, id_type)
-                            }, 
-                            'header': 'application/x-www-form-urlencoded'
-                        }
-                    },
-                    "value": ','.join(ids[i:i+1000]),
-                    "internal_query_id": 1
-                })
+                self.api_call_inputs.append(
+                    {
+                        "api": api,
+                        "operation": {
+                            "server": ID_RESOLVING_APIS[semantic_type]["url"],
+                            "path": "/query",
+                            "method": "post",
+                            "parameters": {
+                                "fields": self.get_output_fields(mapping_file),
+                                "dotfield": "true",
+                                "species": "human",
+                            },
+                            "requestBody": {
+                                "body": {
+                                    "q": "{inputs[0]}",
+                                    "scopes": self.get_input_fields(
+                                        mapping_file, id_type
+                                    ),
+                                },
+                                "header": "application/x-www-form-urlencoded",
+                            },
+                        },
+                        "value": ",".join(ids[i : i + 1000]),
+                        "internal_query_id": 1,
+                    }
+                )
                 self.types.append(id_type)
                 self.mapping_files.append(mapping_file)
         else:
             for _id in ids:
-                self.results[id_type + ':' + _id] = {id_type: [_id]}
+                self.results[id_type + ":" + _id] = {id_type: [_id]}
 
     def preprocess_ids(self, ids, _type):
         """Preprocess ids to become a list of strings.
@@ -145,7 +149,7 @@ class IDResolver():
             ids = [ids]
         # make sure all ids in id list is str
         for _id in ids:
-            if ' ' in str(_id):
-                self.results[_type + ':' + str(_id)] = {_type: [str(_id)]}
-        ids = [str(i) for i in ids if ' ' not in str(i)]
+            if " " in str(_id):
+                self.results[_type + ":" + str(_id)] = {_type: [str(_id)]}
+        ids = [str(i) for i in ids if " " not in str(i)]
         return ids
