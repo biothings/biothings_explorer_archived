@@ -12,11 +12,14 @@
 		"title": "SEMMED Disease API",
 		"version": "1.0"
 	},
-	"servers": [{
-		"description": "Production server",
-		"url": "https://biothings.ncats.io/semmed"
-	}],
-	"tags": [{
+	"servers": [
+		{
+			"description": "Production server",
+			"url": "https://biothings.ncats.io/semmed"
+		}
+	],
+	"tags": [
+		{
 			"name": "chemical"
 		},
 		{
@@ -38,7 +41,8 @@
 	"paths": {
 		"/disease": {
 			"post": {
-				"parameters": [{
+				"parameters": [
+					{
 						"$ref": "#/components/parameters/dotfield",
 						"name": "dotfield"
 					},
@@ -105,7 +109,8 @@
 		},
 		"/disease/{diseaseid}": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"description": "Retrieve disease objects based on ID",
 						"example": "C0004096",
 						"in": "path",
@@ -159,11 +164,13 @@
 		},
 		"/metadata": {
 			"get": {
-				"parameters": [{
-					"$ref": "#/components/parameters/callback",
-					"in": "query",
-					"name": "callback"
-				}],
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/callback",
+						"in": "query",
+						"name": "callback"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "mydisease.info metadata object"
@@ -177,7 +184,8 @@
 		},
 		"/metadata/fields": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"$ref": "#/components/parameters/search",
 						"name": "search"
 					},
@@ -207,7 +215,8 @@
 		},
 		"/query": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"description": "Query string.  The detailed query syntax can be found from our [docs](http://mydisease.info).  Examples: \"cancer\", \"primary ciliary dyskinesia\", \"DOID:9562\"",
 						"example": "cancer",
 						"in": "query",
@@ -286,7 +295,8 @@
 				]
 			},
 			"post": {
-				"parameters": [{
+				"parameters": [
+					{
 						"$ref": "#/components/parameters/dotfield",
 						"name": "dotfield"
 					},
@@ -351,7 +361,8 @@
 				"tags": [
 					"query"
 				],
-				"x-bte-kgs-operations": [{
+				"x-bte-kgs-operations": [
+					{
 						"$ref": "#/components/x-bte-kgs-operations/Disease-affected_by-AnatomicalEntity"
 					},
 					{
@@ -767,7 +778,8 @@
 			},
 			"QueryPOSTResult": {
 				"items": {
-					"allOf": [{
+					"allOf": [
+						{
 							"$ref": "#/components/schemas/Disease"
 						},
 						{
@@ -808,7 +820,8 @@
 				"type": "object"
 			},
 			"int64_or_array": {
-				"oneOf": [{
+				"oneOf": [
+					{
 						"items": {
 							"format": "int64",
 							"type": "integer"
@@ -822,7 +835,8 @@
 				]
 			},
 			"string_or_array": {
-				"oneOf": [{
+				"oneOf": [
+					{
 						"items": {
 							"type": "string"
 						},
@@ -835,2696 +849,3271 @@
 			}
 		},
 		"x-bte-kgs-operations": {
-			"Disease-affected_by-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-AnatomicalEntity"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Cell"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-ChemicalSubstance"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-BiologicalProcess"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Disease"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-PhenotypicFeature"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Gene"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affected_by-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "affected_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-CellularComponent"
-				},
-				"predicate": "affected_by"
-			}],
-			"Disease-affects-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-AnatomicalEntity"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-Cell"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-ChemicalSubstance"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-BiologicalProcess"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-Disease"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-PhenotypicFeature"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-Gene"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-affects-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "affects"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-affects-CellularComponent"
-				},
-				"predicate": "affects"
-			}],
-			"Disease-caused_by-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-AnatomicalEntity"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Cell"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-ChemicalSubstance"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-BiologicalProcess"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Disease"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-PhenotypicFeature"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Gene"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-caused_by-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "caused_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-CellularComponent"
-				},
-				"predicate": "caused_by"
-			}],
-			"Disease-causes-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "causes"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-causes-Disease"
-				},
-				"predicate": "causes"
-			}],
-			"Disease-causes-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "causes"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-causes-BiologicalProcess"
-				},
-				"predicate": "causes"
-			}],
-			"Disease-coexists_with-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-AnatomicalEntity"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Cell"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-ChemicalSubstance"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-BiologicalProcess"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Disease"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-PhenotypicFeature"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Gene"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-coexists_with-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "coexists_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-CellularComponent"
-				},
-				"predicate": "coexists_with"
-			}],
-			"Disease-derives_from-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "derives_from"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-derives_from-ChemicalSubstance"
-				},
-				"predicate": "derives_from"
-			}],
-			"Disease-derives_from-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "derives_from"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-derives_from-Gene"
-				},
-				"predicate": "derives_from"
-			}],
-			"Disease-derives_info-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "derives_info"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-derives_info-ChemicalSubstance"
-				},
-				"predicate": "derives_info"
-			}],
-			"Disease-disrupted_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-ChemicalSubstance"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupted_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-BiologicalProcess"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupted_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-Disease"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupted_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-PhenotypicFeature"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupted_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-Gene"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupted_by-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "disrupted_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-CellularComponent"
-				},
-				"predicate": "disrupted_by"
-			}],
-			"Disease-disrupts-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-AnatomicalEntity"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Cell"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-BiologicalProcess"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Disease"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-PhenotypicFeature"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Gene"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-disrupts-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "disrupts"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-CellularComponent"
-				},
-				"predicate": "disrupts"
-			}],
-			"Disease-negatively_regulated_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "negatively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-ChemicalSubstance"
-				},
-				"predicate": "negatively_regulated_by"
-			}],
-			"Disease-negatively_regulated_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "negatively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-BiologicalProcess"
-				},
-				"predicate": "negatively_regulated_by"
-			}],
-			"Disease-negatively_regulated_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "negatively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-Disease"
-				},
-				"predicate": "negatively_regulated_by"
-			}],
-			"Disease-negatively_regulated_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "negatively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-PhenotypicFeature"
-				},
-				"predicate": "negatively_regulated_by"
-			}],
-			"Disease-negatively_regulated_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "negatively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-Gene"
-				},
-				"predicate": "negatively_regulated_by"
-			}],
-			"Disease-negatively_regulates-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "negatively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-ChemicalSubstance"
-				},
-				"predicate": "negatively_regulates"
-			}],
-			"Disease-negatively_regulates-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "negatively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-BiologicalProcess"
-				},
-				"predicate": "negatively_regulates"
-			}],
-			"Disease-negatively_regulates-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "negatively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-Disease"
-				},
-				"predicate": "negatively_regulates"
-			}],
-			"Disease-negatively_regulates-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "negatively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-Gene"
-				},
-				"predicate": "negatively_regulates"
-			}],
-			"Disease-physically_interacts_with-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-ChemicalSubstance"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-physically_interacts_with-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-BiologicalProcess"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-physically_interacts_with-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-Disease"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-physically_interacts_with-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-PhenotypicFeature"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-physically_interacts_with-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-Gene"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-physically_interacts_with-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "physically_interacts_with"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-CellularComponent"
-				},
-				"predicate": "physically_interacts_with"
-			}],
-			"Disease-positively_regulated_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "positively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-ChemicalSubstance"
-				},
-				"predicate": "positively_regulated_by"
-			}],
-			"Disease-positively_regulated_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "positively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-Disease"
-				},
-				"predicate": "positively_regulated_by"
-			}],
-			"Disease-positively_regulated_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "positively_regulated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-Gene"
-				},
-				"predicate": "positively_regulated_by"
-			}],
-			"Disease-positively_regulates-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "positively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-ChemicalSubstance"
-				},
-				"predicate": "positively_regulates"
-			}],
-			"Disease-positively_regulates-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "positively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-Disease"
-				},
-				"predicate": "positively_regulates"
-			}],
-			"Disease-positively_regulates-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "positively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-BiologicalProcess"
-				},
-				"predicate": "positively_regulates"
-			}],
-			"Disease-positively_regulates-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "positively_regulates"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-Gene"
-				},
-				"predicate": "positively_regulates"
-			}],
-			"Disease-prevented_by-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-AnatomicalEntity"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevented_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-ChemicalSubstance"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevented_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-BiologicalProcess"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevented_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-Disease"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevented_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-PhenotypicFeature"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevented_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "prevented_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-Gene"
-				},
-				"predicate": "prevented_by"
-			}],
-			"Disease-prevents-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "prevents"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-prevents-Disease"
-				},
-				"predicate": "prevents"
-			}],
-			"Disease-related_to-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-AnatomicalEntity"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Cell"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-ChemicalSubstance"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-BiologicalProcess"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Disease"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-PhenotypicFeature"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Gene"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-related_to-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "related_to"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-related_to-CellularComponent"
-				},
-				"predicate": "related_to"
-			}],
-			"Disease-treated_by-AnatomicalEntity": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "AnatomicalEntity"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-AnatomicalEntity"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-Cell": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Cell"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Cell"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-ChemicalSubstance": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "ChemicalSubstance"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-ChemicalSubstance"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-BiologicalProcess": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "BiologicalProcess"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-BiologicalProcess"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Disease"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-PhenotypicFeature": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "PhenotypicFeature"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-PhenotypicFeature"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-Gene": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Gene"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Gene"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treated_by-CellularComponent": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "CellularComponent"
-				}],
-				"parameters": {
-					"fields": "treated_by"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-CellularComponent"
-				},
-				"predicate": "treated_by"
-			}],
-			"Disease-treats-Disease": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"method": "post",
-				"source": "SEMMED",
-				"outputs": [{
-					"id": "UMLS",
-					"semantic": "Disease"
-				}],
-				"parameters": {
-					"fields": "treats"
-				},
-				"path": "/query",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "umls"
-					}
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/Disease-treats-Disease"
-				},
-				"predicate": "treats"
-			}]
+			"Disease-affected_by-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-AnatomicalEntity"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Cell"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-ChemicalSubstance"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-BiologicalProcess"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Disease"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-PhenotypicFeature"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-Gene"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affected_by-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "affected_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affected_by-CellularComponent"
+					},
+					"predicate": "affected_by"
+				}
+			],
+			"Disease-affects-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-AnatomicalEntity"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-Cell"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-ChemicalSubstance"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-BiologicalProcess"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-Disease"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-PhenotypicFeature"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-Gene"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-affects-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "affects"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-affects-CellularComponent"
+					},
+					"predicate": "affects"
+				}
+			],
+			"Disease-caused_by-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-AnatomicalEntity"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Cell"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-ChemicalSubstance"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-BiologicalProcess"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Disease"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-PhenotypicFeature"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-Gene"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-caused_by-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "caused_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-caused_by-CellularComponent"
+					},
+					"predicate": "caused_by"
+				}
+			],
+			"Disease-causes-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "causes"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-causes-Disease"
+					},
+					"predicate": "causes"
+				}
+			],
+			"Disease-causes-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "causes"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-causes-BiologicalProcess"
+					},
+					"predicate": "causes"
+				}
+			],
+			"Disease-coexists_with-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-AnatomicalEntity"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Cell"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-ChemicalSubstance"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-BiologicalProcess"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Disease"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-PhenotypicFeature"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-Gene"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-coexists_with-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "coexists_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-coexists_with-CellularComponent"
+					},
+					"predicate": "coexists_with"
+				}
+			],
+			"Disease-derives_from-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "derives_from"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-derives_from-ChemicalSubstance"
+					},
+					"predicate": "derives_from"
+				}
+			],
+			"Disease-derives_from-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "derives_from"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-derives_from-Gene"
+					},
+					"predicate": "derives_from"
+				}
+			],
+			"Disease-derives_info-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "derives_info"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-derives_info-ChemicalSubstance"
+					},
+					"predicate": "derives_info"
+				}
+			],
+			"Disease-disrupted_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-ChemicalSubstance"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupted_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-BiologicalProcess"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupted_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-Disease"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupted_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-PhenotypicFeature"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupted_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-Gene"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupted_by-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "disrupted_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupted_by-CellularComponent"
+					},
+					"predicate": "disrupted_by"
+				}
+			],
+			"Disease-disrupts-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-AnatomicalEntity"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Cell"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-BiologicalProcess"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Disease"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-PhenotypicFeature"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-Gene"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-disrupts-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "disrupts"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-disrupts-CellularComponent"
+					},
+					"predicate": "disrupts"
+				}
+			],
+			"Disease-negatively_regulated_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-ChemicalSubstance"
+					},
+					"predicate": "negatively_regulated_by"
+				}
+			],
+			"Disease-negatively_regulated_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-BiologicalProcess"
+					},
+					"predicate": "negatively_regulated_by"
+				}
+			],
+			"Disease-negatively_regulated_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-Disease"
+					},
+					"predicate": "negatively_regulated_by"
+				}
+			],
+			"Disease-negatively_regulated_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-PhenotypicFeature"
+					},
+					"predicate": "negatively_regulated_by"
+				}
+			],
+			"Disease-negatively_regulated_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulated_by-Gene"
+					},
+					"predicate": "negatively_regulated_by"
+				}
+			],
+			"Disease-negatively_regulates-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-ChemicalSubstance"
+					},
+					"predicate": "negatively_regulates"
+				}
+			],
+			"Disease-negatively_regulates-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-BiologicalProcess"
+					},
+					"predicate": "negatively_regulates"
+				}
+			],
+			"Disease-negatively_regulates-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-Disease"
+					},
+					"predicate": "negatively_regulates"
+				}
+			],
+			"Disease-negatively_regulates-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "negatively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-negatively_regulates-Gene"
+					},
+					"predicate": "negatively_regulates"
+				}
+			],
+			"Disease-physically_interacts_with-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-ChemicalSubstance"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-physically_interacts_with-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-BiologicalProcess"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-physically_interacts_with-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-Disease"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-physically_interacts_with-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-PhenotypicFeature"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-physically_interacts_with-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-Gene"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-physically_interacts_with-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "physically_interacts_with"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-physically_interacts_with-CellularComponent"
+					},
+					"predicate": "physically_interacts_with"
+				}
+			],
+			"Disease-positively_regulated_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-ChemicalSubstance"
+					},
+					"predicate": "positively_regulated_by"
+				}
+			],
+			"Disease-positively_regulated_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-Disease"
+					},
+					"predicate": "positively_regulated_by"
+				}
+			],
+			"Disease-positively_regulated_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulated_by-Gene"
+					},
+					"predicate": "positively_regulated_by"
+				}
+			],
+			"Disease-positively_regulates-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-ChemicalSubstance"
+					},
+					"predicate": "positively_regulates"
+				}
+			],
+			"Disease-positively_regulates-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-Disease"
+					},
+					"predicate": "positively_regulates"
+				}
+			],
+			"Disease-positively_regulates-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-BiologicalProcess"
+					},
+					"predicate": "positively_regulates"
+				}
+			],
+			"Disease-positively_regulates-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "positively_regulates"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-positively_regulates-Gene"
+					},
+					"predicate": "positively_regulates"
+				}
+			],
+			"Disease-prevented_by-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-AnatomicalEntity"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevented_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-ChemicalSubstance"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevented_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-BiologicalProcess"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevented_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-Disease"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevented_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-PhenotypicFeature"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevented_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "prevented_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevented_by-Gene"
+					},
+					"predicate": "prevented_by"
+				}
+			],
+			"Disease-prevents-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "prevents"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-prevents-Disease"
+					},
+					"predicate": "prevents"
+				}
+			],
+			"Disease-related_to-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-AnatomicalEntity"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Cell"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-ChemicalSubstance"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-BiologicalProcess"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Disease"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-PhenotypicFeature"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-Gene"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-related_to-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "related_to"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-related_to-CellularComponent"
+					},
+					"predicate": "related_to"
+				}
+			],
+			"Disease-treated_by-AnatomicalEntity": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "AnatomicalEntity"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-AnatomicalEntity"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-Cell": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Cell"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Cell"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-ChemicalSubstance": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "ChemicalSubstance"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-ChemicalSubstance"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-BiologicalProcess": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-BiologicalProcess"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Disease"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-PhenotypicFeature": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "PhenotypicFeature"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-PhenotypicFeature"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-Gene": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Gene"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-Gene"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treated_by-CellularComponent": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "CellularComponent"
+						}
+					],
+					"parameters": {
+						"fields": "treated_by"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treated_by-CellularComponent"
+					},
+					"predicate": "treated_by"
+				}
+			],
+			"Disease-treats-Disease": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"method": "post",
+					"source": "SEMMED",
+					"outputs": [
+						{
+							"id": "UMLS",
+							"semantic": "Disease"
+						}
+					],
+					"parameters": {
+						"fields": "treats"
+					},
+					"path": "/query",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "umls"
+						}
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/Disease-treats-Disease"
+					},
+					"predicate": "treats"
+				}
+			]
 		},
-
 		"x-bte-response-mapping": {
 			"Disease-affected_by-AnatomicalEntity": {
 				"umls": "affected_by.umls",
@@ -3911,6 +4500,5 @@
 				"pmid": "treats.pmid"
 			}
 		}
-
 	}
 }
