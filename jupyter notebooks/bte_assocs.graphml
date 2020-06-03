@@ -4,93 +4,93 @@
   <key attr.name="label" attr.type="string" for="edge" id="d1" />
   <key attr.name="label" attr.type="string" for="node" id="d0" />
   <graph edgedefault="directed">
-    <node id="Gene" label="Gene" />
-    <node id="MolecularActivity" label="MolecularActivity" />
-    <node id="NCBIGene" label="NCBIGene">
+    <node id="Gene" labels=":Gene" />
+    <node id="MolecularActivity" labels=":MolecularActivity" />
+    <node id="NCBIGene" labels=":NCBIGene">
       <data key="d0">NCBIGene</data>
     </node>
-    <node id="GO" label="GO">
+    <node id="GO" labels=":GO">
       <data key="d0">GO</data>
     </node>
-    <node id="BiologicalProcess" label="BiologicalProcess" />
-    <node id="CellularComponent" label="CellularComponent" />
-    <node id="Pathway" label="Pathway" />
-    <node id="WIKIPATHWAYS" label="WIKIPATHWAYS">
+    <node id="BiologicalProcess" labels=":BiologicalProcess" />
+    <node id="CellularComponent" labels=":CellularComponent" />
+    <node id="Pathway" labels=":Pathway" />
+    <node id="WIKIPATHWAYS" labels=":WIKIPATHWAYS">
       <data key="d0">WIKIPATHWAYS</data>
     </node>
-    <node id="Reactome" label="Reactome">
+    <node id="Reactome" labels=":Reactome">
       <data key="d0">Reactome</data>
     </node>
-    <node id="MGI" label="MGI">
+    <node id="MGI" labels=":MGI">
       <data key="d0">MGI</data>
     </node>
-    <node id="Disease" label="Disease" />
-    <node id="MESH" label="MESH">
+    <node id="Disease" labels=":Disease" />
+    <node id="MESH" labels=":MESH">
       <data key="d0">MESH</data>
     </node>
-    <node id="ChemicalSubstance" label="ChemicalSubstance" />
-    <node id="CHEMBL.COMPOUND" label="CHEMBL.COMPOUND">
+    <node id="ChemicalSubstance" labels=":ChemicalSubstance" />
+    <node id="CHEMBL.COMPOUND" labels=":CHEMBL.COMPOUND">
       <data key="d0">CHEMBL.COMPOUND</data>
     </node>
-    <node id="CHEBI" label="CHEBI">
+    <node id="CHEBI" labels=":CHEBI">
       <data key="d0">CHEBI</data>
     </node>
-    <node id="DOID" label="DOID">
+    <node id="DOID" labels=":DOID">
       <data key="d0">DOID</data>
     </node>
-    <node id="MONDO" label="MONDO">
+    <node id="MONDO" labels=":MONDO">
       <data key="d0">MONDO</data>
     </node>
-    <node id="AnatomicalEntity" label="AnatomicalEntity" />
-    <node id="UBERON" label="UBERON">
+    <node id="AnatomicalEntity" labels=":AnatomicalEntity" />
+    <node id="UBERON" labels=":UBERON">
       <data key="d0">UBERON</data>
     </node>
-    <node id="HGNC" label="HGNC">
+    <node id="HGNC" labels=":HGNC">
       <data key="d0">HGNC</data>
     </node>
-    <node id="PhenotypicFeature" label="PhenotypicFeature" />
-    <node id="HP" label="HP">
+    <node id="PhenotypicFeature" labels=":PhenotypicFeature" />
+    <node id="HP" labels=":HP">
       <data key="d0">HP</data>
     </node>
-    <node id="UMLS" label="UMLS">
+    <node id="UMLS" labels=":UMLS">
       <data key="d0">UMLS</data>
     </node>
-    <node id="Protein" label="Protein" />
-    <node id="PR" label="PR">
+    <node id="Protein" labels=":Protein" />
+    <node id="PR" labels=":PR">
       <data key="d0">PR</data>
     </node>
-    <node id="Cell" label="Cell" />
-    <node id="CL" label="CL">
+    <node id="Cell" labels=":Cell" />
+    <node id="CL" labels=":CL">
       <data key="d0">CL</data>
     </node>
-    <node id="MOP" label="MOP">
+    <node id="MOP" labels=":MOP">
       <data key="d0">MOP</data>
     </node>
-    <node id="GenomicEntity" label="GenomicEntity" />
-    <node id="SO" label="SO">
+    <node id="GenomicEntity" labels=":GenomicEntity" />
+    <node id="SO" labels=":SO">
       <data key="d0">SO</data>
     </node>
-    <node id="Transcript" label="Transcript" />
-    <node id="ENSEMBL" label="ENSEMBL">
+    <node id="Transcript" labels=":Transcript" />
+    <node id="ENSEMBL" labels=":ENSEMBL">
       <data key="d0">ENSEMBL</data>
     </node>
-    <node id="UNIPROTKB" label="UNIPROTKB">
+    <node id="UNIPROTKB" labels=":UNIPROTKB">
       <data key="d0">UNIPROTKB</data>
     </node>
-    <node id="MP" label="MP">
+    <node id="MP" labels=":MP">
       <data key="d0">MP</data>
     </node>
-    <node id="SYMBOL" label="SYMBOL">
+    <node id="SYMBOL" labels=":SYMBOL">
       <data key="d0">SYMBOL</data>
     </node>
-    <node id="SequenceVariant" label="SequenceVariant" />
-    <node id="DBSNP" label="DBSNP">
+    <node id="SequenceVariant" labels=":SequenceVariant" />
+    <node id="DBSNP" labels=":DBSNP">
       <data key="d0">DBSNP</data>
     </node>
-    <node id="OMIM" label="OMIM">
+    <node id="OMIM" labels=":OMIM">
       <data key="d0">OMIM</data>
     </node>
-    <node id="DRUGBANK" label="DRUGBANK">
+    <node id="DRUGBANK" labels=":DRUGBANK">
       <data key="d0">DRUGBANK</data>
     </node>
     <edge id="e0" label="functional_association" source="Gene" target="MolecularActivity">
