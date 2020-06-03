@@ -1,0 +1,2697 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="api" attr.type="string" for="edge" id="d1" />
+  <key attr.name="label" attr.type="string" for="edge" id="d0" />
+  <graph edgedefault="directed">
+    <node id="Gene" />
+    <node id="MolecularActivity" />
+    <node id="BiologicalProcess" />
+    <node id="CellularComponent" />
+    <node id="Pathway" />
+    <node id="Disease" />
+    <node id="ChemicalSubstance" />
+    <node id="AnatomicalEntity" />
+    <node id="PhenotypicFeature" />
+    <node id="Protein" />
+    <node id="Cell" />
+    <node id="GenomicEntity" />
+    <node id="Transcript" />
+    <node id="SequenceVariant" />
+    <edge id="e0" source="Gene" target="MolecularActivity">
+      <data key="d0">functional_association</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e1" source="Gene" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e2" source="Gene" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e3" source="Gene" target="BiologicalProcess">
+      <data key="d0">functional_association</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e4" source="Gene" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e5" source="Gene" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e6" source="Gene" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e7" source="Gene" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e8" source="Gene" target="BiologicalProcess">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e9" source="Gene" target="BiologicalProcess">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e10" source="Gene" target="BiologicalProcess">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e11" source="Gene" target="BiologicalProcess">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e12" source="Gene" target="BiologicalProcess">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e13" source="Gene" target="BiologicalProcess">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e14" source="Gene" target="BiologicalProcess">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e15" source="Gene" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e16" source="Gene" target="CellularComponent">
+      <data key="d0">functional_association</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e17" source="Gene" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e18" source="Gene" target="CellularComponent">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e19" source="Gene" target="CellularComponent">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e20" source="Gene" target="CellularComponent">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e21" source="Gene" target="CellularComponent">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e22" source="Gene" target="CellularComponent">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e23" source="Gene" target="CellularComponent">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e24" source="Gene" target="CellularComponent">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e25" source="Gene" target="CellularComponent">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e26" source="Gene" target="Pathway">
+      <data key="d0">functional_association</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e27" source="Gene" target="Pathway">
+      <data key="d0">functional_association</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e28" source="Gene" target="Gene">
+      <data key="d0">homologous_to</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e29" source="Gene" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e30" source="Gene" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e31" source="Gene" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e32" source="Gene" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e33" source="Gene" target="Gene">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e34" source="Gene" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e35" source="Gene" target="Gene">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e36" source="Gene" target="Gene">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e37" source="Gene" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e38" source="Gene" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e39" source="Gene" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e40" source="Gene" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e41" source="Gene" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e42" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CTD API</data>
+    </edge>
+    <edge id="e43" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e44" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e45" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e46" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat Hetio API</data>
+    </edge>
+    <edge id="e47" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e48" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e49" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e50" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e51" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat Hetio API</data>
+    </edge>
+    <edge id="e52" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e53" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">MGIgene2phenotype API</data>
+    </edge>
+    <edge id="e54" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e55" source="Gene" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e56" source="Gene" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e57" source="Gene" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e58" source="Gene" target="Disease">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e59" source="Gene" target="Disease">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e60" source="Gene" target="Disease">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e61" source="Gene" target="Disease">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e62" source="Gene" target="Disease">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e63" source="Gene" target="Disease">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e64" source="Gene" target="Disease">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e65" source="Gene" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e66" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e67" source="Gene" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e68" source="Gene" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">DISEASES API</data>
+    </edge>
+    <edge id="e69" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e70" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e71" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e72" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e73" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CHEMBIO API</data>
+    </edge>
+    <edge id="e74" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e75" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e76" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e77" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e78" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CHEMBIO API</data>
+    </edge>
+    <edge id="e79" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">OpenTarget API</data>
+    </edge>
+    <edge id="e80" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e81" source="Gene" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e82" source="Gene" target="ChemicalSubstance">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e83" source="Gene" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e84" source="Gene" target="ChemicalSubstance">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e85" source="Gene" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e86" source="Gene" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e87" source="Gene" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e88" source="Gene" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e89" source="Gene" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e90" source="Gene" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e91" source="Gene" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">DGIdb API</data>
+    </edge>
+    <edge id="e92" source="Gene" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e93" source="Gene" target="ChemicalSubstance">
+      <data key="d0">metabolize</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e94" source="Gene" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e95" source="Gene" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e96" source="Gene" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e97" source="Gene" target="AnatomicalEntity">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e98" source="Gene" target="AnatomicalEntity">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e99" source="Gene" target="AnatomicalEntity">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e100" source="Gene" target="AnatomicalEntity">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e101" source="Gene" target="AnatomicalEntity">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e102" source="Gene" target="AnatomicalEntity">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e103" source="Gene" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e104" source="Gene" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e105" source="Gene" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">MGIgene2phenotype API</data>
+    </edge>
+    <edge id="e106" source="Gene" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">EBIgene2phenotype API</data>
+    </edge>
+    <edge id="e107" source="Gene" target="PhenotypicFeature">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e108" source="Gene" target="PhenotypicFeature">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e109" source="Gene" target="PhenotypicFeature">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e110" source="Gene" target="PhenotypicFeature">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e111" source="Gene" target="PhenotypicFeature">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e112" source="Gene" target="PhenotypicFeature">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e113" source="Gene" target="PhenotypicFeature">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e114" source="Gene" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e115" source="Gene" target="Transcript">
+      <data key="d0">gene_to_transcript_relationship</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e116" source="Gene" target="Protein">
+      <data key="d0">has_gene_product</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e117" source="Gene" target="Protein">
+      <data key="d0">has_gene_product</data>
+      <data key="d1">MyGene.info API</data>
+    </edge>
+    <edge id="e118" source="Gene" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e119" source="Gene" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e120" source="Gene" target="Cell">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e121" source="Gene" target="Cell">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e122" source="Gene" target="Cell">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e123" source="Gene" target="Cell">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e124" source="Gene" target="Cell">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e125" source="Gene" target="Cell">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e126" source="Gene" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Gene API</data>
+    </edge>
+    <edge id="e127" source="Gene" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Gene API</data>
+    </edge>
+    <edge id="e128" source="MolecularActivity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e129" source="MolecularActivity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e130" source="MolecularActivity" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e131" source="MolecularActivity" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e132" source="MolecularActivity" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e133" source="MolecularActivity" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e134" source="MolecularActivity" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e135" source="MolecularActivity" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e136" source="MolecularActivity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e137" source="MolecularActivity" target="MolecularActivity">
+      <data key="d0">has_subclass</data>
+      <data key="d1">QuickGO API</data>
+    </edge>
+    <edge id="e138" source="MolecularActivity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e139" source="MolecularActivity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e140" source="MolecularActivity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e141" source="MolecularActivity" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e142" source="MolecularActivity" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e143" source="MolecularActivity" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e144" source="MolecularActivity" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e145" source="MolecularActivity" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e146" source="MolecularActivity" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e147" source="MolecularActivity" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e148" source="MolecularActivity" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e149" source="MolecularActivity" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e150" source="MolecularActivity" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Molecular Activity API</data>
+    </edge>
+    <edge id="e151" source="BiologicalProcess" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e152" source="BiologicalProcess" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e153" source="BiologicalProcess" target="Gene">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e154" source="BiologicalProcess" target="Gene">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e155" source="BiologicalProcess" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e156" source="BiologicalProcess" target="Gene">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e157" source="BiologicalProcess" target="Gene">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e158" source="BiologicalProcess" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e159" source="BiologicalProcess" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e160" source="BiologicalProcess" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e161" source="BiologicalProcess" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e162" source="BiologicalProcess" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e163" source="BiologicalProcess" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e164" source="BiologicalProcess" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e165" source="BiologicalProcess" target="Cell">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e166" source="BiologicalProcess" target="Cell">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e167" source="BiologicalProcess" target="Cell">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e168" source="BiologicalProcess" target="Cell">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e169" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e170" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e171" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e172" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e173" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e174" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e175" source="BiologicalProcess" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e176" source="BiologicalProcess" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e177" source="BiologicalProcess" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e178" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e179" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e180" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e181" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e182" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e183" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e184" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e185" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e186" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e187" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e188" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e189" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e190" source="BiologicalProcess" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e191" source="BiologicalProcess" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e192" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e193" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e194" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e195" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e196" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e197" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e198" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e199" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e200" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e201" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e202" source="BiologicalProcess" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e203" source="BiologicalProcess" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e204" source="BiologicalProcess" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e205" source="BiologicalProcess" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e206" source="BiologicalProcess" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e207" source="BiologicalProcess" target="Disease">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e208" source="BiologicalProcess" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e209" source="BiologicalProcess" target="Disease">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e210" source="BiologicalProcess" target="Disease">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e211" source="BiologicalProcess" target="Disease">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e212" source="BiologicalProcess" target="Disease">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e213" source="BiologicalProcess" target="Disease">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e214" source="BiologicalProcess" target="Disease">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e215" source="BiologicalProcess" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e216" source="BiologicalProcess" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e217" source="BiologicalProcess" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e218" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Biological Process API</data>
+    </edge>
+    <edge id="e219" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e220" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e221" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e222" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e223" source="BiologicalProcess" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e224" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e225" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e226" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e227" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e228" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e229" source="BiologicalProcess" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Biological Process API</data>
+    </edge>
+    <edge id="e230" source="CellularComponent" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e231" source="CellularComponent" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e232" source="CellularComponent" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e233" source="CellularComponent" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e234" source="CellularComponent" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e235" source="CellularComponent" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e236" source="CellularComponent" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e237" source="CellularComponent" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e238" source="CellularComponent" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e239" source="CellularComponent" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e240" source="CellularComponent" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cellular Component API</data>
+    </edge>
+    <edge id="e241" source="Pathway" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e242" source="Pathway" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e243" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e244" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e245" source="Disease" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e246" source="Disease" target="ChemicalSubstance">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e247" source="Disease" target="ChemicalSubstance">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e248" source="Disease" target="ChemicalSubstance">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e249" source="Disease" target="ChemicalSubstance">
+      <data key="d0">derives_from</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e250" source="Disease" target="ChemicalSubstance">
+      <data key="d0">derives_info</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e251" source="Disease" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e252" source="Disease" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e253" source="Disease" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e254" source="Disease" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e255" source="Disease" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e256" source="Disease" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e257" source="Disease" target="ChemicalSubstance">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e258" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e259" source="Disease" target="ChemicalSubstance">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e260" source="Disease" target="ChemicalSubstance">
+      <data key="d0">treated_by</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e261" source="Disease" target="ChemicalSubstance">
+      <data key="d0">contraindicated_by</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e262" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e263" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e264" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e265" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e266" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e267" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e268" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e269" source="Disease" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e270" source="Disease" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e271" source="Disease" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e272" source="Disease" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e273" source="Disease" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e274" source="Disease" target="BiologicalProcess">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e275" source="Disease" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e276" source="Disease" target="BiologicalProcess">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e277" source="Disease" target="BiologicalProcess">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e278" source="Disease" target="BiologicalProcess">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e279" source="Disease" target="BiologicalProcess">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e280" source="Disease" target="BiologicalProcess">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e281" source="Disease" target="BiologicalProcess">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e282" source="Disease" target="BiologicalProcess">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e283" source="Disease" target="BiologicalProcess">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e284" source="Disease" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e285" source="Disease" target="BiologicalProcess">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e286" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e287" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">DISEASES API</data>
+    </edge>
+    <edge id="e288" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">MGIgene2phenotype API</data>
+    </edge>
+    <edge id="e289" source="Disease" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e290" source="Disease" target="Gene">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e291" source="Disease" target="Gene">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e292" source="Disease" target="Gene">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e293" source="Disease" target="Gene">
+      <data key="d0">derives_from</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e294" source="Disease" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e295" source="Disease" target="Gene">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e296" source="Disease" target="Gene">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e297" source="Disease" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e298" source="Disease" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e299" source="Disease" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e300" source="Disease" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e301" source="Disease" target="Gene">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e302" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e303" source="Disease" target="Gene">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e304" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e305" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e306" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e307" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e308" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e309" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat Hetio API</data>
+    </edge>
+    <edge id="e310" source="Disease" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e311" source="Disease" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e312" source="Disease" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e313" source="Disease" target="Cell">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e314" source="Disease" target="Cell">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e315" source="Disease" target="Cell">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e316" source="Disease" target="Cell">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e317" source="Disease" target="Cell">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e318" source="Disease" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e319" source="Disease" target="Cell">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e320" source="Disease" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e321" source="Disease" target="CellularComponent">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e322" source="Disease" target="CellularComponent">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e323" source="Disease" target="CellularComponent">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e324" source="Disease" target="CellularComponent">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e325" source="Disease" target="CellularComponent">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e326" source="Disease" target="CellularComponent">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e327" source="Disease" target="CellularComponent">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e328" source="Disease" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e329" source="Disease" target="CellularComponent">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e330" source="Disease" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e331" source="Disease" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e332" source="Disease" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e333" source="Disease" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e334" source="Disease" target="Disease">
+      <data key="d0">has_subclass</data>
+      <data key="d1">Ontology Lookup Service API</data>
+    </edge>
+    <edge id="e335" source="Disease" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e336" source="Disease" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e337" source="Disease" target="Disease">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e338" source="Disease" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e339" source="Disease" target="Disease">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e340" source="Disease" target="Disease">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e341" source="Disease" target="Disease">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e342" source="Disease" target="Disease">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e343" source="Disease" target="Disease">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e344" source="Disease" target="Disease">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e345" source="Disease" target="Disease">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e346" source="Disease" target="Disease">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e347" source="Disease" target="Disease">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e348" source="Disease" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e349" source="Disease" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e350" source="Disease" target="Disease">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e351" source="Disease" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e352" source="Disease" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Disease API</data>
+    </edge>
+    <edge id="e353" source="Disease" target="AnatomicalEntity">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e354" source="Disease" target="AnatomicalEntity">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e355" source="Disease" target="AnatomicalEntity">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e356" source="Disease" target="AnatomicalEntity">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e357" source="Disease" target="AnatomicalEntity">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e358" source="Disease" target="AnatomicalEntity">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e359" source="Disease" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e360" source="Disease" target="AnatomicalEntity">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e361" source="Disease" target="PhenotypicFeature">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e362" source="Disease" target="PhenotypicFeature">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e363" source="Disease" target="PhenotypicFeature">
+      <data key="d0">caused_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e364" source="Disease" target="PhenotypicFeature">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e365" source="Disease" target="PhenotypicFeature">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e366" source="Disease" target="PhenotypicFeature">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e367" source="Disease" target="PhenotypicFeature">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e368" source="Disease" target="PhenotypicFeature">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e369" source="Disease" target="PhenotypicFeature">
+      <data key="d0">prevented_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e370" source="Disease" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e371" source="Disease" target="PhenotypicFeature">
+      <data key="d0">treated_by</data>
+      <data key="d1">SEMMED Disease API</data>
+    </edge>
+    <edge id="e372" source="Disease" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e373" source="Disease" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e374" source="Disease" target="SequenceVariant">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e375" source="Disease" target="SequenceVariant">
+      <data key="d0">related_to</data>
+      <data key="d1">MyVariant.info API</data>
+    </edge>
+    <edge id="e376" source="Disease" target="Pathway">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e377" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CTD API</data>
+    </edge>
+    <edge id="e378" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e379" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e380" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e381" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e382" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e383" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CHEMBIO API</data>
+    </edge>
+    <edge id="e384" source="ChemicalSubstance" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e385" source="ChemicalSubstance" target="Gene">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e386" source="ChemicalSubstance" target="Gene">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e387" source="ChemicalSubstance" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e388" source="ChemicalSubstance" target="Gene">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e389" source="ChemicalSubstance" target="Gene">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e390" source="ChemicalSubstance" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e391" source="ChemicalSubstance" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e392" source="ChemicalSubstance" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e393" source="ChemicalSubstance" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e394" source="ChemicalSubstance" target="Gene">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e395" source="ChemicalSubstance" target="Gene">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e396" source="ChemicalSubstance" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e397" source="ChemicalSubstance" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">DGIdb API</data>
+    </edge>
+    <edge id="e398" source="ChemicalSubstance" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e399" source="ChemicalSubstance" target="Gene">
+      <data key="d0">metabolic_processing_affected_by</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e400" source="ChemicalSubstance" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e401" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e402" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e403" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e404" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e405" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e406" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e407" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scibite API</data>
+    </edge>
+    <edge id="e408" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat CORD19 Scigraph API</data>
+    </edge>
+    <edge id="e409" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat PHAROS API</data>
+    </edge>
+    <edge id="e410" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">Automat HMDB API</data>
+    </edge>
+    <edge id="e411" source="ChemicalSubstance" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e412" source="ChemicalSubstance" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e413" source="ChemicalSubstance" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e414" source="ChemicalSubstance" target="Disease">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e415" source="ChemicalSubstance" target="Disease">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e416" source="ChemicalSubstance" target="Disease">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e417" source="ChemicalSubstance" target="Disease">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e418" source="ChemicalSubstance" target="Disease">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e419" source="ChemicalSubstance" target="Disease">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e420" source="ChemicalSubstance" target="Disease">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e421" source="ChemicalSubstance" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e422" source="ChemicalSubstance" target="Disease">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e423" source="ChemicalSubstance" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e424" source="ChemicalSubstance" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e425" source="ChemicalSubstance" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e426" source="ChemicalSubstance" target="Disease">
+      <data key="d0">contraindication</data>
+      <data key="d1">MyChem.info API</data>
+    </edge>
+    <edge id="e427" source="ChemicalSubstance" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e428" source="ChemicalSubstance" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e429" source="ChemicalSubstance" target="Cell">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e430" source="ChemicalSubstance" target="Cell">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e431" source="ChemicalSubstance" target="Cell">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e432" source="ChemicalSubstance" target="Cell">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e433" source="ChemicalSubstance" target="Cell">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e434" source="ChemicalSubstance" target="Cell">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e435" source="ChemicalSubstance" target="Cell">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e436" source="ChemicalSubstance" target="Cell">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e437" source="ChemicalSubstance" target="Cell">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e438" source="ChemicalSubstance" target="Cell">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e439" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e440" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e441" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e442" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e443" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e444" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e445" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e446" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e447" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e448" source="ChemicalSubstance" target="CellularComponent">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e449" source="ChemicalSubstance" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e450" source="ChemicalSubstance" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e451" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e452" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e453" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e454" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e455" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e456" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e457" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e458" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e459" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e460" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e461" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e462" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e463" source="ChemicalSubstance" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e464" source="ChemicalSubstance" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e465" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e466" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e467" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e468" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e469" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e470" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e471" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e472" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e473" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e474" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e475" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e476" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e477" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e478" source="ChemicalSubstance" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e479" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Chemical API</data>
+    </edge>
+    <edge id="e480" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e481" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e482" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e483" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e484" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e485" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e486" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e487" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e488" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e489" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e490" source="ChemicalSubstance" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e491" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e492" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">coexists_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e493" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e494" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e495" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e496" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e497" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e498" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e499" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e500" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e501" source="ChemicalSubstance" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Chemical API</data>
+    </edge>
+    <edge id="e502" source="AnatomicalEntity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e503" source="AnatomicalEntity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e504" source="AnatomicalEntity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e505" source="AnatomicalEntity" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e506" source="AnatomicalEntity" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e507" source="AnatomicalEntity" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e508" source="AnatomicalEntity" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e509" source="AnatomicalEntity" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e510" source="AnatomicalEntity" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e511" source="AnatomicalEntity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e512" source="AnatomicalEntity" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e513" source="AnatomicalEntity" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e514" source="AnatomicalEntity" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e515" source="AnatomicalEntity" target="CellularComponent">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e516" source="AnatomicalEntity" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e517" source="AnatomicalEntity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e518" source="AnatomicalEntity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e519" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e520" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e521" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e522" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e523" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e524" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">manifestation_of</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e525" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">preceded_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e526" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">precedes</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e527" source="AnatomicalEntity" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e528" source="AnatomicalEntity" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e529" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e530" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e531" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e532" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e533" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e534" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e535" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e536" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e537" source="AnatomicalEntity" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e538" source="AnatomicalEntity" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e539" source="AnatomicalEntity" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e540" source="AnatomicalEntity" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e541" source="AnatomicalEntity" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e542" source="AnatomicalEntity" target="Disease">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e543" source="AnatomicalEntity" target="Disease">
+      <data key="d0">manifested_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e544" source="AnatomicalEntity" target="Disease">
+      <data key="d0">preceded_by</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e545" source="AnatomicalEntity" target="Disease">
+      <data key="d0">precedes</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e546" source="AnatomicalEntity" target="Disease">
+      <data key="d0">predisposes</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e547" source="AnatomicalEntity" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e548" source="AnatomicalEntity" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e549" source="AnatomicalEntity" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Anatomy API</data>
+    </edge>
+    <edge id="e550" source="AnatomicalEntity" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e551" source="AnatomicalEntity" target="PhenotypicFeature">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Anatomy API</data>
+    </edge>
+    <edge id="e552" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e553" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e554" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">has_part</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e555" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e556" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e557" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">part_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e558" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e559" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e560" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e561" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e562" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e563" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e564" source="PhenotypicFeature" target="ChemicalSubstance">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e565" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e566" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e567" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e568" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e569" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">manifestation_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e570" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e571" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">preceded_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e572" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">precedes</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e573" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e574" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e575" source="PhenotypicFeature" target="BiologicalProcess">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e576" source="PhenotypicFeature" target="Disease">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e577" source="PhenotypicFeature" target="Disease">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e578" source="PhenotypicFeature" target="Disease">
+      <data key="d0">causes</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e579" source="PhenotypicFeature" target="Disease">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e580" source="PhenotypicFeature" target="Disease">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e581" source="PhenotypicFeature" target="Disease">
+      <data key="d0">has_part</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e582" source="PhenotypicFeature" target="Disease">
+      <data key="d0">has_subclass</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e583" source="PhenotypicFeature" target="Disease">
+      <data key="d0">manifestation_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e584" source="PhenotypicFeature" target="Disease">
+      <data key="d0">manifested_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e585" source="PhenotypicFeature" target="Disease">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e586" source="PhenotypicFeature" target="Disease">
+      <data key="d0">part_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e587" source="PhenotypicFeature" target="Disease">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e588" source="PhenotypicFeature" target="Disease">
+      <data key="d0">preceded_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e589" source="PhenotypicFeature" target="Disease">
+      <data key="d0">predisposes</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e590" source="PhenotypicFeature" target="Disease">
+      <data key="d0">prevents</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e591" source="PhenotypicFeature" target="Disease">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e592" source="PhenotypicFeature" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e593" source="PhenotypicFeature" target="Disease">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e594" source="PhenotypicFeature" target="Disease">
+      <data key="d0">treats</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e595" source="PhenotypicFeature" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e596" source="PhenotypicFeature" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e597" source="PhenotypicFeature" target="Gene">
+      <data key="d0">affected_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e598" source="PhenotypicFeature" target="Gene">
+      <data key="d0">disrupted_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e599" source="PhenotypicFeature" target="Gene">
+      <data key="d0">has_part</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e600" source="PhenotypicFeature" target="Gene">
+      <data key="d0">manifestation_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e601" source="PhenotypicFeature" target="Gene">
+      <data key="d0">negatively_regulated_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e602" source="PhenotypicFeature" target="Gene">
+      <data key="d0">negatively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e603" source="PhenotypicFeature" target="Gene">
+      <data key="d0">physically_interacts_with</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e604" source="PhenotypicFeature" target="Gene">
+      <data key="d0">positively_regulated_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e605" source="PhenotypicFeature" target="Gene">
+      <data key="d0">positively_regulates</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e606" source="PhenotypicFeature" target="Gene">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e607" source="PhenotypicFeature" target="Gene">
+      <data key="d0">produces</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e608" source="PhenotypicFeature" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e609" source="PhenotypicFeature" target="Gene">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e610" source="PhenotypicFeature" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e611" source="PhenotypicFeature" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">EBIgene2phenotype API</data>
+    </edge>
+    <edge id="e612" source="PhenotypicFeature" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e613" source="PhenotypicFeature" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">MGIgene2phenotype API</data>
+    </edge>
+    <edge id="e614" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e615" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e616" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">has_part</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e617" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">located_in</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e618" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">part_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e619" source="PhenotypicFeature" target="CellularComponent">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e620" source="PhenotypicFeature" target="Cell">
+      <data key="d0">affects</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e621" source="PhenotypicFeature" target="Cell">
+      <data key="d0">disrupts</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e622" source="PhenotypicFeature" target="Cell">
+      <data key="d0">located_in</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e623" source="PhenotypicFeature" target="Cell">
+      <data key="d0">part_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e624" source="PhenotypicFeature" target="Cell">
+      <data key="d0">produced_by</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e625" source="PhenotypicFeature" target="PhenotypicFeature">
+      <data key="d0">has_subclass</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e626" source="PhenotypicFeature" target="PhenotypicFeature">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e627" source="PhenotypicFeature" target="AnatomicalEntity">
+      <data key="d0">located_in</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e628" source="PhenotypicFeature" target="AnatomicalEntity">
+      <data key="d0">part_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e629" source="PhenotypicFeature" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e630" source="PhenotypicFeature" target="AnatomicalEntity">
+      <data key="d0">subclass_of</data>
+      <data key="d1">SEMMED Phenotype API</data>
+    </edge>
+    <edge id="e631" source="PhenotypicFeature" target="Pathway">
+      <data key="d0">related_to</data>
+      <data key="d1">BioLink API</data>
+    </edge>
+    <edge id="e632" source="Protein" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e633" source="Protein" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e634" source="Protein" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e635" source="Protein" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e636" source="Protein" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e637" source="Protein" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e638" source="Protein" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e639" source="Protein" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e640" source="Protein" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e641" source="Protein" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e642" source="Protein" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Protein API</data>
+    </edge>
+    <edge id="e643" source="Cell" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e644" source="Cell" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e645" source="Cell" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e646" source="Cell" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e647" source="Cell" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e648" source="Cell" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e649" source="Cell" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e650" source="Cell" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e651" source="Cell" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e652" source="Cell" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e653" source="Cell" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Cell API</data>
+    </edge>
+    <edge id="e654" source="GenomicEntity" target="Gene">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e655" source="GenomicEntity" target="Protein">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e656" source="GenomicEntity" target="Cell">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e657" source="GenomicEntity" target="CellularComponent">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e658" source="GenomicEntity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e659" source="GenomicEntity" target="MolecularActivity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e660" source="GenomicEntity" target="BiologicalProcess">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e661" source="GenomicEntity" target="GenomicEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e662" source="GenomicEntity" target="ChemicalSubstance">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e663" source="GenomicEntity" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e664" source="GenomicEntity" target="AnatomicalEntity">
+      <data key="d0">related_to</data>
+      <data key="d1">CORD Genomic Entity API</data>
+    </edge>
+    <edge id="e665" source="SequenceVariant" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">mydisease.info API</data>
+    </edge>
+    <edge id="e666" source="SequenceVariant" target="Disease">
+      <data key="d0">related_to</data>
+      <data key="d1">MyVariant.info API</data>
+    </edge>
+    <edge id="e667" source="SequenceVariant" target="Gene">
+      <data key="d0">located_in</data>
+      <data key="d1">MyVariant.info API</data>
+    </edge>
+    <edge id="e668" source="SequenceVariant" target="Gene">
+      <data key="d0">located_in</data>
+      <data key="d1">LitVar API</data>
+    </edge>
+  </graph>
+</graphml>
