@@ -2,49 +2,49 @@
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <key attr.name="api" attr.type="string" for="edge" id="d2" />
   <key attr.name="label" attr.type="string" for="edge" id="d1" />
-  <key attr.name="label" attr.type="string" for="node" id="d0" />
+  <key attr.name="label" attr.type="string" for="node" id="label" />
   <graph edgedefault="directed">
     <node id="n0" labels=":Gene">
-      <data key="d0">Gene</data>
+      <data key="label">Gene</data>
     </node>
     <node id="n1" labels=":MolecularActivity">
-      <data key="d0">MolecularActivity</data>
+      <data key="label">MolecularActivity</data>
     </node>
     <node id="n2" labels=":BiologicalProcess">
-      <data key="d0">BiologicalProcess</data>
+      <data key="label">BiologicalProcess</data>
     </node>
     <node id="n3" labels=":CellularComponent">
-      <data key="d0">CellularComponent</data>
+      <data key="label">CellularComponent</data>
     </node>
     <node id="n4" labels=":Pathway">
-      <data key="d0">Pathway</data>
+      <data key="label">Pathway</data>
     </node>
     <node id="n5" labels=":Disease">
-      <data key="d0">Disease</data>
+      <data key="label">Disease</data>
     </node>
     <node id="n6" labels=":ChemicalSubstance">
-      <data key="d0">ChemicalSubstance</data>
+      <data key="label">ChemicalSubstance</data>
     </node>
     <node id="n7" labels=":AnatomicalEntity">
-      <data key="d0">AnatomicalEntity</data>
+      <data key="label">AnatomicalEntity</data>
     </node>
     <node id="n8" labels=":PhenotypicFeature">
-      <data key="d0">PhenotypicFeature</data>
+      <data key="label">PhenotypicFeature</data>
     </node>
     <node id="n9" labels=":Protein">
-      <data key="d0">Protein</data>
+      <data key="label">Protein</data>
     </node>
     <node id="n10" labels=":Cell">
-      <data key="d0">Cell</data>
+      <data key="label">Cell</data>
     </node>
     <node id="n11" labels=":GenomicEntity">
-      <data key="d0">GenomicEntity</data>
+      <data key="label">GenomicEntity</data>
     </node>
     <node id="n12" labels=":Transcript">
-      <data key="d0">Transcript</data>
+      <data key="label">Transcript</data>
     </node>
     <node id="n13" labels=":SequenceVariant">
-      <data key="d0">SequenceVariant</data>
+      <data key="label">SequenceVariant</data>
     </node>
     <edge id="e0" label="homologous_to" source="n0" target="n0">
       <data key="d1">homologous_to</data>
