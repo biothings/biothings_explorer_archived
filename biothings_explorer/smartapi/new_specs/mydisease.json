@@ -15,7 +15,7 @@
   "servers": [
     {
       "description": "Production server",
-      "url": "http://52.42.228.156/v1"
+      "url": "https://mydisease.info/v1"
     }
   ],
   "tags": [
