@@ -1,5 +1,5 @@
 """
-Function for filtering based on the number of edges connected to each node
+Function for filtering based on the number of edges connected to each node/degree
 
 Parameters:
     G - A networkX graph
@@ -9,10 +9,17 @@ Returns:
     A networkX graph with the top count results
 """
 
-def filter_num_edges(G, count=50): #takes input G as networkX graph
+import pandas as pd
+
+def filter_node_degree(G, count=50): #takes input G as networkX graph
+
+    try:
+        count = int(count)
+    except ValueError:
+        return 
 
     degrees = []
-    for i,node in enumerate(G.nodes):
+    for node in G.nodes:
         degrees.append(G.degree(node))
 
     data = {'node':G.nodes, 'degree':degrees}
@@ -23,7 +30,7 @@ def filter_num_edges(G, count=50): #takes input G as networkX graph
     subG = G.subgraph(filtered)
 
     for i,node in enumerate(filtered):
-        subG.nodes.data()[node]['filteredBy'] = 'edges'
+        subG.nodes.data()[node]['filteredBy'] = 'NodeDegree'
         subG.nodes.data()[node]['rank'] = i+1
 
     return subG
