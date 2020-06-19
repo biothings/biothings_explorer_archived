@@ -9,7 +9,6 @@ import warnings
 
 class TestFilterEdges(unittest.TestCase):
 
-
     # test for count values
     def test_count_values(self):
         warnings.filterwarnings('ignore')
