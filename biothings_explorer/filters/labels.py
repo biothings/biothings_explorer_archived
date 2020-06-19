@@ -10,7 +10,6 @@ Returns:
     A networkX graph with the top count results that fit the label
 """
 
-
 def filter_label(G, label, count=50):
 
     val_edges = []
@@ -19,5 +18,9 @@ def filter_label(G, label, count=50):
             val_edges.append(edge)
 
     subG = G.edge_subgraph(val_edges)
+    subG = filter_node_degree(subG, count)
 
-    return filter_node_degree(subG, count)
+    for node in subG.nodes:
+        subG.nodes.data()[node]['filteredBy'] = 'EdgeLabel'
+
+    return subG
