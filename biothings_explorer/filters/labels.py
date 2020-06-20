@@ -14,7 +14,7 @@ def filter_label(G, label, count=50):
 
     val_edges = []
     for edge in G.edges:
-        if G[edge[0]][edge[1]][0]['label'] == label:
+        if G[edge[0]][edge[1]][edge[2]]['label'] == label:
             val_edges.append(edge)
 
     subG = G.edge_subgraph(val_edges)
