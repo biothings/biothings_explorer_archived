@@ -3,7 +3,7 @@ Function for filtering based on the label of an edges (ie. related_to, positivel
 
 Parameters:
     G - A networkX graph
-    label - label to look for
+    label - label to look for or a list of labels
     count - number of nodes to return (default=50)
 
 Returns:
@@ -14,7 +14,7 @@ def filter_label(G, label, count=50):
 
     val_edges = []
     for edge in G.edges:
-        if G[edge[0]][edge[1]][edge[2]]['label'] == label:
+        if G[edge[0]][edge[1]][edge[2]]['label'] in label:
             val_edges.append(edge)
 
     subG = G.edge_subgraph(val_edges)

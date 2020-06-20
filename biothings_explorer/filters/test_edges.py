@@ -5,15 +5,12 @@ Tests for edges.py
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 from edges import filter_node_degree
-import warnings
 
 class TestFilterEdges(unittest.TestCase):
 
     # test for count values
     def test_count_values(self):
-        warnings.filterwarnings('ignore')
         counts = [10, 20, 40, 50, 100]
-
         seqd = SingleEdgeQueryDispatcher(input_cls='Gene',
                                  output_cls='ChemicalSubstance',
                                  input_id='NCBIGene',
