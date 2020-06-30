@@ -24,8 +24,8 @@ def filter_co_occur(G, count=50):
     def get_ids(node):
         ids = []
         try:
-            ids.append(seqd.G.nodes[node]['equivalent_ids']['MESH'])
-            ids.append(seqd.G.nodes[node]['equivalent_ids']['UMLS'])
+            ids.append(G.nodes[node]['equivalent_ids']['MESH'])
+            ids.append(G.nodes[node]['equivalent_ids']['UMLS'])
         except:
             pass
         ids = [i for sub in ids for i in sub] # flatten and get rid of set()
