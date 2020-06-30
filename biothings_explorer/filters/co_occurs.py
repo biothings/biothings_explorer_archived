@@ -7,9 +7,9 @@ Parameters:
     count - number of nodes to return (default=50)
 
 Returns:
-    A networkX graph with the top count results
-
-(need to update.. returns list at the moment)
+    A networkX subgraph with 'count' number of unique edges
+    Number of edges between two nodes are preserved and have same rank
+    Each edge in returned graph labeled with rank and ngd_overall
 
 
 # error codes for NGD :
@@ -37,7 +37,7 @@ def filter_co_occur(G, count=50):
         combos += ['-'.join([j,i]) for i in id1 for j in id2]
         return combos
 
-
+    # begin code
     unique_edges = []
     for edge in G.edges:
         if [edge[0], edge[1]] in unique_edges:
@@ -61,5 +61,14 @@ def filter_co_occur(G, count=50):
             if not isinstance(edge[0], float):
                 edge.insert(0, 200)
 
-    unique_edges.sort()
-    return unique_edges[:count]
+    results = sorted(unique_edges)[:count]
+    filtered = list(set([i[1] for i in results] + [i[2] for i in results]))
+    subG = G.subgraph(filtered)
+
+    for i,res in enumerate(results, start=1):
+        for edge in subG[res[1]][res[2]]:
+            subG[res[1]][res[2]][edge]['rank'] = i
+            subG[res[1]][res[2]][edge]['filteredBy'] = 'CoOccurrence'
+            subG[res[1]][res[2]][edge]['ngd_overall'] = res[0]
+
+    return subG
