@@ -1,5 +1,5 @@
 """
-Function for simple filter that ranks items (edges of graph) by co-occurrence
+Function for filter that ranks items (edges of graph) by co-occurrence
     by sending batch queries to the MRCOC co-occurrence API
 
 Parameters:
@@ -10,7 +10,6 @@ Returns:
     A networkX subgraph with 'count' number of unique edges
     Number of edges between two nodes are preserved and have same rank
     Each edge in returned graph labeled with rank and ngd_overall
-
 
 # error codes for NGD :
 #      100 : ID (mesh or umls) not found for at least 1 of the nodes
