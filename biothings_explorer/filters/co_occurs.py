@@ -19,6 +19,24 @@ Returns:
 import requests
 
 def filter_co_occur(G, count=50):
+
+    # helper funcs
+    def get_ids(node):
+        ids = []
+        try:
+            ids.append(G.nodes[node]['equivalent_ids']['MESH'])
+            ids.append(G.nodes[node]['equivalent_ids']['UMLS'])
+        except:
+            pass
+        ids = [i for sub in ids for i in sub] # flatten and get rid of set()
+        return 0 if len(ids) == 0 else ids
+
+    def make_combo(id1, id2):
+        combos = ['-'.join([i,j]) for i in id1 for j in id2]
+        combos += ['-'.join([j,i]) for i in id1 for j in id2]
+        return combos
+
+    # begin code
     unique_edges = []
     for edge in G.edges:
         if [edge[0], edge[1]] in unique_edges:
