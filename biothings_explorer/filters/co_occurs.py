@@ -18,7 +18,7 @@ Returns:
 
 import requests
 
-def filter2(G, count=50):
+def filter_co_occur(G, count=50):
     unique_edges = []
     for edge in seqd.G.edges:
         if [edge[0], edge[1]] in unique_edges:
