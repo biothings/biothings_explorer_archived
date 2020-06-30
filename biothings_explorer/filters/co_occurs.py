@@ -1,6 +1,6 @@
 """
 Function for simple filter that ranks items (edges of graph) by co-occurrence
- in literature using only average frequency per year
+    by sending batch queries to the MRCOC co-occurrence API
 
 Parameters:
     G - A networkX graph
@@ -9,13 +9,19 @@ Parameters:
 Returns:
     A networkX graph with the top count results
 
-    * not yet functional *
+(need to update.. returns list at the moment)
+
+
+# error codes for NGD :
+#      100 : ID (mesh or umls) not found for at least 1 of the nodes
+#      200 : query not found for pair of nodes
 """
 
-# simple filter that ranks items (edges of graph) by co-occurrence in literature using only average frequency per year
+import requests
 
-def filter_co_occurs_avg(G, count=50):
+def filter_co_occur(G, count=50):
 
+    # helper methods
     def get_ids(node):
         ids = []
         try:
@@ -23,58 +29,37 @@ def filter_co_occurs_avg(G, count=50):
             ids.append(seqd.G.nodes[node]['equivalent_ids']['UMLS'])
         except:
             pass
-
         ids = [i for sub in ids for i in sub] # flatten and get rid of set()
+        return 0 if len(ids) == 0 else ids
 
-        if len(ids) == 0:
-            return 0
-        else:
-            return ids
-
-    avgs = []
-    for edge in G.edges.data():
-
-        # get the ids
-        ids = []
-        ids.append(get_ids(edge[0]))
-        ids.append(get_ids(edge[1]))
+    def make_combo(id1, id2):
+        combos = ['-'.join([i,j]) for i in id1 for j in id2]
+        combos += ['-'.join([j,i]) for i in id1 for j in id2]
+        return combos
 
 
-        if 0 in ids: # at least 1 doesn't have an ID
-            edge[2]['rank'] = 0
-            edge[2]['filteredBy'] = 'CoOccurrence'
+    unique_edges = []
+    for edge in G.edges:
+        if [edge[0], edge[1]] in unique_edges:
             continue
+        else:
+            unique_edges.append([edge[0], edge[1]])
 
-        freq, numYears = 0,0
+    for edge in unique_edges:
+        id1 = get_ids(edge[0])
+        id2 = get_ids(edge[1])
 
-        linenum = 0
-        # look for IDs in file
-        with open('NIH_CoOccurs/summary_CoOccurs_2019.txt') as fp:
-            for line in fp:
-                line = line.strip().split('|')
+        if (id1 == 0) | (id2 == 0):
+            edge.insert(0, 100)
+        else:
+            combo = make_combo(id1, id2)
+            x = requests.post('https://biothings.ncats.io/mrcoc/query', json={'scopes':'combo', 'q': combo}).json()
+            for query in x:
+                if not 'notfound' in query:
+                    edge.insert(0, query['ngd_overall'])
+                    break
+            if not isinstance(edge[0], float):
+                edge.insert(0, 200)
 
-                if (((line[0] in ids[0]) | (line[1] in ids[0])) & ((line[2] in ids[1]) | (line[3] in ids[1]))) | \
-                (((line[0] in ids[1]) | (line[1] in ids[1])) & ((line[2] in ids[0]) | (line[3] in ids[0]))):
-                    freq += int(line[4])
-                    numYears += 1
-                else:
-                    if numYears > 0:
-                        break # seems like all co-occs for a given pair are adjacent, don't need to go thru whole file
-        fp.close()
-
-        if numYears > 0:
-            avgs.append([freq/numYears, edge[0], edge[1]]) #avg,node1,node2
-
-    print('Exit loop')
-    avgs.sort(reverse=True)
-
-    print('Ranking nodes')
-    # rank them
-    for i in range(count):
-        for edge in range(len(G[avgs[i][0]][avgs[i][1]])): # account for nodes w/ >1 edge
-            G[avgs[i][0]][avgs[i][1]][edge]['rank'] = i+1
-            G[avgs[i][0]][avgs[i][1]][edge]['filteredBy'] = 'CoOccurrence'
-            G[avgs[i][0]][avgs[i][1]][edge]['avg'] = avgs[i][0]
-
-    fp.close()
-    return G
+    unique_edges.sort()
+    return unique_edges[:count]
