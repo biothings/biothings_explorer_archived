@@ -50,6 +50,7 @@ class SingleEdgeQueryDispatcher:
     input_obj: optional, a representation of the input from Hint Module
     prev_graph: the graph object coming from last query
     registry: optional, the Registry object in BioThings Explorer
+    loop: optional, event loop
     """
 
     def __init__(
@@ -66,7 +67,7 @@ class SingleEdgeQueryDispatcher:
         query_id=1,
         reverse=False,
         registry=None,
-        loop=None
+        loop=None,
     ):
         self.loop = loop
         # load bte registry
