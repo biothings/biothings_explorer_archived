@@ -16,8 +16,6 @@ Returns:
 #      200 : query not found for pair of nodes
 """
 
-import requests
-
 def filter_co_occur(G, count=50):
 
     # helper funcs
@@ -38,21 +36,20 @@ def filter_co_occur(G, count=50):
 
     # begin code
     unique_edges = []
-    for edge in G.edges:
-        if [edge[0], edge[1]] in unique_edges:
-            continue
-        else:
-            unique_edges.append([edge[0], edge[1]])
+    source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
+    for node in G.nodes:
+        if node != source:
+            unique_edges.append([source,node])
 
     num_combs, combos = [], []
+    src_id = get_ids(source)
     for edge in unique_edges:
-        id1 = get_ids(edge[0])
-        id2 = get_ids(edge[1])
+        tar_id = get_ids(edge[1])
 
-        if (id1 == 0) | (id2 == 0):
+        if (src_id == 0) | (tar_id == 0):
             edge.insert(0, 100)
         else:
-            combo = make_combo(id1, id2)
+            combo = make_combo(src_id, tar_id)
             combos.append(combo)
             num_combs.append(len(combo))
 
@@ -77,13 +74,12 @@ def filter_co_occur(G, count=50):
         i+=1
 
     results = sorted(unique_edges)[:count]
-    filtered = list(set([i[1] for i in results] + [i[2] for i in results]))
+    filtered = [i[2] for i in results] + [source]
     subG = G.subgraph(filtered)
 
     for i,res in enumerate(results, start=1):
-        for edge in subG[res[1]][res[2]]:
-            subG[res[1]][res[2]][edge]['rank'] = i
-            subG[res[1]][res[2]][edge]['filteredBy'] = 'CoOccurrence'
-            subG[res[1]][res[2]][edge]['ngd_overall'] = res[0]
+        subG.nodes[res[2]]['rank'] = i
+        subG.nodes[res[2]]['filteredBy'] = 'CoOccurrence'
+        subG.nodes[res[2]]['ngd_overall'] = res[0]
 
     return subG

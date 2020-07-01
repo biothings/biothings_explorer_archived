@@ -1,6 +1,8 @@
 # main class
 
-import pandas as pd 
+import pandas as pd
+import requests
+
 
 class Filter:
 

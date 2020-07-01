@@ -9,28 +9,24 @@ Returns:
     A networkX graph with the top count results
 """
 
-import pandas as pd
+def filter_node_degree(G, count=50, filt='NodeDegree'): #takes input G as networkX graph
 
-def filter_node_degree(G, count=50): #takes input G as networkX graph
-
-    try:
-        count = int(count)
-    except ValueError:
-        return 
-
-    degrees = []
+    source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
+    degrees = [[],[]]
     for node in G.nodes:
-        degrees.append(G.degree(node))
+        if node != source:
+            degrees[0].append(node)
+            degrees[1].append(G.degree(node))
 
-    data = {'node':G.nodes, 'degree':degrees}
+    data = {'node':degrees[0], 'degree':degrees[1]}
     deg_count = pd.DataFrame(data=data)
     deg_count.sort_values(by='degree', inplace=True, ascending=False)
 
-    filtered = list(deg_count.head(count)['node'])
+    filtered = list(deg_count.head(count)['node']) + [source]
     subG = G.subgraph(filtered)
 
-    for i,node in enumerate(filtered):
-        subG.nodes.data()[node]['filteredBy'] = 'NodeDegree'
-        subG.nodes.data()[node]['rank'] = i+1
+    for i,node in enumerate(filtered[:-1], start=1):
+        subG.nodes.data()[node]['filteredBy'] = filt
+        subG.nodes.data()[node]['rank'] = i
 
     return subG
