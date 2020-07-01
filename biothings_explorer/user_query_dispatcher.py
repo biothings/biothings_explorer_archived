@@ -75,14 +75,16 @@ class SingleEdgeQueryDispatcher:
             self.registry = Registry()
         else:
             self.registry = registry
-        self.prev_graph = prev_graph
-        self.query_id = query_id
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
         self.idr = IDResolver()
+        self.prev_graph, self.query_id, self.input_cls, self.input_id = (
+            prev_graph,
+            query_id,
+            input_cls,
+            input_id,
+        )
         semantic_types = self.metadata.list_all_semantic_types()
-        self.input_cls = input_cls
-        self.input_id = input_id
         if output_cls in (["BiologicalEntity"], "BiologicalEntity"):
             self.output_cls = None
         else:
