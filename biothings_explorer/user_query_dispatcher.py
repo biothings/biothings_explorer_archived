@@ -69,17 +69,15 @@ class SingleEdgeQueryDispatcher:
         registry=None,
         loop=None,
     ):
-        self.loop = loop
         # load bte registry
-        if not registry:
-            self.registry = Registry()
-        else:
-            self.registry = registry
-        self.metadata = Metadata(reg=self.registry)
-        # load id conversion module
-        self.idr = IDResolver()
-        self.dp = Dispatcher(registry=self.registry)
+        self.registry = registry if registry else Registry()
+        self.metadata, self.idr, self.dp = (
+            Metadata(reg=self.registry),
+            IDResolver(),
+            Dispatcher(registry=self.registry),
+        )
         (
+            self.loop,
             self.prev_graph,
             self.query_id,
             self.input_cls,
@@ -92,6 +90,7 @@ class SingleEdgeQueryDispatcher:
             self.log,
             self.summary,
         ) = (
+            loop,
             prev_graph,
             query_id,
             input_cls,
@@ -104,7 +103,15 @@ class SingleEdgeQueryDispatcher:
             [],
             [],
         )
-        semantic_types = self.metadata.list_all_semantic_types()
+        self.preprocess_output(output_cls, output_id)
+        self.preprocess_input(input_obj)
+
+    def preprocess_output(self, output_cls, output_id):
+        """ Preprocess the output from user
+
+        :param: output_cls: output class
+        :param: output_id: output identifier
+        """
         if output_cls in (["BiologicalEntity"], "BiologicalEntity"):
             self.output_cls = None
         else:
@@ -124,11 +131,21 @@ class SingleEdgeQueryDispatcher:
                 self.output_id = ["SYMBOL", "name"]
         if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
+
+    def preprocess_input(self, input_obj):
+        """ Preprocess the output from user
+
+        :param: output_cls: output class
+        :param: output_id: output identifier
+        """
+        semantic_types = self.metadata.list_all_semantic_types()
         self.input_identifier = None
         if input_obj:
-            self.input_cls = input_obj.get("primary").get("cls")
-            self.input_id = input_obj.get("primary").get("identifier")
-            self.values = input_obj.get("primary").get("value")
+            self.input_cls, self.input_id, self.values = (
+                input_obj.get("primary").get("cls"),
+                input_obj.get("primary").get("identifier"),
+                input_obj.get("primary").get("value"),
+            )
             if "SYMBOL" in input_obj:
                 self.input_label = input_obj.get("SYMBOL")
                 self.input_identifier = "SYMBOL"
