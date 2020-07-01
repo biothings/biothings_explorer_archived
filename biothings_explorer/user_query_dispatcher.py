@@ -81,7 +81,6 @@ class SingleEdgeQueryDispatcher:
         # load id conversion module
         self.idr = IDResolver()
         semantic_types = self.metadata.list_all_semantic_types()
-        id_types = self.metadata.list_all_id_types()
         self.input_cls = input_cls
         self.input_id = input_id
         if output_cls in (["BiologicalEntity"], "BiologicalEntity"):
