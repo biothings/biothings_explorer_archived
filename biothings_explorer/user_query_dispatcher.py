@@ -78,11 +78,31 @@ class SingleEdgeQueryDispatcher:
         self.metadata = Metadata(reg=self.registry)
         # load id conversion module
         self.idr = IDResolver()
-        self.prev_graph, self.query_id, self.input_cls, self.input_id = (
+        self.dp = Dispatcher(registry=self.registry)
+        (
+            self.prev_graph,
+            self.query_id,
+            self.input_cls,
+            self.input_id,
+            self.pred,
+            self.values,
+            self.equivalent_ids,
+            self.reverse,
+            self.G,
+            self.log,
+            self.summary,
+        ) = (
             prev_graph,
             query_id,
             input_cls,
             input_id,
+            pred,
+            values,
+            equivalent_ids,
+            reverse,
+            nx.MultiDiGraph(),
+            [],
+            [],
         )
         semantic_types = self.metadata.list_all_semantic_types()
         if output_cls in (["BiologicalEntity"], "BiologicalEntity"):
@@ -104,11 +124,7 @@ class SingleEdgeQueryDispatcher:
                 self.output_id = ["SYMBOL", "name"]
         if not isinstance(self.output_id, list):
             self.output_id = [self.output_id]
-        self.pred = pred
-        self.values = values
-        self.equivalent_ids = equivalent_ids
         self.input_identifier = None
-        self.reverse = reverse
         if input_obj:
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = input_obj.get("primary").get("identifier")
@@ -143,10 +159,6 @@ class SingleEdgeQueryDispatcher:
             if not self.input_label:
                 self.input_label = self.input_id + ":" + values
             self.equivalent_ids = equivalent_ids
-        self.dp = Dispatcher(registry=self.registry)
-        self.G = nx.MultiDiGraph()
-        self.log = []
-        self.summary = []
 
     def to_reasoner_std(self):
         """Convert the output to reasoner api standard.
