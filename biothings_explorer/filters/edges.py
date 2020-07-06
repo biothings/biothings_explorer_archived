@@ -9,7 +9,7 @@ Returns:
     A networkX graph with the top count results
 """
 
-def filter_node_degree(G, count=50, filt='NodeDegree'): #takes input G as networkX graph
+def filter_node_degree(G, count=50, filt='NodeDegree'):
 
     source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
     degrees = [[],[]]
