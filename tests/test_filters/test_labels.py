@@ -4,7 +4,8 @@ Tests for labels.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from biothings_explorer.filters.labels import filter_label
+from labels import filter_label
+from edges import filter_node_degree
 
 class TestFilterLabels(unittest.TestCase):
 
@@ -41,7 +42,7 @@ class TestFilterLabels(unittest.TestCase):
                                  values='1017')
         seqd.query()
         subG = filter_label(seqd.G, ['negatively_regulated_by', 'positively_regulates'], count)
-        self.assertEqual(count, len(subG.nodes))
+        self.assertEqual(count+1, len(subG.nodes))
 
 
     # check that the filteredBy is EdgeLabel
@@ -52,8 +53,9 @@ class TestFilterLabels(unittest.TestCase):
                                  values='1017')
         seqd.query()
         subG = filter_label(seqd.G, 'related_to')
-        for node in subG.nodes():
-            self.assertEqual('EdgeLabel', node[1]['filteredBy'])
+        for node,y in subG.nodes(data=True):
+            if node != 'NCBIGene:1017':
+                self.assertEqual('EdgeLabel', y['filteredBy'])
 
 if __name__ == '__main__':
     unittest.main()

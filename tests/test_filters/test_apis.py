@@ -4,7 +4,7 @@ Tests for apis.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from biothings_explorer.filters.apis import filter_api
+from apis import filter_api
 
 class TestFilterAPI(unittest.TestCase):
 
@@ -29,9 +29,9 @@ class TestFilterAPI(unittest.TestCase):
                                  values='1017')
         seqd.query()
         subG = filter_api(seqd.G)
-        for node in subG.nodes():
+        for node,y in subG.nodes(data=True):
             if node != 'NCBIGene:1017': #source node shouldn't have it
-                self.assertEqual('UniqueAPIs', node[1]['filteredBy'])
+                self.assertEqual('UniqueAPIs', y['filteredBy'])
 
 
     # check that the source node isn't labeled w/ rank or filteredBy
@@ -47,8 +47,6 @@ class TestFilterAPI(unittest.TestCase):
             if node == source:
                 self.assertTrue('filteredBy' not in y.keys())
                 self.assertTrue('rank' not in y.keys())
-
-
 
 if __name__ == '__main__':
     unittest.main()

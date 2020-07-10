@@ -16,6 +16,8 @@ Returns:
 #      200 : query not found for pair of nodes
 """
 
+import requests
+
 def filter_co_occur(G, count=50):
 
     # helper funcs

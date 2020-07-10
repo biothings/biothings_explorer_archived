@@ -8,6 +8,7 @@ Parameters:
 Returns:
     A networkX graph with the top count results
 """
+import pandas as pd
 
 def filter_node_degree(G, count=50, filt='NodeDegree'):
 
