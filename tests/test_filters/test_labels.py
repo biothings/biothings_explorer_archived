@@ -4,7 +4,7 @@ Tests for labels.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from labels import filter_label
+from biothings_explorer.filters.labels import filter_label
 
 class TestFilterLabels(unittest.TestCase):
 
@@ -54,3 +54,6 @@ class TestFilterLabels(unittest.TestCase):
         subG = filter_label(seqd.G, 'related_to')
         for node in subG.nodes():
             self.assertEqual('EdgeLabel', node[1]['filteredBy'])
+
+if __name__ == '__main__':
+    unittest.main()

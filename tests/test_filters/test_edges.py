@@ -4,7 +4,7 @@ Tests for edges.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from edges import filter_node_degree
+from biothings_explorer.filters.edges import filter_node_degree
 
 class TestFilterEdges(unittest.TestCase):
 
@@ -54,3 +54,6 @@ class TestFilterEdges(unittest.TestCase):
                     self.assertLess(newG.nodes.data()[node1]['rank'], newG.nodes.data()[node2]['rank'])
                 elif newG.degree(node1) < newG.degree(node2):
                     self.assertGreater(newG.nodes.data()[node1]['rank'], newG.nodes.data()[node2]['rank'])
+
+if __name__ == '__main__':
+    unittest.main()

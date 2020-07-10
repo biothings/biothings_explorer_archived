@@ -11,6 +11,8 @@ Returns:
 """
 
 def filter_api(G, count=50):
+
+    source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
     counts = []
     for node in G.nodes:
         if node == source:
