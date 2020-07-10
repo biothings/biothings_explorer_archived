@@ -61,6 +61,20 @@ class TestFilterCoOccur(unittest.TestCase):
         for i in range(len(rankngd)-1):
             self.assertLess(rankngd[i], rankngd[i+1])
 
+    # test that source node doesn't have any of the new labels
+    def test_source(self):
+        seqd = SingleEdgeQueryDispatcher(input_cls='Disease',
+                                            output_cls='Disease',
+                                            input_id='MESH',
+                                            values='D000755')
+        seqd.query()
+        subG = filter_co_occur(seqd.G)
+        for node,y in subG.nodes(data=True):
+            if node == 'MESH:D000755':
+                self.assertTrue('filteredBy' not in y.keys())
+                self.assertTrue('rank' not in y.keys())
+                self.assertTrue('ngd_overall' not in y.keys())
+
 
 if __name__ == '__main__':
     unittest.main()
