@@ -15,7 +15,8 @@ class TestFilter(unittest.TestCase):
                                                  input_id='NCBIGene',
                                                  values='1017')
         seqd.query()
-        newG = Filter(seqd.G, 'NodeDegree', 30).filter_results()
+        filt = {'name':'NodeDegree', 'count':30}
+        newG = Filter(seqd.G, filt).filter_results()
         self.assertEqual(newG.number_of_nodes(), 31)
         for node,y in newG.nodes(data=True):
             if node != 'NCBIGene:1017':
@@ -28,7 +29,8 @@ class TestFilter(unittest.TestCase):
                                          input_id='NCBIGene',
                                          values='1017')
         seqd.query()
-        newG = Filter(seqd.G, 'UniqueAPIs').filter_results()
+        filt = {'name':'UniqueAPIs'}
+        newG = Filter(seqd.G, filt).filter_results()
         for node,y in newG.nodes(data=True):
             if node != 'NCBIGene:1017':
                 self.assertEqual('UniqueAPIs', y['filteredBy'])
@@ -40,7 +42,8 @@ class TestFilter(unittest.TestCase):
                                             input_id='MESH',
                                             values='D000755')
         seqd.query()
-        newG = Filter(seqd.G, 'CoOccurrence', 60).filter_results()
+        filt = {'name':'CoOccurrence', 'count':60}
+        newG = Filter(seqd.G, filt).filter_results()
         self.assertEqual(newG.number_of_nodes(), 61)
         for node,y in newG.nodes(data=True):
             if node != 'MESH:D000755':
@@ -53,11 +56,11 @@ class TestFilter(unittest.TestCase):
                                          input_id='NCBIGene',
                                          values='1017')
         seqd.query()
-        label = 'related_to'
-        newG = Filter(seqd.G, 'EdgeLabel', 60, label).filter_results()
+        filt = {'name':'EdgeLabel', 'count':60, 'label':'related_to'}
+        newG = Filter(seqd.G, filt).filter_results()
         self.assertEqual(newG.number_of_nodes(), 61)
         for x in newG.edges.data():
-            self.assertEqual(label, x[2]['label'])
+            self.assertEqual(filt['label'], x[2]['label'])
 
      # with no label given
     def test_label_F(self):
@@ -66,7 +69,8 @@ class TestFilter(unittest.TestCase):
                                          input_id='NCBIGene',
                                          values='1017')
         seqd.query()
-        newG = Filter(seqd.G, 'EdgeLabel', 60).filter_results()
+        filt = {'name':'EdgeLabel', 'count':60}
+        newG = Filter(seqd.G, filt).filter_results()
         self.assertEqual(seqd.G, newG)
         self.assertEqual(seqd.G.number_of_nodes(), newG.number_of_nodes())
 

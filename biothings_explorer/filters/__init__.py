@@ -7,11 +7,11 @@ from apis import filter_api
 
 class Filter():
 
-    def __init__(self, G, filt=None, count=50, label=None):
+    def __init__(self, G, filtdict={}):
         self.G = G
-        self.filter = filt
-        self.count = count
-        self.label = label
+        self.filter = filtdict['name'] if 'name' in filtdict.keys() else None
+        self.count = filtdict['count'] if 'count' in filtdict.keys() else 50
+        self.label = filtdict['label'] if 'label' in filtdict.keys() else None
 
     def filter_results(self):
         if not self.filter:
