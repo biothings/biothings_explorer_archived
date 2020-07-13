@@ -9,7 +9,7 @@ Parameters:
 Returns:
     A networkX graph with the top count results that fit the label
 """
-from edges import filter_node_degree
+from .edges import filter_node_degree
 
 def filter_label(G, label, count=50):
 
