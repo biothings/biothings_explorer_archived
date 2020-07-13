@@ -2,8 +2,8 @@
 Tests for __init__.py
 """
 
-from __init__ import Filter
 import unittest
+from biothings_explorer.filters.__init__ import Filter
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
 
 class TestFilter(unittest.TestCase):
