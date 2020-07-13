@@ -4,7 +4,7 @@ Tests for apis.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from apis import filter_api
+from biothings_explorer.filters.api import filter_api
 
 class TestFilterAPI(unittest.TestCase):
 

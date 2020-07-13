@@ -3,7 +3,7 @@
 from .co_occurs import filter_co_occur
 from .labels import filter_label
 from .edges import filter_node_degree
-from .apis import filter_api
+from .api import filter_api
 
 class Filter():
 

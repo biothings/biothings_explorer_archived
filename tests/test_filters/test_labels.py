@@ -4,8 +4,8 @@ Tests for labels.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from labels import filter_label
-from edges import filter_node_degree
+from biothings_explorer.filters.labels import filter_label
+from biothings_explorer.filters.edges import filter_node_degree
 
 class TestFilterLabels(unittest.TestCase):
 

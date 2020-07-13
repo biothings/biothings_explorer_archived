@@ -4,7 +4,7 @@ Tests for co-occurs.py
 
 import unittest
 from biothings_explorer.user_query_dispatcher import SingleEdgeQueryDispatcher
-from co_occurs import filter_co_occur
+from biothings_explorer.filters.co_occurs import filter_co_occur
 
 class TestFilterCoOccur(unittest.TestCase):
 
