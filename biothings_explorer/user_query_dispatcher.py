@@ -9,7 +9,7 @@ from collections import defaultdict
 import networkx as nx
 import copy
 
-from filters.__init__ import Filter
+from .filters.__init__ import Filter
 from .api_call_dispatcher import Dispatcher
 from .id_resolver import IDResolver
 from .registry import Registry
