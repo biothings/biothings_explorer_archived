@@ -32,14 +32,13 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                 continue
             for _val in prop_vals:
                 if not isinstance(_val, dict):
-                    G.add_node(str(_val),
-                               identifier=prop,
-                               type=parsed_api_output["@type"],
-                               level=2)
-                    G.add_edge(id_mapping[input_id],
-                               str(_val),
-                               info=None,
-                               label=prop)
+                    G.add_node(
+                        str(_val),
+                        identifier=prop,
+                        type=parsed_api_output["@type"],
+                        level=2,
+                    )
+                    G.add_edge(id_mapping[input_id], str(_val), info=None, label=prop)
                 else:
                     for i, j in _val.items():
                         if i in output_id_types and j:
@@ -48,16 +47,15 @@ def load_res_to_networkx(_res, G, labels, id_mapping, output_id_types):
                             if not isinstance(j, list):
                                 j = [j]
                             j = [str(jj) for jj in j]
-                            G.add_nodes_from(j,
-                                             identifier=i,
-                                             type=output_type,
-                                             level=2)
+                            G.add_nodes_from(j, identifier=i, type=output_type, level=2)
                             for _j in j:
-                                G.add_edge(id_mapping[input_id],
-                                           _j,
-                                           info=_val,
-                                           label=prop,
-                                           source=source)
+                                G.add_edge(
+                                    id_mapping[input_id],
+                                    _j,
+                                    info=_val,
+                                    label=prop,
+                                    source=source,
+                                )
     return G
 
 
@@ -74,7 +72,7 @@ def add_equivalent_ids_to_nodes(G, IDResolver):
     if not G:
         return (G, {})
     # get all nodes which are level 2 (output nodes)
-    output_ids = [x for x, y in G.nodes(data=True) if y and y['level'] == 2]
+    output_ids = [x for x, y in G.nodes(data=True) if y and y["level"] == 2]
     # check if there is no output nodes
     if not output_ids:
         return (G, {})
@@ -82,17 +80,17 @@ def add_equivalent_ids_to_nodes(G, IDResolver):
     idc_inputs = []
     output_ids_dict = defaultdict(list)
     for _id in output_ids:
-        type_identifier = G.nodes[_id]['type'] + ',' + G.nodes[_id]['identifier']
+        type_identifier = G.nodes[_id]["type"] + "," + G.nodes[_id]["identifier"]
         output_ids_dict[type_identifier].append(_id)
     # construct inputs for IDConverter
     for k, v in output_ids_dict.items():
-        input_cls, input_id = k.split(',')
+        input_cls, input_id = k.split(",")
         idc_inputs.append((v, input_id, input_cls))
     # find equivalent ids
     equivalent_ids = IDResolver.resolve_ids(idc_inputs)
     # populate nodes with equivalent ids
     for m, n in equivalent_ids.items():
-        G.nodes[m.split(':', 1)[-1]]['equivalent_ids'] = n
+        G.nodes[m.split(":", 1)[-1]]["equivalent_ids"] = n
     return (G, equivalent_ids)
 
 
