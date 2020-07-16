@@ -66,7 +66,7 @@ class SingleEdgeQueryDispatcher:
         query_id=1,
         reverse=False,
         registry=None,
-        loop=None
+        loop=None,
     ):
         self.loop = loop
         # load bte registry
