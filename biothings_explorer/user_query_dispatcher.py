@@ -783,10 +783,11 @@ class Predict:
         could be None, str, or a list of entity classes
     intermediate_nodes: the semantic type(s) of the intermediate node
         could be None, which represents any semantic type, or a list of semantic types
+    filters : list of dicts of filters to be applied at every intermediate node and final node
 
     """
 
-    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None, filters=[]):
         """Initialize.
         params
         ------
@@ -797,6 +798,9 @@ class Predict:
             could be None, which represents any semantic type, or a list of semantic types
 
         """
+        if not isinstance(filters, list):
+            filters = [filters]
+        self.filters = filters
         if not intermediate_nodes:
             intermediate_nodes = []
         elif not isinstance(intermediate_nodes, list):
@@ -922,6 +926,7 @@ class Predict:
                             query_id=i + 1,
                             prev_graph=self.prev_graph,
                             pred=None,
+                            filter=self.filters[i]
                         )
                         self.seqd[query_id].query(verbose=verbose)
                         if len(self.seqd[query_id].G) < 2:
@@ -959,6 +964,7 @@ class Predict:
                         query_id=i + 1,
                         prev_graph=self.prev_graph,
                         pred=None,
+                        filter=self.filters[i]
                     )
                     self.seqd[i + 1].query(verbose=verbose)
                     if len(self.seqd[i + 1].G) < 2:
