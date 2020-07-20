@@ -918,16 +918,27 @@ class Predict:
                             )
                         )
                         self.log.append("==========\n")
-                        self.seqd[query_id] = SingleEdgeQueryDispatcher(
-                            input_obj=input_obj,
-                            equivalent_ids=equivalent_ids[input_cls],
-                            input_cls=input_cls,
-                            output_cls=output_cls,
-                            query_id=i + 1,
-                            prev_graph=self.prev_graph,
-                            pred=None,
-                            filter=self.filters[i]
-                        )
+                        if self.filters:
+                            self.seqd[query_id] = SingleEdgeQueryDispatcher(
+                                input_obj=input_obj,
+                                equivalent_ids=equivalent_ids[input_cls],
+                                input_cls=input_cls,
+                                output_cls=output_cls,
+                                query_id=i + 1,
+                                prev_graph=self.prev_graph,
+                                pred=None,
+                                filter=self.filters[i]
+                            )
+                        else:
+                            self.seqd[query_id] = SingleEdgeQueryDispatcher(
+                                input_obj=input_obj,
+                                equivalent_ids=equivalent_ids[input_cls],
+                                input_cls=input_cls,
+                                output_cls=output_cls,
+                                query_id=i + 1,
+                                prev_graph=self.prev_graph,
+                                pred=None
+                            )
                         self.seqd[query_id].query(verbose=verbose)
                         if len(self.seqd[query_id].G) < 2:
                             break
@@ -957,15 +968,25 @@ class Predict:
                         )
                     )
                     self.log.append("==========\n")
-                    self.seqd[i + 1] = SingleEdgeQueryDispatcher(
-                        input_obj=input_obj,
-                        input_cls=input_cls,
-                        output_cls=output_cls,
-                        query_id=i + 1,
-                        prev_graph=self.prev_graph,
-                        pred=None,
-                        filter=self.filters[i]
-                    )
+                    if self.filters:
+                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(
+                            input_obj=input_obj,
+                            input_cls=input_cls,
+                            output_cls=output_cls,
+                            query_id=i + 1,
+                            prev_graph=self.prev_graph,
+                            pred=None,
+                            filter=self.filters[i]
+                        )
+                    else:
+                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(
+                            input_obj=input_obj,
+                            input_cls=input_cls,
+                            output_cls=output_cls,
+                            query_id=i + 1,
+                            prev_graph=self.prev_graph,
+                            pred=None
+                        )
                     self.seqd[i + 1].query(verbose=verbose)
                     if len(self.seqd[i + 1].G) < 2:
                         break
@@ -1134,7 +1155,7 @@ class FindConnection:
     **NOTE**: queries with more than one intermediate node are currently not supported
     """
 
-    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None, filters=[]):
         """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
 
         Args:
@@ -1160,6 +1181,7 @@ class FindConnection:
                     ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
                                                     **NOTE**: queries with more than one intermediate node are currently not supported
         """
+        self.filters = filters
         self.input_obj = input_obj
         self.output_obj = output_obj
         self.intermediate_nodes = intermediate_nodes
@@ -1169,7 +1191,7 @@ class FindConnection:
             )
         else:
             self.fc = Predict(
-                input_obj, output_obj, intermediate_nodes, registry=registry
+                input_obj, output_obj, intermediate_nodes, registry=registry, filters=filters
             )
 
     def connect(self, verbose=False):
