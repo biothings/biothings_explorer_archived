@@ -407,9 +407,9 @@ class SingleEdgeQueryDispatcher:
             self.G = Filter(self.G, self.filter).filter_results()
             if verbose:
                 print("\nAfter application of the {} filter, BTE retrived {} unique objects".format(
-                    self.filter['name'], len(self.G)))
+                    self.filter['name'], len(self.G) - source_nodes_cnt))
             self.log.append("\nAfter application of the {} filter, BTE retrived {} unique objects".format(
-                    self.filter['name'], len(self.G)))
+                    self.filter['name'], len(self.G) - source_nodes_cnt))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
