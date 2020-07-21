@@ -75,8 +75,7 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        data = await res.read()
-                        res = json.loads(data)
+                        res = await res.json()
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": res,
