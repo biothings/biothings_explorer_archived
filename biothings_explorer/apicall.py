@@ -75,13 +75,13 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        res = await res.json()
+                        res = res.json()
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": res,
                         }
                     except Exception as ex:
-                        m = await res.text()
+                        m = res.text()
                         return {
                             "result": json.loads(m),
                             "internal_query_id": _input["internal_query_id"],
@@ -115,7 +115,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": await res.json(),
+                            "result": res.json(),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
@@ -142,7 +142,7 @@ class BioThingsCaller:
         :param: session (obj): a aiohttp session object
         """
         # check api type
-        res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
+        res = self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
 
     def run(self, inputs, verbose=False):
@@ -156,7 +156,7 @@ class BioThingsCaller:
             for i in inputs:
                 task = self.call_one_api(i, session, verbose=verbose)
                 tasks.append(task)
-            responses = await asyncio.gather(*tasks)
+            responses = asyncio.gather(*tasks)
             # print(responses)
             return responses
 
