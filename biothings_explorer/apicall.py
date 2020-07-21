@@ -96,7 +96,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                async with session.post(
+                session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
@@ -115,7 +115,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": await res.json(content_type=None),
+                            "result": res.json(content_type=None),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
