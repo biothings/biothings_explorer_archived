@@ -35,7 +35,7 @@ class BioThingsCaller:
             return url
         return ""
 
-    def call_one_arbitrary_api(self, _input, session, verbose=False):
+    async def call_one_arbitrary_api(self, _input, session, verbose=False):
         base_url = (
             _input["operation"]["server"].strip("/") + _input["operation"]["path"]
         )
@@ -61,7 +61,7 @@ class BioThingsCaller:
         query_url = self.print_request(method, base_url, parameters, request_body)
         if method == "get":
             try:
-                with session.get(base_url, params=parameters) as res:
+                async with session.get(base_url, params=parameters) as res:
                     if verbose:
                         print("{}: {}".format(_input["internal_query_id"], query_url))
                     try:
@@ -75,13 +75,13 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        res = res.json()
+                        res = await res.json(content_type=None)
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": res,
                         }
                     except Exception as ex:
-                        m = res.text()
+                        m = await res.text()
                         return {
                             "result": json.loads(m),
                             "internal_query_id": _input["internal_query_id"],
@@ -96,7 +96,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                with session.post(
+                async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
@@ -115,7 +115,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": res.json(),
+                            "result": await res.json(),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
@@ -135,28 +135,28 @@ class BioThingsCaller:
                     )
                 return {"result": {}, "internal_query_id": _input["internal_query_id"]}
 
-    def call_one_api(self, _input, session, verbose=False):
+    async def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
 
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
         :param: session (obj): a aiohttp session object
         """
         # check api type
-        res = self.call_one_arbitrary_api(_input, session, verbose=verbose)
+        res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
 
-    def run(self, inputs, verbose=False):
+    async def run(self, inputs, verbose=False):
         """Asynchronously make a list of API calls.
 
         :param: inputs (list): list of python dicts containing three keys
         """
         tasks = []
         # timeout = ClientTimeout(total=15)
-        with ClientSession(connector=TCPConnector(ssl=False)) as session:
+        async with ClientSession(connector=TCPConnector(ssl=False)) as session:
             for i in inputs:
                 task = self.call_one_api(i, session, verbose=verbose)
                 tasks.append(task)
-            responses = asyncio.gather(*tasks)
+            responses = await asyncio.gather(*tasks)
             # print(responses)
             return responses
 
