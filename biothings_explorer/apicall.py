@@ -75,7 +75,7 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        res = await res.json(content_type=None)
+                        res = await res.json()
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": res,
@@ -115,7 +115,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": await res.json(),
+                            "result": await res.json(content_type=None),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
