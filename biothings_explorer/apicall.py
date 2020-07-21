@@ -35,7 +35,7 @@ class BioThingsCaller:
             return url
         return ""
 
-    async def call_one_arbitrary_api(self, _input, session, verbose=False):
+    def call_one_arbitrary_api(self, _input, session, verbose=False):
         base_url = (
             _input["operation"]["server"].strip("/") + _input["operation"]["path"]
         )
@@ -61,7 +61,7 @@ class BioThingsCaller:
         query_url = self.print_request(method, base_url, parameters, request_body)
         if method == "get":
             try:
-                async with session.get(base_url, params=parameters) as res:
+                with session.get(base_url, params=parameters) as res:
                     if verbose:
                         print("{}: {}".format(_input["internal_query_id"], query_url))
                     try:
@@ -97,7 +97,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                async with session.post(
+                with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
@@ -116,7 +116,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": await res.json(content_type=None),
+                            "result": await res.json(),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
@@ -136,7 +136,7 @@ class BioThingsCaller:
                     )
                 return {"result": {}, "internal_query_id": _input["internal_query_id"]}
 
-    async def call_one_api(self, _input, session, verbose=False):
+    def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
 
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
@@ -146,14 +146,14 @@ class BioThingsCaller:
         res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
 
-    async def run(self, inputs, verbose=False):
+    def run(self, inputs, verbose=False):
         """Asynchronously make a list of API calls.
 
         :param: inputs (list): list of python dicts containing three keys
         """
         tasks = []
         # timeout = ClientTimeout(total=15)
-        async with ClientSession(connector=TCPConnector(ssl=False)) as session:
+        with ClientSession(connector=TCPConnector(ssl=False)) as session:
             for i in inputs:
                 task = self.call_one_api(i, session, verbose=verbose)
                 tasks.append(task)
