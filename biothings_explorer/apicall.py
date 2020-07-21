@@ -116,7 +116,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": await res.json(),
+                            "result": await res.json(content_type=None),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
