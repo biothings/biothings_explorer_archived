@@ -196,10 +196,9 @@ class SingleEdgeQueryDispatcher:
                 # check if the identifier matches the id type specified by the
                 # user or the default id type
                 if self.output_id and identifier not in self.output_id:
-                    if  "equivalent_ids" in self.G.nodes[n2]: 
-                        equivalent_ids = self.G.nodes[n2]["equivalent_ids"]
-                    else: 
-                        self.G.nodes[n2]["equivalent_ids"] = []
+                    if  "equivalent_ids" not in self.G.nodes[n2]: 
+                        self.G.nodes[n2]["equivalent_ids"] = {}
+                    equivalent_ids = self.G.nodes[n2]["equivalent_ids"]
                     # find the corresponding id from the equivalent id dict
                     new_vals = None
                     for _id in self.output_id:
