@@ -96,7 +96,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                session.post(
+                with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
