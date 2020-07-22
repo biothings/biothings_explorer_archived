@@ -66,7 +66,7 @@ class BioThingsCaller:
             print("OMMMMGGGG")
             counter = counter + 1
             print(counter)
-            time.sleep(1)
+            time.sleep(5)
         if method == "get":
             try:
                 async with session.get(base_url, params=parameters) as res:
