@@ -176,15 +176,22 @@ class BioThingsCaller:
                 # print("RES JSON")
                 # print(res.json())
                 try:
-                    print("RESPONSE")
-                    print(res)
+                    # print("RESPONSE")
+                    # print(res)
                     return {
-                        "result": await res,
+                        "result": res.json(),
                         "internal_query_id": _input["internal_query_id"]
                     }
-                except Exception as ex1:
-                    print(ex1)
+                except Exception as ex2:
+                    print(ex2)
                     print("Unable to fetch results from {}".format(_input["api"]))
+                    print("MYCHEM RESULT")
+                    print("base")
+                    print(base_url)
+                    print("params")
+                    print(parameters)
+                    print("q url")
+                    print(query_url)
                     return {
                         "internal_query_id": _input["internal_query_id"],
                         "result": {},
