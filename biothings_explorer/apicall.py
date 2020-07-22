@@ -139,9 +139,34 @@ class BioThingsCaller:
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
-
+                try:
+                    if res.status in [400, 404]:
+                        print(
+                            "{} {} failed".format(
+                                _input["internal_query_id"], _input["api"]
+                            )
+                        )
+                        return {
+                            "internal_query_id": _input["internal_query_id"],
+                            "result": {},
+                        }
+                    if verbose:
+                        print(
+                            "{}: {}".format(_input["internal_query_id"], query_url)
+                        )
+                    return {
+                        "result": res.json(),
+                        "internal_query_id": _input["internal_query_id"],
+                    }
+                except Exception as ex1:
+                    print(ex1)
+                    print("Unable to fetch results from {}".format(_input["api"]))
+                    return {
+                        "internal_query_id": _input["internal_query_id"],
+                        "result": {},
+                    }
                 print("WADDUP")
-                print(res)
+                # print(res)
 
 
     async def call_one_api(self, _input, session, verbose=False):
