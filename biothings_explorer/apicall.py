@@ -98,8 +98,13 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
-
             try:
+                print("MERP")
+                if("mychem.info" in base_url):
+                    print("MERPPPP")
+                    counter = counter + 1
+                    print(counter)
+                    time.sleep(5)
                 async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
