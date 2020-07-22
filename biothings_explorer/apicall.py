@@ -149,15 +149,15 @@ class BioThingsCaller:
                 # print("REQUEST BODY")
                 # print(request_body)
                 counter = 0
-                # res = []
+                res = []
                 request_body_backup = request_body
                 while(counter < len(request_body["q"])):
                     request_body["q"] = request_body_backup["q"][counter:(counter+100)]
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                    if(counter == 0):
-                        res = res_temp.json()
-                    else: 
-                        res = res + res_temp.json()
+                    # if(counter == 0):
+                    #     res = res_temp.json()
+                    # else: 
+                    res = res + res_temp.json()
                     counter = counter + 100
 
                 # if(len(request_body["q"]) > 10):
