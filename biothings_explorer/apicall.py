@@ -98,7 +98,6 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             if("mychem.info" not in base_url):
-                print("NOT MYCHEM RESULT")
                 try:
                     async with session.post(
                         base_url, params=parameters, data=request_body, headers=header
@@ -139,56 +138,21 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
-                # print("MYCHEM RESULT")
-                # print("base")
-                # print(base_url)
-                # print("params")
-                # print(parameters)
-                # print("q url")
-                # print(query_url)
-                # print("REQUEST BODY")
-                # print(request_body["q"])
                 counter = 0
                 interval = 200
-                # res = []
+                res = []
                 request_list = request_body["q"].split(",")
                 while(counter < len(request_list)):
-                    # print("OK HENNY")
-                    # print(counter)
                     s = ","
                     request_body["q"] = s.join(request_list[counter:(counter+interval)])
-                    # print(request_body["q"])
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                    # print(type(res_temp.json()))
-                    if(counter == 0):
-                        res = res_temp.json()
-                        # print("INITIAL RES")
-                    else: 
-                        res = res + res_temp.json()
-                        # print("RES ADDED TO")
-                    # print(res)
-                    # print(type(res))
+                    # if(counter == 0):
+                    #     res = res_temp.json()
+                    #     # print("INITIAL RES")
+                    # else: 
+                    res = res + res_temp.json()
                     counter = counter + interval
-
-
-                # res = requests.post(base_url, params=parameters, data=request_body)
-                # res = res.json()
-                # if(counter == 0):
-                #     res = res_temp.json()
-                # else: 
-                # res = res_temp.json()
-
-
-
-                # if(len(request_body["q"]) > 10):
-                    # request_body["q"] = request_body["q"][:10]
-                # if(len(request_body['q'] )
-                # res = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                # print("RES JSON")
-                # print(res.json())
                 try:
-                    # print("RESPONSE")
-                    # print(res)
                     return {
                         "result": res,
                         "internal_query_id": _input["internal_query_id"]
@@ -196,43 +160,11 @@ class BioThingsCaller:
                 except Exception as ex2:
                     print(ex2)
                     print("Unable to fetch results from {}".format(_input["api"]))
-                    print("MYCHEM RESULT")
-                    print("base")
-                    print(base_url)
-                    print("params")
-                    print(parameters)
-                    print("q url")
-                    print(query_url)
                     return {
                         "internal_query_id": _input["internal_query_id"],
                         "result": {},
                     }
 
-                # try:
-                #     if res.status in [400, 404]:
-                #         print(
-                #             "{} {} failed".format(
-                #                 _input["internal_query_id"], _input["api"]
-                #             )
-                #         )
-                #         return {
-                #             "internal_query_id": _input["internal_query_id"],
-                #             "result": {},
-                #         }
-                #     if verbose:
-                #         print(
-                #             "{}: {}".format(_input["internal_query_id"], query_url)
-                #         )
-
-                # except Exception as ex1:
-                #     print(ex1)
-                #     print("Unable to fetch results from {}".format(_input["api"]))
-                #     return {
-                #         "internal_query_id": _input["internal_query_id"],
-                #         "result": {},
-                #     }
-                # print("WADDUP")
-                # print(res)
 
 
     async def call_one_api(self, _input, session, verbose=False):
