@@ -102,12 +102,13 @@ class BioThingsCaller:
                 print("OMMMMGGGG")
                 counter = counter + 1
                 print(counter)
-                time.sleep(5)
+                time.sleep(15)
             try:
                 async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
+                        print("OMG WE GOTTA RESULT")
                         if res.status in [400, 404]:
                             print(
                                 "{} {} failed".format(
