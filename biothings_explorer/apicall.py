@@ -139,21 +139,25 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
-                print("MYCHEM RESULT")
-                print("base")
-                print(base_url)
-                print("params")
-                print(parameters)
-                print("q url")
-                print(query_url)
-                print("REQUEST BODY")
-                print(request_body)
-
+                # print("MYCHEM RESULT")
+                # print("base")
+                # print(base_url)
+                # print("params")
+                # print(parameters)
+                # print("q url")
+                # print(query_url)
+                # print("REQUEST BODY")
+                # print(request_body)
+                if(len(request_body["q"]) > 10):
+                    request_body["q"] = request_body["q"][:10]
                 # if(len(request_body['q'] )
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 # print("RES JSON")
                 # print(res.json())
+
+
                 try:
+                    print("RESPONSE")
                     print(res.json())
                     return {
                         "result": res.json(),
