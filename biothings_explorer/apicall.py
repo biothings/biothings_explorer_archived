@@ -140,9 +140,9 @@ class BioThingsCaller:
             else:
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 print("RES JSON")
-                print(res.text)
+                print(res.text[0])
                 return {
-                    "result": res.text,
+                    "result": res.text[0],
                     "internal_query_id": _input["internal_query_id"],
                 }
 
