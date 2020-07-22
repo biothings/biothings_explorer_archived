@@ -148,19 +148,27 @@ class BioThingsCaller:
                 # print(query_url)
                 # print("REQUEST BODY")
                 # print(request_body)
+                counter = 0
+                res = []
+                while(counter < len(request_body["q"])):
+                    request_body["q"] = request_body["q"][counter:(counter+100)]
+                    res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
+                    res = res + res_temp.json()
+                    counter = counter + 100
+
                 # if(len(request_body["q"]) > 10):
-                #     request_body["q"] = request_body["q"][:10]
+                    # request_body["q"] = request_body["q"][:10]
                 # if(len(request_body['q'] )
-                res = requests.post(base_url, params=parameters, data=request_body, headers=header)
+                # res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 # print("RES JSON")
                 # print(res.json())
 
 
                 try:
                     print("RESPONSE")
-                    print(res.json())
+                    print(res)
                     return {
-                        "result": res.json(),
+                        "result": res,
                         "internal_query_id": _input["internal_query_id"]
                     }
                 except Exception as ex1:
