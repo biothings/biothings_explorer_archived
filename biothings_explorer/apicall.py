@@ -140,6 +140,12 @@ class BioThingsCaller:
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
                 print("MYCHEM RESULT")
+                print("base")
+                print(base_url)
+                print("params")
+                print(parameters)
+                print("q url")
+                print(query_url)
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 # print("RES JSON")
                 # print(res.json())
