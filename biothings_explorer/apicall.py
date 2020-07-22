@@ -100,7 +100,6 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
-                # print("MERP")
             if("mychem.info" in base_url):
                 print("MERPPPP")
                 counter = counter + 1
