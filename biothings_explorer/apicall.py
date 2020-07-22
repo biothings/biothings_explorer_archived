@@ -11,6 +11,7 @@ from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
 from .utils.common import add_s
+import time
 
 
 class BioThingsCaller:
@@ -63,7 +64,9 @@ class BioThingsCaller:
         print("OKOKOKOK")
         if("mychem.info" in base_url):
             print("OMMMMGGGG")
+            counter = counter + 1
             print(counter)
+            time.sleep(1)
         if method == "get":
             try:
                 async with session.get(base_url, params=parameters) as res:
