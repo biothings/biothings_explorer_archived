@@ -149,7 +149,7 @@ class BioThingsCaller:
                 print("REQUEST BODY")
                 print(request_body["q"])
                 counter = 0
-                interval = 1
+                interval = 30
                 # res = []
                 request_list = request_body["q"].split(",")
                 while(counter < len(request_list)):
@@ -166,8 +166,8 @@ class BioThingsCaller:
                     else: 
                         res = res + res_temp.json()
                         print("RES ADDED TO")
-                    print(res)
-                    print(type(res))
+                    # print(res)
+                    # print(type(res))
                     counter = counter + interval
 
 
