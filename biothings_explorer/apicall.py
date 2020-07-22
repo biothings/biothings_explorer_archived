@@ -160,11 +160,13 @@ class BioThingsCaller:
                     print(type(res_temp.json()))
                     if(counter == 0):
                         res = res_temp.json()
+                        print("INITIAL RES")
                     else: 
                         res = res + res_temp.json()
+                        print("RES ADDED TO")
                     print(res)
                     print(type(res))
-                    counter = counter + 100
+                    counter = counter + 1
 
 
                 # res = requests.post(base_url, params=parameters, data=request_body)
