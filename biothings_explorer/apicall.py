@@ -170,7 +170,7 @@ class BioThingsCaller:
                     print("RESPONSE")
                     print(res)
                     return {
-                        "result": res.json(),
+                        "result": res,
                         "internal_query_id": _input["internal_query_id"]
                     }
                 except Exception as ex1:
