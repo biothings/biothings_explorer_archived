@@ -60,7 +60,8 @@ class BioThingsCaller:
                     parameters.pop(path_param)
             parameters = eval(str(parameters).replace("{inputs[0]}", _input["value"]))
         query_url = self.print_request(method, base_url, parameters, request_body)
-        if("mychem.info" in query_url):
+        print("OKOKOKOK")
+        if("mychem.info" in base_url):
             print("OMMMMGGGG")
             print(counter)
         if method == "get":
