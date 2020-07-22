@@ -149,7 +149,7 @@ class BioThingsCaller:
                 print("REQUEST BODY")
                 print(request_body["q"])
                 counter = 0
-                interval = 30
+                interval = 200
                 # res = []
                 request_list = request_body["q"].split(",")
                 while(counter < len(request_list)):
