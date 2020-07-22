@@ -11,7 +11,7 @@ from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
 from .utils.common import add_s
-
+import time
 
 class BioThingsCaller:
     """Call biothings APIs."""
@@ -96,7 +96,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                with session.post(
+                async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
@@ -115,7 +115,7 @@ class BioThingsCaller:
                                 "{}: {}".format(_input["internal_query_id"], query_url)
                             )
                         return {
-                            "result": res.json(content_type=None),
+                            "result": await res.json(),
                             "internal_query_id": _input["internal_query_id"],
                         }
                     except Exception as ex1:
@@ -141,6 +141,8 @@ class BioThingsCaller:
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
         :param: session (obj): a aiohttp session object
         """
+        # sleep for a second
+        time.sleep(1)
         # check api type
         res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
