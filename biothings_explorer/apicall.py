@@ -155,7 +155,8 @@ class BioThingsCaller:
                 while(counter < len(request_list)):
                     print("OK HENNY")
                     print(counter)
-                    request_body["q"] = request_list[counter:(counter+interval)].join(",")
+                    s = ","
+                    request_body["q"] = s.join(request_list[counter:(counter+interval)])
                     print(request_body["q"])
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
                     print(type(res_temp.json()))
