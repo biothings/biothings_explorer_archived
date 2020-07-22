@@ -145,8 +145,7 @@ class BioThingsCaller:
                     return {
                         "result": res.json(),
                         "internal_query_id": _input["internal_query_id"],
-                    }
-                 except Exception as ex1:
+                except Exception as ex1:
                     print(ex1)
                     print("Unable to fetch results from {}".format(_input["api"]))
                     return {
