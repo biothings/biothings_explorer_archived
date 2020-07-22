@@ -139,6 +139,9 @@ class BioThingsCaller:
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
+                print("RES text")
+                print(res.text)
+
                 try:
                     if res.status in [400, 404]:
                         print(
@@ -155,7 +158,7 @@ class BioThingsCaller:
                             "{}: {}".format(_input["internal_query_id"], query_url)
                         )
                     return {
-                        "result": res.json(),
+                        "result": res.text,
                         "internal_query_id": _input["internal_query_id"],
                     }
                 except Exception as ex1:
