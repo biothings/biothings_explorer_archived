@@ -69,31 +69,31 @@ class BioThingsCaller:
         #     time.sleep(5)
         if method == "get":
             try:
-                session.get(base_url, params=parameters) as res:
-                    if verbose:
-                        print("{}: {}".format(_input["internal_query_id"], query_url))
-                    try:
-                        if res.status in [400, 404]:
-                            print(
-                                "{} {} failed".format(
-                                    _input["internal_query_id"], _input["api"]
-                                )
+                res = session.get(base_url, params=parameters)
+                if verbose:
+                    print("{}: {}".format(_input["internal_query_id"], query_url))
+                try:
+                    if res.status in [400, 404]:
+                        print(
+                            "{} {} failed".format(
+                                _input["internal_query_id"], _input["api"]
                             )
-                            return {
-                                "internal_query_id": _input["internal_query_id"],
-                                "result": {},
-                            }
-                        res = res.json()
+                        )
                         return {
                             "internal_query_id": _input["internal_query_id"],
-                            "result": res,
+                            "result": {},
                         }
-                    except Exception as ex:
-                        m = res.text()
-                        return {
-                            "result": json.loads(m),
-                            "internal_query_id": _input["internal_query_id"],
-                        }
+                    res = res.json()
+                    return {
+                        "internal_query_id": _input["internal_query_id"],
+                        "result": res,
+                    }
+                except Exception as ex:
+                    m = res.text()
+                    return {
+                        "result": json.loads(m),
+                        "internal_query_id": _input["internal_query_id"],
+                    }
             except Exception:
                 if verbose:
                     print(
@@ -104,35 +104,33 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             try:
-                async with session.post(
-                    base_url, params=parameters, data=request_body, headers=header
-                ) as res:
-                    try:
-                        if res.status in [400, 404]:
-                            print(
-                                "{} {} failed".format(
-                                    _input["internal_query_id"], _input["api"]
-                                )
+                res =  session.post(base_url, params=parameters, data=request_body, headers=header)
+                try:
+                    if res.status in [400, 404]:
+                        print(
+                            "{} {} failed".format(
+                                _input["internal_query_id"], _input["api"]
                             )
-                            return {
-                                "internal_query_id": _input["internal_query_id"],
-                                "result": {},
-                            }
-                        if verbose:
-                            print(
-                                "{}: {}".format(_input["internal_query_id"], query_url)
-                            )
-                        return {
-                            "result": await res.json(),
-                            "internal_query_id": _input["internal_query_id"],
-                        }
-                    except Exception as ex1:
-                        print(ex1)
-                        print("Unable to fetch results from {}".format(_input["api"]))
+                        )
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": {},
                         }
+                    if verbose:
+                        print(
+                            "{}: {}".format(_input["internal_query_id"], query_url)
+                        )
+                    return {
+                        "result": res.json(),
+                        "internal_query_id": _input["internal_query_id"],
+                    }
+                except Exception as ex1:
+                    print(ex1)
+                    print("Unable to fetch results from {}".format(_input["api"]))
+                    return {
+                        "internal_query_id": _input["internal_query_id"],
+                        "result": {},
+                    }
             except Exception as ex:
                 print(ex)
                 if verbose:
