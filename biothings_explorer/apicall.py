@@ -12,7 +12,7 @@ from collections import Counter
 import json
 from .utils.common import add_s
 import requests
-import time
+
 
 
 class BioThingsCaller:
