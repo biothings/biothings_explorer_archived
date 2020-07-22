@@ -61,15 +61,15 @@ class BioThingsCaller:
                     parameters.pop(path_param)
             parameters = eval(str(parameters).replace("{inputs[0]}", _input["value"]))
         query_url = self.print_request(method, base_url, parameters, request_body)
-        print("OKOKOKOK")
-        if("mychem.info" in base_url):
-            print("OMMMMGGGG")
-            counter = counter + 1
-            print(counter)
-            await asyncio.sleep(5)
+        # print("OKOKOKOK")
+        # if("mychem.info" in base_url):
+        #     print("OMMMMGGGG")
+        #     counter = counter + 1
+        #     print(counter)
+        #     time.sleep(5)
         if method == "get":
             try:
-                async with session.get(base_url, params=parameters) as res:
+                session.get(base_url, params=parameters) as res:
                     if verbose:
                         print("{}: {}".format(_input["internal_query_id"], query_url))
                     try:
@@ -83,13 +83,13 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        res = await res.json()
+                        res = res.json()
                         return {
                             "internal_query_id": _input["internal_query_id"],
                             "result": res,
                         }
                     except Exception as ex:
-                        m = await res.text()
+                        m = res.text()
                         return {
                             "result": json.loads(m),
                             "internal_query_id": _input["internal_query_id"],
