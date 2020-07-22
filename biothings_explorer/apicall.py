@@ -149,12 +149,13 @@ class BioThingsCaller:
                 print("REQUEST BODY")
                 print(request_body["q"])
                 counter = 0
+                interval = 1
                 # res = []
-                request_body_backup = request_body
-                while(counter < len(request_body["q"])):
+                request_list = request_body["q"].split(",")
+                while(counter < len(request_list)):
                     print("OK HENNY")
                     print(counter)
-                    request_body["q"] = request_body_backup["q"].split(",")[counter:(counter+100)].join(",")
+                    request_body["q"] = request_list[counter:(counter+interval)].join(",")
                     print(request_body["q"])
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
                     print(type(res_temp.json()))
@@ -166,7 +167,7 @@ class BioThingsCaller:
                         print("RES ADDED TO")
                     print(res)
                     print(type(res))
-                    counter = counter + 1
+                    counter = counter + interval
 
 
                 # res = requests.post(base_url, params=parameters, data=request_body)
