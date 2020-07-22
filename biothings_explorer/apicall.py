@@ -11,9 +11,6 @@ from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
 from .utils.common import add_s
-import time
-import requests
-
 
 
 class BioThingsCaller:
@@ -39,7 +36,6 @@ class BioThingsCaller:
         return ""
 
     async def call_one_arbitrary_api(self, _input, session, verbose=False):
-        counter = 0;
         base_url = (
             _input["operation"]["server"].strip("/") + _input["operation"]["path"]
         )
@@ -63,7 +59,6 @@ class BioThingsCaller:
                     parameters.pop(path_param)
             parameters = eval(str(parameters).replace("{inputs[0]}", _input["value"]))
         query_url = self.print_request(method, base_url, parameters, request_body)
-        print("OKOKOKOK")
         if method == "get":
             try:
                 async with session.get(base_url, params=parameters) as res:
@@ -100,50 +95,12 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
-            try: 
-                if("mychem.info" in base_url):
-                    # pass;
-                    print("MERPPPP")
-                    counter = counter + 1
-                    print(counter)
-                    # time.sleep(5)
-                    res = session.post(base_url, params=parameters, data=request_body, headers=header)
-                    try:
-                        print("RESULT")
-                        if("mychem.info" in base_url):
-                            print("OMMMMGGGG")
-                            counter = counter + 1
-                            print(counter)
-                            # time.sleep(5)
-                        if res.status in [400, 404]:
-                            print(
-                                "{} {} failed".format(
-                                    _input["internal_query_id"], _input["api"]
-                                )
-                            )
-                            return {
-                                "internal_query_id": _input["internal_query_id"],
-                                "result": {},
-                            }
-                        if verbose:
-                            print(
-                                "{}: {}".format(_input["internal_query_id"], query_url)
-                            )
-                        return {
-                            "result": res.json(),
-                            "internal_query_id": _input["internal_query_id"],
-                        }
-                else:
+            if("mychem.info" not in base_url):
+                try:
                     async with session.post(
                         base_url, params=parameters, data=request_body, headers=header
                     ) as res:
                         try:
-                            print("RESULT")
-                            if("mychem.info" in base_url):
-                                print("WTF")
-                                counter = counter + 1
-                                print(counter)
-                                # time.sleep(5)
                             if res.status in [400, 404]:
                                 print(
                                     "{} {} failed".format(
@@ -169,15 +126,18 @@ class BioThingsCaller:
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-            except Exception as ex:
-                print(ex)
-                if verbose:
-                    print(
-                        "{}: {} failed".format(
-                            _input["internal_query_id"], _input["api"]
+                except Exception as ex:
+                    print(ex)
+                    if verbose:
+                        print(
+                            "{}: {} failed".format(
+                                _input["internal_query_id"], _input["api"]
+                            )
                         )
-                    )
-                return {"result": {}, "internal_query_id": _input["internal_query_id"]}
+                    return {"result": {}, "internal_query_id": _input["internal_query_id"]}
+            else:
+                print("WADDUP")
+
 
     async def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
