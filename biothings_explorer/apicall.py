@@ -148,8 +148,8 @@ class BioThingsCaller:
                 # print(query_url)
                 # print("REQUEST BODY")
                 # print(request_body)
-                if(len(request_body["q"]) > 10):
-                    request_body["q"] = request_body["q"][:10]
+                # if(len(request_body["q"]) > 10):
+                #     request_body["q"] = request_body["q"][:10]
                 # if(len(request_body['q'] )
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 # print("RES JSON")
