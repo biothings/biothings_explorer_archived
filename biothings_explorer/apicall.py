@@ -141,7 +141,7 @@ class BioThingsCaller:
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
         :param: session (obj): a aiohttp session object
         """
-        # sleep for a second
+        # wait a second
         time.sleep(1)
         # check api type
         res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
