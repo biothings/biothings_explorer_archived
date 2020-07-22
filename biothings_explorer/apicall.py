@@ -36,6 +36,7 @@ class BioThingsCaller:
         return ""
 
     async def call_one_arbitrary_api(self, _input, session, verbose=False):
+        time.sleep(.300)
         base_url = (
             _input["operation"]["server"].strip("/") + _input["operation"]["path"]
         )
@@ -141,8 +142,6 @@ class BioThingsCaller:
         :param: _input (dict) : a python dict containing three keys, e.g. batch_mode, params, api
         :param: session (obj): a aiohttp session object
         """
-        # wait a second
-        time.sleep(1)
         # check api type
         res = await self.call_one_arbitrary_api(_input, session, verbose=verbose)
         return res
