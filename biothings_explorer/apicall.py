@@ -98,17 +98,18 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
-            if("mychem.info" in base_url):
-                print("OMMMMGGGG")
-                counter = counter + 1
-                print(counter)
-                time.sleep(15)
+
             try:
                 async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
                 ) as res:
                     try:
-                        print("OMG WE GOTTA RESULT")
+                        print("RESULT")
+                        if("mychem.info" in base_url):
+                            print("OMMMMGGGG")
+                            counter = counter + 1
+                            print(counter)
+                            time.sleep(5)
                         if res.status in [400, 404]:
                             print(
                                 "{} {} failed".format(
