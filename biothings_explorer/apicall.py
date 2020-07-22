@@ -60,6 +60,7 @@ class BioThingsCaller:
             parameters = eval(str(parameters).replace("{inputs[0]}", _input["value"]))
         query_url = self.print_request(method, base_url, parameters, request_body)
         if method == "get":
+            await asyncio.sleep(1)
             try:
                 async with session.get(base_url, params=parameters) as res:
                     if verbose:
@@ -95,6 +96,7 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
+            await asyncio.sleep(1)
             try:
                 async with session.post(
                     base_url, params=parameters, data=request_body, headers=header
