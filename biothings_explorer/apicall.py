@@ -146,26 +146,26 @@ class BioThingsCaller:
                 # print(parameters)
                 # print("q url")
                 # print(query_url)
-                print("REQUEST BODY")
-                print(request_body["q"])
+                # print("REQUEST BODY")
+                # print(request_body["q"])
                 counter = 0
                 interval = 200
                 # res = []
                 request_list = request_body["q"].split(",")
                 while(counter < len(request_list)):
-                    print("OK HENNY")
-                    print(counter)
+                    # print("OK HENNY")
+                    # print(counter)
                     s = ","
                     request_body["q"] = s.join(request_list[counter:(counter+interval)])
-                    print(request_body["q"])
+                    # print(request_body["q"])
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                    print(type(res_temp.json()))
+                    # print(type(res_temp.json()))
                     if(counter == 0):
                         res = res_temp.json()
-                        print("INITIAL RES")
+                        # print("INITIAL RES")
                     else: 
                         res = res + res_temp.json()
-                        print("RES ADDED TO")
+                        # print("RES ADDED TO")
                     # print(res)
                     # print(type(res))
                     counter = counter + interval
