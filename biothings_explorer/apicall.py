@@ -12,7 +12,7 @@ from collections import Counter
 import json
 from .utils.common import add_s
 import requests
-
+import time
 
 
 class BioThingsCaller:
@@ -161,7 +161,7 @@ class BioThingsCaller:
                 #     counter = counter + 100
 
 
-                res = requests.post(base_url, params=parameters, data=request_body, headers=header)
+                res = requests.post(base_url, params=parameters, data=request_body)
                 # if(counter == 0):
                 #     res = res_temp.json()
                 # else: 
