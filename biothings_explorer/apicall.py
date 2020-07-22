@@ -138,6 +138,7 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
+                await asyncio.sleep(5)
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 print("RES JSON")
                 print(res.json())
