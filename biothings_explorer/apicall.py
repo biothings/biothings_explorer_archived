@@ -148,10 +148,13 @@ class BioThingsCaller:
                 print(query_url)
                 print("REQUEST BODY")
                 print(request_body)
+
+                # if(len(request_body['q'] )
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 # print("RES JSON")
                 # print(res.json())
                 try:
+                    print(res.json())
                     return {
                         "result": res.json(),
                         "internal_query_id": _input["internal_query_id"]
