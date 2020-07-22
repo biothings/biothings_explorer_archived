@@ -141,10 +141,18 @@ class BioThingsCaller:
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
                 print("RES JSON")
                 print(res.json())
-                return {
-                    "result": res.json(),
-                    "internal_query_id": _input["internal_query_id"],
-                }
+                try:
+                    return {
+                        "result": res.json(),
+                        "internal_query_id": _input["internal_query_id"],
+                    }
+                 except Exception as ex1:
+                    print(ex1)
+                    print("Unable to fetch results from {}".format(_input["api"]))
+                    return {
+                        "internal_query_id": _input["internal_query_id"],
+                        "result": {},
+                    }
 
                 # try:
                 #     if res.status in [400, 404]:
