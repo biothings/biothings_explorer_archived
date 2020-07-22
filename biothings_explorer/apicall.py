@@ -98,6 +98,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             if("mychem.info" not in base_url):
+                print("NOT MYCHEM RESULT")
                 try:
                     async with session.post(
                         base_url, params=parameters, data=request_body, headers=header
@@ -138,10 +139,10 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
-                await asyncio.sleep(5)
+                print("MYCHEM RESULT")
                 res = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                print("RES JSON")
-                print(res.json())
+                # print("RES JSON")
+                # print(res.json())
                 try:
                     return {
                         "result": res.json(),
