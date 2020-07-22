@@ -11,6 +11,8 @@ from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
 from .utils.common import add_s
+import requests
+
 
 
 class BioThingsCaller:
@@ -136,7 +138,10 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
+                res = requests.post(base_url, params=parameters, data=request_body, headers=header)
+
                 print("WADDUP")
+                print(res)
 
 
     async def call_one_api(self, _input, session, verbose=False):
