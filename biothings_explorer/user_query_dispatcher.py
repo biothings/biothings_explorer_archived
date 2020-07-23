@@ -200,6 +200,8 @@ class SingleEdgeQueryDispatcher:
                         equivalent_ids = self.G.nodes[n2]["equivalent_ids"]
                     except KeyError: 
                         print(KeyError)
+                        print("ID resolution steps failed")
+                        break; 
                     # find the corresponding id from the equivalent id dict
                     new_vals = None
                     for _id in self.output_id:
