@@ -98,6 +98,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             if("mychem.info" not in base_url):
+                # execute asynchronous calls as per usual 
                 try:
                     async with session.post(
                         base_url, params=parameters, data=request_body, headers=header
@@ -138,18 +139,18 @@ class BioThingsCaller:
                         )
                     return {"result": {}, "internal_query_id": _input["internal_query_id"]}
             else:
+                # in this case, the call is to MyChem.info
                 counter = 0
                 interval = 200
                 res = []
                 request_list = request_body["q"].split(",")
+                # only make queries with up to 200 items at a time - too many will return error
                 while(counter < len(request_list)):
                     s = ","
                     request_body["q"] = s.join(request_list[counter:(counter+interval)])
+                    # make synchronous calls
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                    # if(counter == 0):
-                    #     res = res_temp.json()
-                    #     # print("INITIAL RES")
-                    # else: 
+                    # combine responses from 1+ calls
                     res = res + res_temp.json()
                     counter = counter + interval
                 try:
@@ -164,8 +165,6 @@ class BioThingsCaller:
                         "internal_query_id": _input["internal_query_id"],
                         "result": {},
                     }
-
-
 
     async def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
