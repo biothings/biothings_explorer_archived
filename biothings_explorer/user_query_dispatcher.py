@@ -9,6 +9,7 @@ from collections import defaultdict
 import networkx as nx
 import copy
 
+from .filters.__init__ import Filter
 from .api_call_dispatcher import Dispatcher
 from .id_resolver import IDResolver
 from .registry import Registry
@@ -50,6 +51,7 @@ class SingleEdgeQueryDispatcher:
     input_obj: optional, a representation of the input from Hint Module
     prev_graph: the graph object coming from last query
     registry: optional, the Registry object in BioThings Explorer
+    filter: filter to be applied, with optional count (default to 50)
     """
 
     def __init__(
@@ -66,7 +68,8 @@ class SingleEdgeQueryDispatcher:
         query_id=1,
         reverse=False,
         registry=None,
-        loop=None
+        loop=None,
+        filter={}
     ):
         self.loop = loop
         # load bte registry
@@ -107,6 +110,7 @@ class SingleEdgeQueryDispatcher:
         self.equivalent_ids = equivalent_ids
         self.input_identifier = None
         self.reverse = reverse
+        self.filter = filter
         if input_obj:
             self.input_cls = input_obj.get("primary").get("cls")
             self.input_id = input_obj.get("primary").get("identifier")
@@ -145,6 +149,7 @@ class SingleEdgeQueryDispatcher:
         self.G = nx.MultiDiGraph()
         self.log = []
         self.summary = []
+
 
     def to_reasoner_std(self):
         """Convert the output to reasoner api standard.
@@ -398,6 +403,13 @@ class SingleEdgeQueryDispatcher:
                 len(self.G) - source_nodes_cnt
             )
         )
+        if self.filter:
+            self.G = Filter(self.G, self.filter).filter_results()
+            if verbose:
+                print("\nAfter application of the {} filter, BTE retrived {} unique objects".format(
+                    self.filter['name'], len(self.G) - source_nodes_cnt))
+            self.log.append("\nAfter application of the {} filter, BTE retrived {} unique objects".format(
+                    self.filter['name'], len(self.G) - source_nodes_cnt))
 
     def to_json(self):
         """convert the graph into JSON through networkx"""
@@ -466,7 +478,7 @@ class SingleEdgeQueryDispatcher:
 
 class Explain:
     """Find intermediate node(s) that connect input and output
-    
+
     There might not be direct evidence showing connection between A and B. \
         The "FindConnection" class aims at finding intermediate node(s) which both A and B are connected to.
 
@@ -478,7 +490,7 @@ class Explain:
         intermediate_nodes: dict
             the semantic type(s) of the intermediate node
             could be None, which represents any semantic type, or a list of semantic types
-        
+
     Examples
         >>> fc = FindConnection(input_obj=asthma, output_obj=imatinib, intermediate_nodes=[None])
         >>> fc.connect()
@@ -751,7 +763,7 @@ class Explain:
 
     def display_table_view(self):
         """Display the query results as a pandas table.
-        
+
         Examples
         --------
         >>> df = fc.display_table_view()
@@ -763,7 +775,7 @@ class Explain:
 
 class Predict:
     """Find relationships between one specific entity and a class of entity types.
-    
+
     params
     ------
     input_obj: the input object returned from Hint, required
@@ -771,10 +783,11 @@ class Predict:
         could be None, str, or a list of entity classes
     intermediate_nodes: the semantic type(s) of the intermediate node
         could be None, which represents any semantic type, or a list of semantic types
-    
+    filters : list of dicts of filters to be applied at every intermediate node and final node
+
     """
 
-    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None, filters=[]):
         """Initialize.
         params
         ------
@@ -783,8 +796,11 @@ class Predict:
             could be None, str, or a list of entity classes
         intermediate_nodes: the semantic type(s) of the intermediate node
             could be None, which represents any semantic type, or a list of semantic types
-        
+
         """
+        if not isinstance(filters, list):
+            filters = [filters]
+        self.filters = filters
         if not intermediate_nodes:
             intermediate_nodes = []
         elif not isinstance(intermediate_nodes, list):
@@ -825,7 +841,7 @@ class Predict:
 
     def connect(self, verbose=False):
         """Make the query.
-        
+
         params
         ------
         verbose: boolean, if True, print the progress and the summary
@@ -902,15 +918,27 @@ class Predict:
                             )
                         )
                         self.log.append("==========\n")
-                        self.seqd[query_id] = SingleEdgeQueryDispatcher(
-                            input_obj=input_obj,
-                            equivalent_ids=equivalent_ids[input_cls],
-                            input_cls=input_cls,
-                            output_cls=output_cls,
-                            query_id=i + 1,
-                            prev_graph=self.prev_graph,
-                            pred=None,
-                        )
+                        if self.filters:
+                            self.seqd[query_id] = SingleEdgeQueryDispatcher(
+                                input_obj=input_obj,
+                                equivalent_ids=equivalent_ids[input_cls],
+                                input_cls=input_cls,
+                                output_cls=output_cls,
+                                query_id=i + 1,
+                                prev_graph=self.prev_graph,
+                                pred=None,
+                                filter=self.filters[i]
+                            )
+                        else:
+                            self.seqd[query_id] = SingleEdgeQueryDispatcher(
+                                input_obj=input_obj,
+                                equivalent_ids=equivalent_ids[input_cls],
+                                input_cls=input_cls,
+                                output_cls=output_cls,
+                                query_id=i + 1,
+                                prev_graph=self.prev_graph,
+                                pred=None
+                            )
                         self.seqd[query_id].query(verbose=verbose)
                         if len(self.seqd[query_id].G) < 2:
                             break
@@ -940,14 +968,25 @@ class Predict:
                         )
                     )
                     self.log.append("==========\n")
-                    self.seqd[i + 1] = SingleEdgeQueryDispatcher(
-                        input_obj=input_obj,
-                        input_cls=input_cls,
-                        output_cls=output_cls,
-                        query_id=i + 1,
-                        prev_graph=self.prev_graph,
-                        pred=None,
-                    )
+                    if self.filters:
+                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(
+                            input_obj=input_obj,
+                            input_cls=input_cls,
+                            output_cls=output_cls,
+                            query_id=i + 1,
+                            prev_graph=self.prev_graph,
+                            pred=None,
+                            filter=self.filters[i]
+                        )
+                    else:
+                        self.seqd[i + 1] = SingleEdgeQueryDispatcher(
+                            input_obj=input_obj,
+                            input_cls=input_cls,
+                            output_cls=output_cls,
+                            query_id=i + 1,
+                            prev_graph=self.prev_graph,
+                            pred=None
+                        )
                     self.seqd[i + 1].query(verbose=verbose)
                     if len(self.seqd[i + 1].G) < 2:
                         break
@@ -1075,7 +1114,7 @@ class Predict:
 
     def display_table_view(self):
         """Display the query results as a pandas table
-        
+
         Examples
         --------
         >>> df = fc.display_table_view()
@@ -1092,7 +1131,7 @@ class FindConnection:
 
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
-                                Examples: 
+                                Examples:
                     Hint().query("Fanconi anemia")['DiseaseOrPhenotypicFeature'][0]
                     Hint().query("acetaminophen")['ChemicalSubstance'][0]
 
@@ -1112,13 +1151,13 @@ class FindConnection:
                     ['Gene','Pathway']           : two intermediate nodes, first must be a Gene, second must be a Pathway.
                     ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
                                                     **NOTE**: queries with more than one intermediate node are currently not supported
-    
+
     **NOTE**: queries with more than one intermediate node are currently not supported
     """
 
-    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None):
+    def __init__(self, input_obj, output_obj, intermediate_nodes, registry=None, filters=[]):
         """Find relationships in the Knowledge Graph between an Input Object and an Output Object.
-        
+
         Args:
             input_obj (required): must be an object returned from Hint corresponding to a specific biomedical entity.
                                 Examples:
@@ -1142,6 +1181,7 @@ class FindConnection:
                     ['Gene',('Pathway','Gene')]  : two intermediate nodes, first must be a Gene, second must be a Pathway or Gene.
                                                     **NOTE**: queries with more than one intermediate node are currently not supported
         """
+        self.filters = filters
         self.input_obj = input_obj
         self.output_obj = output_obj
         self.intermediate_nodes = intermediate_nodes
@@ -1151,7 +1191,7 @@ class FindConnection:
             )
         else:
             self.fc = Predict(
-                input_obj, output_obj, intermediate_nodes, registry=registry
+                input_obj, output_obj, intermediate_nodes, registry=registry, filters=filters
             )
 
     def connect(self, verbose=False):
@@ -1191,7 +1231,7 @@ class FindConnection:
 
     def display_table_view(self):
         """Display the query results as a pandas table.
-        
+
         **Examples**
 
         >>> df = fc.display_table_view()
