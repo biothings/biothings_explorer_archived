@@ -198,8 +198,8 @@ class SingleEdgeQueryDispatcher:
                 if self.output_id and identifier not in self.output_id:
                     try: 
                         equivalent_ids = self.G.nodes[n2]["equivalent_ids"]
-                    except NameError: 
-                        print(NameError)
+                    except KeyError: 
+                        print(KeyError)
                     # find the corresponding id from the equivalent id dict
                     new_vals = None
                     for _id in self.output_id:
