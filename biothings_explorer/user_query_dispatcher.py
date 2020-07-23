@@ -196,8 +196,9 @@ class SingleEdgeQueryDispatcher:
                 # check if the identifier matches the id type specified by the
                 # user or the default id type
                 if self.output_id and identifier not in self.output_id:
+                    #if equivalent_ids doesn't exist then print error message
                     if("equivalent_ids" not in self.G.nodes[n2]):
-                        print("ID resolution steps failed")
+                        print("ID resolution steps failed:")
                     equivalent_ids = self.G.nodes[n2]["equivalent_ids"]
                     # find the corresponding id from the equivalent id dict
                     new_vals = None
