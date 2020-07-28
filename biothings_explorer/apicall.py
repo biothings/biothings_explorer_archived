@@ -98,7 +98,7 @@ class BioThingsCaller:
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
             if("mychem.info" not in base_url):
-                # execute asynchronous calls as per usual 
+                # execute asynchronous calls as per usual
                 try:
                     async with session.post(
                         base_url, params=parameters, data=request_body, headers=header
