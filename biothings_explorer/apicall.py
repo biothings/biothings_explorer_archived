@@ -150,9 +150,10 @@ class BioThingsCaller:
                     request_body["q"] = s.join(request_list[counter:(counter+interval)])
                     # make synchronous calls
                     res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
-                    # combine responses from 1+ calls
-                    res = res + res_temp.json()
-                    counter = counter + interval
+                    if(res_temp.status_code == 200):
+                        # combine responses from 1+ calls
+                        res = res + res_temp.json()
+                        counter = counter + interval
                 try:
                     return {
                         "result": res,
