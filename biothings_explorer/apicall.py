@@ -55,7 +55,11 @@ class BioThingsCaller:
             if _input["operation"].get("path_params"):
                 for path_param in _input["operation"]["path_params"]:
                     path_value_template = parameters.get(path_param)
-                    if(path_value_template):
+                    print("input")
+                    print(_input["value"])
+                    print("PVT")
+                    print(path_value_template)
+                    if(_input["value"]):
                         base_url = base_url.replace(
                             "{" + path_param + "}", path_value_template
                         ).replace("{inputs[0]}", _input["value"])
