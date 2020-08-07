@@ -11,6 +11,8 @@ from aiohttp import ClientSession, TCPConnector
 from collections import Counter
 import json
 from .utils.common import add_s
+import requests
+
 
 
 class BioThingsCaller:
@@ -53,6 +55,7 @@ class BioThingsCaller:
             if _input["operation"].get("path_params"):
                 for path_param in _input["operation"]["path_params"]:
                     path_value_template = parameters.get(path_param)
+                    # if(path_value_template):
                     base_url = base_url.replace(
                         "{" + path_param + "}", path_value_template
                     ).replace("{inputs[0]}", _input["value"])
@@ -95,45 +98,75 @@ class BioThingsCaller:
                     )
                 return {"internal_query_id": _input["internal_query_id"], "result": {}}
         elif method == "post":
-            try:
-                async with session.post(
-                    base_url, params=parameters, data=request_body, headers=header
-                ) as res:
-                    try:
-                        if res.status in [400, 404]:
-                            print(
-                                "{} {} failed".format(
-                                    _input["internal_query_id"], _input["api"]
+            if("mychem.info" not in base_url):
+                # execute asynchronous calls as per usual
+                try:
+                    async with session.post(
+                        base_url, params=parameters, data=request_body, headers=header
+                    ) as res:
+                        try:
+                            if res.status in [400, 404]:
+                                print(
+                                    "{} {} failed".format(
+                                        _input["internal_query_id"], _input["api"]
+                                    )
                                 )
-                            )
+                                return {
+                                    "internal_query_id": _input["internal_query_id"],
+                                    "result": {},
+                                }
+                            if verbose:
+                                print(
+                                    "{}: {}".format(_input["internal_query_id"], query_url)
+                                )
+                            return {
+                                "result": await res.json(),
+                                "internal_query_id": _input["internal_query_id"],
+                            }
+                        except Exception as ex1:
+                            print(ex1)
+                            print("Unable to fetch results from {}".format(_input["api"]))
                             return {
                                 "internal_query_id": _input["internal_query_id"],
                                 "result": {},
                             }
-                        if verbose:
-                            print(
-                                "{}: {}".format(_input["internal_query_id"], query_url)
+                except Exception as ex:
+                    print(ex)
+                    if verbose:
+                        print(
+                            "{}: {} failed".format(
+                                _input["internal_query_id"], _input["api"]
                             )
-                        return {
-                            "result": await res.json(),
-                            "internal_query_id": _input["internal_query_id"],
-                        }
-                    except Exception as ex1:
-                        print(ex1)
-                        print("Unable to fetch results from {}".format(_input["api"]))
-                        return {
-                            "internal_query_id": _input["internal_query_id"],
-                            "result": {},
-                        }
-            except Exception as ex:
-                print(ex)
-                if verbose:
-                    print(
-                        "{}: {} failed".format(
-                            _input["internal_query_id"], _input["api"]
                         )
-                    )
-                return {"result": {}, "internal_query_id": _input["internal_query_id"]}
+                    return {"result": {}, "internal_query_id": _input["internal_query_id"]}
+            else:
+                # in this case, the call is to MyChem.info
+                counter = 0
+                interval = 500
+                res = []
+                request_list = request_body["q"].split(",")
+                # only make queries with up to 200 items at a time - too many will return error
+                while(counter < len(request_list)):
+                    s = ","
+                    request_body["q"] = s.join(request_list[counter:(counter+interval)])
+                    # make synchronous calls
+                    res_temp = requests.post(base_url, params=parameters, data=request_body, headers=header)
+                    if(res_temp.status_code == 200):
+                        # combine responses from 1+ calls
+                        res = res + res_temp.json()
+                        counter = counter + interval
+                try:
+                    return {
+                        "result": res,
+                        "internal_query_id": _input["internal_query_id"]
+                    }
+                except Exception as ex2:
+                    print(ex2)
+                    print("Unable to fetch results from {}".format(_input["api"]))
+                    return {
+                        "internal_query_id": _input["internal_query_id"],
+                        "result": {},
+                    }
 
     async def call_one_api(self, _input, session, verbose=False):
         """Asynchronously make one API call.
