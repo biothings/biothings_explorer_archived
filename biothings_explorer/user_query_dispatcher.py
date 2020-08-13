@@ -403,6 +403,7 @@ class SingleEdgeQueryDispatcher:
                 len(self.G) - source_nodes_cnt
             )
         )
+
         if self.filter:
             self.G = Filter(self.G, self.filter).filter_results()
             if verbose:

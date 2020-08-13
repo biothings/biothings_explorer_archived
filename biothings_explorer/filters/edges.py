@@ -8,25 +8,25 @@ Parameters:
 Returns:
     A networkX graph with the top count results
 """
-import pandas as pd
-
+# TO DO: fix other 2 filter functions to deal w/ intermediate nodes
+#        add some key for each node so we know which ones are returned in which step of the query process
+#               (ex. if NodeDegree is used for inter1 and the target type, then there will be two sets
+#                of nodes which are labeled with filteredBy=NodeDegree, can't differentiate right now)
 def filter_node_degree(G, count=50, filt='NodeDegree'):
 
-    source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
-    degrees = [[],[]]
-    for node in G.nodes:
-        if node != source:
-            degrees[0].append(node)
-            degrees[1].append(G.degree(node))
+    sources = [x for x,y in G.nodes(data=True) if y['level']==1]
+    targets = [x for x,y in G.nodes(data=True) if y['level']==2]
 
-    data = {'node':degrees[0], 'degree':degrees[1]}
-    deg_count = pd.DataFrame(data=data)
-    deg_count.sort_values(by='degree', inplace=True, ascending=False)
+    degrees = []
+    for target in targets:
+        degrees.append([G.degree(target), target])
 
-    filtered = list(deg_count.head(count)['node']) + [source]
+    degrees = sorted(degrees, reverse=True)[:count]
+
+    filtered = [i[1] for i in degrees] + sources
     subG = G.subgraph(filtered)
 
-    for i,node in enumerate(filtered[:-1], start=1):
+    for i,node in enumerate(filtered[:-len(sources)], start=1):
         subG.nodes.data()[node]['filteredBy'] = filt
         subG.nodes.data()[node]['rank'] = i
 

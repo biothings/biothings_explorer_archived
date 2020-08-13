@@ -23,11 +23,11 @@ def filter_co_occur(G, count=50):
     # helper funcs
     def get_ids(node):
         ids = []
-        try:
+        if 'MESH' in G.nodes[node]['equivalent_ids'].keys():
             ids.append(G.nodes[node]['equivalent_ids']['MESH'])
+        if 'UMLS' in G.nodes[node]['equivalent_ids'].keys():
             ids.append(G.nodes[node]['equivalent_ids']['UMLS'])
-        except:
-            pass
+
         ids = [i for sub in ids for i in sub] # flatten and get rid of set()
         return 0 if len(ids) == 0 else ids
 
@@ -38,14 +38,17 @@ def filter_co_occur(G, count=50):
 
     # begin code
     unique_edges = []
-    source = [x for x,y in G.nodes(data=True) if y['level']==1][0]
-    for node in G.nodes:
-        if node != source:
-            unique_edges.append([source,node])
+    sources = [x for x,y in G.nodes(data=True) if y['level']==1]
+    targets = [x for x,y in G.nodes(data=True) if y['level']==2]
+
+    for source in sources:
+        for target in targets:
+            if G.has_edge(source,target):
+                unique_edges.append([source,target])
 
     num_combs, combos = [], []
-    src_id = get_ids(source)
     for edge in unique_edges:
+        src_id = get_ids(edge[0])
         tar_id = get_ids(edge[1])
 
         if (src_id == 0) | (tar_id == 0):
@@ -76,12 +79,22 @@ def filter_co_occur(G, count=50):
         i+=1
 
     results = sorted(unique_edges)[:count]
-    filtered = [i[2] for i in results] + [source]
+    filtered = [i[2] for i in results] + sources
     subG = G.subgraph(filtered)
 
     for i,res in enumerate(results, start=1):
-        subG.nodes[res[2]]['rank'] = i
-        subG.nodes[res[2]]['filteredBy'] = 'CoOccurrence'
-        subG.nodes[res[2]]['ngd_overall'] = res[0]
+        if 'rank' not in subG.nodes[res[2]].keys():
+            subG.nodes[res[2]]['rank'] = i
+            subG.nodes[res[2]]['filteredBy'] = 'CoOccurrence'
+            subG.nodes[res[2]]['ngd_overall'] = res[0]
+            subG.nodes[res[2]]['co_occur_with'] = res[1]
+        elif isinstance(subG.nodes[res[2]]['rank'],list):
+            subG.nodes[res[2]]['rank'].append(i)
+            subG.nodes[res[2]]['ngd_overall'].append(res[0])
+            subG.nodes[res[2]]['co_occur_with'].append(res[1])
+        else: # create list for duplicate node
+            subG.nodes[res[2]]['rank'] = [subG.nodes[res[2]]['rank'],i]
+            subG.nodes[res[2]]['ngd_overall'] = [subG.nodes[res[2]]['ngd_overall'],res[0]]
+            subG.nodes[res[2]]['co_occur_with'] = [subG.nodes[res[2]]['co_occur_with'],res[1]]
 
     return subG
