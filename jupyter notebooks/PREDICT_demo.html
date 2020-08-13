@@ -13017,10 +13017,6 @@ ul.typeahead-list  > li > a.pull-right {
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
-<style type="text/css">
-    .container { width:98% !important; }
-
-    </style>
 
 
 <style type="text/css">
@@ -13073,7 +13069,1254 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration --></head>
+    <!-- End of mathjax configuration -->
+
+<style type="text/css">
+    
+/* no local copies of fontawesome fonts in basic templates, so use cdn */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css)
+
+    </style>
+<style type="text/css">
+    .collapsible_headings_toggle .h1 {
+  font-size: 185.7%;
+  margin: 0.538em 0 0 0;
+  line-height: 1.0;
+}
+.collapsible_headings_toggle .h2 {
+  font-size: 157.1%;
+  margin: 0.636em 0 0 0;
+  line-height: 1.0;
+}
+.collapsible_headings_toggle .h3 {
+  font-size: 128.6%;
+  margin: 0.777em 0 0 0;
+  line-height: 1.0;
+}
+.collapsible_headings_toggle .h4,
+.collapsible_headings_toggle .h5,
+.collapsible_headings_toggle .h6 {
+  font-size: 100%;
+  margin: 1em 0 0 0;
+  line-height: 1.0;
+}
+
+.collapsible_headings_toggle.btn .h1,
+.collapsible_headings_toggle.btn .h2,
+.collapsible_headings_toggle.btn .h3,
+.collapsible_headings_toggle.btn .h4,
+.collapsible_headings_toggle.btn .h5,
+.collapsible_headings_toggle.btn .h6 {
+  margin-top: 0;
+}
+
+.collapsible_headings_toggle .fa {
+	transition: transform 400ms;
+
+  /* don't support IE filter, since can't rotate 360 */
+	-webkit-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	transform: rotate(360deg);
+}
+
+.collapsible_headings_collapsed .fa {
+	-webkit-transform: none;
+	-moz-transform: none;
+	-ms-transform: none;
+	-o-transform: none;
+	transform: none;
+}
+
+/* bracket rules */
+
+div.cell {
+  position: relative;
+}
+
+.chb {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: calc(100% + 3px);
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.chb div {
+  margin-left: 2px;
+  width: 5px;
+  border-color: #aaa;
+  border-left-color: transparent;
+  border-style: solid;
+  border-width: 0 2px 0 2px;
+}
+
+.collapsible_headings_collapsed .chb .chb-start {
+  border-width: 5px 2px 2px 4px;
+}
+
+.chb div:hover, 
+.chb .chb-hover, 
+.jupyter-soft-selected .chb div{
+    border-color:  #42A5F5;
+    border-left-color: transparent;
+	  border-width: 0 3px 0 0;
+}
+
+.chb .chb-start {
+  border-top-width: 1px;
+  margin-top: 2px;
+}
+
+.chb .chb-end {
+  border-bottom-width: 1px;
+  margin-bottom: 2px;
+}
+
+.chb-start div:hover, .chb .chb-start.chb-hover, .jupyter-soft-selected .chb .chb-start {
+  border-top-width: 2px;
+}
+
+.chb-end div:hover, .chb .chb-end.chb-hover, .jupyter-soft-selected .chb .chb-end {
+  border-bottom-width: 2px;
+}
+
+/* ellipsis rules */
+.collapsible_headings_ellipsis .rendered_html h1,
+.collapsible_headings_ellipsis .rendered_html h2,
+.collapsible_headings_ellipsis .rendered_html h3,
+.collapsible_headings_ellipsis .rendered_html h4,
+.collapsible_headings_ellipsis .rendered_html h5,
+.collapsible_headings_ellipsis .rendered_html h6 {
+  position: relative;
+  padding-right: 2em;
+}
+
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h1:after,
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h2:after,
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h3:after,
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h4:after,
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h5:after,
+.collapsible_headings_collapsed.collapsible_headings_ellipsis .rendered_html h6:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: "[\002026]";
+  color: #aaa;
+}
+    </style>
+
+
+<script type="text/javascript">
+    (requirejs.specified('base/js/namespace') ? define : function (deps, callback) {
+	// if here, the Jupyter namespace hasn't been specified to be loaded.
+	// This means that we're probably embedded in a page, so we need to make
+	// our definition with a specific module name
+	"use strict";
+	return define('nbextensions/collapsible_headings/main', deps, callback);
+})(['jquery', 'require'], function ($, requirejs) {
+	"use strict";
+
+	var mod_name = 'collapsible_headings';
+	var log_prefix = '[' + mod_name + ']';
+	var action_names = { // set on registration
+		insert_above: '',
+		insert_below: '',
+		collapse: '',
+		uncollapse: '',
+		select: ''
+	};
+	var select_reveals = true; // used as a flag to prevent selecting a heading section from also opening it
+
+	// define default values for config parameters
+	var params = {
+		add_button : false,
+		add_all_cells_button: false,
+		add_insert_header_buttons: false,
+		use_toggle_controls : true,
+		make_toggle_controls_buttons : false,
+		size_toggle_controls_by_level : true,
+		toggle_open_icon : 'fa-caret-down',
+		toggle_closed_icon : 'fa-caret-right',
+		toggle_color : '#aaaaaa',
+		use_shortcuts : true,
+		shortcuts: {
+			collapse: 'left',
+			collapse_all: 'ctrl-shift-left',
+			uncollapse: 'right',
+			uncollapse_all: 'ctrl-shift-right',
+			select: 'shift-right',
+			insert_above: 'shift-a',
+			insert_below: 'shift-b',
+		},
+		show_section_brackets : false,
+		section_bracket_width : 10,
+		show_ellipsis : true,
+		select_reveals : true,
+		collapse_to_match_toc: false,
+		indent_px: 8,
+	};
+
+	// ------------------------------------------------------------------------
+	// Jupyter is used when we're in a live notebook, but in non-live notebook
+	// settings, it remains undefined.
+	// It is declared here to allow us to keep logic for live/nonlive functions
+	// together.
+	var Jupyter;
+	// similarly, in a live notebook, events is the Jupyter global events
+	// object, but in a non-live notebook, we must construct our own version
+	var events;
+	try {
+		events = requirejs('base/js/events');
+	}
+	catch (err) {
+		// in non-live notebook, there's no events structure, so we make our own
+		if (window.events === undefined) {
+			var Events = function () {};
+			window.events = $([new Events()]);
+		}
+		events = window.events;
+	}
+
+	// global flag denoting whether we're in a live notebook or exported html.
+	// In a live notebook we operate on Cell instances, in exported html we
+	// operate on jQuery collections of '.cell' elements
+	var live_notebook = false;
+
+
+	//  Some functions providing things akin to Jupyter.notebook methods, but
+	//  which can work using jQuery collections in place of Cell instances.
+
+	/**
+	 *  Return all cells in the notebook (or cell elements if notebook not live)
+	 */
+	function _get_cells () {
+		return live_notebook ? Jupyter.notebook.get_cells() : $('#notebook-container > .cell');
+	}
+
+	/**
+	 *  Return cell at index index (or cell element if notebook not live)
+	 */
+	function _get_cell_at_index (index) {
+		return live_notebook ? Jupyter.notebook.get_cell(index) : $('.cell').eq(index);
+	}
+
+	/**
+	 *  Return the index of the given cell (or cell element if notebook not live)
+	 */
+	function _find_cell_index (cell) {
+		return live_notebook ? Jupyter.notebook.find_cell_index(cell) : $(cell).index();
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Return the level of nbcell.
+	 * The cell level is an integer in the range 1-7 inclusive
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {Integer} cell level
+	 */
+	function get_cell_level (cell) {
+		// headings can have a level up to 6, so 7 is used for a non-heading
+		var level = 7;
+		if (cell === undefined) {
+			return level;
+		}
+		if (live_notebook) {
+			if ((typeof(cell) === 'object')  && (cell.cell_type === 'markdown')) {
+			level = cell.get_text().match(/^#*/)[0].length || level;
+			}
+		}
+		else {
+			// the jQuery pseudo-selector :header is useful for us, but is
+			// implemented in javascript rather than standard css selectors,
+			// which get implemented in native browser code.
+			// So we get best performance by using css-native first, then filtering
+			var only_child_header = $(cell).find(
+				'.inner_cell > .rendered_html > :only-child'
+			).filter(':header');
+			if (only_child_header.length > 0) {
+				level = Number(only_child_header[0].tagName.substring(1));
+			}
+		}
+		return Math.min(level, 7); // we rely on 7 being max
+	}
+
+	/**
+	 * Check if a cell is a heading cell.
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {Boolean}
+	 */
+	function is_heading (cell) {
+		return get_cell_level(cell) < 7;
+	}
+
+	/**
+	 *  Check if a heading cell is collapsed.
+	 *
+	 *  Should in general return false on non-heading cells, but this is
+	 *  dependent on metadata/css classes, so don't rely on it.
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {Boolean}
+	 */
+	function _is_collapsed (heading_cell) {
+		if (live_notebook) {
+			return heading_cell.metadata.heading_collapsed === true;
+		}
+		return $(heading_cell).hasClass('collapsible_headings_collapsed');
+	}
+
+	/**
+	 *  Alter cell so that _is_collapsed called on it will return set_collapsed
+	 */
+	function _set_collapsed (heading_cell, set_collapsed) {
+		set_collapsed = set_collapsed !== undefined ? set_collapsed : true;
+		if (live_notebook) {
+			if (set_collapsed) {
+				heading_cell.metadata.heading_collapsed = true;
+			}
+			else {
+				delete heading_cell.metadata.heading_collapsed;
+			}
+		}
+		else {
+			$(heading_cell).toggleClass('collapsible_headings_collapsed', set_collapsed);
+		}
+		return set_collapsed;
+	}
+
+	/**
+	 * Check if a cell is a collapsed heading cell.
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {Boolean}
+	 */
+	function is_collapsed_heading (cell) {
+		return is_heading(cell) && _is_collapsed(cell);
+	}
+
+	/**
+	 * Uncollapse any headings which are hiding the cell at index
+	 *
+	 * @param {Integer} index - index of cell to reveal
+	 */
+	function reveal_cell_by_index (index) {
+		// Restrict the search to cells that are of the same level and lower
+		// than the currently selected cell by index.
+		var ref_cell = _get_cell_at_index(index);
+		// ref_cell may be null, if we've attempted to extend selection beyond
+		// the existing cells
+		if (!ref_cell) {
+			return;
+		}
+		var pivot_level = get_cell_level(ref_cell);
+		var cells = _get_cells();
+		while (index > 0 && pivot_level > 1) {
+			index--;
+			var cell = cells[index];
+			var cell_level = get_cell_level(cell);
+			if (cell_level < pivot_level) {
+				if (is_collapsed_heading(cell)) {
+					toggle_heading(cell);
+				}
+				pivot_level = cell_level;
+			}
+		}
+	}
+
+	/**
+	 * Add or remove collapsed/uncollapsed classes & metadata to match the
+	 * cell's status as a non-heading or collapsed/uncollapsed heading
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {undefined}
+	 */
+	function update_heading_cell_status (cell) {
+		var level = get_cell_level(cell);
+		var cell_is_heading = level < 7;
+		var cell_elt = live_notebook ? cell.element : $(cell);
+		var cht = cell_elt.find('.input_prompt > .collapsible_headings_toggle');
+		if (cell_is_heading) {
+			var collapsed = _is_collapsed(cell);
+			cell_elt.toggleClass('collapsible_headings_collapsed', collapsed);
+			cell_elt.toggleClass('collapsible_headings_ellipsis', params.show_ellipsis);
+			if (params.use_toggle_controls) {
+				if (cht.length < 1) {
+					cht = $('<div/>')
+						.addClass('collapsible_headings_toggle')
+						.css('color', params.toggle_color)
+						.append('<div><i class="fa fa-fw"></i></div>')
+						.appendTo(cell_elt.find('.input_prompt'));
+					var clickable = cht.find('i');
+					if (params.make_toggle_controls_buttons) {
+						cht.addClass('btn btn-default');
+						clickable = cht;
+					}
+					if (live_notebook) {
+						clickable.on('click', function () { toggle_heading(cell); });
+					}
+					else {
+						// in non-live notebook, cell isn;t editable, so make it clickable also
+						var only_child_header = cell_elt.find(
+							'.inner_cell > .rendered_html > :only-child'
+						).filter(':header');
+						clickable.add(only_child_header)
+							.css('cursor', 'pointer')
+							.on('click', function (evt) {
+								// evt.target is what was clicked, not what the handler was attached to
+								if (!$(evt.target).hasClass('anchor-link')) {
+									toggle_heading(cell);
+								}
+							});
+					}
+				}
+				// Update the cell's toggle control classes
+				var hwrap = cht.children();
+				hwrap.find('.fa')
+					.toggleClass(params.toggle_closed_icon, collapsed)
+					.toggleClass(params.toggle_open_icon, !collapsed);
+				if (params.size_toggle_controls_by_level) {
+					for (var hh = 1; hh < 7; hh++) {
+						hwrap.toggleClass('h' + hh, hh == level);
+					}
+				}
+			}
+		}
+		else {
+			_set_collapsed(cell, false);
+			cell_elt.removeClass('collapsible_headings_collapsed');
+			cht.remove();
+		}
+	}
+
+	/**
+	 * find the closest header cell to input cell
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @param {Function} a function to filter which header cells can be
+	 *                   returned. Should take a notebook cell/jquer element as
+	 *                   input (depending on whether we're in a live notebook),
+	 *                   and return true if the given cell is acceptable.
+	 * @return {Object | undefined}
+	 */
+	function find_header_cell (cell, test_func) {
+		var index = _find_cell_index(cell);
+		for (; index >= 0; index--) {
+			cell = _get_cell_at_index(index);
+			if (is_heading(cell) && (test_func === undefined || test_func(cell))) {
+				return cell;
+			}
+		}
+		return undefined;
+	}
+
+	/**
+	 *  Select the section enclosed by the given heading cell.
+	 *
+	 *  Only callable from a live notebook, so require no special cell handling
+	 *
+	 *  @param {Object} head_cell Cell instance or jQuery collection of '.cell' elements
+	 *  @return {undefined}
+	 */
+	function select_heading_section(head_cell, extend) {
+		var head_lvl = get_cell_level(head_cell);
+		var ncells = Jupyter.notebook.ncells();
+		var head_ind = _find_cell_index(head_cell);
+		var tail_ind;
+		for (tail_ind = head_ind; tail_ind + 1 < ncells; tail_ind++) {
+			if (get_cell_level(_get_cell_at_index(tail_ind + 1)) <= head_lvl) {
+				break;
+			}
+		}
+		select_reveals = params.select_reveals;
+		if (extend) {
+			var ank_ind = Jupyter.notebook.get_anchor_index();
+			if (ank_ind <= head_ind) {
+				// keep current anchor, extend to head
+				Jupyter.notebook.select(tail_ind, false);
+				select_reveals = true;
+				return;
+			}
+			else if (ank_ind >= tail_ind) {
+				// keep current anchor, extend to tail
+				Jupyter.notebook.select(head_ind, false);
+				select_reveals = true;
+				return;
+			}
+			// head_ind < ank_ind < tail_ind i.e. anchor is inside section
+		}
+		// move_anchor to header cell
+		Jupyter.notebook.select(head_ind, true);
+		// don't move anchor, i.e. extend, to tail cell
+		Jupyter.notebook.select(tail_ind, false);
+		select_reveals = true;
+	}
+
+	/**
+	 *  Return all of the cell _elements _which are part of the section headed by
+	 *  the given cell
+	 *
+	 *  @param {Object} head_cell Cell instance or jQuery collection of '.cell' elements
+	 */
+	function get_jquery_bracket_section (head_cell) {
+		var head_lvl = get_cell_level(head_cell);
+		var cells = _get_cells();
+		var cell_elements = $(live_notebook ? head_cell.element : head_cell);
+		for (var ii = _find_cell_index(head_cell); ii < cells.length; ii++) {
+			var cell = live_notebook ? cells[ii] : cells.eq(ii);
+
+			if (get_cell_level(cell) <= head_lvl) {
+				break;
+			}
+			cell_elements = cell_elements.add(live_notebook ? cell.element : cell);
+		}
+		return cell_elements;
+	}
+
+	/**
+	 * Callback function attached to the bracket-containing div, should toggle
+	 * the relevant heading
+	 */
+	var bracket_callback_timeout_id;
+	function bracket_callback (evt) {
+		// prevent bubbling, otherwise when closing a section, the cell gets
+		// selected & re-revealed after being hidden
+		evt.preventDefault();
+		evt.stopPropagation();
+		// evt.target is what was clicked, not what the handler was attached to
+		var bracket = $(evt.target);
+		var bracket_level = Number(bracket.attr('data-bracket-level'));
+		if (bracket_level) {
+			var bracket_cell = live_notebook ? bracket.closest('.cell').data('cell') : bracket.closest('.cell');
+			var header_cell = find_header_cell(bracket_cell, function (cell) {
+				return get_cell_level(cell) == bracket_level;
+			});
+			switch (evt.type) {
+				case 'dblclick':
+					clearTimeout(bracket_callback_timeout_id);
+					bracket_callback_timeout_id = undefined;
+					toggle_heading(header_cell);
+					break;
+				case 'click':
+					if (live_notebook && (bracket_callback_timeout_id === undefined)) {
+						bracket_callback_timeout_id = setTimeout(function () {
+							select_heading_section(header_cell, evt.shiftKey);
+							bracket_callback_timeout_id = undefined;
+						}, 300);
+					}
+					break;
+				case 'mouseenter':
+				case 'mouseleave':
+					var in_section = get_jquery_bracket_section(header_cell)
+						.find('.chb div[data-bracket-level=' + bracket_level + ']');
+					$('.chb div').not(in_section).removeClass('chb-hover');
+					in_section.toggleClass('chb-hover', evt.type === 'mouseenter');
+					break;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Update the hidden/collapsed status of all the cells under
+	 * - the notebook, if param cell === undefined
+	 * - the heading which contains the specified cell (if cell !== undefined,
+	 *   but is also not a heading)
+	 * - the specified heading cell (if specified cell is a heading)
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 * @return {undefined}
+	 */
+	function update_collapsed_headings (cell) {
+		var index = 0;
+		var section_level = 0;
+		var show = true;
+		if (cell !== undefined && (cell = find_header_cell(cell)) !== undefined) {
+			index = _find_cell_index(cell) + 1;
+			section_level = get_cell_level(cell);
+			show = !_is_collapsed(cell);
+		}
+		var hide_above = 7;
+		var brackets_open = {};
+		var max_open = 0; // count max number open at one time to calc padding
+		for (var cells = _get_cells(); index < cells.length; index++) {
+			cell = cells[index];
+			var cell_elt = live_notebook ? cell.element : $(cell);
+			var level = get_cell_level(cell);
+			if (level <= section_level) {
+				break;
+			}
+			if (show && level <= hide_above) {
+				cell_elt.slideDown('fast');
+				hide_above = is_collapsed_heading(cell) ? level : 7;
+				if (live_notebook) {
+					delete cell.metadata.hidden;
+				}
+			}
+			else {
+				cell_elt.slideUp('fast');
+				if (live_notebook) {
+					cell.metadata.hidden = true;
+				}
+				continue;
+			}
+
+			if (params.show_section_brackets) {
+				var chb = cell_elt.find('.chb').empty();
+				if (chb.length < 1) {
+					chb = $('<div/>')
+						.addClass('chb')
+						.on('click dblclick', bracket_callback)
+						.appendTo(cell_elt);
+				}
+				var num_open = 0; // count number of brackets currently open
+				for (var jj = 1; jj < 7; jj++) {
+					if (brackets_open[jj] && level <= jj) {
+						brackets_open[jj].addClass('chb-end'); // closing, add class
+						delete brackets_open[jj]; // closed
+					}
+					var opening = level == jj;
+					if (brackets_open[jj] || opening) {
+						num_open++;
+						brackets_open[jj] = $('<div/>')
+							.on('mouseenter mouseleave', bracket_callback)
+							.attr('data-bracket-level', jj)
+							.appendTo(chb); // add bracket element
+						if (opening) { // opening, add class
+							brackets_open[jj].addClass('chb-start');
+						}
+					}
+				}
+				max_open = Math.max(num_open, max_open);
+			}
+		}
+		if (params.show_section_brackets) {
+			// close any remaining
+			for (var ii in brackets_open) {
+				brackets_open[ii].addClass('chb-end');
+			}
+			// adjust padding to fit in brackets
+			var bwidth = params.section_bracket_width;
+			var dwidth = max_open * (2 + bwidth);
+			$('#notebook-container').css('padding-right', (16 + dwidth) + 'px');
+			$('.chb')
+				.css('right', '-' + (3 + dwidth) + 'px')
+				.find('div')
+					.css('width', bwidth);
+		}
+	}
+
+	/**
+	 * Hide/reveal all cells in the section headed by cell.
+	 *
+	 * @param {Object} cell Cell instance or jQuery collection of '.cell' elements
+	 */
+	function toggle_heading (cell, set_collapsed, trigger_event) {
+		if (is_heading(cell)) {
+			if (set_collapsed === undefined) {
+				set_collapsed = !_is_collapsed(cell);
+			}
+			_set_collapsed(cell, set_collapsed);
+			update_heading_cell_status(cell);
+			update_collapsed_headings(params.show_section_brackets ? undefined : cell);
+			console.log(log_prefix, set_collapsed ? 'collapsed' : 'expanded', 'cell', _find_cell_index(cell));
+			if (trigger_event !== false) {
+				events.trigger((set_collapsed ? '' : 'un') + 'collapse.CollapsibleHeading', {cell: cell});
+			}
+		}
+	}
+
+	/**
+	 *  Return a promise which resolves when the Notebook class methods have
+	 *  been appropriately patched.
+	 *  Patches methods
+	 *   - Notebook.select
+	 *   - Notebook.undelete
+	 *
+	 *  @return {Promise}
+	 */
+	function patch_Notebook () {
+		return new Promise(function (resolve, reject) {
+			requirejs(['notebook/js/notebook'], function on_success (notebook) {
+				console.debug(log_prefix, 'patching Notebook.protoype');
+
+				// we have to patch select, since the select.Cell event is only fired
+				// by cell click events, not by the notebook select method
+				var orig_notebook_select = notebook.Notebook.prototype.select;
+				notebook.Notebook.prototype.select = function (index, moveanchor) {
+					if (select_reveals) {
+						reveal_cell_by_index(index);
+					}
+					return orig_notebook_select.apply(this, arguments);
+				};
+				resolve();
+			}, reject);
+		}).catch(function on_reject (reason) {
+			console.warn(log_prefix, 'error patching Notebook.protoype:', reason);
+		});
+	}
+
+	/**
+	 *  Return a promise which resolves when the TextCell class methods have
+	 *  been appropriately patched.
+	 *
+	 *  Patches TextCell.set_text to update headings.
+	 *  This is useful for undelete and copy/paste of cells, which don't fire
+	 *  markdown.
+	 *
+	 *  @return {Promise}
+	 */
+	function patch_TextCell () {
+		return new Promise(function (resolve, reject) {
+			requirejs(['notebook/js/textcell'], function on_success (textcell) {
+				console.debug(log_prefix, 'patching TextCell.protoype');
+				var orig_set_text = textcell.TextCell.prototype.set_text;
+				textcell.TextCell.prototype.set_text = function (text) {
+					var ret = orig_set_text.apply(this, arguments);
+					if (Jupyter.notebook._fully_loaded) {
+						update_heading_cell_status(this);
+						update_collapsed_headings();
+					}
+					return ret;
+				};
+				resolve();
+			}, reject);
+		}).catch(function on_reject (reason) {
+			console.warn(log_prefix, 'error patching TextCell.protoype:', reason);
+		});
+	}
+
+	/**
+	 *  Return a promise which resolves when the Tooltip class methods have
+	 *  been appropriately patched.
+	 *
+	 *  For notebook 4.x, cells had css position:static, and changing them to
+	 *  relative to get heading brackets working broke the tooltip position
+	 *  calculation. In order to fix this, we patch the 4.x Tooltip._show
+	 *  method to temporarily reapply position:static while the tooltip
+	 *  position is calculated & the animation queued, before revertign to the
+	 *  css-appled position:relative.
+	 *	For notebook 5.x, cells are already position:relative, so the patch is
+	 *  unecessary.
+	 *
+	 *  @return {Promise}
+	 */
+	function patch_Tooltip () {
+		if (Number(Jupyter.version[0]) >= 5) {
+			return Promise.resolve();
+		}
+		return new Promise(function (resolve, reject) {
+			requirejs(['notebook/js/tooltip'], function on_success (tooltip) {
+				console.debug(log_prefix, 'patching Tooltip.prototype');
+
+				var orig_tooltip__show = tooltip.Tooltip.prototype._show;
+				tooltip.Tooltip.prototype._show = function (reply) {
+					var $cell = $(this.code_mirror.getWrapperElement()).closest('.cell');
+					$cell.css('position', 'static');
+					var ret = orig_tooltip__show.apply(this, arguments);
+					$cell.css('position', '');
+					return ret;
+				};
+
+				resolve();
+			}, reject);
+		}).catch(function on_reject (reason) {
+			console.warn(log_prefix, 'error patching Tooltip.prototype:', reason);
+		});
+	}
+
+	/**
+	 *  Return a promise which resolves when the appropriate Jupyter actions
+	 *  have been patched correctly.
+	 *
+	 *  We patch the up/down arrow actions to skip selecting cells which are
+	 *  hidden by a collapsed heading
+	 *
+	 *  @return {Promise}
+	 */
+	function patch_actions () {
+		return new Promise(function (resolve, reject) {
+			requirejs(['notebook/js/tooltip'], function on_success (tooltip) {
+				console.debug(log_prefix, 'patching Jupyter up/down actions');
+
+				var kbm = Jupyter.keyboard_manager;
+
+				var action_up = kbm.actions.get("jupyter-notebook:select-previous-cell");
+				var orig_up_handler = action_up.handler;
+				action_up.handler = function (env) {
+					for (var index = env.notebook.get_selected_index() - 1; (index !== null) && (index >= 0); index--) {
+						if (env.notebook.get_cell(index).element.is(':visible')) {
+							env.notebook.select(index);
+							env.notebook.focus_cell();
+							return;
+						}
+					}
+					return orig_up_handler.apply(this, arguments);
+				};
+
+				var action_down = kbm.actions.get("jupyter-notebook:select-next-cell");
+				var orig_down_handler = action_down.handler;
+				action_down.handler = function (env) {
+					var ncells = env.notebook.ncells();
+					for (var index = env.notebook.get_selected_index() + 1; (index !== null) && (index < ncells); index++) {
+						if (env.notebook.get_cell(index).element.is(':visible')) {
+							env.notebook.select(index);
+							env.notebook.focus_cell();
+							return;
+						}
+					}
+					return orig_down_handler.apply(this, arguments);
+				};
+
+				resolve();
+			}, reject);
+		}).catch(function on_reject (reason) {
+			console.warn(log_prefix, 'error patching Jupyter up/down actions:', reason);
+		});
+	}
+
+	/**
+	 * register actions to collapse and uncollapse the selected heading cell
+	 */
+	function register_new_actions () {
+		action_names.collapse = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) {
+					var cell = env.notebook.get_selected_cell();
+					var is_h = is_heading(cell);
+					if (is_h && !_is_collapsed(cell)) {
+						toggle_heading(cell, true);
+						return;
+					}
+					var filter_func;
+					if (is_h) {
+						var lvl = get_cell_level(cell);
+						filter_func = function (c) { return get_cell_level(c) < lvl; };
+					}
+					cell = find_header_cell(cell, filter_func);
+					if (cell !== undefined) {
+						Jupyter.notebook.select(Jupyter.notebook.find_cell_index(cell));
+						cell.focus_cell();
+					}
+				},
+				help : "Collapse the selected heading cell's section",
+				icon : params.toggle_closed_icon,
+				help_index: 'c1'
+			},
+			'collapse_heading', mod_name
+		);
+
+		action_names.collapse_all = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) {
+					env.notebook.get_cells().forEach(function (c, idx, arr) {
+						toggle_heading(c, true);
+					});
+					var cell = env.notebook.get_selected_cell();
+					if (cell.element.is(':hidden')) {
+						cell = find_header_cell(cell, function (c) { return c.element.is(':visible'); });
+						if (cell !== undefined) {
+							Jupyter.notebook.select(Jupyter.notebook.find_cell_index(cell));
+							cell.focus_cell();
+						}
+					}
+				},
+				help : "Collapse all heading cells' sections",
+				icon : params.toggle_closed_icon,
+				help_index: 'c2'
+			},
+			'collapse_all_headings', mod_name
+		);
+
+		action_names.uncollapse = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) {
+					var cell = env.notebook.get_selected_cell();
+					if (is_heading(cell)) {
+						toggle_heading(cell, false);
+					}
+					else {
+						var ncells = env.notebook.ncells();
+						for (var ii = env.notebook.find_cell_index(cell); ii < ncells; ii++) {
+							cell = env.notebook.get_cell(ii);
+							if (is_heading(cell)) {
+								env.notebook.select(ii);
+								cell.focus_cell();
+								break;
+							}
+						}
+					}
+				},
+				help : "Un-collapse (expand) the selected heading cell's section",
+				icon : params.toggle_open_icon,
+				help_index: 'c3'
+			},
+			'uncollapse_heading', mod_name
+		);
+
+		action_names.uncollapse_all = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) {
+					env.notebook.get_cells().forEach(function (c, idx, arr) {
+						toggle_heading(c, false);
+					});
+					env.notebook.get_selected_cell().focus_cell();
+				},
+				help : "Un-collapse (expand) all heading cells' sections",
+				icon : params.toggle_open_icon,
+				help_index: 'c4'
+			},
+			'uncollapse_all_headings', mod_name
+		);
+
+		action_names.toggle = Jupyter.keyboard_manager.actions.register ({
+				handler: function () {
+					var heading_cell = find_header_cell(Jupyter.notebook.get_selected_cell(), function (cell) {
+						return cell.element.is(':visible') && !_is_collapsed(cell);
+					});
+					if (is_heading(heading_cell)) {
+						toggle_heading(heading_cell, true);
+						Jupyter.notebook.select(Jupyter.notebook.find_cell_index(heading_cell));
+					}
+				},
+				help   : "Toggle closest heading's collapsed status",
+				icon   : 'fa-angle-double-up',
+			},
+			'toggle_collapse_heading', mod_name
+		);
+
+		action_names.toggle_all = Jupyter.keyboard_manager.actions.register ({
+				handler: function () {
+					var cells = Jupyter.notebook.get_cells();
+					for (var ii = 0; ii < cells.length; ii++) {
+						if (is_heading(cells[ii])) {
+							Jupyter.keyboard_manager.actions.call(action_names[
+								is_collapsed_heading(cells[ii]) ? 'uncollapse_all' : 'collapse_all']);
+							return;
+						}
+					}
+				},
+				help   : 'Collapse/uncollapse all headings based on the status of the first',
+				icon   : 'fa-angle-double-up',
+			},
+			'toggle_collapse_all_headings', mod_name
+		);
+
+		action_names.select = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) {
+					var cell = env.notebook.get_selected_cell();
+					if (is_heading(cell)) {
+						select_heading_section(cell, true);
+					}
+				},
+				help : "Select all cells in the selected heading cell's section",
+				help_index: 'c3'
+			},
+			'select_heading_section', mod_name
+		);
+
+		action_names.insert_above = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) { insert_heading_cell(true); },
+				help : "Insert a heading cell above the selected cell",
+				help_index: 'c4',
+				icon: 'fa-caret-up'
+			},
+			'insert_heading_above', mod_name
+		);
+
+		action_names.insert_below = Jupyter.keyboard_manager.actions.register({
+				handler : function (env) { insert_heading_cell(false); },
+				help : "Insert a heading cell below the selected cell's section",
+				help_index: 'c5',
+				icon: 'fa-caret-down'
+			},
+			'insert_heading_below', mod_name
+		);
+	}
+
+	function imitate_hash_click ($element) {
+		var site = $('#site');
+		var adjust = $element.offset().top - site.offset().top;
+		site.animate({scrollTop: site.scrollTop() + adjust});
+	}
+
+	/**
+	 * Insert a new heading cell either above or below the current section.
+	 * only works in a live notebook.
+	 */
+	function insert_heading_cell (above) {
+		var selected_cell = Jupyter.notebook.get_selected_cell();
+		var ref_cell = find_header_cell(selected_cell) || selected_cell;
+		var level = get_cell_level(ref_cell);
+		level = (level == 7) ? 1 : level; // default to biggest level (1)
+		if (above) {
+			// if above, insert just above selected cell, but keep ref_cell's level
+			ref_cell = selected_cell;
+		}
+		var index = ref_cell.element.index();
+		if (!above) {
+			// below requires special handling, as we really want to put it
+			// below the currently selected heading's *content*
+			var cells = _get_cells();
+			for (index=index + 1; index < cells.length; index++) {
+				if (get_cell_level(cells[index]) <= level) {
+					break;
+				}
+			}
+			// if we make it here, index will be == cells.length, which is ok
+			// as it gets the new cell inserted at the bottom of the notebook
+		}
+		// we don't want our newly-inserted cell to trigger opening of headings
+		var cached_select_reveals = select_reveals;
+		select_reveals = false;
+		var new_cell = Jupyter.notebook.insert_cell_above('markdown', index);
+		var new_text = 'New heading';
+		new_cell.set_text(new_text);
+		new_cell.set_heading_level(level);
+		new_cell.code_mirror.setSelection({line:0, ch: level + 1}, {line:0, ch: level + 1 + new_text.length});
+		Jupyter.notebook.select(index, true);
+		// restore cached setting
+		select_reveals = cached_select_reveals;
+		Jupyter.notebook.focus_cell();
+		Jupyter.notebook.edit_mode();
+	}
+
+	function refresh_all_headings () {
+		var cells = _get_cells();
+		for (var ii=0; ii < cells.length; ii++) {
+			update_heading_cell_status(cells[ii]);
+		}
+		update_collapsed_headings();
+	}
+
+	function set_collapsible_headings_options (options) {
+		// options may be undefined here, but it's still handled ok by $.extend
+		$.extend(true, params, options);
+		// bind/unbind toc-collapse handler
+		events[params.collapse_to_match_toc ? 'on' : 'off']('collapse.Toc uncollapse.Toc', callback_toc_collapse);
+		// add css for indents
+		if (params.indent_px !== 0) {
+			var lines = [];
+			for (var hh = 1; hh <= 6; hh++) {
+				lines.push(
+					'.collapsible_headings_toggle .h' + hh +
+					' { margin-right: ' + ((6 - hh) * params.indent_px) + 'px; }'
+				);
+			}
+			$('<style id="collapsible_headings_indent_css"/>')
+				.html(lines.join('\n'))
+				.appendTo('head');
+		}
+		return params;
+	}
+
+	function add_buttons_and_shortcuts () {
+		// (Maybe) add buttons to the toolbar
+		if (params.add_button) {
+			Jupyter.toolbar.add_buttons_group([action_names.toggle]);
+		}
+		if (params.add_all_cells_button) {
+			Jupyter.toolbar.add_buttons_group([action_names.toggle_all]);
+		}
+		if (params.add_insert_header_buttons) {
+			Jupyter.toolbar.add_buttons_group([
+				action_names.insert_above, action_names.insert_below
+			],'insert_heading_cell_btns');
+		}
+		// add hashes
+		$('#insert_heading_cell_btns .btn').prepend('# ');
+
+		// (Maybe) register keyboard shortcuts
+		if (params.use_shortcuts) {
+			var cmd_shrts = Jupyter.keyboard_manager.command_shortcuts;
+			for (var act in action_names) {
+				if (action_names.hasOwnProperty(act) && params.shortcuts[act]) {
+					cmd_shrts.add_shortcut(params.shortcuts[act], action_names[act]);
+				}
+			}
+		}
+	}
+
+	var callback_toc_collapse = function (evt, data) {
+		// use trigger_event false to avoid re-triggering toc2
+		toggle_heading(data.cell, evt.type.indexOf('un') < 0, false);
+	}
+
+	/**
+	 *  Return a promise which resolves once event handlers have been bound
+	 *
+	 *  @return {Promise}
+	 */
+	function bind_events () {
+
+		// Callbacks bound to the create.Cell event can execute before the cell
+		// data has been loaded from JSON.
+		// So, we rely on rendered.MarkdownCell event to catch headings from
+		// JSON, and the only reason we use create.Cell is to update brackets
+		function callback_create_cell (evt, data) {
+			if (params.show_section_brackets) {
+				update_collapsed_headings();
+			}
+		}
+
+		function callback_delete_cell(evt, data) {
+			update_collapsed_headings();
+		}
+
+		function callback_markdown_rendered (evt, data) {
+			update_heading_cell_status(data.cell);
+			// we update all headings to avoid pasted headings ending up hidden
+			// by other pre-existing collapsed headings - see
+			//     https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/1082
+			// for details
+			update_collapsed_headings();
+		}
+
+		return new Promise (function (resolve, reject) {
+			requirejs(['base/js/events'], function on_success (events) {
+
+				// ensure events are detached while notebook loads, in order to
+				// speed up loading (otherwise headings are updated for every
+				// new cell in the notebook), then reattached when load is
+				// complete
+				function events_attach () {
+					refresh_all_headings();
+					events.on('create.Cell', callback_create_cell);
+					events.on('delete.Cell', callback_delete_cell);
+					events.on('rendered.MarkdownCell', callback_markdown_rendered);
+				}
+				function events_detach () {
+					events.off('create.Cell', callback_create_cell);
+					events.off('delete.Cell', callback_delete_cell);
+					events.off('rendered.MarkdownCell', callback_markdown_rendered);
+				}
+
+				if (Jupyter.notebook._fully_loaded) {
+					events_attach();
+				}
+				events.on('notebook_loaded.Notebook', events_attach);
+				events.on('notebook_loading.Notebook', events_detach);
+
+				resolve();
+			}, reject);
+		}).catch(function on_reject (reason) {
+			console.warn(log_prefix, 'error binding events:', reason);
+		});
+	}
+
+	/**
+	 *  Return a menu list item with a link that calls the specified action
+	 *  name.
+	 *
+	 *  @param {String} action_name the name of the action which the menu item
+	 *                  should call
+	 *  @param {String} menu_item_html the html to use as the link's content
+	 *  @return {jQuery}
+	 */
+	function make_action_menu_item (action_name, menu_item_html) {
+		var act = Jupyter.menubar.actions.get(action_name);
+		var menu_item = $('<li/>');
+		$('<a/>')
+			.html(menu_item_html)
+			.attr({'title' : act.help, 'href' : '#'})
+			.on('click', function (evt) {
+				Jupyter.menubar.actions.call(action_name, evt);
+			})
+			.appendTo(menu_item);
+		return menu_item;
+	}
+
+	/**
+	 * Add any new items to the notebook menu
+	 */
+	function insert_menu_items () {
+		$('#insert_menu')
+			.append('<li class="divider"/>')
+			.append(make_action_menu_item(action_names.insert_above, 'Insert Heading Above'))
+			.append(make_action_menu_item(action_names.insert_below, 'Insert Heading Below'));
+	}
+
+	/**
+	 * Initialize the extension.
+	 */
+	function load_jupyter_extension () {
+		// Load css first
+		$('<link/>')
+			.attr({
+				id: 'collapsible_headings_css',
+				rel: 'stylesheet',
+				type: 'text/css',
+				href: requirejs.toUrl('./main.css')
+			})
+			.appendTo('head');
+
+		// ensure Jupyter module is defined before proceeding further
+		new Promise(function (resolve, reject) {
+			requirejs(['base/js/namespace'], function (Jupyter_mod) {
+				live_notebook = true;
+				Jupyter = Jupyter_mod;
+				resolve(Jupyter);
+			}, reject);
+		})
+
+		// load config & update params
+		.then(function (Jupyter) {
+			return Jupyter.notebook.config.loaded.catch(function on_err (reason) {
+				console.warn(log_prefix, 'error loading config:', reason);
+			}).then(function () {
+				// may be undefined, but that's ok.
+				return Jupyter.notebook.config.data.collapsible_headings;
+			});
+		})
+		// set values using resolution val of previous .then
+		.then(set_collapsible_headings_options)
+
+		// apply all promisory things in arbitrary order
+		.then(patch_actions)
+		.then(patch_Notebook)
+		.then(patch_TextCell)
+		.then(patch_Tooltip)
+		.then(bind_events)
+		// finally add user-interaction stuff
+		.then(function () {
+			register_new_actions();
+			insert_menu_items();
+			add_buttons_and_shortcuts();
+		})
+		.catch(function on_reject (reason) {
+			console.error(log_prefix, 'error:', reason);
+		});
+	}
+
+	/**
+	 * Export things
+	 */
+	return {
+		get_cell_level : get_cell_level,
+		reveal_cell_by_index : reveal_cell_by_index,
+		update_collapsed_headings : update_collapsed_headings,
+		set_collapsible_headings_options : set_collapsible_headings_options,
+		refresh_all_headings: refresh_all_headings,
+		load_jupyter_extension : load_jupyter_extension,
+		load_ipython_extension : load_jupyter_extension
+	};
+});
+
+    </script>
+<script type="text/javascript">
+    
+$(document).ready(function () {
+    require(['nbextensions/collapsible_headings/main'], function (ch) {
+        ch.set_collapsible_headings_options({"collapse_to_match_toc": true});
+        ch.refresh_all_headings();
+    });
+});
+
+    </script>
+</head>
 <body>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
@@ -13081,8 +14324,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This notebook demonstrates basic usage of BioThings Explorer, an engine for autonomously querying a distributed knowledge graph. BioThings Explorer can answer two classes of queries -- "EXPLAIN" and "PREDICT".  EXPLAIN queries are described in <a href="EXPLAIN_demo.ipynb">EXPLAIN_demo.ipynb</a>. Here, we describe PREDICT queries and how to use BioThings Explorer to execute them.  A more detailed overview of the BioThings Explorer systems is provided in <a href="https://docs.google.com/presentation/d/1QWQqqQhPD_pzKryh6Wijm4YQswv8pAjleVORCPyJyDE/edit?usp=sharing">these slides</a>.</p>
-<p>PREDICT queries are designed to <strong>predict plausible relationships between one entity and an entity class</strong>.  For example, in this notebook, we explore the question:</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>This notebook demonstrates basic usage of BioThings Explorer, an engine for autonomously querying a distributed knowledge graph of biomedical knowledge.</p>
+<p>BioThings Explorer can answer two classes of queries -- "EXPLAIN" and "PREDICT". EXPLAIN queries are described in <a href="EXPLAIN_demo.ipynb">EXPLAIN_demo.ipynb</a>. Here, we describe PREDICT queries and how to use BioThings Explorer to execute them. A more detailed overview of the BioThings Explorer systems is provided in <a href="https://docs.google.com/presentation/d/1QWQqqQhPD_pzKryh6Wijm4YQswv8pAjleVORCPyJyDE/edit?usp=sharing">these slides</a>.</p>
+<p>PREDICT queries are designed to <strong>predict plausible relationships between one specific biomedical entity (an object or a concept) and one biomedical entity type</strong>.  For example, in this notebook, we explore the question:</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>"What drugs might be used to treat hyperphenylalaninemia?"</em></p>
 <p><strong>To experiment with an executable version of this notebook, <a href="https://colab.research.google.com/github/biothings/biothings_explorer/blob/master/jupyter%20notebooks/PREDICT_demo.ipynb">load it in Google Colaboratory</a>.</strong></p>
 
@@ -13099,7 +14343,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, install the <code>biothings_explorer</code> and <code>biothings_schema</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but including it here for compability with <a href="https://colab.research.google.com/">colab</a>).</p>
+<p>First, install the <code>biothings_explorer</code> and <code>biothings_schema</code> packages, as described in this <a href="https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/README.md#prerequisite">README</a>.  This only needs to be done once (but it's included here for compability with <a href="https://colab.research.google.com/">Colab</a>).</p>
 
 </div>
 </div>
@@ -13123,8 +14367,8 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Next, import the relevant modules:</p>
 <ul>
-<li><strong>Hint</strong>: Find corresponding bio-entity representation used in BioThings Explorer based on user input (could be any database IDs, symbols, names)</li>
-<li><strong>FindConnection</strong>: Find intermediate bio-entities which connects user specified input and output</li>
+<li><strong>Hint</strong>: Find corresponding BioThings representations to use in BioThings Explorer based on user input (could be any database IDs, symbols, names)</li>
+<li><strong>FindConnection</strong>: Find the relationship(s) between a specific entity and an entity type (PREDICT) or two specific entities (EXPLAIN))</li>
 </ul>
 
 </div>
@@ -13132,12 +14376,43 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import modules from biothings_explorer</span>
-<span class="kn">from</span> <span class="nn">biothings_explorer.hint</span> <span class="k">import</span> <span class="n">Hint</span>
-<span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="k">import</span> <span class="n">FindConnection</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## import modules from biothings_explorer</span>
+<span class="kn">from</span> <span class="nn">biothings_explorer.hint</span> <span class="kn">import</span> <span class="n">Hint</span>
+<span class="kn">from</span> <span class="nn">biothings_explorer.user_query_dispatcher</span> <span class="kn">import</span> <span class="n">FindConnection</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hint_display</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">hint_result</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    input: query (string used in hint query), hint_result (object returned from hint query)</span>
+<span class="sd">    hint_result is a dictionary of lists of dictionaries</span>
+<span class="sd">    returns: None</span>
+<span class="sd">    show the name and type of all results returned by the query</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">]</span>  <span class="c1">## replace with the parts of the BioThings object you want to see</span>
+    <span class="n">concise_results</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">BT_type</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">hint_result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>  <span class="c1">## basically if it&#39;s not empty</span>
+            <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">concise_results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">items</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">display</span><span class="p">])</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{total}</span><span class="s1"> BioThings objects returned for </span><span class="si">{ht}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>\
+                <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">concise_results</span><span class="p">),</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">query</span><span class="p">))</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">display_info</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">concise_results</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">: </span><span class="si">{val}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">display_info</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13148,21 +14423,77 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-1:-Find-representation-of-&quot;hyperphenylalaninemia&quot;-in-BTE">Step 1: Find representation of "hyperphenylalaninemia" in BTE<a class="anchor-link" href="#Step-1:-Find-representation-of-&quot;hyperphenylalaninemia&quot;-in-BTE">&#182;</a></h2><p>In this step, BioThings Explorer translates our query string "hyperphenylalaninemia"  into BioThings objects, which contain mappings to many common identifiers.  Generally, the top result returned by the <code>Hint</code> module will be the correct item, but you should confirm that using the identifiers shown.</p>
-<p>Search terms can correspond to any child of <a href="https://biolink.github.io/biolink-model/docs/BiologicalEntity.html">BiologicalEntity</a> from the <a href="https://biolink.github.io/biolink-model/docs/">Biolink Model</a>, including <code>DiseaseOrPhenotypicFeature</code> (e.g., "lupus"), <code>ChemicalSubstance</code> (e.g., "acetaminophen"), <code>Gene</code> (e.g., "CDK2"), <code>BiologicalProcess</code> (e.g., "T cell differentiation"), and <code>Pathway</code> (e.g., "Citric acid cycle").</p>
+<h2 id="Step-1:-Find-representation-of-&quot;hyperphenylalaninemia&quot;-in-BTE">Step 1: Find representation of "hyperphenylalaninemia" in BTE<a class="anchor-link" href="#Step-1:-Find-representation-of-&quot;hyperphenylalaninemia&quot;-in-BTE">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this step, BioThings Explorer translates our query string "hyperphenylalaninemia"  into BioThings objects, which contain mappings to many common identifiers.  Generally, the top result returned by the <code>Hint</code> module will match what you want, but you should confirm that using the identifiers shown.</p>
+<p>BioThings types correspond to children and descendants of <a href="https://biolink.github.io/biolink-model/docs/BiologicalEntity.html">BiologicalEntity</a> from the <a href="https://biolink.github.io/biolink-model/docs/">Biolink Model</a>, including <code>Disease</code> (e.g., "lupus"), <code>ChemicalSubstance</code> (e.g., "acetaminophen"), <code>Gene</code> (e.g., "CDK2"), <code>BiologicalProcess</code> (e.g., "T cell differentiation"), and <code>Pathway</code> (e.g., "Citric acid cycle"). <strong>However, <a href="https://smart-api.info/portal/translator/metakg">only a subset of the Biolink BiologicalEntity children / descendants are currently implemented in BTE</a></strong>. More biomedical object types will be available as more knowledge sources (APIs) are added to the system.</p>
+<p><strong>Note that the type <code>BiologicalEntity</code> means any BioThings type currently implemented in BTE will be accepted.</strong></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
-<span class="c1"># find all potential representations of hyperphenylalaninemia</span>
-<span class="n">hyperphenylalaninemia_hint</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;hyperphenylalaninemia&quot;</span><span class="p">)</span>
-<span class="c1"># select the correct representation of hyperphenylalaninemia</span>
+<span class="n">object1</span> <span class="o">=</span> <span class="s1">&#39;hyperphenylalaninemia&#39;</span>
+<span class="c1">## find all potential representations of hyperphenylalaninemia</span>
+<span class="n">hyperphenylalaninemia_hint</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">object1</span><span class="p">)</span>
+
+<span class="n">hint_display</span><span class="p">(</span><span class="n">object1</span><span class="p">,</span> <span class="n">hyperphenylalaninemia_hint</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>There are 7 BioThings objects returned for hyperphenylalaninemia:
+0: [&#39;mild hyperphenylalaninemia&#39;, &#39;Disease&#39;]
+1: [&#39;tetrahydrobiopterin-responsive hyperphenylalaninemia/phenylketonuria&#39;, &#39;Disease&#39;]
+2: [&#39;obsolete hyperphenylalaninemia, BH4-deficient&#39;, &#39;Disease&#39;]
+3: [&#39;BH4-deficient hyperphenylalaninemia A&#39;, &#39;Disease&#39;]
+4: [&#39;hyperphenylalaninemia due to tetrahydrobiopterin deficiency&#39;, &#39;Disease&#39;]
+5: [&#39;Hyperphenylalaninemia due to dhpr-deficiency&#39;, &#39;Pathway&#39;]
+6: [&#39;Hyperphenylalaninemia due to 6-pyruvoyltetrahydropterin synthase deficiency (ptps)&#39;, &#39;Pathway&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Based on the information above, we'll pick the top Disease choice (indexed at 0) for hyperphenylalaninemia for our query. We can look at identifier mappings inside this BioThings object.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## select the first Disease object for our hyperphenylalaninemia query</span>
 <span class="n">hyperphenylalaninemia</span> <span class="o">=</span> <span class="n">hyperphenylalaninemia_hint</span><span class="p">[</span><span class="s1">&#39;Disease&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">hyperphenylalaninemia</span>
 </pre></div>
@@ -13177,20 +14508,19 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;MONDO&#39;: &#39;MONDO:0016543&#39;,
- &#39;UMLS&#39;: &#39;C0751435&#39;,
- &#39;name&#39;: &#39;hyperphenylalaninemia&#39;,
- &#39;ORPHANET&#39;: &#39;238583&#39;,
+<pre>{&#39;MONDO&#39;: &#39;MONDO:0019335&#39;,
+ &#39;name&#39;: &#39;mild hyperphenylalaninemia&#39;,
+ &#39;ORPHANET&#39;: &#39;79651&#39;,
  &#39;primary&#39;: {&#39;identifier&#39;: &#39;MONDO&#39;,
   &#39;cls&#39;: &#39;Disease&#39;,
-  &#39;value&#39;: &#39;MONDO:0016543&#39;},
- &#39;display&#39;: &#39;MONDO(MONDO:0016543) ORPHANET(238583) UMLS(C0751435) name(hyperphenylalaninemia)&#39;,
+  &#39;value&#39;: &#39;MONDO:0019335&#39;},
+ &#39;display&#39;: &#39;MONDO(MONDO:0019335) ORPHANET(79651) name(mild hyperphenylalaninemia)&#39;,
  &#39;type&#39;: &#39;Disease&#39;}</pre>
 </div>
 
@@ -13203,7 +14533,15 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-2:-Find-drugs-that-are-associated-with-genes-which-invovled-in-hyperphenylalaninemia">Step 2: Find drugs that are associated with genes which invovled in hyperphenylalaninemia<a class="anchor-link" href="#Step-2:-Find-drugs-that-are-associated-with-genes-which-invovled-in-hyperphenylalaninemia">&#182;</a></h2><p>In this section, we find all paths in the knowledge graph that connect hyperphenylalaninemia to any entity that is a chemical compound.  To do that, we will use <code>FindConnection</code>.  This class is a convenient wrapper around two advanced functions for <strong>query path planning</strong> and <strong>query path execution</strong>. More advanced features for both query path planning and query path execution are in development and will be documented in the coming months.</p>
+<h2 id="Step-2:-Find-drugs-associated-with-the-genes-involved-in-hyperphenylalaninemia">Step 2: Find drugs associated with the genes involved in hyperphenylalaninemia<a class="anchor-link" href="#Step-2:-Find-drugs-associated-with-the-genes-involved-in-hyperphenylalaninemia">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this section, we find some paths in the knowledge graph that connect hyperphenylalaninemia to chemical compounds (nodes with the biomedical object type "Chemical Substance").</p>
+<p>To do that, we will use <code>FindConnection</code>.  This class is a convenient wrapper around two advanced functions for <strong>query path planning</strong> and <strong>query path execution</strong>. More advanced features for both query path planning and query path execution are in development and will be documented in the coming months.</p>
 <p>The parameters for <code>FindConnection</code> are described below:</p>
 
 </div>
@@ -13211,7 +14549,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">FindConnection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
@@ -13270,17 +14608,19 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here, we formulate a <code>FindConnection</code> query with "hyperphenylalaninemia" as the <code>input_ojb</code>, "ChemicalSubstance" as the <code>output_obj</code> (which corresponds to a Biolink Entity type).  We further specify with the <code>intermediate_nodes</code> parameter that we are looking for paths joining hyperphenylalaninemia and chemical compounds with <em>one</em> intermediate node that is a Gene.  (The ability to search for longer reasoning paths that include additional intermediate nodes will be added shortly.)</p>
+<p>Here, we formulate a <code>FindConnection</code> query with "hyperphenylalaninemia" as the <code>input_obj</code>, "ChemicalSubstance" as the <code>output_obj</code> (which corresponds to a BioThings type).  We further specify with the <code>intermediate_nodes</code> parameter that we are looking for paths joining hyperphenylalaninemia and chemical compounds with <em>one</em> intermediate node that is a "Gene" (BioThings type).</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span><span class="o">=</span><span class="n">hyperphenylalaninemia</span><span class="p">,</span> <span class="n">output_obj</span><span class="o">=</span><span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">,</span> <span class="n">intermediate_nodes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span> <span class="o">=</span> <span class="n">hyperphenylalaninemia</span><span class="p">,</span> \
+                    <span class="n">output_obj</span> <span class="o">=</span> <span class="s1">&#39;ChemicalSubstance&#39;</span><span class="p">,</span> \
+                    <span class="n">intermediate_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Gene&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13291,7 +14631,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We next execute the <code>connect</code> method, which performs the <strong>query path planning</strong> and <strong>query path execution</strong> process.  In short, BioThings Explorer is deconstructing the query into individual API calls, executing those API calls, then assembling the results.</p>
+<p>We next execute the <code>connect</code> method, which performs the <strong>query path planning</strong> and <strong>query path execution</strong> process.  In short, BioThings Explorer is deconstructing the query into individual API calls, executing those API calls, and then assembling the results.</p>
 <p>A verbose log of this process is displayed below:</p>
 
 </div>
@@ -13299,11 +14639,11 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set verbose=True will display all steps which BTE takes to find the connection</span>
-<span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## set verbose=True will display all steps which BTE takes to find the connection</span>
+<span class="n">fc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13324,81 +14664,47 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;hyperphenylalaninemia&#39; and &#39;ChemicalSubstance&#39;.                   Paths will have 1 intermediate node.
+BTE will find paths that join &#39;mild hyperphenylalaninemia&#39; and &#39;ChemicalSubstance&#39;.                   Paths will have 1 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
 
 
-========== QUERY #1 -- fetch all Gene entities linked to hyperphenylalaninemia ==========
+========== QUERY #1 -- fetch all Gene entities linked to mild hyperphenylalaninemia ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because hyperphenylalaninemia is of type &#39;Disease&#39;, BTE will query our meta-KG for APIs that can take &#39;Disease&#39; as input and &#39;Gene&#39; as output
+Because mild hyperphenylalaninemia is of type &#39;Disease&#39;, BTE will query our meta-KG for APIs that can take &#39;Disease&#39; as input and &#39;Gene&#39; as output
 
-BTE found 7 apis:
+BTE found 5 apis:
 
-API 1. hetio(1 API call)
+API 1. pharos(1 API call)
 API 2. scigraph(1 API call)
-API 3. semmed_disease(15 API calls)
-API 4. pharos(1 API call)
-API 5. scibite(1 API call)
-API 6. biolink(1 API call)
-API 7. mydisease(1 API call)
+API 3. biolink(1 API call)
+API 4. scibite(1 API call)
+API 5. hetio(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.1: http://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0751435,C0751436&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
-API 3.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 3.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0751435,C0751436&amp;scopes=umls)
-API 6.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0016543/genes?rows=200
-API 5.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0016543
-API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0016543
-API 4.1: https://automat.renci.org/pharos/disease/gene/MONDO:0016543
-API 1.1: https://automat.renci.org/hetio/disease/gene/MONDO:0016543
+API 3.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019335/genes?rows=200
+API 4.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0019335
+API 4.1 scibite failed
+API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0019335
+API 2.1 scigraph failed
+API 1.1: https://automat.renci.org/pharos/disease/gene/MONDO:0019335
+API 5.1: https://automat.renci.org/hetio/disease/gene/MONDO:0019335
 
 
 ==== Step #3: Output normalization ====
 
-API 3.1 semmed_disease: No hits
-API 3.2 semmed_disease: No hits
-API 3.3 semmed_disease: No hits
-API 3.4 semmed_disease: No hits
-API 3.5 semmed_disease: No hits
-API 3.6 semmed_disease: 6 hits
-API 3.7 semmed_disease: No hits
-API 4.1 pharos: 1 hits
-API 3.8 semmed_disease: No hits
-API 2.1 scigraph: No hits
-API 3.9 semmed_disease: 3 hits
-API 7.1 mydisease: 10 hits
-API 3.10 semmed_disease: No hits
-API 5.1 scibite: 1 hits
-API 1.1 hetio: No hits
-API 3.11 semmed_disease: No hits
-API 3.12 semmed_disease: 14 hits
-API 3.13 semmed_disease: No hits
-API 3.14 semmed_disease: 17 hits
-API 6.1 biolink: 4 hits
-API 3.15 semmed_disease: No hits
+API 1.1 pharos: No hits
+API 5.1 hetio: No hits
+API 3.1 biolink: 1 hits
 
-After id-to-object translation, BTE retrieved 33 unique objects.
+After id-to-object translation, BTE retrieved 1 unique objects.
 
 
 ========== QUERY #2.1 -- fetch all ChemicalSubstance entities linked to Gene entites ==========
@@ -13410,287 +14716,77 @@ Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that
 
 BTE found 10 apis:
 
-API 1. semmed_gene(10 API calls)
-API 2. scigraph(16 API calls)
-API 3. hmdb(16 API calls)
+API 1. pharos(1 API call)
+API 2. chembio(1 API call)
+API 3. opentarget(1 API call)
 API 4. mychem(3 API calls)
-API 5. dgidb(16 API calls)
-API 6. pharos(16 API calls)
-API 7. scibite(16 API calls)
-API 8. opentarget(16 API calls)
-API 9. chembio(16 API calls)
-API 10. cord_gene(1 API call)
+API 5. hmdb(1 API call)
+API 6. dgidb(1 API call)
+API 7. cord_gene(1 API call)
+API 8. scibite(1 API call)
+API 9. semmed_gene(10 API calls)
+API 10. scigraph(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.15: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000145730&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.8: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.7: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000166228&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.5: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000137880&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000151552&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.13: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000148602&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.6: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000198074&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.11: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000141837&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.3: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000131979&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.12: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000150787&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.10: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000170606&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.16: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000135775&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 7.4: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000142192&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 5.13: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=AKR1B10
-API 5.7: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=CACNA1A
-API 5.14: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAH
-API 5.8: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PTS
-API 5.9: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAM
-API 5.11: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=HSPA4
-API 5.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=GCHFR
-API 5.3: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=GCH1
-API 5.5: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=QDPR
-API 5.6: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=LRIT1
-API 5.16: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=COG2
-API 5.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PCBD1
-API 5.12: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=APP
-API 6.16: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:338
-API 8.1: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:57016
-API 2.7: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:3308
-API 4.8: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:2644
-API 4.7: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:3308
-API 6.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:57016
-API 6.13: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2643
-API 6.10: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:351
-API 4.2: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5860
-API 6.6: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5805
-API 6.3: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:773
-API 6.15: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5066
-API 2.5: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5092
-API 2.14: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:26103
-API 2.2: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5860
-API 4.1: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:57016
-API 2.11: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:3034
-API 4.5: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5092
-API 5.15: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=SHCBP1
-API 6.4: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:22796
-API 2.8: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:2644
-API 2.12: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5053
-API 5.4: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=HAL
-API 3.2: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugbank.enzymes.gene_name)
-API 3.1: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugbank.targets.gene_name)
-API 6.9: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:79801
-API 6.7: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3308
-API 5.10: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=APOB
-API 7.2: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084674&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 2.9: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:79801
-API 6.2: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5860
-API 6.5: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5092
-API 6.14: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:26103
-API 6.8: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:2644
-API 2.16: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:338
-API 6.11: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:3034
-API 7.9: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171241&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 4.6: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5805
-API 6.12: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
-API 4.12: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5053
-API 2.4: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:22796
-API 7.14: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000084110&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 3.3: https://mychem.info/v1/query?fields=chembl.molecule_chembl_id&amp;size=250 (POST -d q=PCBD1,GCHFR,GCH1,HAL,QDPR,LRIT1,CACNA1A,PTS,PAM,APOB,HSPA4,APP,AKR1B10,PAH,SHCBP1,COG2&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol)
-API 2.1: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:57016
-API 2.13: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:2643
-API 4.9: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:79801
-API 8.2: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5860
-API 4.3: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:773
-API 9.6: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5805
-API 8.7: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:3308
-API 4.13: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:2643
-API 4.4: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:22796
-API 2.15: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5066
-API 2.3: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:773
-API 4.14: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:26103
-API 4.11: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:3034
-API 2.10: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:351
-API 4.15: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5066
-API 8.3: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:773
-API 8.9: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:79801
-API 4.16: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:338
-API 8.8: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:2644
-API 8.4: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:22796
-API 8.15: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5066
-API 8.5: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5092
-API 8.6: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5805
-API 8.10: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:351
-API 2.6: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5805
-API 8.11: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:3034
-API 8.14: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:26103
-API 8.13: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:2643
-API 4.10: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:351
-API 9.4: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:22796
-API 8.12: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5053
-API 8.16: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:338
-API 9.1: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:57016
-API 10.1: https://biothings.ncats.io/cord_gene/query?fields=associated_with (POST -d q=4193,6546,5237,9689,1388,603,4194,382,4806,29547,8646,8596,9752,23404,620,8582&amp;scopes=hgnc)
-API 9.7: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:3308
-API 9.8: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:2644
-API 9.9: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:79801
-API 9.3: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:773
-API 9.5: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5092
-API 9.2: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5860
-API 9.12: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5053
-API 9.10: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:351
-API 9.11: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:3034
-API 9.14: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:26103
-API 9.15: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5066
-API 9.13: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:2643
-API 9.16: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:338
-API 1.1: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulates (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.6: https://biothings.ncats.io/semmedgene/query?fields=positively_regulated_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.4: https://biothings.ncats.io/semmedgene/query?fields=affected_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.9: https://biothings.ncats.io/semmedgene/query?fields=disrupted_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.8: https://biothings.ncats.io/semmedgene/query?fields=disrupts (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.7: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulated_by (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.10: https://biothings.ncats.io/semmedgene/query?fields=positively_regulates (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.5: https://biothings.ncats.io/semmedgene/query?fields=related_to (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.3: https://biothings.ncats.io/semmedgene/query?fields=affects (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
-API 1.2: https://biothings.ncats.io/semmedgene/query?fields=physically_interacts_with (POST -d q=C0017361,C0018293,C1412323,C0072774,C1364818,C1415465,C1335144,C1539766,C0314604,C1416822,C0031456,C0012312,C1710338,C1428072,C0074350,C0002085,C0014442,C1418251,C1418296,C1456413,C0041491,C0284927,C1419129,C1705543,C1415012,C1419182,C1412471,C1415760,C1415013,C0020239,C0030016,C1456357,C0017337&amp;scopes=umls)
+API 4.3: https://mychem.info/v1/query?fields=chembl.molecule_chembl_id&amp;size=250 (POST -d q=PAH&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol)
+API 9.9: https://biothings.ncats.io/semmedgene/query?fields=disrupted_by (POST -d q=C1418251&amp;scopes=umls)
+API 9.1: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulates (POST -d q=C1418251&amp;scopes=umls)
+API 9.2: https://biothings.ncats.io/semmedgene/query?fields=physically_interacts_with (POST -d q=C1418251&amp;scopes=umls)
+API 7.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAH
+API 4.2: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PAH&amp;scopes=drugbank.enzymes.gene_name)
+API 9.6: https://biothings.ncats.io/semmedgene/query?fields=positively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
+API 9.10: https://biothings.ncats.io/semmedgene/query?fields=positively_regulates (POST -d q=C1418251&amp;scopes=umls)
+API 9.4: https://biothings.ncats.io/semmedgene/query?fields=affected_by (POST -d q=C1418251&amp;scopes=umls)
+API 9.5: https://biothings.ncats.io/semmedgene/query?fields=related_to (POST -d q=C1418251&amp;scopes=umls)
+API 9.3: https://biothings.ncats.io/semmedgene/query?fields=affects (POST -d q=C1418251&amp;scopes=umls)
+API 9.7: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
+API 9.8: https://biothings.ncats.io/semmedgene/query?fields=disrupts (POST -d q=C1418251&amp;scopes=umls)
+API 4.1: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PAH&amp;scopes=drugbank.targets.gene_name)
+API 6.1: https://biothings.ncats.io/cord_gene/query?fields=associated_with (POST -d q=8582&amp;scopes=hgnc)
+API 3.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 8.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
+API 8.1 scibite failed
+API 10.1: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5053
+API 10.1 scigraph failed
+API 1.1: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5053
+API 2.1: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5053
+API 5.1: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5053
 
 
 ==== Step #3: Output normalization ====
 
-API 7.1 opentarget: No hits
-API 7.2 opentarget: 7 hits
-API 7.3 opentarget: No hits
-API 7.4 opentarget: 59 hits
-API 7.5 opentarget: No hits
-API 7.6 opentarget: No hits
-API 7.7 opentarget: No hits
-API 7.8 opentarget: 42 hits
-API 7.9 opentarget: No hits
-API 7.10 opentarget: No hits
-API 7.11 opentarget: 19 hits
-API 7.12 opentarget: No hits
-API 7.13 opentarget: No hits
-API 7.14 opentarget: No hits
-API 7.15 opentarget: No hits
-API 7.16 opentarget: No hits
-API 6.1 scibite: 1 hits
-API 6.2 scibite: No hits
-API 6.3 scibite: No hits
-API 6.4 scibite: No hits
-API 6.5 scibite: No hits
-API 6.6 scibite: No hits
-API 6.7 scibite: 1 hits
-API 6.8 scibite: 1 hits
-API 6.9 scibite: No hits
-API 6.10 scibite: 9 hits
-API 6.11 scibite: No hits
-API 6.12 scibite: 1 hits
-API 6.13 scibite: 1 hits
-API 6.14 scibite: No hits
-API 6.15 scibite: No hits
-API 6.16 scibite: 3 hits
-API 1.1 semmed_gene: 2007 hits
-API 1.2 semmed_gene: 15441 hits
-API 1.3 semmed_gene: 1 hits
-API 1.4 semmed_gene: 9 hits
-API 2.1 scigraph: No hits
-API 2.2 scigraph: No hits
-API 2.3 scigraph: No hits
-API 2.4 scigraph: No hits
-API 2.5 scigraph: No hits
-API 2.6 scigraph: 442 hits
-API 2.7 scigraph: No hits
-API 2.8 scigraph: No hits
-API 2.9 scigraph: No hits
-API 2.10 scigraph: 56 hits
-API 2.11 scigraph: 1 hits
-API 2.12 scigraph: 52 hits
-API 2.13 scigraph: No hits
-API 2.14 scigraph: No hits
-API 2.15 scigraph: 19 hits
-API 2.16 scigraph: 16 hits
-API 1.5 semmed_gene: No hits
-API 5.1 dgidb: 1 hits
-API 5.2 dgidb: No hits
-API 5.3 dgidb: 1 hits
-API 5.4 dgidb: 1 hits
-API 5.5 dgidb: 1 hits
-API 5.6 dgidb: No hits
-API 5.7 dgidb: 11 hits
-API 5.8 dgidb: No hits
-API 5.9 dgidb: 1 hits
-API 5.10 dgidb: 17 hits
-API 5.11 dgidb: 35 hits
-API 5.12 dgidb: 22 hits
-API 5.13 dgidb: 3 hits
-API 5.14 dgidb: 8 hits
-API 5.15 dgidb: No hits
-API 5.16 dgidb: No hits
-API 1.6 semmed_gene: 4883 hits
-API 3.1 mychem: 51 hits
-API 10.1 cord_gene: 723 hits
-API 1.7 semmed_gene: 6577 hits
-API 4.1 pharos: 44 hits
-API 4.2 pharos: 3 hits
-API 4.3 pharos: 1 hits
-API 4.4 pharos: No hits
-API 4.5 pharos: No hits
-API 4.6 pharos: No hits
-API 4.7 pharos: No hits
-API 4.8 pharos: No hits
-API 4.9 pharos: No hits
-API 4.10 pharos: 358 hits
-API 4.11 pharos: No hits
-API 4.12 pharos: 2 hits
-API 4.13 pharos: No hits
-API 4.14 pharos: No hits
-API 4.15 pharos: 5 hits
-API 4.16 pharos: 49 hits
-API 1.8 semmed_gene: 2 hits
-API 8.1 chembio: 5 hits
-API 8.2 chembio: 1 hits
-API 8.3 chembio: 1 hits
-API 8.4 chembio: No hits
-API 8.5 chembio: 2 hits
-API 8.6 chembio: 2 hits
-API 8.7 chembio: 6 hits
-API 8.8 chembio: 4 hits
-API 8.9 chembio: 1 hits
-API 8.10 chembio: 29 hits
-API 8.11 chembio: 3 hits
-API 8.12 chembio: 1 hits
-API 8.13 chembio: 4 hits
-API 8.14 chembio: No hits
-API 8.15 chembio: 7 hits
-API 8.16 chembio: 6 hits
-API 3.2 mychem: 4 hits
-API 1.9 semmed_gene: No hits
-API 9.1 hmdb: 18 hits
-API 9.2 hmdb: 11 hits
-API 9.3 hmdb: 4 hits
-API 9.4 hmdb: No hits
-API 9.5 hmdb: 5 hits
-API 9.6 hmdb: 6 hits
-API 9.7 hmdb: No hits
-API 9.8 hmdb: 2 hits
-API 9.9 hmdb: No hits
-API 9.10 hmdb: 5 hits
-API 9.11 hmdb: 3 hits
-API 9.12 hmdb: 11 hits
-API 9.13 hmdb: 8 hits
-API 9.14 hmdb: No hits
-API 9.15 hmdb: 5 hits
-API 9.16 hmdb: 4 hits
-API 3.3 mychem: 15 hits
-API 1.10 semmed_gene: 2314 hits
+API 3.1 opentarget: 43 hits
+API 9.1 semmed_gene: 6 hits
+API 9.2 semmed_gene: 53 hits
+API 9.3 semmed_gene: No hits
+API 9.4 semmed_gene: No hits
+API 9.5 semmed_gene: No hits
+API 7.1 dgidb: 8 hits
+API 9.6 semmed_gene: 11 hits
+API 4.1 mychem: 8 hits
+API 6.1 cord_gene: 135 hits
+API 9.7 semmed_gene: 15 hits
+API 1.1 pharos: 2 hits
+API 9.8 semmed_gene: No hits
+API 2.1 chembio: 1 hits
+API 4.2 mychem: 1 hits
+API 9.9 semmed_gene: No hits
+API 5.1 hmdb: 11 hits
+API 4.3 mychem: 1 hits
+API 9.10 semmed_gene: 7 hits
 
-After id-to-object translation, BTE retrieved 9449 unique objects.
+After id-to-object translation, BTE retrieved 228 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-In the #1 query, BTE found 33 unique Gene nodes
-In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
+In the #1 query, BTE found 1 unique Gene nodes
+In the #2 query, BTE found 228 unique ChemicalSubstance nodes
 </pre>
 </div>
 </div>
@@ -13702,20 +14798,28 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Step-3:-Display-and-Filter-results">Step 3: Display and Filter results<a class="anchor-link" href="#Step-3:-Display-and-Filter-results">&#182;</a></h2><p>This section demonstrates post-query filtering done in Python. Later, more advanced filtering functions will be added to the <strong>query path execution</strong> module for interleaved filtering, thereby enabling longer query paths. More details to come...</p>
-<p>First, all matching paths can be exported to a data frame. Let's examine a sample of those results.</p>
+<h2 id="Step-3:-Display-and-filter-results">Step 3: Display and filter results<a class="anchor-link" href="#Step-3:-Display-and-filter-results">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This section demonstrates post-query filtering done in Python. Later, more advanced filtering functions will be added to the <strong>query path execution</strong> module for interleaved filtering, thereby enabling longer query paths. More details to come...</p>
+<p>First, results can be exported to a data frame. Let's examine a sample of those results.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
 
-<span class="c1"># because UMLS is not currently well-integrated in our ID-to-object translation system, removing UMLS-only outputs here</span>
+<span class="c1">## because UMLS is not currently well-integrated in our ID-to-object </span>
+<span class="c1">##      translation system, removing UMLS-only outputs here</span>
 <span class="n">patternDel</span> <span class="o">=</span> <span class="s2">&quot;^UMLS:C\d+&quot;</span>
 <span class="nb">filter</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">output_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="nb">filter</span><span class="p">]</span>
@@ -13728,6 +14832,7 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 <span class="n">filter3</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">node1_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">patternDel3</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">filter3</span><span class="p">]</span>
 
+<span class="c1"># df[df.output_id.str.contains(patternDel)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
@@ -13742,7 +14847,18 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(244, 16)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
@@ -13785,184 +14901,32 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <td>16504</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>10727395</td>
-      <td>Gene</td>
-      <td>C0014442</td>
-      <td>UMLS:C0014442</td>
-      <td>negatively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>11839529,19443747</td>
-      <td>ChemicalSubstance</td>
-      <td>U 0126</td>
-      <td>name:U 0126</td>
-    </tr>
-    <tr>
-      <td>8209</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
+      <th>157</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>9675155</td>
-      <td>Gene</td>
-      <td>C0017337</td>
-      <td>UMLS:C0017337</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>21984199,26086415</td>
-      <td>ChemicalSubstance</td>
-      <td>ISOFLURANE</td>
-      <td>name:ISOFLURANE</td>
-    </tr>
-    <tr>
-      <td>31798</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>9222755,9667588</td>
-      <td>Gene</td>
-      <td>C0017337</td>
-      <td>UMLS:C0017337</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>17684401,18412988,17693008</td>
-      <td>ChemicalSubstance</td>
-      <td>MICRONUTRIENT</td>
-      <td>name:MICRONUTRIENT</td>
-    </tr>
-    <tr>
-      <td>1929</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>10874306</td>
-      <td>Gene</td>
-      <td>PTS</td>
-      <td>NCBIGene:5805</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Gene API</td>
       <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>.BETA.-D-GLUCOPYRANOSE</td>
-      <td>name:.BETA.-D-GLUCOPYRANOSE</td>
-    </tr>
-    <tr>
-      <td>10532</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>699146</td>
-      <td>Gene</td>
-      <td>C0030016</td>
-      <td>UMLS:C0030016</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>11731036</td>
-      <td>ChemicalSubstance</td>
-      <td>GENISTEIN</td>
-      <td>name:GENISTEIN</td>
-    </tr>
-    <tr>
-      <td>35512</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>10727395</td>
-      <td>Gene</td>
-      <td>C0014442</td>
-      <td>UMLS:C0014442</td>
-      <td>positively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>4291334,7358701,11980911</td>
-      <td>ChemicalSubstance</td>
-      <td>DEOXYCHOLATE</td>
-      <td>name:DEOXYCHOLATE</td>
-    </tr>
-    <tr>
-      <td>40287</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>8841415</td>
-      <td>Gene</td>
-      <td>PTS</td>
-      <td>NCBIGene:5805</td>
-      <td>related_to</td>
-      <td>scigraph</td>
-      <td>Automat CORD19 Scigraph API</td>
+      <td>BioLink API</td>
       <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>CHLORAMBUCIL</td>
-      <td>name:CHLORAMBUCIL</td>
-    </tr>
-    <tr>
-      <td>40027</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>15133828</td>
       <td>Gene</td>
-      <td>AKR1B10</td>
-      <td>NCBIGene:57016</td>
-      <td>negatively_regulates</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>physically_interacts_with</td>
       <td>SEMMED</td>
       <td>SEMMED Gene API</td>
-      <td>28322780</td>
+      <td>1972801</td>
       <td>ChemicalSubstance</td>
-      <td>TIAPROFENIC ACID</td>
-      <td>name:TIAPROFENIC ACID</td>
+      <td>AMITRIPTYLINE</td>
+      <td>name:AMITRIPTYLINE</td>
     </tr>
     <tr>
-      <td>22054</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
+      <th>294</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>NCBIGene:3308</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>26307981</td>
-      <td>ChemicalSubstance</td>
-      <td>MALONALDEHYDE</td>
-      <td>name:MALONALDEHYDE</td>
-    </tr>
-    <tr>
-      <td>45089</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>1301201,8892014,10495930,10495930</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
       <td>Gene</td>
       <td>PAH</td>
       <td>NCBIGene:5053</td>
@@ -13971,8 +14935,160 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
       <td>CORD Gene API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>CHEBI:46756</td>
-      <td>CHEBI:CHEBI:46756</td>
+      <td>ISOBUTANOL</td>
+      <td>name:ISOBUTANOL</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>MONOCROTALINE</td>
+      <td>name:MONOCROTALINE</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>11055810</td>
+      <td>ChemicalSubstance</td>
+      <td>PEROXOVANADATE</td>
+      <td>name:PEROXOVANADATE</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>CHEBI:33893</td>
+      <td>CHEBI:CHEBI:33893</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>PROLINATE</td>
+      <td>name:PROLINATE</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>16676991,20638309</td>
+      <td>ChemicalSubstance</td>
+      <td>OXYGEN</td>
+      <td>name:OXYGEN</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Gene API</td>
+      <td>23523934</td>
+      <td>ChemicalSubstance</td>
+      <td>HYDROGEN PEROXIDE</td>
+      <td>name:HYDROGEN PEROXIDE</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>D 21266</td>
+      <td>name:D 21266</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>CHEBI:24632</td>
+      <td>CHEBI:CHEBI:24632</td>
     </tr>
   </tbody>
 </table>
@@ -13988,7 +15104,7 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>While most results are based on edges from <a href="https://skr3.nlm.nih.gov/SemMed/">semmed</a>, edges from <a href="http://www.dgidb.org/">DGIdb</a>, <a href="https://monarchinitiative.org/">biolink</a>, <a href="http://www.disgenet.org/">disgenet</a>, and <a href="https://mychem.info">mychem.info</a> were also retrieved from their respective APIs.</p>
+<p>Notice that results give the knowledge source (API) and that many also give the literature source (Pubmed ID).</p>
 <p>Next, let's examine which chemical compounds were most frequently mentioned.</p>
 
 </div>
@@ -13996,10 +15112,10 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14012,22 +15128,22 @@ In the #2 query, BTE found 9449 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>PHARMACEUTICAL PREPARATIONS    122
-HYDROGEN PEROXIDE              119
-.BETA.-D-GLUCOPYRANOSE         116
-NADH                           105
-NITRIC OXIDE                   101
-BINDING SITE                    97
-3-METHYLADENINE DNA             94
-CHOLESTEROL                     94
-OXYGEN SPECIES, REACTIVE        92
-ALCOHOL                         91
+<pre>SAPROPTERIN            5
+HYDROCORTISONE         3
+NOREPINEPHRINE         3
+PTERINS                3
+L-PHENYLALANINE        3
+SEROTONIN              2
+HYDROGEN PEROXIDE      2
+MELANIN                2
+OMEGA-3 FATTY ACIDS    2
+METALS                 2
 Name: output_name, dtype: int64</pre>
 </div>
 
@@ -14040,7 +15156,8 @@ Name: output_name, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Hyperphenylalaninemia is a condition characterized by elevated levels of phenylalanine in the blood. This phenotype is strongly associated with phenylketonuria (PKU), an inherited, genetic disorder that affects the ability to metabolize phenylalanine.  <strong>Sapropterin</strong> is a naturally-occurring cofactor associated with several enzymatic processes, including the metabolism of phenylalanine to tyrosine. It has been <a href="https://www.centerwatch.com/drug-information/fda-approved-drugs/drug/972/kuvan-sapropterin-dihydrochloride">FDA-approved</a> as a treatment for PKU patients.  Tyrosine is also a precursor to several neurotransmitters, including <strong>norepinephrine</strong> and <strong>dopamine</strong>.</p>
+<p><em>Note: as of 2020-08-13, the notebook output above matches the description below. As knowledge sources (APIs) and code are updated and added, users may obtain different results.</em></p>
+<p>Hyperphenylalaninemia is a condition characterized by elevated levels of phenylalanine in the blood. This phenotype is strongly associated with phenylketonuria (PKU), an inherited, genetic disorder that affects the ability to metabolize phenylalanine.  <strong>Sapropterin</strong> is a naturally-occurring cofactor associated with several enzymatic processes, including the metabolism of phenylalanine to tyrosine. It has been <a href="https://www.centerwatch.com/drug-information/fda-approved-drugs/drug/972/kuvan-sapropterin-dihydrochloride">FDA-approved</a> as a treatment for PKU patients.  Tyrosine is also a precursor to several neurotransmitters, including <strong>norepinephrine</strong> and dopamine.</p>
 <p>While several of the listed compounds would be considered positive controls, others on the list could be viewed as <strong>testable hypotheses and discovery opportunities</strong> to be evaluated by domain experts. For example, let's examine which genes link hyperphenylalaninemia to nitric oxide.</p>
 
 </div>
@@ -14048,10 +15165,10 @@ Name: output_name, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">==</span><span class="s2">&quot;NITRIC OXIDE&quot;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span> <span class="o">==</span> <span class="s2">&quot;NITRIC OXIDE&quot;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -14064,7 +15181,7 @@ Name: output_name, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14107,559 +15224,26 @@ Name: output_name, dtype: int64</pre>
   </thead>
   <tbody>
     <tr>
-      <td>2318</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>25261586,25261586</td>
-      <td>Gene</td>
-      <td>C1710338</td>
-      <td>UMLS:C1710338</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>23769841</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2319</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>25261586,25261586</td>
-      <td>Gene</td>
-      <td>C1710338</td>
-      <td>UMLS:C1710338</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>15265010</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2320</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>25261586,25261586</td>
-      <td>Gene</td>
-      <td>C1710338</td>
-      <td>UMLS:C1710338</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>25049660,23072349</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2321</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>25261586,25261586</td>
-      <td>Gene</td>
-      <td>C1710338</td>
-      <td>UMLS:C1710338</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>23806552,16831427</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2322</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>25261586,25261586</td>
-      <td>Gene</td>
-      <td>C1710338</td>
-      <td>UMLS:C1710338</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>10952392</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <td>2422</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>NCBIGene:3308</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>7544743,9085348,9085348,9276725,10805410,10805...</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2423</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>NCBIGene:3308</td>
-      <td>positively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>11374865</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2424</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>7766952</td>
-      <td>Gene</td>
-      <td>CACNA1A</td>
-      <td>NCBIGene:773</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>23949212</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2425</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
+      <th>276</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
-      <td>scibite</td>
-      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>BioLink API</td>
       <td>None</td>
       <td>Gene</td>
-      <td>GCHFR</td>
-      <td>NCBIGene:2644</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>18372436,18372436,18372436</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>2426</td>
-      <td>HYPERPHENYLALANINAEMIA</td>
-      <td>Disease</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
       <td>related_to</td>
-      <td>scibite</td>
-      <td>Automat CORD19 Scibite API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>GCHFR</td>
-      <td>NCBIGene:2644</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>21693765</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39812</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>caused_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>entrez:3308</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>7544743,9085348,9085348,9276725,10805410,10805...</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39813</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>caused_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>entrez:3308</td>
-      <td>positively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>11374865</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39814</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>caused_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>28794131</td>
-      <td>Gene</td>
-      <td>HSPA4</td>
-      <td>entrez:3308</td>
-      <td>produces</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>10849439,16521562,24395610</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39815</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>caused_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>7766952</td>
-      <td>Gene</td>
-      <td>CACNA1A</td>
-      <td>entrez:773</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>23949212</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39816</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>disrupted_by</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>10051643</td>
-      <td>Gene</td>
-      <td>PAM</td>
-      <td>entrez:5066</td>
-      <td>associated_with</td>
-      <td>CORD API</td>
-      <td>cordgene</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
       <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39817</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>COG2</td>
-      <td>entrez:22796</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>16060915</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39818</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>COG2</td>
-      <td>entrez:22796</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>25224628</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39819</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>COG2</td>
-      <td>entrez:22796</td>
-      <td>positively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>27919363</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39820</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>COG2</td>
-      <td>entrez:22796</td>
-      <td>produces</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>26847282</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39821</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>27612877</td>
-      <td>Gene</td>
-      <td>APOB</td>
-      <td>entrez:338</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>9593815</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39822</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>20021361,22810094</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39823</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>coexists_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>20936504</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39824</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>has_part</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>15371443</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39825</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>20936504,21073661,22426388,26819495</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39826</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>19779140,22384120,26665235</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39827</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>positively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>23915297,23915297</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39828</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>positively_regulates</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>9915130,9915130,9576964,10648444,17365664,1917...</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
-    </tr>
-    <tr>
-      <td>39829</td>
-      <td>hyperphenylalaninemia</td>
-      <td>DiseaseOrPhenotypicFeature</td>
-      <td>related_to</td>
-      <td>SEMMED API</td>
-      <td>semmeddisease</td>
-      <td>25260610</td>
-      <td>Gene</td>
-      <td>APP</td>
-      <td>entrez:351</td>
-      <td>produces</td>
-      <td>SEMMED API</td>
-      <td>semmedgene</td>
-      <td>11027218,9915130,11241130,12944390,21718498</td>
-      <td>ChemicalSubstance</td>
-      <td>NITRIC OXIDE</td>
-      <td>chembl:CHEMBL1200689</td>
+      <td>name:NITRIC OXIDE</td>
     </tr>
   </tbody>
 </table>
-<p>101 rows × 16 columns</p>
 </div>
 </div>
 
@@ -14672,7 +15256,8 @@ Name: output_name, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>BTE identifies a number of genes, including <a href="https://www.ncbi.nlm.nih.gov/gene/3308">HSPA4</a> and <a href="https://www.ncbi.nlm.nih.gov/gene/2643">GCH1</a>, as being the key nodes that join hyperphenylalaninemia with nitric oxide.</p>
+<p><em>Note: as of 2020-08-13, the notebook output above matches the description below. As knowledge sources (APIs) and code are updated and added, users may obtain different results.</em></p>
+<p>BTE identifies <a href="https://www.ncbi.nlm.nih.gov/gene/5053">PAH</a> as being a gene connecting hyperphenylalaninemia and nitric oxide.</p>
 
 </div>
 </div>
@@ -14680,11 +15265,57 @@ Name: output_name, dtype: int64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusions-and-caveats">Conclusions and caveats<a class="anchor-link" href="#Conclusions-and-caveats">&#182;</a></h2><p>This notebook demonstrated the use of BioThings Explorer in PREDICDT mode to identify chemical compounds related to hyperphenylalaninemia. BioThings Explorer autonomously queried a <strong>distributed knowledge graph of biomedical APIs</strong> to find the most common compounds, and several of the top hits had a clear biochemical and clinical relevance to hyperphenylalaninemia.</p>
+<h2 id="Conclusions-and-caveats">Conclusions and caveats<a class="anchor-link" href="#Conclusions-and-caveats">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This notebook demonstrates the use of BioThings Explorer (PREDICT queries) to identify chemical compounds related to hyperphenylalaninemia. BioThings Explorer autonomously queried a <strong>distributed knowledge graph of biomedical APIs</strong> to find the most common compounds, and several of the top hits had a clear biochemical and clinical relevance to hyperphenylalaninemia.</p>
 <p>There are still many areas for improvement (and some areas in which BioThings Explorer is still buggy).  And of course, BioThings Explorer is dependent on the accessibility of the APIs that comprise the distributed knowledge graph.  Nevertheless, we encourage users to try other variants of the PREDICT queries demonstrated in this notebook.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="More-query-information-for-users">More query information for users<a class="anchor-link" href="#More-query-information-for-users">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><em>Note: as of 2020-08-13, the information below is valid.</em></p>
+<p>The input into the Hint query should be one string with <strong>at least one whole word.</strong></p>
+<p>Currently, the user must set the input_obj parameter of FindConnection() as <strong>one specific BioThings object</strong> (ex: one chemical, phenotype, disease, GO term, etc.). To do a PREDICT query, the output_obj parameter of FindConnection() must be <strong>one BioThings type</strong>.</p>
+<p>For a PREDICT query, BTE will accept one or more intermediate nodes (example: the chain of queries is then A -&gt; B -&gt; C -&gt; D). <strong>However, having more than one intermediate node currently leads to slow performance and an overwhelming number of results so it is discouraged.</strong></p>
+<p>Intermediate nodes cannot be specific biomedical entities. They must be BioThings type(s), None, or an empty list ([]).</p>
+<p>The intermediate node parameter can be a list or None. <strong>None or an empty list will tell BTE to look for direct connections (no intermediate nodes).</strong> For a non-empty list, each element is a string (one acceptable entity type) or a tuple of strings (describing the acceptable types) for one node.</p>
+<ul>
+<li>[('AnatomicalEntity, 'CellularComponent')] means one intermediate node that can be an anatomical entity or a cellular component (GO term)</li>
+<li>[('AnatomicalEntity, 'CellularComponent'), 'CellularComponent'] means two intermediate nodes so the chain of queries is A -&gt; B -&gt; C -&gt; D. The first intermediate node (B) can be either of the two types, while the second intermediate node (C) MUST be a cellular-component (GO term). </li>
+</ul>
+<p>BTE will query from input_obj -&gt; intermediate and from intermediate -&gt; output_obj and then join results based on shared intermediates. The results should therefore be read as input_obj -&gt; intermediate -&gt; output_obj.</p>
+<p>If <strong>an intermediate node has a tuple of acceptable types</strong>, BTE will look for knowledge sources that can handle at least one of the types listed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
     </div>
   </div>
