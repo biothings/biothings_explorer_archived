@@ -178,7 +178,7 @@ ID_RESOLVING_APIS = {
         ],
         "semantic": "PhenotypicFeature",
         "api_name": "HPO API",
-        "url": "https://biothings.ncats.io/hpo/query",
+        "url": "https://biothings.ncats.io/hpo",
         "mapping": {
             "UMLS": ["xrefs.umls"],
             "SNOMEDCT": ["xrefs.snomed_ct"],
@@ -195,7 +195,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "MetaCyc", "RHEA", "KEGG", "REACT", "name"],
         "semantic": "MolecularActivity",
         "api_name": "Gene Ontology Molecular Function API",
-        "url": "https://biothings.ncats.io/go_mf/query",
+        "url": "https://biothings.ncats.io/go_mf",
         "mapping": {
             "GO": ["_id"],
             "MetaCyc": ["xrefs.metacyc"],
@@ -209,7 +209,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "MetaCyc", "REACT", "KEGG", "name"],
         "semantic": "BiologicalProcess",
         "api_name": "Gene Ontology Biological Process API",
-        "url": "https://biothings.ncats.io/go_bp/query",
+        "url": "https://biothings.ncats.io/go_bp",
         "mapping": {
             "GO": ["_id"],
             "MetaCyc": ["xrefs.metacyc"],
@@ -222,7 +222,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["GO", "MetaCyc", "RHEA", "name"],
         "semantic": "CellularComponent",
         "api_name": "Gene Ontology Cellular Component API",
-        "url": "https://biothings.ncats.io/go_cc/query",
+        "url": "https://biothings.ncats.io/go_cc",
         "mapping": {
             "GO": ["_id"],
             "MetaCyc": ["xrefs.metacyc"],
@@ -231,12 +231,12 @@ ID_RESOLVING_APIS = {
         },
     },
     "Pathway": {
-        "id_ranks": ["Reactome", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
+        "id_ranks": ["REACT", "KEGG", "PHARMGKB", "WIKIPATHWAYS", "name"],
         "semantic": "Pathway",
         "api_name": "geneset API",
-        "url": "https://biothings.ncats.io/geneset/query",
+        "url": "https://biothings.ncats.io/geneset",
         "mapping": {
-            "Reactome": ["reactome"],
+            "REACT": ["reactome"],
             "WIKIPATHWAYS": ["wikipathways"],
             "KEGG": ["kegg"],
             "PHARMGKB": ["pharmgkb"],
@@ -247,7 +247,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["UBERON", "UMLS", "MESH", "NCIT", "name"],
         "semantic": "AnatomicalEntity",
         "api_name": "UBERON API",
-        "url": "https://biothings.ncats.io/uberon/query",
+        "url": "https://biothings.ncats.io/uberon",
         "mapping": {
             "UBERON": ["_id"],
             "UMLS": ["xrefs.umls"],
@@ -260,7 +260,7 @@ ID_RESOLVING_APIS = {
         "id_ranks": ["CL", "NCIT", "MESH", "EFO", "name"],
         "semantic": "Cell",
         "api_name": "Cell Onotlogy API",
-        "url": "https://biothings.ncats.io/cell_ontology/query",
+        "url": "https://biothings.ncats.io/cell_ontology",
         "mapping": {
             "CL": ["_id"],
             "NCIT": ["xrefs.ncit"],

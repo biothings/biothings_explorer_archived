@@ -90,7 +90,7 @@ class TestSingleHopQuery(unittest.TestCase):
         # test <chemical, interactswith, anatomy>
         seqd = SingleEdgeQueryDispatcher(
             input_cls="Pathway",
-            input_id="Reactome",
+            input_id="REACT",
             output_cls="Disease",
             output_id="MONDO",
             pred="related_to",
@@ -98,7 +98,7 @@ class TestSingleHopQuery(unittest.TestCase):
         )
         seqd.query()
         self.assertTrue("MONDO:0009950" in seqd.G)
-        edges = seqd.G["Reactome:R-HSA-210745"]["MONDO:0009950"]
+        edges = seqd.G["REACT:R-HSA-210745"]["MONDO:0009950"]
         self.assertTrue("BioLink API" in get_apis(edges))
 
     # def test_pathway2phenotype(self):

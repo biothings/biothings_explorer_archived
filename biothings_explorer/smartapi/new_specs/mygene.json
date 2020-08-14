@@ -12,7 +12,8 @@
 		"title": "MyGene.info API",
 		"version": "3.0"
 	},
-	"servers": [{
+	"servers": [
+		{
 			"description": "Encrypted Production server",
 			"url": "https://mygene.info/v3"
 		},
@@ -21,7 +22,8 @@
 			"url": "http://mygene.info/v3"
 		}
 	],
-	"tags": [{
+	"tags": [
+		{
 			"name": "gene"
 		},
 		{
@@ -40,7 +42,8 @@
 	"paths": {
 		"/gene": {
 			"post": {
-				"parameters": [{
+				"parameters": [
+					{
 						"$ref": "#/components/parameters/fields",
 						"name": "fields"
 					},
@@ -97,7 +100,8 @@
 		},
 		"/gene/{geneid}": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"description": "Entrez or Ensembl gene id, e.g., 1017, ENSG00000170248. A retired Entrez Gene id works too if it is replaced by a new one, e.g., 245794",
 						"example": "1017",
 						"in": "path",
@@ -144,10 +148,12 @@
 		},
 		"/metadata": {
 			"get": {
-				"parameters": [{
-					"$ref": "#/components/parameters/callback",
-					"name": "callback"
-				}],
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/callback",
+						"name": "callback"
+					}
+				],
 				"responses": {
 					"200": {
 						"description": "MyGene.info metadata object"
@@ -158,7 +164,8 @@
 		},
 		"/metadata/fields": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"description": "Pass a search term to filter the available fields, e.g. \"search=clinvar\".",
 						"in": "query",
 						"name": "search",
@@ -189,7 +196,8 @@
 		},
 		"/query": {
 			"get": {
-				"parameters": [{
+				"parameters": [
+					{
 						"description": "Query string. Examples \"CDK2\", \"NM_052827\", \"204639_at\", \"chr1:151,073,054-151,383,976\", \"hg19.chr1:151073054-151383976\". The detailed query syntax can be found from our [docs](http://docs.mygene.info/en/latest/doc/query_service.html).",
 						"example": "CDK2",
 						"in": "query",
@@ -282,7 +290,8 @@
 				]
 			},
 			"post": {
-				"parameters": [{
+				"parameters": [
+					{
 						"$ref": "#/components/parameters/fields",
 						"name": "fields"
 					},
@@ -336,7 +345,8 @@
 				"tags": [
 					"query"
 				],
-				"x-bte-kgs-operations": [{
+				"x-bte-kgs-operations": [
+					{
 						"$ref": "#/components/x-bte-kgs-operations/enablesMF"
 					},
 					{
@@ -630,7 +640,8 @@
 			},
 			"QueryPOSTResult": {
 				"items": {
-					"allOf": [{
+					"allOf": [
+						{
 							"$ref": "#/components/schemas/MinimalGene"
 						},
 						{
@@ -671,7 +682,8 @@
 				"type": "object"
 			},
 			"int64_or_array": {
-				"oneOf": [{
+				"oneOf": [
+					{
 						"items": {
 							"format": "int64",
 							"type": "integer"
@@ -685,7 +697,8 @@
 				]
 			},
 			"string_or_array": {
-				"oneOf": [{
+				"oneOf": [
+					{
 						"items": {
 							"type": "string"
 						},
@@ -698,39 +711,47 @@
 			}
 		},
 		"x-bte-kgs-operations": {
-			"enablesMF": [{
-				"inputSeparator": ",",
-				"inputs": [{
-					"id": "NCBIGene",
-					"semantic": "Gene"
-				}],
-				"outputs": [{
-					"id": "GO",
-					"semantic": "MolecularActivity"
-                }],
-                "source": "entrez",
-				"predicate": "functional_association",
-				"parameters": {
-					"fields": "go.MF"
-				},
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "entrezgene"
+			"enablesMF": [
+				{
+					"inputSeparator": ",",
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
+					"outputs": [
+						{
+							"id": "GO",
+							"semantic": "MolecularActivity"
+						}
+					],
+					"source": "entrez",
+					"predicate": "functional_association",
+					"parameters": {
+						"fields": "go.MF"
 					},
-					"header": "application/x-www-form-urlencoded"
-				},
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/functional_association_mf"
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "entrezgene"
+						},
+						"header": "application/x-www-form-urlencoded"
+					},
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/functional_association_mf"
+					}
 				}
-			}],
+			],
 			"hasGeneProduct": [
 				{
-					"inputs": [{
-						"id": "ENSEMBL",
-						"semantic": "Gene"
-					}],
+					"inputs": [
+						{
+							"id": "ENSEMBL",
+							"semantic": "Gene"
+						}
+					],
 					"outputs": [
 						{
 							"id": "UNIPROTKB",
@@ -755,10 +776,12 @@
 					}
 				},
 				{
-					"inputs": [{
-						"id": "ENSEMBL",
-						"semantic": "Gene"
-					}],
+					"inputs": [
+						{
+							"id": "ENSEMBL",
+							"semantic": "Gene"
+						}
+					],
 					"outputs": [
 						{
 							"id": "ENSEMBL",
@@ -783,123 +806,152 @@
 					}
 				}
 			],
-			"hasHomolog": [{
-				"inputs": [{
-					"id": "NCBIGene",
-					"semantic": "Gene"
-				}],
-				"outputs": [{
-					"id": "MGI",
-					"semantic": "Gene"
-				}],
-				"predicate": "homologous_to",
-				"parameters": {
-					"fields": "pantherdb.ortholog"
-				},
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "entrezgene"
+			"hasHomolog": [
+				{
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
+					"outputs": [
+						{
+							"id": "MGI",
+							"semantic": "Gene"
+						}
+					],
+					"predicate": "homologous_to",
+					"parameters": {
+						"fields": "pantherdb.ortholog"
 					},
-					"header": "application/x-www-form-urlencoded"
-				},
-				"inputSeparator": ",",
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/homologous_to"
-				}
-			}],
-			"hasTranscript": [{
-				"inputs": [{
-					"id": "ENSEMBL",
-					"semantic": "Gene"
-				}],
-				"outputs": [{
-					"id": "ENSEMBL",
-					"semantic": "Transcript"
-				}],
-				"parameters": {
-					"fields": "ensembl.transcript"
-				},
-				"predicate": "gene_to_transcript_relationship",
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "ensembl.gene"
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "entrezgene"
+						},
+						"header": "application/x-www-form-urlencoded"
 					},
-					"header": "application/x-www-form-urlencoded"
-				},
-				"inputSeparator": ",",
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/gene_to_transcript_relationship"
+					"inputSeparator": ",",
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/homologous_to"
+					}
 				}
-			}],
-			"involvedInBP": [{
-				"inputs": [{
-					"id": "NCBIGene",
-					"semantic": "Gene"
-				}],
-				"outputs": [{
-					"id": "GO",
-					"semantic": "BiologicalProcess"
-                }],
-                "source": "entrez",
-				"predicate": "functional_association",
-				"parameters": {
-					"fields": "go.BP"
-				},
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "entrezgene"
+			],
+			"hasTranscript": [
+				{
+					"inputs": [
+						{
+							"id": "ENSEMBL",
+							"semantic": "Gene"
+						}
+					],
+					"outputs": [
+						{
+							"id": "ENSEMBL",
+							"semantic": "Transcript"
+						}
+					],
+					"parameters": {
+						"fields": "ensembl.transcript"
 					},
-					"header": "application/x-www-form-urlencoded"
-				},
-				"inputSeparator": ",",
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/functional_association_bp"
-				}
-			}],
-			"involvedInCC": [{
-				"inputs": [{
-					"id": "NCBIGene",
-					"semantic": "Gene"
-				}],
-				"outputs": [{
-					"id": "GO",
-					"semantic": "CellularComponent"
-                }],
-                "source": "entrez",
-				"predicate": "functional_association",
-				"parameters": {
-					"fields": "go.CC"
-				},
-				"requestBody": {
-					"body": {
-						"q": "{inputs[0]}",
-						"scopes": "entrezgene"
+					"predicate": "gene_to_transcript_relationship",
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "ensembl.gene"
+						},
+						"header": "application/x-www-form-urlencoded"
 					},
-					"header": "application/x-www-form-urlencoded"
-				},
-				"inputSeparator": ",",
-				"supportBatch": true,
-				"response_mapping": {
-					"$ref": "#/components/x-bte-response-mapping/functional_association_cc"
+					"inputSeparator": ",",
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/gene_to_transcript_relationship"
+					}
 				}
-			}],
-			"involvedInPathway": [{
-					"inputs": [{
-						"id": "NCBIGene",
-						"semantic": "Gene"
-					}],
+			],
+			"involvedInBP": [
+				{
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
+					"outputs": [
+						{
+							"id": "GO",
+							"semantic": "BiologicalProcess"
+						}
+					],
+					"source": "entrez",
+					"predicate": "functional_association",
+					"parameters": {
+						"fields": "go.BP"
+					},
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "entrezgene"
+						},
+						"header": "application/x-www-form-urlencoded"
+					},
+					"inputSeparator": ",",
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/functional_association_bp"
+					}
+				}
+			],
+			"involvedInCC": [
+				{
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
+					"outputs": [
+						{
+							"id": "GO",
+							"semantic": "CellularComponent"
+						}
+					],
+					"source": "entrez",
+					"predicate": "functional_association",
+					"parameters": {
+						"fields": "go.CC"
+					},
+					"requestBody": {
+						"body": {
+							"q": "{inputs[0]}",
+							"scopes": "entrezgene"
+						},
+						"header": "application/x-www-form-urlencoded"
+					},
+					"inputSeparator": ",",
+					"supportBatch": true,
+					"response_mapping": {
+						"$ref": "#/components/x-bte-response-mapping/functional_association_cc"
+					}
+				}
+			],
+			"involvedInPathway": [
+				{
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
 					"method": "post",
-					"outputs": [{
-						"id": "WIKIPATHWAYS",
-						"semantic": "Pathway"
-                    }],
-                    "source": "CPDB",
+					"outputs": [
+						{
+							"id": "WIKIPATHWAYS",
+							"semantic": "Pathway"
+						}
+					],
+					"source": "CPDB",
 					"predicate": "functional_association",
 					"parameters": {
 						"fields": "pathway.wikipathways"
@@ -918,17 +970,21 @@
 					}
 				},
 				{
-					"inputs": [{
-						"id": "NCBIGene",
-						"semantic": "Gene"
-					}],
+					"inputs": [
+						{
+							"id": "NCBIGene",
+							"semantic": "Gene"
+						}
+					],
 					"method": "post",
-					"outputs": [{
-						"id": "Reactome",
-						"semantic": "Pathway"
-					}],
-                    "predicate": "functional_association",
-                    "source": "CPDB",
+					"outputs": [
+						{
+							"id": "REACT",
+							"semantic": "Pathway"
+						}
+					],
+					"predicate": "functional_association",
+					"source": "CPDB",
 					"parameters": {
 						"fields": "pathway.reactome",
 						"species": "human"
@@ -949,66 +1005,66 @@
 			]
 		},
 		"x-bte-response-mapping": {
-            "description": "summary",
-            "name": [
-                "name",
-                "other_names"
-            ],
-            "OMIM": "MIM",
-            "PHARMGKB": "pharmgkb",
-            "PHAROS": "pahros.target_id",
-            "SYMBOL": "symbol",
-            "UMLS": "umls.cui",
-            "ENSEMBL": "ensembl.gene",
-            "NCBIGene": "entrezgene",
-            "HGNC": "HGNC",
-            "inTaxon": "taxid",
-            "has_gene_product": {
-                "ENSEMBL": "ensembl.protein",
-                "UNIPROTKB": "uniprot.Swiss-Prot"
-            },
-            "homologous_to": {
-                "dictyBase": "pantherdb.ortholog.dictyBase",
-                "ENSEMBL": "pantherdb.ortholog.Ensembl",
-                "FlyBase": "pantherdb.ortholog.FlyBase",
-                "HGNC": "pantherdb.ortholog.HGNC",
-                "inTaxon": "pantherdb.ortholog.taxid",
-                "MGI": "pantherdb.ortholog.MGI",
-                "POMBASE": "pantherdb.ortholog.PomBase",
-                "RGD": "pantherdb.ortholog.RGD",
-                "SGD": "pantherdb.ortholog.SGD",
-                "TAIR": "pantherdb.ortholog.TAIR",
-                "ZFIN": "pantherdb.ortholog.ZFIN"
-            },
-            "gene_to_transcript_relationship": {
-                "ENSEMBL": "ensembl.transcript"
-            },
-            "functional_association_wikipathways": {
-                "name": "pathway.wikipathways.name",
-                "WIKIPATHWAYS": "pathway.wikipathways.id"
-            },
-            "functional_association_reactome": {
-                "name": "pathway.reactome.name",
-                "Reactome": "pathway.reactome.id"
-            },
-            "functional_association_cc": {
-                "evidence": "go.CC.evidence",
-                "GO": "go.CC.id",
-                "pubmed": "go.CC.pubmed",
-                "term": "go.CC.term"
-            },
-            "functional_association_bp": {
-                "evidence": "go.BP.evidence",
-                "GO": "go.BP.id",
-                "pubmed": "go.BP.pubmed",
-                "term": "go.BP.term"
-            },
-            "functional_association_mf": {
-                "evidence": "go.MF.evidence",
-                "GO": "go.MF.id",
-                "pubmed": "go.MF.pubmed",
-                "term": "go.MF.term"
-            }
-        }
-    }
+			"description": "summary",
+			"name": [
+				"name",
+				"other_names"
+			],
+			"OMIM": "MIM",
+			"PHARMGKB": "pharmgkb",
+			"PHAROS": "pahros.target_id",
+			"SYMBOL": "symbol",
+			"UMLS": "umls.cui",
+			"ENSEMBL": "ensembl.gene",
+			"NCBIGene": "entrezgene",
+			"HGNC": "HGNC",
+			"inTaxon": "taxid",
+			"has_gene_product": {
+				"ENSEMBL": "ensembl.protein",
+				"UNIPROTKB": "uniprot.Swiss-Prot"
+			},
+			"homologous_to": {
+				"dictyBase": "pantherdb.ortholog.dictyBase",
+				"ENSEMBL": "pantherdb.ortholog.Ensembl",
+				"FlyBase": "pantherdb.ortholog.FlyBase",
+				"HGNC": "pantherdb.ortholog.HGNC",
+				"inTaxon": "pantherdb.ortholog.taxid",
+				"MGI": "pantherdb.ortholog.MGI",
+				"POMBASE": "pantherdb.ortholog.PomBase",
+				"RGD": "pantherdb.ortholog.RGD",
+				"SGD": "pantherdb.ortholog.SGD",
+				"TAIR": "pantherdb.ortholog.TAIR",
+				"ZFIN": "pantherdb.ortholog.ZFIN"
+			},
+			"gene_to_transcript_relationship": {
+				"ENSEMBL": "ensembl.transcript"
+			},
+			"functional_association_wikipathways": {
+				"name": "pathway.wikipathways.name",
+				"WIKIPATHWAYS": "pathway.wikipathways.id"
+			},
+			"functional_association_reactome": {
+				"name": "pathway.reactome.name",
+				"REACT": "pathway.reactome.id"
+			},
+			"functional_association_cc": {
+				"evidence": "go.CC.evidence",
+				"GO": "go.CC.id",
+				"pubmed": "go.CC.pubmed",
+				"term": "go.CC.term"
+			},
+			"functional_association_bp": {
+				"evidence": "go.BP.evidence",
+				"GO": "go.BP.id",
+				"pubmed": "go.BP.pubmed",
+				"term": "go.BP.term"
+			},
+			"functional_association_mf": {
+				"evidence": "go.MF.evidence",
+				"GO": "go.MF.id",
+				"pubmed": "go.MF.pubmed",
+				"term": "go.MF.term"
+			}
+		}
+	}
 }
