@@ -131,6 +131,14 @@ ID_RESOLVING_APIS = {
                 "aeolus.unii",
                 "ginas.unii",
             ],
+            "INCHIKEY": [
+                "drugbank.inchi_key",
+                "ginas.inchikey",
+                "unii.inchikey",
+                "chebi.inchikey",
+            ],
+            "INCHI": ["drugbank.inchi", "chebi.inchi", "chembl.inchi"],
+            "KEGG": ["drugbank.xrefs.kegg.cid"],
             "name": [
                 "chembl.pref_name",
                 "drugbank.name",
