@@ -70,7 +70,6 @@ ID_RESOLVING_APIS = {
         "semantic": "SequenceVariant",
         "url": "https://myvariant.info/v1",
         "mapping": {
-            "MYVARIANT_HG19": ["_id"],
             "DBSNP": ["dbsnp.rsid", "clinvar.rsid", "dbnsfp.rsid"],
             "HGVS": [
                 "clinvar.hgvs.genomic",
@@ -171,7 +170,7 @@ ID_RESOLVING_APIS = {
         "api_name": "mydisease.info",
         "url": "http://mydisease.info/v1",
         "mapping": {
-            "MONDO": ["_id"],
+            "MONDO": ["mondo.mondo"],
             "DOID": ["mondo.xrefs.doid"],
             "UMLS": ["mondo.xrefs.umls", "disgenet.xrefs.umls"],
             "name": ["mondo.label", "disgenet.xrefs.disease_name", "mondo.synonyms"],
