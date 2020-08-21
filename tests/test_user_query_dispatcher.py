@@ -22,7 +22,7 @@ class TestUserQueryDispatcher(unittest.TestCase):
     def test_query_with_broken_intermediate_nodes(self):
         """For a query with long intermediate nodes, it might happen that one intermediate query returns 0 hits.
         In this case, we should stop the code execution"""
-        mof = ht.query("Multiple Organ Failure")["Disease"][0]
+        mof = ht.query("Multiple Organ Failure")["Disease"][1]
         fc = FindConnection(
             mof,
             output_obj="Gene",
