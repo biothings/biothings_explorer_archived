@@ -14,6 +14,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Disease",
             input_id="DOID",
             pred="related_to",
+            output_id="PR",
             values="DOID:12143",
         )
         seqd.query()
@@ -28,6 +29,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Disease",
             pred="related_to",
             input_id="DOID",
+            output_id="SO",
             values="DOID:12143",
         )
         seqd.query()
@@ -41,10 +43,11 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Disease",
             input_id="DOID",
             values="DOID:12143",
+            output_id="CHEBI",
         )
         seqd.query()
-        self.assertTrue("MIRABEGRON" in seqd.G)
-        edges = seqd.G["DOID:DOID:12143"]["MIRABEGRON"]
+        self.assertTrue("CHEBI:65349" in seqd.G)
+        edges = seqd.G["DOID:DOID:12143"]["CHEBI:65349"]
         self.assertTrue("CORD Disease API" in get_apis(edges))
 
     def test_disease2gene(self):
@@ -64,6 +67,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="AnatomicalEntity",
             input_cls="Disease",
             input_id="DOID",
+            output_id="UBERON",
             values="DOID:12143",
         )
         seqd.query()
@@ -77,11 +81,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="MolecularActivity",
             input_cls="Disease",
             input_id="DOID",
+            output_id="GO",
             values="DOID:12143",
         )
         seqd.query()
-        self.assertTrue("adrenergic receptor activity".upper() in seqd.G)
-        edges = seqd.G["DOID:DOID:12143"]["adrenergic receptor activity".upper()]
+        self.assertTrue("GO:0004935" in seqd.G)
+        edges = seqd.G["DOID:DOID:12143"]["GO:0004935"]
         self.assertTrue("CORD Disease API" in get_apis(edges))
 
     def test_disease2bp(self):
@@ -91,10 +96,11 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Disease",
             input_id="DOID",
             values="DOID:12143",
+            output_id="GO",
         )
         seqd.query()
-        self.assertTrue("sensory perception of sound".upper() in seqd.G)
-        edges = seqd.G["DOID:DOID:12143"]["sensory perception of sound".upper()]
+        self.assertTrue("GO:0007605" in seqd.G)
+        edges = seqd.G["DOID:DOID:12143"]["GO:0007605"]
         self.assertTrue("CORD Disease API" in get_apis(edges))
 
     def test_disease2cc(self):
@@ -103,17 +109,22 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="CellularComponent",
             input_cls="Disease",
             input_id="DOID",
+            output_id="GO",
             values="DOID:0001816",
         )
         seqd.query()
-        self.assertTrue("SARCOMERE" in seqd.G)
-        edges = seqd.G["DOID:DOID:0001816"]["SARCOMERE"]
+        self.assertTrue("GO:0030017" in seqd.G)
+        edges = seqd.G["DOID:DOID:0001816"]["GO:0030017"]
         self.assertTrue("CORD Disease API" in get_apis(edges))
 
     def test_disease2cell(self):
         """Test gene-cell"""
         seqd = SingleEdgeQueryDispatcher(
-            output_cls="Cell", input_cls="Disease", input_id="DOID", values="DOID:12143"
+            output_cls="Cell",
+            input_cls="Disease",
+            input_id="DOID",
+            output_id="CL",
+            values="DOID:12143",
         )
         seqd.query()
         self.assertTrue("CL:0000731" in seqd.G)

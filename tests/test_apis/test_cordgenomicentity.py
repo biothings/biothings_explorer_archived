@@ -13,6 +13,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="Protein",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="PR",
             pred="related_to",
             values="SO:0001860",
         )
@@ -28,6 +29,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="GenomicEntity",
             pred="related_to",
             input_id="SO",
+            output_id="SO",
             values="SO:0001860",
         )
         seqd.query()
@@ -40,11 +42,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="ChemicalSubstance",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="CHEBI",
             values="SO:0001860",
         )
         seqd.query()
-        self.assertTrue("CHEBI:33284" in seqd.G)
-        edges = seqd.G["SO:SO:0001860"]["CHEBI:33284"]
+        self.assertTrue("CHEBI:17351" in seqd.G)
+        edges = seqd.G["SO:SO:0001860"]["CHEBI:17351"]
         self.assertTrue("CORD Genomic Entity API" in get_apis(edges))
 
     def test_genomicentity2gene(self):
@@ -67,6 +70,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="AnatomicalEntity",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="UBERON",
             values="SO:0001860",
         )
         seqd.query()
@@ -80,6 +84,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="MolecularActivity",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="MOP",
             values="SO:0001860",
         )
         seqd.query()
@@ -93,11 +98,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="BiologicalProcess",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="GO",
             values="SO:0001860",
         )
         seqd.query()
-        self.assertTrue("GROWTH" in seqd.G)
-        edges = seqd.G["SO:SO:0001860"]["GROWTH"]
+        self.assertTrue("GO:0009056" in seqd.G)
+        edges = seqd.G["SO:SO:0001860"]["GO:0009056"]
         self.assertTrue("CORD Genomic Entity API" in get_apis(edges))
 
     def test_genomicentity2cc(self):
@@ -106,11 +112,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="CellularComponent",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="GO",
             values="SO:0001860",
         )
         seqd.query()
-        self.assertTrue("nucleolus organizer region".upper() in seqd.G)
-        edges = seqd.G["SO:SO:0001860"]["nucleolus organizer region".upper()]
+        self.assertTrue("GO:0030121" in seqd.G)
+        edges = seqd.G["SO:SO:0001860"]["GO:0030121"]
         self.assertTrue("CORD Genomic Entity API" in get_apis(edges))
 
     def test_genomicentity2cell(self):
@@ -119,6 +126,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="Cell",
             input_cls="GenomicEntity",
             input_id="SO",
+            output_id="CL",
             values="SO:0001860",
         )
         seqd.query()

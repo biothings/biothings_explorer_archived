@@ -67,6 +67,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="AnatomicalEntity",
             input_cls="AnatomicalEntity",
             input_id="UBERON",
+            output_id="UBERON",
             values="UBERON:0000013",
         )
         seqd.query()
@@ -119,6 +120,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="Cell",
             input_cls="AnatomicalEntity",
             input_id="UBERON",
+            output_id="CL",
             values="UBERON:0000013",
         )
         seqd.query()

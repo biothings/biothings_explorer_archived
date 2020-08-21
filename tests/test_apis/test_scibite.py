@@ -11,11 +11,12 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Gene",
             pred="related_to",
             input_id="NCBIGene",
+            output_id="CHEBI",
             values="7852",
         )
         seqd.query()
-        self.assertTrue("DMP 266" in seqd.G)
-        edges = seqd.G["NCBIGene:7852"]["DMP 266"]
+        self.assertTrue("CHEBI:119486" in seqd.G)
+        edges = seqd.G["NCBIGene:7852"]["CHEBI:119486"]
         self.assertTrue("Automat CORD19 Scibite API" in get_apis(edges))
 
     def test_chemical2disease(self):
@@ -85,12 +86,12 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd = SingleEdgeQueryDispatcher(
             input_cls="Disease",
             input_id="MONDO",
+            output_id="CHEBI",
             pred="related_to",
             output_cls="ChemicalSubstance",
             values="MONDO:0007926",
         )
         seqd.query()
-        self.assertTrue("CHLORAMBUCIL" in seqd.G)
-        self.assertTrue("HETASTARCH" in seqd.G)
-        edges = seqd.G["MONDO:MONDO:0007926"]["CHLORAMBUCIL"]
+        self.assertTrue("CHEBI:28830" in seqd.G)
+        edges = seqd.G["MONDO:MONDO:0007926"]["CHEBI:28830"]
         self.assertTrue("Automat CORD19 Scibite API" in get_apis(edges))

@@ -40,11 +40,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="ChemicalSubstance",
             input_cls="Cell",
             input_id="CL",
+            output_id="CHEBI",
             values="CL:0000060",
         )
         seqd.query()
-        self.assertTrue("GRAPHENE" in seqd.G)
-        edges = seqd.G["CL:CL:0000060"]["GRAPHENE"]
+        self.assertTrue("CHEBI:80551" in seqd.G)
+        edges = seqd.G["CL:CL:0000060"]["CHEBI:80551"]
         self.assertTrue("CORD Cell API" in get_apis(edges))
 
     def test_cell2gene(self):
@@ -64,6 +65,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="AnatomicalEntity",
             input_cls="Cell",
             input_id="CL",
+            output_id="UBERON",
             values="CL:0000060",
         )
         seqd.query()
@@ -90,11 +92,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="BiologicalProcess",
             input_cls="Cell",
             input_id="CL",
+            output_id="GO",
             values="CL:0000060",
         )
         seqd.query()
-        self.assertTrue("defecation rhythm".upper() in seqd.G)
-        edges = seqd.G["CL:CL:0000060"]["defecation rhythm".upper()]
+        self.assertTrue("GO:0035882" in seqd.G)
+        edges = seqd.G["CL:CL:0000060"]["GO:0035882"]
         self.assertTrue("CORD Cell API" in get_apis(edges))
 
     def test_cell2cc(self):
@@ -103,17 +106,22 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="CellularComponent",
             input_cls="Cell",
             input_id="CL",
+            output_id="GO",
             values="CL:0000060",
         )
         seqd.query()
-        self.assertTrue("NUCLEUS" in seqd.G)
-        edges = seqd.G["CL:CL:0000060"]["NUCLEUS"]
+        self.assertTrue("GO:0005634" in seqd.G)
+        edges = seqd.G["CL:CL:0000060"]["GO:0005634"]
         self.assertTrue("CORD Cell API" in get_apis(edges))
 
     def test_cell2cell(self):
         """Test gene-cell"""
         seqd = SingleEdgeQueryDispatcher(
-            output_cls="Cell", input_cls="Cell", input_id="CL", values="CL:0000040"
+            output_cls="Cell",
+            input_cls="Cell",
+            input_id="CL",
+            values="CL:0000040",
+            output_id="CL",
         )
         seqd.query()
         self.assertTrue("CL:0000988" in seqd.G)

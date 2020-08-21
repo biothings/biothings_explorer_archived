@@ -37,6 +37,7 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd = SingleEdgeQueryDispatcher(
             input_cls="Disease",
             input_id="MONDO",
+            output_id="HP",
             output_cls="PhenotypicFeature",
             pred="related_to",
             values="MONDO:0010997",
@@ -65,6 +66,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Gene",
             input_id="NCBIGene",
             output_cls="PhenotypicFeature",
+            output_id="HP",
             pred="related_to",
             values="13434",
         )

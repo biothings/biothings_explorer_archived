@@ -28,6 +28,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="MolecularActivity",
             pred="related_to",
             input_id="GO",
+            output_id="SO",
             values="GO:0050626",
         )
         seqd.query()
@@ -40,11 +41,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="ChemicalSubstance",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="GO",
             values="GO:0050626",
         )
         seqd.query()
-        self.assertTrue("PHENOLS" in seqd.G)
-        edges = seqd.G["GO:GO:0050626"]["PHENOLS"]
+        self.assertTrue("CHEBI:50526" in seqd.G)
+        edges = seqd.G["GO:GO:0050626"]["CHEBI:50526"]
         self.assertTrue("CORD Molecular Activity API" in get_apis(edges))
 
     def test_ma2gene(self):
@@ -67,6 +69,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="AnatomicalEntity",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="UBERON",
             values="GO:0050626",
         )
         seqd.query()
@@ -80,6 +83,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="MolecularActivity",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="MOP",
             values="GO:0050626",
         )
         seqd.query()
@@ -93,11 +97,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="BiologicalProcess",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="GO",
             values="GO:0050626",
         )
         seqd.query()
-        self.assertTrue("AGING" in seqd.G)
-        edges = seqd.G["GO:GO:0050626"]["AGING"]
+        self.assertTrue("GO:0006935" in seqd.G)
+        edges = seqd.G["GO:GO:0050626"]["GO:0006935"]
         self.assertTrue("CORD Molecular Activity API" in get_apis(edges))
 
     def test_ma2cc(self):
@@ -106,11 +111,12 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="CellularComponent",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="GO",
             values="GO:0050626",
         )
         seqd.query()
-        self.assertTrue("VIRION" in seqd.G)
-        edges = seqd.G["GO:GO:0050626"]["VIRION"]
+        self.assertTrue("GO:0005790" in seqd.G)
+        edges = seqd.G["GO:GO:0050626"]["GO:0005790"]
         self.assertTrue("CORD Molecular Activity API" in get_apis(edges))
 
     def test_ma2cell(self):
@@ -119,6 +125,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="Cell",
             input_cls="MolecularActivity",
             input_id="GO",
+            output_id="CL",
             values="GO:0050626",
         )
         seqd.query()

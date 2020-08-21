@@ -11,11 +11,12 @@ class TestSingleHopQuery(unittest.TestCase):
             input_id="MONDO",
             output_cls="ChemicalSubstance",
             pred="related_to",
+            output_id="MESH",
             values="MONDO:0016575",
         )
         seqd.query()
-        self.assertTrue("BW A509U" in seqd.G)
-        edges = seqd.G["MONDO:MONDO:0016575"]["BW A509U"]
+        self.assertTrue("D015215" in seqd.G)
+        edges = seqd.G["MONDO:MONDO:0016575"]["D015215"]
         self.assertTrue("mydisease.info API" in get_apis(edges))
 
     def test_disease2variant(self):
@@ -26,6 +27,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="SequenceVariant",
             pred="related_to",
             values="MONDO:0016575",
+            output_id="DBSNP",
         )
         seqd.query()
         self.assertTrue("rs1007345781" in seqd.G)
@@ -52,6 +54,7 @@ class TestSingleHopQuery(unittest.TestCase):
             input_cls="Disease",
             input_id="MONDO",
             output_cls="PhenotypicFeature",
+            output_id="HP",
             pred="related_to",
             values="MONDO:0007965",
         )
