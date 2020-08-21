@@ -71,11 +71,6 @@ class TestHint(unittest.TestCase):
         res = self.ht.query("rs12190874")
         self.myvariant_test(res)
 
-    def test_variant_hgvs_as_input(self):
-        """Test the output of Hint query when providing variant hgvs id as input."""
-        res = self.ht.query("chr6:g.42454850G>A")
-        self.myvariant_test(res)
-
     def test_chemical(self):
         """Test the output of Hint query when providing chemical drugbank ID as input."""
         res = self.ht.query("DB01926")
