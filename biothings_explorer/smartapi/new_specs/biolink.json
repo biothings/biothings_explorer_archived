@@ -694,7 +694,8 @@
         {
           "parameters": {
             "anatomy_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -717,7 +718,8 @@
         {
           "parameters": {
             "anatomy_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -742,7 +744,8 @@
         {
           "parameters": {
             "disease_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -765,7 +768,8 @@
         {
           "parameters": {
             "disease_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -790,7 +794,8 @@
         {
           "parameters": {
             "disease_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -815,7 +820,8 @@
         {
           "parameters": {
             "disease_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -840,7 +846,8 @@
         {
           "parameters": {
             "gene_id": "NCBIGene:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -865,7 +872,8 @@
         {
           "parameters": {
             "gene_id": "NCBIGene:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -890,7 +898,8 @@
         {
           "parameters": {
             "gene_id": "NCBIGene:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -915,7 +924,8 @@
         {
           "parameters": {
             "gene_id": "NCBIGene:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -938,7 +948,8 @@
         {
           "parameters": {
             "gene_id": "NCBIGene:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -963,7 +974,8 @@
         {
           "parameters": {
             "pathway_id": "REACT:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -988,7 +1000,8 @@
         {
           "parameters": {
             "gene_id": "REACT:{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -1013,7 +1026,8 @@
         {
           "parameters": {
             "phenotype_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -1038,7 +1052,8 @@
         {
           "parameters": {
             "phenotype_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
@@ -1086,7 +1101,8 @@
         {
           "parameters": {
             "gene_id": "{inputs[0]}",
-            "rows": 200
+            "rows": 200,
+            "direct": "true"
           },
           "inputs": [
             {
