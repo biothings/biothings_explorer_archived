@@ -153,3 +153,14 @@ class TestSingleHopQuery(unittest.TestCase):
         seqd.query()
         self.assertTrue("HP:0004374" in seqd.G)
         self.assertFalse("HP:0012758" in seqd.G)
+
+    def test_phenotype2pathway(self):
+        seqd = SingleEdgeQueryDispatcher(
+            input_cls="PhenotypicFeature",
+            input_id="MP",
+            output_cls="Pathway",
+            output_id="REACT",
+            values="MP:0001569",
+        )
+        seqd.query()
+        self.assertTrue("R-MMU-382556" in seqd.G)
