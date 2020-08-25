@@ -141,3 +141,15 @@ class TestSingleHopQuery(unittest.TestCase):
         self.assertTrue("4195" in seqd.G)
         edges = seqd.G["HP:HP:0004904"]["4195"]
         self.assertTrue("BioLink API" in get_apis(edges))
+
+    def test_direct_equal_to_true_param(self):
+        seqd = SingleEdgeQueryDispatcher(
+            input_cls="Disease",
+            input_id="MONDO",
+            output_cls="PhenotypicFeature",
+            output_id="HP",
+            values="MONDO:0009563",
+        )
+        seqd.query()
+        self.assertTrue("HP:0004374" in seqd.G)
+        self.assertFalse("HP:0012758" in seqd.G)
