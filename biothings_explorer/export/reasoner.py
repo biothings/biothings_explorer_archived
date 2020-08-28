@@ -177,11 +177,14 @@ class ReasonerConverter:
         result = {"node_bindings": [], "edge_bindings": []}
         if not self.result:
             return result
-        result["node_bindings"].append({"qg_id": "n0", "kg_id": self.start_node_curie})
         for k, v in self.result.items():
-            target_id = k.split("|||")[-1]
-            result["node_bindings"].append({"qg_id": "n1", "kg_id": target_id})
-            result["edge_bindings"].append({"qg_id": "e1", "kg_id": v})
+            source_id, target_id = k.split("|||")
+            if source_id == "name:{}".format(self.start["name"]):
+                result["node_bindings"].append({"n0": source_id, "n1": target_id})
+                result["edge_bindings"].append({"e0": v})
+            else:
+                result["node_bindings"].append({"n1": source_id, "n2": target_id})
+                result["edge_bindings"].append({"e1": v})
         return result
 
     def generate_reasoner_response(self):
