@@ -90,7 +90,7 @@ class IDResolver:
                 for m in resolved_ids.keys():
                     if m == "name":
                         self.results[res_id][m] = sorted(
-                            {str(item).upper() for item in resolved_ids[m]}
+                            {(str(item)).upper() for item in resolved_ids[m]}
                         )
                     else:
                         self.results[res_id][m] = list(resolved_ids[m])
