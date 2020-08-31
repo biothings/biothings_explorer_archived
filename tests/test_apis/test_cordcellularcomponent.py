@@ -135,6 +135,7 @@ class TestSingleHopQuery(unittest.TestCase):
             output_cls="Disease",
             input_cls="CellularComponent",
             input_id="GO",
+            output_id="DOID",
             values="GO:0002102",
         )
         seqd.query()
