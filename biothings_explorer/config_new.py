@@ -176,8 +176,8 @@ ID_RESOLVING_APIS = {
             "name": [
                 "mondo.label",
                 "disgenet.xrefs.disease_name",
-                "mondo.synonyms.exact",
-                "mondo.synonyms.related",
+                "mondo.synonym.exact",
+                "mondo.synonym.related",
                 "disease_ontology.synonyms.exact",
             ],
             "MESH": ["mondo.xrefs.mesh", "disease_ontology.xrefs.mesh", "ctd.mesh"],
