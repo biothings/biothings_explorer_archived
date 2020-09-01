@@ -369,6 +369,9 @@
             "$ref": "#/components/x-bte-kgs-operations/disease-phenotype"
           },
           {
+            "$ref": "#/components/x-bte-kgs-operations/disease-phenotype2"
+          },
+          {
             "$ref": "#/components/x-bte-kgs-operations/disease-chemical"
           },
           {
@@ -597,7 +600,8 @@
       },
       "disease-phenotype": {
         "HP": "hpo.phenotype_related_to_disease.hpo_id",
-        "evidence": "hpo.phenotype_related_to_disease.evidence"
+        "evidence": "hpo.phenotype_related_to_disease.evidence",
+        "frequency": "hpo.phenotype_related_to_disease.frequency"
       },
       "disease-chemical": {
         "MESH": "ctd.chemical_related_to_disease.mesh_chemical_id",
@@ -704,6 +708,39 @@
           "inputs": [
             {
               "id": "OMIM",
+              "semantic": "Disease"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "HP",
+              "semantic": "PhenotypicFeature"
+            }
+          ],
+          "predicate": "related_to",
+          "source": "hpo",
+          "response_mapping": {
+            "$ref": "#/components/x-bte-response-mapping/disease-phenotype"
+          }
+        }
+      ],
+      "disease-phenotype2": [
+        {
+          "supportBatch": true,
+          "inputSeparator": ",",
+          "parameters": {
+            "fields": "hpo.phenotype_related_to_disease"
+          },
+          "requestBody": {
+            "body": {
+              "q": "{inputs[0]}",
+              "scopes": "hpo.orphanet"
+            },
+            "header": "application/x-www-form-urlencoded"
+          },
+          "inputs": [
+            {
+              "id": "ORPHANET",
               "semantic": "Disease"
             }
           ],
