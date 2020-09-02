@@ -291,3 +291,6 @@ ID_RESOLVING_APIS = {
         },
     },
 }
+
+MAX_CONCURRENT_QUERIES_ON_SINGLE_API = 5
+
