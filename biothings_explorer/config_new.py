@@ -294,3 +294,16 @@ ID_RESOLVING_APIS = {
 
 MAX_CONCURRENT_QUERIES_ON_SINGLE_API = 5
 
+ALWAYS_PREFIXED = [
+    "RHEA",
+    "GO",
+    "CHEBI",
+    "HP",
+    "MONDO",
+    "DOID",
+    "EFO",
+    "UBERON",
+    "MP",
+    "CL",
+    "MGI",
+]
