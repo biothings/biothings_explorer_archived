@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 install_requires = [
     "jupyter",
-    "ipykernel==5.3.4",
-    "ipython==7.18.1",
+    "ipykernel",
+    "ipython",
     "notebook",
     "networkx==2.4",
     "jsonpath-rw>=1.4.0",
