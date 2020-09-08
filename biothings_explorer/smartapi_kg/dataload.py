@@ -1,8 +1,9 @@
 import requests
 from copy import deepcopy
+import json
+import os
 
 from .config import SMARTAPI_URL
-from .smartapi_local_specs import SPECS
 
 
 def restructure_specs(spec):
@@ -26,7 +27,10 @@ def load_specs(source="remote", tag="translator"):
                 "Unable to retrieve smartapi specs from {}".format(SMARTAPI_URL)
             )
     else:
-        specs = SPECS
+        dir_path = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(dir_path, "smartapi_local_specs.json")
+        with open(file_path) as f:
+            specs = json.load(f)
     new_specs = []
     for spec in specs.get("hits"):
         tags = [item.get("name") for item in spec.get("tags")]
