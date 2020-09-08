@@ -1,5 +1,7 @@
 from collections import defaultdict
 from aiohttp import ClientTimeout
+import traceback
+
 from .parser import BioThingsParser
 
 from ..config_new import (
@@ -84,7 +86,7 @@ class Dispatcher:
         note: the input IDs must be less than 1000;
         The return value is an axios post query promises
         """
-        query = "q={inputs}&scopes={scopes}&fields={fields}&dotfield=true"
+        query = "q={inputs}&scopes={scopes}&fields={fields}&dotfield=true&species=human"
         if not inputs:
             return
         if semantic_type not in ID_RESOLVING_APIS:
@@ -122,6 +124,7 @@ class Dispatcher:
                 res = parser.parse()
                 return res
             except Exception as e:
+                traceback.print_exc()
                 print("failed to resolve {} ids".format(semanticType))
                 return
 

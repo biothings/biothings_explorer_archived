@@ -25,14 +25,20 @@ class BioThingsParser:
             if "notfound" in rec:
                 self.invalid.append(curie)
                 continue
-            result[curie] = defaultdict(set)
+            if curie not in result:
+                result[curie] = defaultdict(set)
             for prefix, fields in mapping.items():
                 for field in fields:
                     if field in rec:
                         if isinstance(rec[field], list):
+                            if prefix == "name" and "label" not in result[curie]:
+                                result[curie]["label"].add(str(rec[field][0]))
+                            rec[field] = [str(item) for item in rec[field]]
                             result[curie][prefix].update(rec[field])
                         else:
-                            result[curie][prefix].add(rec[field])
+                            if prefix == "name" and "label" not in result[curie]:
+                                result[curie]["label"].add(str(rec[field]))
+                            result[curie][prefix].add(str(rec[field]))
         return self.restructureOutput(result, self.semanticType)
 
     def restructureOutput(self, res, semanticType):
@@ -52,7 +58,9 @@ class BioThingsParser:
         for curie, resolved_ids in res.items():
             ids = set()
             result[curie] = {"id": {}, "db_ids": {}, "type": semanticType}
-            if "name" in resolved_ids:
+            if "label" in resolved_ids:
+                result[curie]["id"]["label"] = list(res[curie]["label"])[0]
+            elif "name" in resolved_ids:
                 result[curie]["id"]["label"] = list(res[curie]["name"])[0]
             else:
                 result[curie]["id"]["label"] = curie
