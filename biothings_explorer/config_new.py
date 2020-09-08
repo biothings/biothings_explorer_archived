@@ -307,3 +307,23 @@ ALWAYS_PREFIXED = [
     "CL",
     "MGI",
 ]
+
+SEMANTIC_TYPES_TO_EXPAND = [
+    "Disease",
+    "PhenotypicFeature",
+    "AnatomicalEntity",
+    "BiologicalProcess",
+    "CellularComponent",
+    "MolecularActivity",
+]
+
+EXPAND_API_LIST = [
+    "mydisease.info API",
+    "Gene Ontology Cellular Component API",
+    "Gene Ontology Biological Process API",
+    "UBERON Ontology API",
+    "Gene Ontology Molecular Activity API",
+    "Human Phenotype Ontology API",
+]
+
+BTE_FILTERS = ["node_degree", "edges_out", "cooccurence"]
