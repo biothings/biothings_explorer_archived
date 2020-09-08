@@ -1,5 +1,6 @@
 import asyncio
 import json
+import traceback
 from json import JSONDecodeError
 from math import floor
 from collections import Counter, defaultdict
@@ -9,6 +10,7 @@ from ..resolve_ids import asyncQuery
 from .query_builder import QueryBuilder
 from .api_response_transform import Transformer
 from ..config_new import MAX_CONCURRENT_QUERIES_ON_SINGLE_API
+from .filter import filter_response
 
 
 class APIQueryDispatcher:
@@ -111,9 +113,26 @@ class APIQueryDispatcher:
                                 len(result),
                             )
                         )
-                        self.api_id[edge["association"]["api_name"]]["current"] += 1
+                    if "filter" in edge:
+                        result = filter_response(result, edge["filter"])
+                    if self.verbose:
+                        print(
+                            "API {} {}: {} hits after applying filters".format(
+                                str(self.api_id[edge["association"]["api_name"]]["id"])
+                                + "."
+                                + str(
+                                    self.api_id[edge["association"]["api_name"]][
+                                        "current"
+                                    ]
+                                ),
+                                edge["association"]["api_name"],
+                                len(result),
+                            )
+                        )
+                    self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except Exception as e:
+                # traceback.print_exc()
                 print(
                     "API call to {} with input {} failed with unknown response".format(
                         edge["association"]["api_name"], edge["input"]
@@ -173,9 +192,26 @@ class APIQueryDispatcher:
                                 len(result),
                             )
                         )
-                        self.api_id[edge["association"]["api_name"]]["current"] += 1
+                    if "filter" in edge:
+                        result = filter_response(result, edge["filter"])
+                    if self.verbose:
+                        print(
+                            "API {} {}: {} hits after applying filters".format(
+                                str(self.api_id[edge["association"]["api_name"]]["id"])
+                                + "."
+                                + str(
+                                    self.api_id[edge["association"]["api_name"]][
+                                        "current"
+                                    ]
+                                ),
+                                edge["association"]["api_name"],
+                                len(result),
+                            )
+                        )
+                    self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except Exception as e:
+                traceback.print_exc()
                 print(
                     "API call to {} with input {} failed with unknown response".format(
                         edge["association"]["api_name"], edge["input"]
@@ -230,13 +266,14 @@ class APIQueryDispatcher:
                 for _res in res:
                     if _res:
                         responses += _res
-            if self.verbose:
-                print("\nBTE starts to perform id-to-object translation.\n")
-            responses = await self.annotate(responses, session)
-            if self.verbose:
-                return responses
+            if responses:
+                if self.verbose:
+                    print("\nBTE starts to perform id-to-object translation.\n")
+                responses = await self.annotate(responses, session)
+            return responses
 
     def syncQuery(self, loop=None):
         if not loop:
-            loop = asyncio.new_event_loop()
+            loop = asyncio.get_event_loop()
+        # return loop.create_task(self.asyncQuery())
         return loop.run_until_complete(self.asyncQuery())

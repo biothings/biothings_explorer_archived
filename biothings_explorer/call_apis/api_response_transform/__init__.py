@@ -6,6 +6,8 @@ from .transformers.cord_transformer import CordTransformer
 from .transformers.ctd_transformer import CTDTransformer
 from .transformers.opentarget_transformer import OpenTargetTransformer
 from .transformers.semmed_transformer import SemmedTransformer
+from .transformers.mut_freq_transformer import MutFreqTransformer
+from .transformers.drug_response_transformer import DrugResponseTransformer
 
 
 class Transformer:
@@ -20,6 +22,10 @@ class Transformer:
             self.tf = CordTransformer(self.data)
         elif api.startswith("SEMMED"):
             self.tf = SemmedTransformer(self.data)
+        elif api == "TCGA Mutation Frequency KP API":
+            self.tf = MutFreqTransformer(self.data)
+        elif api == "Drug Response KP API":
+            self.tf = DrugResponseTransformer(self.data)
         elif api == "BioLink API":
             self.tf = BioLinkTransformer(self.data)
         elif "automat" in tags:
