@@ -6,7 +6,7 @@ from ..call_apis import APIQueryDispatcher
 
 
 class Predict:
-    def __init__(self, input_objs, intermediate_nodes, output_types):
+    def __init__(self, input_objs, intermediate_nodes, output_types, config=None):
         self.input_objs = input_objs
         self.intermediate_nodes = intermediate_nodes
         if isinstance(intermediate_nodes, str):
@@ -24,8 +24,9 @@ class Predict:
         self.kg = MetaKG()
         self.kg.constructMetaKG(source="local")
         self.query_completes = False
+        self.config = config
 
-    def connect(self, verbose=True):
+    def connect(self, filter=None, verbose=True):
         if (
             isinstance(self.intermediate_nodes, list)
             and len(self.intermediate_nodes) > 3
@@ -61,7 +62,15 @@ class Predict:
                 print("\n========== Query # {} ==========\n".format(i + 1))
                 print("==== Step #1: Query Path Planning ====\n")
             inputs = groupsIDsbySemanticType(inputs)
-            edges = getEdges(inputs, node, self.kg)
+            if (
+                self.config.get("predicates")
+                and isinstance(self.config["predicates"], list)
+                and i < len(self.config["predicates"])
+            ):
+                predicates = self.config["predicates"][i]
+            else:
+                predicates = None
+            edges = getEdges(inputs, node, predicates, self.kg)
             if len(edges) > 0:
                 annotatedEdges = []
                 for e in edges:
@@ -76,6 +85,13 @@ class Predict:
                 )
                 return
             if annotatedEdges:
+                if (
+                    self.config.get("filters")
+                    and isinstance(self.config["filters"], list)
+                    and i < len(self.config["filters"])
+                ):
+                    for edge in annotatedEdges:
+                        edge["filter"] = self.config["filters"][i]
                 dp = APIQueryDispatcher(annotatedEdges, verbose=verbose)
                 self.steps_results[i] = dp.syncQuery()
                 if not self.steps_results[i] or len(self.steps_results[i]) == 0:

@@ -46,7 +46,7 @@ def annotateEdgesWithInput(edges, inputs):
     return annotatedEdges
 
 
-def getEdges(inputs, outputs, knowledgegraph=None):
+def getEdges(inputs, outputs, predicates, knowledgegraph=None):
     result = []
     if not knowledgegraph:
         kg = MetaKG()
@@ -54,7 +54,13 @@ def getEdges(inputs, outputs, knowledgegraph=None):
     else:
         kg = knowledgegraph
     for semantic_type, ids in inputs.items():
-        edges = kg.filter({"input_type": semantic_type, "output_type": outputs})
+        edges = kg.filter(
+            {
+                "input_type": semantic_type,
+                "output_type": outputs,
+                "predicate": predicates,
+            }
+        )
         if not edges or not ids:
             continue
         result.append({"edges": edges, "inputs": ids})
