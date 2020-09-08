@@ -2,16 +2,18 @@ from setuptools import setup, find_packages
 
 
 install_requires = [
-    'jupyter',
-    'notebook==5.7.5',
-    'tornado==4.5.3',
-    'networkx==2.4',
-    'jsonpath-rw>=1.4.0',
-    'requests>=2.21.0',
-    'graphviz>=0.11.1',
-    'aiohttp',
-    'pandas',
-    'pyyaml'
+    "jupyter",
+    "ipykernel==5.3.4",
+    "ipython==7.18.1",
+    "notebook",
+    "networkx==2.4",
+    "jsonpath-rw>=1.4.0",
+    "requests>=2.21.0",
+    "graphviz>=0.11.1",
+    "aiohttp",
+    "pandas",
+    "pyyaml",
+    "nest_asyncio",
 ]
 
 
@@ -45,7 +47,7 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
-    include_package_data=True
+    setup_requires=["pytest-runner"],
+    tests_require=["pytest"],
+    include_package_data=True,
 )

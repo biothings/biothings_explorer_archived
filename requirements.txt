@@ -2,6 +2,8 @@ networkx==2.4
 jsonpath-rw>=1.4.0
 requests>=2.21.0
 graphviz>=0.11.1
+ipykernel==5.3.4
+ipython==7.18.1
 aiohttp
 pandas
 pyyaml
