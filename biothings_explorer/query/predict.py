@@ -3,6 +3,8 @@ import pandas as pd
 from .utils import *
 from ..smartapi_kg import MetaKG
 from ..call_apis import APIQueryDispatcher
+from ..config_new import BTE_FILTERS
+from .filter import Filter
 
 
 class Predict:
@@ -63,7 +65,8 @@ class Predict:
                 print("==== Step #1: Query Path Planning ====\n")
             inputs = groupsIDsbySemanticType(inputs)
             if (
-                self.config.get("predicates")
+                self.config
+                and self.config.get("predicates")
                 and isinstance(self.config["predicates"], list)
                 and i < len(self.config["predicates"])
             ):
@@ -86,7 +89,8 @@ class Predict:
                 return
             if annotatedEdges:
                 if (
-                    self.config.get("filters")
+                    self.config
+                    and self.config.get("filters")
                     and isinstance(self.config["filters"], list)
                     and i < len(self.config["filters"])
                 ):
@@ -109,6 +113,24 @@ class Predict:
                         len(inputs)
                     )
                 )
+                if (
+                    self.config
+                    and self.config.get("filters")
+                    and i < len(self.config["filters"])
+                    and "nodeDegree" in self.config["filters"][i]
+                ):
+                    print("NodeDegree filter is going to be applied")
+                    ft = Filter(self.steps_results[i], self.config["filters"][i])
+                    self.steps_results[i] = ft.filter()
+                    inputs = self.steps_nodes[i] = extractAllResolvedOutputIDs(
+                        self.steps_results[i]
+                    )
+                    print(
+                        "After applying post-query filter, BTE retrieved {} unique outputs".format(
+                            len(inputs)
+                        )
+                    )
+
             else:
                 print(
                     "No APIs found to perform the query in step {}. Your query ends.".format(
