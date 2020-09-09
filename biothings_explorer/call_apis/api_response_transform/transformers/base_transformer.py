@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from .utils import generateCurie, process_publications
 from .json_transformer import Transformer
 
@@ -44,22 +46,26 @@ class BaseTransformer:
         output_ids = self.extractOutputIDs(res)
         result = []
         for item in output_ids:
-            res.update(
+            copy_item = deepcopy(item)
+            copy_res = deepcopy(res)
+            copy_res.update(
                 {
                     "$reasoner_edge": self.edge.get("reasoner_edge", None),
                     "$association": self.edge.get("association", None),
                     "$input": _input,
-                    "$output": item,
+                    "$output": copy_item,
                     "$original_input": self.edge.get("original_input", None),
                     "$input_resolved_identifiers": self.edge.get(
                         "input_resolved_identifiers", None
                     ),
                     "api": self.edge["association"]["api_name"],
-                    "provided_by": self.edge["association"].get("source", None),
+                    "provided_by": res.get("source")
+                    if res.get("source")
+                    else [self.edge["association"].get("source", None)],
                 }
             )
-            res = process_publications(res)
-            result.append(res)
+            copy_res = process_publications(copy_res)
+            result.append(copy_res)
         return result
 
     def transform(self):

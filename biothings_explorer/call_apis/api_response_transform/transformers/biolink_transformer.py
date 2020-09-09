@@ -39,11 +39,22 @@ class BioLinkTransformer(BaseTransformer):
                     _doc.pop("publications")
                 else:
                     for _item in _doc["publications"]:
-                        _item["id"] = _item["id"].split(":")[-1]
+                        if _item["id"].startswith("PMID"):
+                            _item["id"] = _item["id"].split(":")[-1]
+                        else:
+                            _item.pop("id")
                 if not _doc["provided_by"]:
                     _doc.pop("provided_by")
                 else:
-                    if isinstance(_doc["provided_by"], list):
-                        _doc["provided_by"] = _doc["provided_by"][0]
-                    _doc["provided_by"] = _doc["provided_by"].split("#")[-1]
+                    if not isinstance(_doc["provided_by"], list):
+                        _doc["provided_by"] = [_doc["provided_by"]]
+                    source_list = []
+                    for item in _doc["provided_by"]:
+                        if item.startswith("https://data.monarchinitiative.org/ttl"):
+                            source_name = item.split("/")[-1].strip(".nt")
+                            source_list.append(source_name)
+                        else:
+                            source_name = item.split("/")[-1].strip("#")
+                            source_list.append(source_name)
+                    _doc["provided_by"] = source_list
         return res

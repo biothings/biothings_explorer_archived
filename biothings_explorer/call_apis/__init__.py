@@ -63,7 +63,7 @@ class APIQueryDispatcher:
                 async with session.get(
                     qb.config.get("url"),
                     params=qb.config.get("params"),
-                    timeout=ClientTimeout(5),
+                    timeout=ClientTimeout(8),
                 ) as res:
                     if self.verbose:
                         print(
@@ -131,6 +131,13 @@ class APIQueryDispatcher:
                         )
                     self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
+            except asyncio.TimeoutError:
+                print(
+                    "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
+                        edge["association"]["api_name"], edge["input"]
+                    )
+                )
+                return
             except Exception as e:
                 # traceback.print_exc()
                 print(
@@ -146,6 +153,7 @@ class APIQueryDispatcher:
                     params=qb.config.get("params"),
                     data=qb.config.get("data"),
                     headers=qb.POST_HEADER,
+                    timeout=ClientTimeout(8),
                 ) as res:
                     if self.verbose:
                         print(
@@ -210,6 +218,13 @@ class APIQueryDispatcher:
                         )
                     self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
+            except asyncio.TimeoutError:
+                print(
+                    "API call to {} with input {} failed with timeout error. Current timeout limit is 10 seconds".format(
+                        edge["association"]["api_name"], edge["input"]
+                    )
+                )
+                return
             except Exception as e:
                 traceback.print_exc()
                 print(

@@ -4,6 +4,8 @@ from os.path import commonprefix
 def generateCurie(idType, _id):
     if isinstance(_id, list):
         _id = _id[0]
+    elif isinstance(_id, int):
+        _id = str(_id)
     if ":" in _id:
         _id = _id.split(":")[-1]
     return idType + ":" + _id
