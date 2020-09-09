@@ -27954,6 +27954,7 @@
               "parameters": {
                 "anatomy_id": "{inputs[0]}",
                 "direct": true,
+                "unselect_evidence": true,
                 "rows": 200
               },
               "predicate": "related_to",
@@ -28002,6 +28003,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "disease_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28026,6 +28028,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "disease_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28052,6 +28055,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "disease_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28078,6 +28082,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "disease_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28104,6 +28109,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "NCBIGene:{inputs[0]}",
                 "rows": 200
               },
@@ -28130,6 +28136,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "NCBIGene:{inputs[0]}",
                 "rows": 200
               },
@@ -28156,6 +28163,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "NCBIGene:{inputs[0]}",
                 "rows": 200
               },
@@ -28180,6 +28188,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "NCBIGene:{inputs[0]}",
                 "rows": 200
               },
@@ -28206,6 +28215,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "NCBIGene:{inputs[0]}",
                 "rows": 200
               },
@@ -28232,6 +28242,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "pathway_id": "REACT:{inputs[0]}",
                 "rows": 200
               },
@@ -28258,6 +28269,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "gene_id": "REACT:{inputs[0]}",
                 "rows": 200
               },
@@ -28284,6 +28296,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "phenotype_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28310,6 +28323,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "phenotype_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28334,6 +28348,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "phenotype_id": "{inputs[0]}",
                 "rows": 200
               },
@@ -28360,6 +28375,7 @@
               ],
               "parameters": {
                 "direct": true,
+                "unselect_evidence": true,
                 "phenotype_id": "{inputs[0]}",
                 "rows": 200
               },
