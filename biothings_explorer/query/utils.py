@@ -88,20 +88,34 @@ def groupsIDsbySemanticType(output_ids):
 def restructureHintOutput(outputs):
     result = {}
     for output in outputs:
+        copy_output = deepcopy(output)
         output_id = {}
-        if output["primary"]["identifier"] in ALWAYS_PREFIXED:
-            curie = output["primary"]["value"]
+        for k, v in copy_output.items():
+            if k not in ["primary", "type"] and not isinstance(v, list):
+                copy_output[k] = [v]
+        if copy_output["primary"]["identifier"] in ALWAYS_PREFIXED:
+            curie = copy_output["primary"]["value"]
         else:
-            curie = output["primary"]["identifier"] + ":" + output["primary"]["value"]
-        if "name" in output:
-            output_id["label"] = output["name"][0]
+            curie = (
+                copy_output["primary"]["identifier"]
+                + ":"
+                + copy_output["primary"]["value"]
+            )
+        if "name" in copy_output:
+            output_id["label"] = copy_output["name"][0]
         else:
             output_id["label"] = curie
         output_id["identifier"] = curie
-        output.pop("display")
-        output.pop("primary")
+        copy_output.pop("display")
+        copy_output.pop("primary")
         result.update(
-            {curie: {"type": output.pop("type"), "db_ids": output, "id": output_id}}
+            {
+                curie: {
+                    "type": copy_output.pop("type"),
+                    "db_ids": copy_output,
+                    "id": output_id,
+                }
+            }
         )
     return result
 
@@ -126,7 +140,9 @@ def stepResult2PandasTable(result, step, total_steps):
                     + "_label": rec["$original_input"][rec["$input"]]["id"]["label"],
                     node1 + "_type": rec["$original_input"][rec["$input"]]["type"],
                     "pred" + str(step + 1): rec["$association"]["predicate"],
-                    "pred" + str(step + 1) + "_source": rec.get("provided_by"),
+                    "pred" + str(step + 1) + "_source": ",".join(rec.get("provided_by"))
+                    if rec.get("provided_by") != [None]
+                    else None,
                     "pred" + str(step + 1) + "_api": rec.get("api"),
                     "pred"
                     + str(step + 1)
@@ -142,6 +158,7 @@ def stepResult2PandasTable(result, step, total_steps):
                         "label"
                     ],
                     node2 + "_type": rec["$output_id_mapping"]["resolved_ids"]["type"],
+                    node2 + "_degree": rec.get("$nodeDegree"),
                 }
             )
         return pd.DataFrame(table_dict)
