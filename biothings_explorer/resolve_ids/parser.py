@@ -27,6 +27,16 @@ class BioThingsParser:
                 continue
             if curie not in result:
                 result[curie] = defaultdict(set)
+            if (
+                self.semanticType == "Gene"
+                and "symbol" in rec
+                and "label" not in result[curie]
+            ):
+                result[curie]["label"] = (
+                    set([rec["symbol"]])
+                    if not isinstance(rec["symbol"], list)
+                    else set([rec["symbol"][0]])
+                )
             for prefix, fields in mapping.items():
                 for field in fields:
                     if field in rec:
