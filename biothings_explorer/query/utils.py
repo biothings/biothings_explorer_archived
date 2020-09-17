@@ -28,10 +28,11 @@ def annotateEdgesWithInput(edges, inputs):
                         input_ids.add(val)
                         original_input[id2curie(prefix, val)] = _input
             input_ids = list(input_ids)
-            for i in range(0, len(input_ids), 1000):
+            step = 1000
+            for i in range(0, len(input_ids), step):
                 copy_edge["input"] = input_ids[i : i + 1000]
                 copy_edge["original_input"] = original_input
-                annotatedEdges.append(copy_edge)
+                annotatedEdges.append(deepcopy(copy_edge))
         else:
             for _input in inputs:
                 prefix = edge["association"]["input_id"]
@@ -42,7 +43,7 @@ def annotateEdgesWithInput(edges, inputs):
                         copy_edge = deepcopy(edge)
                         copy_edge["input"] = _id
                         copy_edge["original_input"] = {id2curie(prefix, _id): _input}
-                        annotatedEdges.append(copy_edge)
+                        annotatedEdges.append(deepcopy(copy_edge))
     return annotatedEdges
 
 
@@ -54,13 +55,34 @@ def getEdges(inputs, outputs, predicates, knowledgegraph=None):
     else:
         kg = knowledgegraph
     for semantic_type, ids in inputs.items():
-        edges = kg.filter(
-            {
-                "input_type": semantic_type,
-                "output_type": outputs,
-                "predicate": predicates,
-            }
-        )
+        if (
+            (isinstance(outputs, list) and len(outputs) == 1)
+            or not isinstance(outputs, list)
+            or not isinstance(predicates, list)
+        ):
+            edges = kg.filter(
+                {
+                    "input_type": semantic_type,
+                    "output_type": outputs,
+                    "predicate": predicates,
+                }
+            )
+        else:
+            edges = []
+            if not isinstance(predicates, list):
+                predicates = [predicates]
+            for i, node in enumerate(outputs):
+                if i >= len(predicates):
+                    tmp_predicate = None
+                else:
+                    tmp_predicate = predicates[i]
+                edges += kg.filter(
+                    {
+                        "input_type": semantic_type,
+                        "output_type": node,
+                        "predicate": tmp_predicate,
+                    }
+                )
         if not edges or not ids:
             continue
         result.append({"edges": edges, "inputs": ids})
@@ -120,7 +142,7 @@ def restructureHintOutput(outputs):
     return result
 
 
-def stepResult2PandasTable(result, step, total_steps):
+def stepResult2PandasTable(result, step, total_steps, extra_fields=[]):
     if step == 0:
         node1 = "input"
     else:
@@ -132,33 +154,60 @@ def stepResult2PandasTable(result, step, total_steps):
     if isinstance(result, list) and len(result) > 1:
         table_dict = []
         for rec in result:
-            table_dict.append(
-                {
-                    node1
-                    + "_id": rec["$original_input"][rec["$input"]]["id"]["identifier"],
-                    node1
-                    + "_label": rec["$original_input"][rec["$input"]]["id"]["label"],
-                    node1 + "_type": rec["$original_input"][rec["$input"]]["type"],
-                    "pred" + str(step + 1): rec["$association"]["predicate"],
-                    "pred" + str(step + 1) + "_source": ",".join(rec.get("provided_by"))
-                    if rec.get("provided_by") != [None]
-                    else None,
-                    "pred" + str(step + 1) + "_api": rec.get("api"),
-                    "pred"
-                    + str(step + 1)
-                    + "_publications": ",".join(rec.get("publications"))
-                    if rec.get("publications")
-                    else None,
-                    node2
-                    + "_id": rec["$output_id_mapping"]["resolved_ids"]["id"][
-                        "identifier"
-                    ],
-                    node2
-                    + "_label": rec["$output_id_mapping"]["resolved_ids"]["id"][
-                        "label"
-                    ],
-                    node2 + "_type": rec["$output_id_mapping"]["resolved_ids"]["type"],
-                    node2 + "_degree": rec.get("$nodeDegree"),
-                }
-            )
+            d = {
+                node1
+                + "_id": rec["$original_input"][rec["$input"]]["id"]["identifier"],
+                node1 + "_label": rec["$original_input"][rec["$input"]]["id"]["label"],
+                node1 + "_type": rec["$original_input"][rec["$input"]]["type"],
+                "pred" + str(step + 1): rec["$association"]["predicate"],
+                "pred" + str(step + 1) + "_source": ",".join(rec.get("provided_by"))
+                if rec.get("provided_by") != [None]
+                else None,
+                "pred" + str(step + 1) + "_api": rec.get("api"),
+                "pred"
+                + str(step + 1)
+                + "_publications": ",".join(rec.get("publications"))
+                if rec.get("publications")
+                else None,
+                node2
+                + "_id": rec["$output_id_mapping"]["resolved_ids"]["id"]["identifier"],
+                node2
+                + "_label": rec["$output_id_mapping"]["resolved_ids"]["id"]["label"],
+                node2 + "_type": rec["$output_id_mapping"]["resolved_ids"]["type"],
+                node2 + "_degree": rec.get("$nodeDegree"),
+            }
+            if isinstance(extra_fields, list) and len(extra_fields) > 0:
+                for field in extra_fields:
+                    if field in ["drug_phase", "ngd"]:
+                        field = "$" + field
+                    if field in rec:
+                        if field in ["pvalue"]:
+                            rec[field] = float(rec[field])
+                        elif isinstance(rec[field], list) and len(rec[field]) == 1:
+                            rec[field] = rec[field][0]
+                        d.update(
+                            {
+                                "pred"
+                                + str(step + 1)
+                                + "_"
+                                + str(field).strip("$"): rec[field]
+                            }
+                        )
+            table_dict.append(d)
+
         return pd.DataFrame(table_dict)
+
+
+def validate_max_intermediate_nodes(intermediate_nodes):
+    """
+    Validate if user inputs more than 2 intermediate nodes.
+    :param intermediate_nodes: a list of intermediate nodes
+    """
+    if isinstance(intermediate_nodes, list) and len(intermediate_nodes) > 3:
+        print(
+            "Max number of intermediate nodes is 2. You specify {}. We can not proceed your query. Please refine your query".format(
+                len(intermediate_nodes) - 1
+            )
+        )
+        return False
+    return True
