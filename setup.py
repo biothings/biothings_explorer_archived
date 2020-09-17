@@ -27,6 +27,8 @@ setup(
     keywords="schema biothings",
     url="https://github.com/biothings/biothings_explorer",
     packages=find_packages(),
+    include_package_data=True,
+    package_data={"": ["data/smartapi_local_specs.json"]},
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
@@ -47,7 +49,7 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     install_requires=install_requires,
+    dependency_links=["git+https://github.com/mmayers12/data_tools.git#egg=data_tools"],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
-    include_package_data=True,
 )

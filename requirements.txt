@@ -5,5 +5,10 @@ graphviz>=0.11.1
 ipykernel==5.3.4
 ipython==7.18.1
 aiohttp
+jupyter
+ipython
+ipykernel
 pandas
 pyyaml
+nest_asyncio
+-e git+https://github.com/mmayers12/data_tools.git#egg=data_tools
