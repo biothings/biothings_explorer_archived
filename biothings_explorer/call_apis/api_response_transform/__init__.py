@@ -8,6 +8,7 @@ from .transformers.opentarget_transformer import OpenTargetTransformer
 from .transformers.semmed_transformer import SemmedTransformer
 from .transformers.mut_freq_transformer import MutFreqTransformer
 from .transformers.drug_response_transformer import DrugResponseTransformer
+from .transformers.reasoner_transformer import ReasonerTransformer
 
 
 class Transformer:
@@ -32,6 +33,8 @@ class Transformer:
             self.tf = AutomatTransformer(self.data)
         elif "biothings" in tags:
             self.tf = BioThingsTransformer(self.data)
+        elif "reasoner" in tags:
+            self.tf = ReasonerTransformer(self.data)
         elif "ctd" in tags:
             self.tf = CTDTransformer(self.data)
         elif "opentarget" in tags:

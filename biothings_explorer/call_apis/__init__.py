@@ -41,7 +41,7 @@ class APIQueryDispatcher:
                 self.api_cnt[edge["association"]["api_name"]] += 1
 
     @staticmethod
-    def print_request(method, url, params, request_body):
+    def print_request(method, url, params, request_body, json_body=None):
         if params:
             url += "?"
             params = [(str(m) + "=" + str(n)) for m, n in params.items()]
@@ -53,16 +53,20 @@ class APIQueryDispatcher:
                 url += " (POST -d "
                 url += str(request_body)
                 url += ")"
+            if json_body:
+                url += " (POST -d "
+                url += str(json_body)
+                url += ")"
             return url
         return ""
 
     async def callSingleAPI(self, edge, session):
         qb = QueryBuilder(edge)
-        if qb.config.get("method") == "get":
+        if qb.config.get("json"):
             try:
-                async with session.get(
+                async with session.post(
                     qb.config.get("url"),
-                    params=qb.config.get("params"),
+                    json=qb.config.get("json"),
                     timeout=ClientTimeout(8),
                 ) as res:
                     if self.verbose:
@@ -76,10 +80,11 @@ class APIQueryDispatcher:
                                     ]
                                 ),
                                 self.print_request(
-                                    "get",
+                                    "post",
                                     qb.config.get("url"),
                                     qb.config.get("params"),
                                     qb.config.get("data"),
+                                    qb.config.get("json"),
                                 ),
                             )
                         )
@@ -115,9 +120,88 @@ class APIQueryDispatcher:
                         )
                     if "filter" in edge:
                         result = filter_response(result, edge["filter"])
+                        if self.verbose:
+                            print(
+                                "API {} {}: {} hits after applying filters".format(
+                                    str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "id"
+                                        ]
+                                    )
+                                    + "."
+                                    + str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "current"
+                                        ]
+                                    ),
+                                    edge["association"]["api_name"],
+                                    len(result),
+                                )
+                            )
+                    if self.verbose:
+                        self.api_id[edge["association"]["api_name"]]["current"] += 1
+                    return result
+            except asyncio.TimeoutError:
+                print(
+                    "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
+                        edge["association"]["api_name"], edge["input"]
+                    )
+                )
+                return
+            except Exception as e:
+                traceback.print_exc()
+                print(
+                    "API call to {} with input {} failed with unknown response".format(
+                        edge["association"]["api_name"], edge["input"]
+                    )
+                )
+                return
+        elif qb.config.get("method") == "get":
+            try:
+                async with session.get(
+                    qb.config.get("url"),
+                    params=qb.config.get("params"),
+                    timeout=ClientTimeout(8),
+                ) as res:
                     if self.verbose:
                         print(
-                            "API {} {}: {} hits after applying filters".format(
+                            "API {}: {}".format(
+                                str(self.api_id[edge["association"]["api_name"]]["id"])
+                                + "."
+                                + str(
+                                    self.api_id[edge["association"]["api_name"]][
+                                        "current"
+                                    ]
+                                ),
+                                self.print_request(
+                                    "get",
+                                    qb.config.get("url"),
+                                    qb.config.get("params"),
+                                    qb.config.get("data"),
+                                ),
+                            )
+                        )
+                    if res.status >= 400:
+                        print(
+                            "API call to {} with input {} failed with status code {}".format(
+                                edge["association"]["api_name"],
+                                edge["input"],
+                                res.status,
+                            )
+                        )
+                        res = await res.json()
+                        print(res)
+                        return
+                    try:
+                        res = await res.json()
+                    except JSONDecodeError:
+                        res = await res.text()
+                        res = json.loads(res)
+                    tf = Transformer({"response": res, "edge": edge})
+                    result = tf.transform()
+                    if self.verbose:
+                        print(
+                            "API {} {}: {} hits".format(
                                 str(self.api_id[edge["association"]["api_name"]]["id"])
                                 + "."
                                 + str(
@@ -129,7 +213,28 @@ class APIQueryDispatcher:
                                 len(result),
                             )
                         )
-                    self.api_id[edge["association"]["api_name"]]["current"] += 1
+                    if "filter" in edge:
+                        result = filter_response(result, edge["filter"])
+                        if self.verbose:
+                            print(
+                                "API {} {}: {} hits after applying filters".format(
+                                    str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "id"
+                                        ]
+                                    )
+                                    + "."
+                                    + str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "current"
+                                        ]
+                                    ),
+                                    edge["association"]["api_name"],
+                                    len(result),
+                                )
+                            )
+                    if self.verbose:
+                        self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except asyncio.TimeoutError:
                 print(
@@ -153,7 +258,7 @@ class APIQueryDispatcher:
                     params=qb.config.get("params"),
                     data=qb.config.get("data"),
                     headers=qb.POST_HEADER,
-                    timeout=ClientTimeout(8),
+                    timeout=ClientTimeout(20),
                 ) as res:
                     if self.verbose:
                         print(
@@ -202,25 +307,30 @@ class APIQueryDispatcher:
                         )
                     if "filter" in edge:
                         result = filter_response(result, edge["filter"])
-                    if self.verbose:
-                        print(
-                            "API {} {}: {} hits after applying filters".format(
-                                str(self.api_id[edge["association"]["api_name"]]["id"])
-                                + "."
-                                + str(
-                                    self.api_id[edge["association"]["api_name"]][
-                                        "current"
-                                    ]
-                                ),
-                                edge["association"]["api_name"],
-                                len(result),
+                        if self.verbose:
+                            print(
+                                "API {} {}: {} hits after applying filters".format(
+                                    str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "id"
+                                        ]
+                                    )
+                                    + "."
+                                    + str(
+                                        self.api_id[edge["association"]["api_name"]][
+                                            "current"
+                                        ]
+                                    ),
+                                    edge["association"]["api_name"],
+                                    len(result),
+                                )
                             )
-                        )
-                    self.api_id[edge["association"]["api_name"]]["current"] += 1
+                    if self.verbose:
+                        self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except asyncio.TimeoutError:
                 print(
-                    "API call to {} with input {} failed with timeout error. Current timeout limit is 10 seconds".format(
+                    "API call to {} with input {} failed with timeout error. Current timeout limit is 20 seconds".format(
                         edge["association"]["api_name"], edge["input"]
                     )
                 )
@@ -259,8 +369,11 @@ class APIQueryDispatcher:
         for edge in self.edges:
             api = edge["association"]["api_name"]
             cnt[api] += 1
-            task_id = floor(cnt[api] / MAX_CONCURRENT_QUERIES_ON_SINGLE_API)
-            tasks[task_id].append(self.callSingleAPI(edge, session))
+            if api == "MyVariant.info API":
+                tasks[cnt[api]].append(self.callSingleAPI(edge, session))
+            else:
+                task_id = floor(cnt[api] / MAX_CONCURRENT_QUERIES_ON_SINGLE_API)
+                tasks[task_id].append(self.callSingleAPI(edge, session))
         return tasks
 
     async def asyncQuery(self):

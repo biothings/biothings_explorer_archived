@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+from ..config_new import ALWAYS_PREFIXED
+
 
 class QueryBuilder:
     def __init__(self, edge):
@@ -15,10 +17,13 @@ class QueryBuilder:
         self.inputSeparator = edge["query_operation"].get("inputSeparator")
         self.params = deepcopy(edge["query_operation"].get("params"))
         self.data = ""
-        self.constructInput()
-        self.constructRequestBody()
-        self.constructParams()
-        self.constructRequestConfig()
+        if "reasoner" in edge["query_operation"].get("tags"):
+            self.constructRequestConfigForReasonerAPI()
+        else:
+            self.constructInput()
+            self.constructRequestBody()
+            self.constructParams()
+            self.constructRequestConfig()
 
     def constructInput(self):
         """Construct input based on method and inputSeparator"""
@@ -61,4 +66,44 @@ class QueryBuilder:
             "data": self.data,
             "method": self.method,
             "timeout": 5000,
+        }
+
+    def constructRequestConfigForReasonerAPI(self):
+        """Construct the ReasonerStdAPI request config for python reqeust library."""
+
+        def id2curie(prefix, val):
+            if prefix in ALWAYS_PREFIXED:
+                return val
+            return prefix + ":" + val
+
+        predicate = self.edge["association"]["predicate"]
+        input_type = self.edge["association"]["input_type"].lower()
+        output_type = self.edge["association"]["output_type"].lower()
+        _input = id2curie(self.edge["association"]["input_id"], self.input)
+        if self.edge["association"]["api_name"] == "Genetics Provider API":
+            predicate = "associated"
+            if input_type == "phenotypicfeature":
+                input_type = "phenotype"
+            if output_type == "phenotypicfeature":
+                output_type = "phenotype"
+        self.config = {
+            "url": self.url,
+            "json": {
+                "message": {
+                    "query_graph": {
+                        "edges": [
+                            {
+                                "id": "e00",
+                                "source_id": "n00",
+                                "target_id": "n01",
+                                "type": predicate,
+                            }
+                        ],
+                        "nodes": [
+                            {"curie": _input, "id": "n00", "type": input_type},
+                            {"id": "n01", "type": output_type},
+                        ],
+                    }
+                }
+            },
         }
