@@ -3,6 +3,7 @@ import sys
 from .dataload import load_specs
 from .smartapi_parser import SmartAPIParser
 from .filter import filterOps
+import traceback
 
 
 class MetaKG:

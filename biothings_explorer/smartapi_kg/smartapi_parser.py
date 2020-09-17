@@ -143,6 +143,8 @@ class SmartAPIParser:
                             op["predicate"]: self.fetch_response_mapping(
                                 op["response_mapping"]["$ref"]
                             )
+                            if "response_mapping" in op
+                            else {}
                         },
                     }
                 )

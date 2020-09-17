@@ -2,6 +2,7 @@ import requests
 from copy import deepcopy
 import json
 import os
+import pkg_resources
 
 from .config import SMARTAPI_URL
 
@@ -27,9 +28,13 @@ def load_specs(source="remote", tag="translator"):
                 "Unable to retrieve smartapi specs from {}".format(SMARTAPI_URL)
             )
     else:
+        DATA_PATH = pkg_resources.resource_filename("biothings_explorer", "data/")
+        DB_FILE = pkg_resources.resource_filename(
+            "biothings_explorer", "data/smartapi_local_specs.json"
+        )
         dir_path = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(dir_path, "smartapi_local_specs.json")
-        with open(file_path) as f:
+        with open(DB_FILE) as f:
             specs = json.load(f)
     new_specs = []
     for spec in specs.get("hits"):
