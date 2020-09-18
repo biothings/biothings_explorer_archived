@@ -88,10 +88,14 @@ class Predict:
         return predicates
 
     def _annotate_results(self, step):
-        print("annotating results with NodeDegree!")
-        ft = NodeDegreeFilter(self.steps_results[step], {})
-        ft.annotateNodeDegree()
-        self.steps_results[step] = ft.stepResult
+        # print("annotating results with NodeDegree!")
+        # ft = NodeDegreeFilter(self.steps_results[step], {})
+        # ft.annotateNodeDegree()
+        # self.steps_results[step] = ft.stepResult
+        if "annotate" in self.config and isinstance(self.config["annotate"], list):
+            ft = Filter(self.steps_results[step], self.config["annotate"])
+            ft.annotate()
+            self.steps_results[step] = ft.stepResult
 
     def _filter_results(self, step):
         if (

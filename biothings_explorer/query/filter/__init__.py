@@ -12,12 +12,15 @@ class Filter:
         if "nodeDegree" in self.criteria:
             f = NodeDegreeFilter(self.stepResult, {})
             f.annotateNodeDegree()
+            print("Annotated results with nodeDegree information!")
         if "ngd" in self.criteria:
             f = NGDFilter(self.stepResult, {})
             f.annotateNGD()
+            print("Annotated results with normalized google distance information!")
         if "drugPhase" in self.criteria:
             f = DrugPhaseFilter(self.stepResult, {})
             f.annotate()
+            print("Annotated results with drugPhase information!")
         return self.stepResult
 
     # def filter(self):

@@ -11,6 +11,8 @@ TYPE_TO_ID_MAPPING = {
     "MolecularActivity": "GO",
     "Cell": "CL",
     "SequenceVariant": "SO",
+    "Disease": "MONDO",
+    "PhenotypicFeature": "HP",
 }
 
 
@@ -38,7 +40,7 @@ class NGDFilter:
         result = []
         for i in range(0, len(inputs), 1000):
             a = {
-                "q": [item.split("-") for item in inputs],
+                "q": [item.split("-") for item in inputs[i : i + 1000]],
                 "scopes": [["subject.id", "object.id"], ["object.id", "subject.id"],],
                 "fields": "association.ngd",
                 "dotfield": True,
@@ -46,7 +48,8 @@ class NGDFilter:
             res = requests.post(
                 "https://biothings.ncats.io/text_mining_co_occurrence_kp/query", json=a,
             )
-            result += res.json()
+            res = res.json()
+            result += res
         return result
 
     @staticmethod
@@ -87,6 +90,7 @@ class NGDFilter:
                 ngd_inputs.add(str(s_id) + "-" + str(o_id))
                 id_dict[i].append(str(s_id) + "-" + str(o_id))
         annotatedResult = self._parseResponse(self._queryNGD(list(ngd_inputs)))
+        cnt = 0
         for i, rec in enumerate(self.stepResult):
             if i in id_dict:
                 ngd_scores = []
@@ -95,6 +99,12 @@ class NGDFilter:
                         ngd_scores.append(annotatedResult[pair])
                 if ngd_scores:
                     rec["$ngd"] = min(ngd_scores)
+                    cnt += 1
+        print(
+            "Number of results sent to NGD score annotation is {}. Number of results annotated with NGD score is {}".format(
+                len(self.stepResult), cnt
+            )
+        )
         return
 
     def filter(self):

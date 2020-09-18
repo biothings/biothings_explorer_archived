@@ -146,9 +146,13 @@ class HypothesisFilter:
         return reasoner_std
 
     def queryOnePair(self, ensembl, chembl):
-        query = self.buildQuery(
-            genes=[("AAA", "ENSEMBL:" + ensembl)], drugs=[("BBB", "CHEMBL:" + chembl)]
-        )
+        if not ensembl:
+            query = self.buildQuery(genes=[], drugs=[("BBB", "CHEMBL:" + chembl)],)
+        else:
+            query = self.buildQuery(
+                genes=[("AAA", "ENSEMBL:" + ensembl)],
+                drugs=[("BBB", "CHEMBL:" + chembl)],
+            )
         query["reasoner_id"] = "exploring"
         payload = {"query": query}
         try:
@@ -195,6 +199,8 @@ class HypothesisFilter:
             query = self.queryOnePair(ensembl, chembl)
             print("probability", query)
             rec["$survival_probability"] = query
+            query = self.queryOnePair(None, chembl)
+            print("probability with drug alone", query)
         return
 
     def filter(self):
