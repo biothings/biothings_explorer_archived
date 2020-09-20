@@ -71,6 +71,7 @@ class DrugPhaseFilter:
                 chembl_ids.add(o_id)
                 id_dict[i].append(o_id)
         annotatedResult = self._parseResponse(self._queryDrug(list(chembl_ids)))
+        cnt = 0
         for i, rec in enumerate(self.stepResult):
             if i in id_dict:
                 drug_phases = []
@@ -79,8 +80,14 @@ class DrugPhaseFilter:
                         drug_phases.append(annotatedResult[o_id])
                 if drug_phases:
                     rec["$drug_phase"] = max(drug_phases)
+                    cnt += 1
             else:
                 rec["$drug_phase"] = 0
+        print(
+            "Number of results sent to Drug Phase annotation is {}. Number of results annotated with Drug Phase is {}".format(
+                len(self.stepResult), cnt
+            )
+        )
         return
 
     def filter(self):

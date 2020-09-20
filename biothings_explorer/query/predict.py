@@ -96,17 +96,20 @@ class Predict:
             ft = Filter(self.steps_results[step], self.config["annotate"])
             ft.annotate()
             self.steps_results[step] = ft.stepResult
+            return ft
+        return None
 
-    def _filter_results(self, step):
+    def _filter_results(self, step, ft=None):
         if (
             self.config
             and self.config.get("filters")
             and step < len(self.config["filters"])
-            and "nodeDegree" in self.config["filters"][step]
         ):
-            print("NodeDegree filter is going to be applied")
-            ft = Filter(self.steps_results[step], self.config["filters"][step])
-            self.steps_results[step] = ft.filter()
+            if not ft:
+                ft = Filter(self.steps_results[step], self.config["filters"][step])
+            else:
+                ft.criteria = self.config["filters"][step]
+            self.steps_results[step] = ft.filter_response()
             self.steps_nodes[step] = extractAllResolvedOutputIDs(
                 self.steps_results[step]
             )
@@ -159,8 +162,8 @@ class Predict:
             )
             if verbose:
                 self.pt.print_individual_query_step_summary(inputs)
-            inputs = self._filter_results(i)
-            self._annotate_results(i)
+            ft = self._annotate_results(i)
+            inputs = self._filter_results(i, ft)
         self.query_completes = True
         if verbose:
             self.pt.print_final_result_summary(self.steps_nodes)
