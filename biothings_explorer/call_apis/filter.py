@@ -1,7 +1,7 @@
 from functools import partial
 
 # from ..config_new import BTE_FILTERS
-BTE_FILTERS = ["node_degree", "edges_out", "cooccurence"]
+BTE_FILTERS = ["nodeDegree", "ngd", "drugPhase", "survivalProbability"]
 
 
 def filter_response(res, criteria):
@@ -34,6 +34,7 @@ def filter_response(res, criteria):
     for f, v in criteria.items():
         if not isinstance(v, dict):
             continue
+        print("f", f)
         if f not in BTE_FILTERS:
             if "=" in v:
                 res = list(

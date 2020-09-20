@@ -214,6 +214,7 @@ class APIQueryDispatcher:
                             )
                         )
                     if "filter" in edge:
+                        print("filter", edge["filter"])
                         result = filter_response(result, edge["filter"])
                         if self.verbose:
                             print(
