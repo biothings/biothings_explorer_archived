@@ -27,7 +27,11 @@ class APIQueryDispatcher:
         if verbose:
             self.api_id = {}
             cnt = 1
-            print("BTE found {} APIs\n".format(len(self.api_cnt.keys())))
+            print(
+                "BTE found {} APIs based on SmartAPI Meta-KG.\n".format(
+                    len(self.api_cnt.keys())
+                )
+            )
             for k, v in self.api_cnt.items():
                 print("API {}. {} ({} API calls)".format(cnt, k, v))
                 self.api_id[k] = {"id": cnt, "current": 1}
@@ -214,7 +218,6 @@ class APIQueryDispatcher:
                             )
                         )
                     if "filter" in edge:
-                        print("filter", edge["filter"])
                         result = filter_response(result, edge["filter"])
                         if self.verbose:
                             print(

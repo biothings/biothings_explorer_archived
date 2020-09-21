@@ -34,7 +34,6 @@ def filter_response(res, criteria):
     for f, v in criteria.items():
         if not isinstance(v, dict):
             continue
-        print("f", f)
         if f not in BTE_FILTERS:
             if "=" in v:
                 res = list(
