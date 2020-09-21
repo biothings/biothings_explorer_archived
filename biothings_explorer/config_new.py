@@ -326,4 +326,4 @@ EXPAND_API_LIST = [
     "Human Phenotype Ontology API",
 ]
 
-BTE_FILTERS = ["nodeDegree", "edgesOut", "co-occurrence"]
+BTE_FILTERS = ["nodeDegree", "ngd", "drugPhase", "survivalProbability"]
