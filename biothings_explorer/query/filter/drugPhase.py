@@ -83,11 +83,12 @@ class DrugPhaseFilter:
                     cnt += 1
             else:
                 rec["$drug_phase"] = 0
-        print(
-            "Number of results sent to Drug Phase annotation is {}. Number of results annotated with Drug Phase is {}".format(
-                len(self.stepResult), cnt
+        if cnt > 0:
+            print(
+                "Number of output edges sent to Drug Phase annotation is {}. Number of output edges annotated with Drug Phase is {}".format(
+                    len(self.stepResult), cnt
+                )
             )
-        )
         return
 
     def filter(self):

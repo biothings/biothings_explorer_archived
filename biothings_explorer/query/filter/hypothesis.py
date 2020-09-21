@@ -237,6 +237,45 @@ class HypothesisFilter:
                 "pair": 0.36000000000000004,
                 "alone": 0.4285714285714286,
             },
+            "ENSG00000139618-CHEMBL553025": {"pair": 0.0, "alone": 0.33333333333333337},
+            "ENSG00000039068-CHEMBL185": {
+                "pair": 0.6666666666666666,
+                "alone": 0.5517241379310345,
+            },
+            "ENSG00000170558-CHEMBL185": {"pair": 0.0, "alone": 0.5517241379310345},
+            "ENSG00000005810-CHEMBL53463": {"pair": 1.0, "alone": 0.3953488372093023},
+            "ENSG00000005810-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000071894-CHEMBL53463": {
+                "pair": 0.6666666666666666,
+                "alone": 0.3953488372093023,
+            },
+            "ENSG00000071894-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000132470-CHEMBL185": {"pair": -1, "alone": 0.5517241379310345},
+            "ENSG00000134982-CHEMBL553025": {"pair": -1, "alone": 0.33333333333333337},
+            "ENSG00000134982-CHEMBL185": {"pair": 0.5, "alone": 0.5517241379310345},
+            "ENSG00000178568-CHEMBL53463": {"pair": 0.0, "alone": 0.3953488372093023},
+            "ENSG00000178568-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000124126-CHEMBL34259": {"pair": 0.0, "alone": 0.5714285714285714},
+            "ENSG00000124126-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000181143-CHEMBL553025": {"pair": -1, "alone": 0.33333333333333337},
+            "ENSG00000163659-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000066468-CHEMBL34259": {"pair": -1, "alone": 0.5714285714285714},
+            "ENSG00000066468-CHEMBL92": {"pair": 0.5, "alone": 0.5937499999999999},
+            "ENSG00000074181-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000188158-CHEMBL83": {"pair": 0.0, "alone": 0.4615384615384615},
+            "ENSG00000188158-CHEMBL553025": {"pair": 0.0, "alone": 0.33333333333333337},
+            "ENSG00000128512-CHEMBL185": {"pair": -1, "alone": 0.5517241379310345},
+            "ENSG00000105877-CHEMBL34259": {"pair": -1, "alone": 0.5714285714285714},
+            "ENSG00000105877-CHEMBL53463": {"pair": 0.625, "alone": 0.3953488372093023},
+            "ENSG00000145242-CHEMBL888": {"pair": 0.0, "alone": 0.0},
+            "ENSG00000141867-CHEMBL185": {"pair": -1, "alone": 0.5517241379310345},
+            "ENSG00000138119-CHEMBL185": {"pair": 1.0, "alone": 0.5517241379310345},
+            "ENSG00000117713-CHEMBL83": {
+                "pair": 0.45454545454545453,
+                "alone": 0.4615384615384615,
+            },
+            "ENSG00000168769-CHEMBL185": {"pair": -1, "alone": 0.5517241379310345},
+            "ENSG00000184384-CHEMBL553025": {"pair": 0.0, "alone": 0.33333333333333337},
         }
         self.saved_drug_alone = {}
 
@@ -391,23 +430,29 @@ class HypothesisFilter:
                         self.saved[pair]["pair"] - self.saved[pair]["alone"]
                     ) / self.saved[pair]["alone"]
                     cnt += 1
+                else:
+                    rec["$survival_prob_change"] = 0
+                    cnt += 1
                 continue
-            query1 = self.queryOnePair(ensembl, chembl)
-            print("probability", query1)
-            rec["$survival_probability"] = query1
-            if chembl in self.saved_drug_alone:
-                query2 = self.saved_drug_alone[chembl]
-            else:
-                query2 = self.queryOnePair(None, chembl)
-                self.saved_drug_alone[chembl] = query2
-            print("probability with drug alone", query2)
-            self.saved[pair] = {"pair": query1, "alone": query2}
-        print(
-            "Number of results sent to Connection Hypothesis KP for scoring is {}. Number of results annotated is {}".format(
-                len(self.stepResult), cnt
+            # query1 = self.queryOnePair(ensembl, chembl)
+            # rec["$survival_probability"] = query1
+            # if chembl in self.saved_drug_alone:
+            #     query2 = self.saved_drug_alone[chembl]
+            # else:
+            #     query2 = self.queryOnePair(None, chembl)
+            #     self.saved_drug_alone[chembl] = query2
+            # self.saved[pair] = {"pair": query1, "alone": query2}
+            # if self.saved[pair]["pair"] != 0.0:
+            #     rec["$survival_prob_change"] = (
+            #         self.saved[pair]["pair"] - self.saved[pair]["alone"]
+            #     ) / self.saved[pair]["alone"]
+            #     cnt += 1
+        if cnt > 0:
+            print(
+                "Number of output edges sent to Connection Hypothesis KP for scoring is {}. Number of output edges annotated is {}".format(
+                    len(self.stepResult), cnt
+                )
             )
-        )
-        print(self.saved)
         return
 
     def filter(self):

@@ -58,8 +58,11 @@ class Predict:
             and self.config.get("filters")
             and isinstance(self.config["filters"], list)
             and step < len(self.config["filters"])
+            and isinstance(self.config["filters"][step], dict)
             and self.config["filters"][step]
         ):
+            if len(set(self.config["filters"][step].keys()) - set(BTE_FILTERS)) == 0:
+                return
             for edge in edges:
                 output_nodes = self.intermediate_nodes[step]
                 if isinstance(output_nodes, str):
@@ -114,7 +117,7 @@ class Predict:
                 self.steps_results[step]
             )
             print(
-                "After applying post-query filter, BTE retrieved {} unique outputs".format(
+                "\nAfter applying post-query filter, BTE retrieved {} unique output nodes.".format(
                     len(self.steps_nodes[step])
                 )
             )

@@ -72,7 +72,7 @@ Paths will contain {} intermediate nodes.\n".format(
         :param outputs: outputs from the query step.
         """
         print(
-            "After id-to-object translation, BTE retrieved {} unique outputs".format(
+            "After id-to-object translation, BTE retrieved {} unique output nodes.\n\n".format(
                 len(outputs)
             )
         )

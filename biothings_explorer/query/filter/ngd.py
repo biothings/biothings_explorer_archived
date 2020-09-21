@@ -100,11 +100,12 @@ class NGDFilter:
                 if ngd_scores:
                     rec["$ngd"] = min(ngd_scores)
                     cnt += 1
-        print(
-            "Number of results sent to NGD score annotation is {}. Number of results annotated with NGD score is {}".format(
-                len(self.stepResult), cnt
+        if cnt > 0:
+            print(
+                "Number of output edges sent to NGD score annotation is {}. Number of output edges annotated with NGD score is {}".format(
+                    len(self.stepResult), cnt
+                )
             )
-        )
         return
 
     def filter(self):
