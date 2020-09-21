@@ -112,11 +112,13 @@ class Dispatcher:
             headers={"content-type": "application/x-www-form-urlencoded"},
         ) as res:
             if res.status >= 400:
+
                 print(
                     "api call to {} failed with status code {}".format(
                         ID_RESOLVING_APIS[semanticType]["url"] + "/query", res.status
                     )
                 )
+                print(res.json())
                 return
             try:
                 res = await res.json()
