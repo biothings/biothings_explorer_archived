@@ -1,8 +1,194 @@
 {
-  "max_score": 2.5737212,
-  "took": 10,
-  "total": 74,
+  "max_score": 3.6542282,
+  "took": 18,
+  "total": 75,
   "hits": [
+    {
+      "_id": "2fcd08a5f4c45b10520b8f7d5c3417b4",
+      "_meta": {
+        "ETag": "bd481dbdb06f81e9ee5ce53d0aea132c23dfec72abca860b63720d7a77d38aae",
+        "github_username": "kevinxin90",
+        "timestamp": "2020-09-22T17:49:53.379540",
+        "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/cohd/smartapi.yaml"
+      },
+      "_score": 3.6542282,
+      "components": {
+        "x-bte-kgs-operations": {
+          "chemical-disease": [
+            {
+              "inputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "ChemicalSubstance"
+                }
+              ],
+              "outputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "Disease"
+                }
+              ],
+              "parameters": {
+                "concept_id_1": "{inputs[0]}",
+                "dataset_id": 3,
+                "domain": "Condition"
+              },
+              "predicate": "correlated_with",
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/omop"
+              },
+              "supportBatch": false
+            }
+          ],
+          "disease-chemical": [
+            {
+              "inputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "Disease"
+                }
+              ],
+              "outputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "ChemicalSubstance"
+                }
+              ],
+              "parameters": {
+                "concept_id_1": "{inputs[0]}",
+                "dataset_id": 3,
+                "domain": "Drug"
+              },
+              "predicate": "correlated_with",
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/omop"
+              },
+              "supportBatch": false
+            }
+          ],
+          "disease-disease": [
+            {
+              "inputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "Disease"
+                }
+              ],
+              "outputs": [
+                {
+                  "id": "OMOP",
+                  "semantic": "Disease"
+                }
+              ],
+              "parameters": {
+                "concept_id_1": "{inputs[0]}",
+                "dataset_id": 3,
+                "domain": "Condition"
+              },
+              "predicate": "correlated_with",
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/omop"
+              },
+              "supportBatch": false
+            }
+          ]
+        },
+        "x-bte-response-mapping": {
+          "omop": {
+            "OMOP": "results.concept_id_2",
+            "adj_pvalue": "results.adj_p-value"
+          }
+        }
+      },
+      "info": {
+        "contact": {
+          "email": "help@cohd.org",
+          "name": "cohd help desk",
+          "x-role": "responsible developer"
+        },
+        "description": "The COHD API",
+        "termsOfService": "http://www.cohd.org",
+        "title": "COHD API",
+        "version": "1.0"
+      },
+      "openapi": "3.0.0",
+      "paths": [
+        {
+          "path": "/association/chiSquare",
+          "pathitem": {
+            "get": {
+              "parameters": [
+                {
+                  "description": "the dataset id",
+                  "example": 1,
+                  "in": "query",
+                  "name": "dataset_id",
+                  "required": true,
+                  "schema": {
+                    "type": "integer"
+                  }
+                },
+                {
+                  "description": "the COHD concept id",
+                  "example": "441554",
+                  "in": "query",
+                  "name": "concept_id_1",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "description": "the input type",
+                  "example": "Drug",
+                  "in": "query",
+                  "name": "domain",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "A COHD concept object"
+                }
+              },
+              "summary": "retrieve associated concept data",
+              "x-bte-kgs-operations": [
+                {
+                  "$ref": "#/components/x-bte-kgs-operations/disease-disease"
+                },
+                {
+                  "$ref": "#/components/x-bte-kgs-operations/disease-chemical"
+                },
+                {
+                  "$ref": "#/components/x-bte-kgs-operations/chemical-disease"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "servers": [
+        {
+          "description": "Production server",
+          "url": "http://tr-kp-clinical.ncats.io/api"
+        }
+      ],
+      "tags": [
+        {
+          "name": "translator"
+        },
+        {
+          "name": "disease"
+        },
+        {
+          "name": "chemical"
+        }
+      ],
+      "~raw": "H4sIAEI5al8C_8VWyW7bMBD9FYHtMbLsLBefmiaH9lA4QHoLDIOmxhITiWTIkZ3A8L93OJL3tEkKND1J4mxv3rwhtBTWgZFOi2Eiznr9Xl-cJEKbmaWDpZiDD9qaaBy0JtRYQfy-Gn27Ti5vvsfDHILy2mHn-rOEZNeM4Oswmt2Cn2vFwSWiG2bZYrHoKVvmPeuL6KisQamQSxtZs2u0JyVULqEqD9HrKfW2xeAhOGuCnlZA1jlU1IyPLlBLXXEhCvyyKbFakS0QDGqLrHdL0fhqBw_69MGlqtJGK1n1jJIYetpmkZ_jNm-8zRsVv5I2p1iNY7ey6JKvW0AvTagkWj8QhGBryHUAGWD_UJVQx_JtNiexDExIJkOwSstYMFOlvn1spAc2FdByFpq6lv65pQa9JkqSdRTkCdGrwGGSS5SCc3uqiRsyNrDIHgAnOm_FEM8eG6DExyQgzbrzT1p_D4-N9pCTFX0DcRpPsnY8sUHkPzYoGS8-Oy6oDUIR-dsnooVLMCaDtwFh0a27fB2NOD8fXFyci5dBBSLQFAeYckvKMm9Do41rMOF0rwG59k3xGozxyUbw0CritN_n50Hty30e7PQeaKdY-0_pFCF9KEIaN4Wl1M3-s4dZDP6UKVtTDTAYspfcs0606Z543x--lfn74tdx2_rjFfe2DWRSftPqUhzi5_Z5Vh0VOs5IjH6MbngkNBCDWvGYNiXJYBt8d4wjARB47PTtPVRxMycLjeXRRi53F3GYnJ0crASlWLa47_rjFYuwVWe8na3JNQuCr7zGOevxq0RVknUmqwA7aprU0rkosuGfJ7H2Tzv_zNbWdco8Gus_pvWqq3PbTANKYuWDCeaN_SBujyTP3PyN_t42j__N7ceKd3svHrpwSnaLL8xU-9PRVPRfsNPOacQv8_uJm8uqgV0vPk3bY7qnVr8ASPQDm3EJAAA="
+    },
     {
       "_id": "978fe380a147a8641caf72320862697b",
       "_meta": {
@@ -1178,7 +1364,7 @@
         "uptime_ts": "2020-09-22T00:06:19.477923",
         "url": "https://raw.githubusercontent.com/NCATSTranslator/KnowledgeProviderScaffold/master/openapi.yml"
       },
-      "_score": 1.2692857,
+      "_score": 1.3011329,
       "info": {
         "contact": {
           "email": "mark.williams5@nih.gov",
@@ -1343,7 +1529,7 @@
         "uptime_ts": "2020-09-22T00:06:16.100024",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/robokop_extend/smartapi.yaml"
       },
-      "_score": 1.1506553,
+      "_score": 1.1784132,
       "components": {
         "x-bte-kgs-operations": {
           "associatedWith": {
@@ -1622,7 +1808,7 @@
         "uptime_ts": "2020-09-22T00:06:19.047068",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/quickgo/smartapi.yaml"
       },
-      "_score": 1.1506553,
+      "_score": 1.1784132,
       "components": {
         "x-bte-kgs-operations": {
           "ma_has_subclass_ma": [
@@ -1939,7 +2125,7 @@
         "uptime_ts": "2020-09-22T00:05:28.906772",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/biothings_explorer/smartapi.yaml"
       },
-      "_score": 1.0523044,
+      "_score": 1.0768473,
       "components": {
         "schemas": {
           "BiolinkEntity": {
@@ -4880,7 +5066,7 @@
         "uptime_ts": "2020-09-22T00:05:17.430725",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/mydisease.info/smartapi.yaml"
       },
-      "_score": 0.8986777,
+      "_score": 0.9185163,
       "components": {
         "parameters": {
           "callback": {
@@ -5994,7 +6180,7 @@
         "uptime_ts": "2020-09-22T00:05:26.497312",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/cord/cord_protein.yml"
       },
-      "_score": 0.8986777,
+      "_score": 0.9185163,
       "components": {
         "parameters": {
           "callback": {
@@ -6872,7 +7058,7 @@
         "uptime_ts": "2020-09-22T00:05:49.487940",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/cord/cord_bp.yml"
       },
-      "_score": 0.8986777,
+      "_score": 0.9185163,
       "components": {
         "parameters": {
           "callback": {
@@ -7750,7 +7936,7 @@
         "uptime_ts": "2020-09-22T00:06:21.438624",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/scigraph/smartapi.yaml"
       },
-      "_score": 0.8986777,
+      "_score": 0.9185163,
       "components": {
         "x-bte-kgs-operations": {
           "chemical2disease": [
@@ -16251,7 +16437,7 @@
         "uptime_ts": "2020-09-22T00:04:55.694771",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/semmed/semmed_biological_process.yaml"
       },
-      "_score": 0.83754104,
+      "_score": 0.8556148,
       "components": {
         "parameters": {
           "callback": {
@@ -19592,7 +19778,7 @@
         "uptime_ts": "2020-09-22T00:05:12.624372",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/semmed/semmed_disease.yaml"
       },
-      "_score": 0.83754104,
+      "_score": 0.8556148,
       "components": {
         "parameters": {
           "callback": {
@@ -24122,7 +24308,7 @@
         "uptime_ts": "2020-09-22T00:05:48.261870",
         "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/MGIgene2phenotype/smartapi.yaml"
       },
-      "_score": 0.83754104,
+      "_score": 0.8556148,
       "components": {
         "parameters": {
           "callback": {
@@ -25286,6 +25472,681 @@
         }
       ],
       "~raw": "H4sIAJA2B18C_81WTXPbNhD9Kzs8tTMSKctOneRUj-162sZOOvIkB8ujAckViYgEaADURzT6710A1JctKfLUh_pgS8DDw2L37VvPA1mhYBUPPkJwGnbCTtCCgIuhpIV5MEaluRTNpt0y3BRov9_OblBgaKFw8eVPu5eiThSvTHPiSiZ1icIwuwByCCZH2DxmP8E_NaoZTDAGjWrME9QhfEKmBJRSIbBY1gYeNo49_pIbU32MonKWLdeiX11sqEr9edjzPDaEHUgHiiw8kRRbYtxDBSvdgcu8FgVy-FZbxLStpH-tQl1JoXlcIKQ4xoLSpiwES8YLdxUW1e8bF_nzPF2GoSmOjJu8jsNElpHAiYUGiwXh7Msp0wR9mAe1KvaEPj7dkeUvSqZ14lLsaYLFo80Fyxq-5dP8da2NxzIhpK_O9vqTLcn2klFM6IIZ2dBXzOTaZS7yaPsxQ59MXZclc2vBLRsh2JvBwYCJFBSa2paXmSTnIvPbOTc6cMSKrjSrbKxi8rpch_cyE15J2igiDeF6ysqqQA394PLq726fDvSDu9tB5133fffcf-12zn47_TBgph-EcJ_b0hoqJ6ZNtHpGCplCwgTECENZU_TMQFOaVCY63KwPiohShNrYLZ-XQSPqMDdlYWNW-FRzhVYWRtXoRDJmRY33s8o-9GFZeJ5S6_Ahp0yEUmVRnokk1LMyloVT7x6YwqHGp0OIWnAb8k8glZLmEKRK40PbMZcJU4aFVigTNjuEHWGWHYOb8BFvYPpgaDlTZTaKw2PACskCZEnpsLLWSU4N7URsfD0Cryfq08fWygbQS7_b6bi_z3R40ahnCQYZf8fEwIS6n0Rnld4PgBJMFmJmjc802K-bUpi7NnNmQGfCAZkJgTfVsu9VIombIrsu3qIhpMIfzg3egM0r8limLRG_JKNmO_6NBJZCliQZV5pp-6_e57tPV5fk6jg1e2z37vLivte-ZyJDKitGa19r0xCkMmScCj6L4kLGUck0GdGWBX_XUhTpIPGXNFvLr6HdJaU4T49cxub2N08X-_zxD6mAQcbHKLwP8rS1NEg7LrdN0gvpkE3669Ze6dL70iqvnQaALr8m0ZVxsb4cwyxswUnn5LwF13e9m479OTnvdM_eh3BhY7P2BQ3DjT8GE6lGGoyUwIfADXBNyKpgCUFjsn2geQdS4JK_e_bu_MPZfzLEtSr3dzf6171pcz-rxE979606pPHtY4lWNv-cxDp72Jtwrdv0v4N5BZ-fCVt8NAaOJXATY_uw9-dwNSyOb_6X82Unsxstx7NuT6KdjMt58QrW9YjZybg51l7Buj0NdzKvBuHxrDtm5__PXReLfwHrmvLutwwAAA=="
+    },
+    {
+      "_id": "5219cefb9d2b8d5df08c3a956fdd20f3",
+      "_meta": {
+        "ETag": "50a39fd8cb3d50b14e4bee341bb5fae58ebf4a603cccd0df00170bb68f96cde1",
+        "github_username": "kevinxin90",
+        "timestamp": "2020-09-11T00:01:16.822173",
+        "uptime_status": "good",
+        "uptime_ts": "2020-09-22T00:05:38.869857",
+        "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/tcga_mut_freq/smartapi.yaml"
+      },
+      "_score": 0.752544,
+      "components": {
+        "parameters": {
+          "callback": {
+            "description": "you can pass a \"callback\" parameter to make a JSONP call. Type: string.",
+            "in": "query",
+            "name": "callback",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "dotfield": {
+            "description": "control the format of the returned chem object. If \"true\" or \"1\", all fields will be collapsed into a single level deep object (all nested objects will be a single level deep, using dotfield notation to signify the nested structure) Type: boolean. Default: false.",
+            "in": "query",
+            "name": "dotfield",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          "email": {
+            "description": "If you are regular users of our services, we encourage you to provide us with an email, so that we can better track the usage or follow up with you.",
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "facet_size": {
+            "description": "the number of facet buckets to return in the response. Type: integer. Default: 10. Max: 1000.",
+            "in": "query",
+            "name": "facet_size",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "facets": {
+            "description": "a comma-separated list of fields to return facets on.  In addition to query hits, the fields notated in \"facets\" will be aggregated by value and bucklet counts will be displayed in the \"facets\" field of the response object. Type: string (list). Default: None. Max: 1000.",
+            "in": "query",
+            "name": "facets",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "fields": {
+            "description": "a comma-separated list of fields (in dotfield notation) used to limit the fields returned from the matching chem hit(s). The supported field names can be found from any chem object or from the /metadata/fields endpoint. If \"fields=all\", all available fields will be returned. Type: string (list). Default: all. Max: 1000.",
+            "in": "query",
+            "name": "fields",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "format": {
+            "description": "controls output format of server response, currently supports: \"json\", \"jsonld\", \"html\". Type: string. Default: json.",
+            "in": "query",
+            "name": "format",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "from": {
+            "description": "the number of matching chem hits to skip, starting from 0.  This can be useful for paging in combination with the \"size\" parameter. Type: integer. Default: None.",
+            "in": "query",
+            "name": "from",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "prefix": {
+            "description": "Pass a prefix string to filter the available fields. Type: string. Default: None.",
+            "in": "query",
+            "name": "prefix",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "search": {
+            "description": "Pass a search term to filter the available fields. Type: string. Default: None.",
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "size": {
+            "description": "the maximum number of matching chem hits to return per batch. Type: integer. Default: 10.",
+            "in": "query",
+            "name": "size",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "sort": {
+            "description": "the comma-separated list of fields to sort on. Prefix each with \"-\" for descending order, otherwise in ascending order. Default: sort by descending score.",
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "schemas": {
+          "Association": {
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "_id"
+            ],
+            "type": "object"
+          },
+          "ErrorResult": {
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "success": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "QueryPOSTResult": {
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Association"
+                },
+                {
+                  "properties": {
+                    "_score": {
+                      "format": "float",
+                      "type": "number"
+                    },
+                    "query": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "QueryResult": {
+            "properties": {
+              "hits": {
+                "items": {
+                  "$ref": "#/components/schemas/Association"
+                },
+                "type": "array"
+              },
+              "max_score": {
+                "format": "float",
+                "type": "number"
+              },
+              "took": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "int64_or_array": {
+            "oneOf": [
+              {
+                "items": {
+                  "format": "int64",
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "format": "int64",
+                "type": "integer"
+              }
+            ]
+          },
+          "string_or_array": {
+            "oneOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "x-bte-kgs-operations": {
+          "disease-gene": [
+            {
+              "inputs": [
+                {
+                  "id": "MONDO",
+                  "semantic": "Disease"
+                }
+              ],
+              "outputs": [
+                {
+                  "id": "SYMBOL",
+                  "semantic": "Gene"
+                }
+              ],
+              "parameters": {
+                "fields": "association.freq_by_sample,subject.SYMBOL",
+                "q": "object.id:\"{inputs[0]}\"%20AND%20association.freq_by_sample:>0.1",
+                "size": "1000",
+                "sort": "-association.freq_by_sample"
+              },
+              "predicate": "gene_has_variant_that_contributes_to_disease_association",
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/disease-gene"
+              },
+              "source": "Multiomics Provider",
+              "supportBatch": false
+            }
+          ],
+          "gene-disease": [
+            {
+              "inputSeparator": ",",
+              "inputs": [
+                {
+                  "id": "SYMBOL",
+                  "semantic": "Gene"
+                }
+              ],
+              "outputs": [
+                {
+                  "id": "MONDO",
+                  "semantic": "Disease"
+                }
+              ],
+              "parameters": {
+                "fields": "association.freq_by_sample,object.MONDO",
+                "q": "subject.SYMBOL:'{inputs[0]}'%20AND%20association.freq_by_sample:>0.1",
+                "size": "1000",
+                "sort": "-association.freq_by_sample"
+              },
+              "predicate": "gene_has_variant_that_contributes_to_disease_association",
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/gene-disease"
+              },
+              "source": "Multiomics",
+              "supportBatch": true
+            }
+          ]
+        },
+        "x-bte-response-mapping": {
+          "disease-gene": {
+            "SYMBOL": "hits.subject.SYMBOL",
+            "frequency": "hits.association.freq_by_sample"
+          },
+          "gene-disease": {
+            "MONDO": "hits.object.MONDO",
+            "frequency": "hits.association.freq_by_sample"
+          }
+        }
+      },
+      "info": {
+        "contact": {
+          "email": "help@biothings.io",
+          "name": "JIWEN XIN",
+          "x-id": "https://github.com/kevinxin90",
+          "x-role": "responsible developer"
+        },
+        "description": "Documentation of the TCGA Mutation Frequency KP query web services.",
+        "termsOfService": "https://biothings.io/about",
+        "title": "TCGA Mutation Frequency KP API",
+        "version": "1.0"
+      },
+      "openapi": "3.0.0",
+      "paths": [
+        {
+          "path": "/association",
+          "pathitem": {
+            "post": {
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/dotfield",
+                  "name": "dotfield"
+                },
+                {
+                  "$ref": "#/components/parameters/fields",
+                  "name": "fields"
+                },
+                {
+                  "$ref": "#/components/parameters/email",
+                  "name": "email"
+                },
+                {
+                  "$ref": "#/components/parameters/format",
+                  "name": "format"
+                }
+              ],
+              "requestBody": {
+                "content": {
+                  "application/x-www-form-urlencoded": {
+                    "schema": {
+                      "properties": {
+                        "ids": {
+                          "description": "multiple association IDs separated by comma. Note that currently we only take the input ids up to 1000 maximum, the rest will be omitted. Type: string (list). Max: 1000.",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "ids"
+                      ]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "items": {
+                          "$ref": "#/components/schemas/Association"
+                        },
+                        "type": "array"
+                      }
+                    }
+                  },
+                  "description": "A list of matching association objects"
+                },
+                "400": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ErrorResult"
+                      }
+                    }
+                  },
+                  "description": "A response indicating an improperly formatted query"
+                }
+              },
+              "summary": "For a list of association IDs, return the matching disease object",
+              "tags": [
+                "association"
+              ]
+            }
+          }
+        },
+        {
+          "path": "/association/{associationid}",
+          "pathitem": {
+            "get": {
+              "parameters": [
+                {
+                  "description": "Retrieve association objects based on Association ID  Supports JSONP and CORS as well.",
+                  "example": "NRAS-TCGA-LUAD",
+                  "in": "path",
+                  "name": "associationid",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "$ref": "#/components/parameters/dotfield",
+                  "name": "dotfield"
+                },
+                {
+                  "$ref": "#/components/parameters/callback",
+                  "name": "callback"
+                },
+                {
+                  "$ref": "#/components/parameters/fields",
+                  "name": "fields"
+                },
+                {
+                  "$ref": "#/components/parameters/email",
+                  "name": "email"
+                },
+                {
+                  "$ref": "#/components/parameters/format",
+                  "name": "format"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Association"
+                      }
+                    }
+                  },
+                  "description": "A matching association object"
+                },
+                "404": {
+                  "description": "A response indicating an unknown association ID"
+                }
+              },
+              "summary": "Retrieve association objects based on ID",
+              "tags": [
+                "association"
+              ]
+            }
+          }
+        },
+        {
+          "path": "/metadata",
+          "pathitem": {
+            "get": {
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/callback",
+                  "in": "query",
+                  "name": "callback"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "KP metadata object"
+                }
+              },
+              "summary": "Get metadata about the data available from the API",
+              "tags": [
+                "metadata"
+              ]
+            }
+          }
+        },
+        {
+          "path": "/metadata/fields",
+          "pathitem": {
+            "get": {
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/search",
+                  "name": "search"
+                },
+                {
+                  "$ref": "#/components/parameters/callback",
+                  "name": "callback"
+                },
+                {
+                  "$ref": "#/components/parameters/prefix",
+                  "name": "prefix"
+                },
+                {
+                  "$ref": "#/components/parameters/format",
+                  "name": "format"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "metadata fields object"
+                }
+              },
+              "summary": "Get metadata about the data fields available",
+              "tags": [
+                "metadata"
+              ]
+            }
+          }
+        },
+        {
+          "path": "/query",
+          "pathitem": {
+            "get": {
+              "parameters": [
+                {
+                  "description": "Query string.",
+                  "example": "object.MONDO:\"MONDO:0005061\"",
+                  "in": "query",
+                  "name": "q",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "$ref": "#/components/parameters/dotfield",
+                  "name": "dotfield"
+                },
+                {
+                  "$ref": "#/components/parameters/fields",
+                  "name": "fields"
+                },
+                {
+                  "$ref": "#/components/parameters/facet_size",
+                  "name": "facet_size"
+                },
+                {
+                  "$ref": "#/components/parameters/sort",
+                  "name": "sort"
+                },
+                {
+                  "$ref": "#/components/parameters/callback",
+                  "name": "callback"
+                },
+                {
+                  "$ref": "#/components/parameters/email",
+                  "name": "email"
+                },
+                {
+                  "$ref": "#/components/parameters/facets",
+                  "name": "facets"
+                },
+                {
+                  "$ref": "#/components/parameters/size",
+                  "name": "size"
+                },
+                {
+                  "$ref": "#/components/parameters/from",
+                  "name": "from"
+                },
+                {
+                  "$ref": "#/components/parameters/format",
+                  "name": "format"
+                }
+              ],
+              "responses": {
+                "200": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/QueryResult"
+                      }
+                    }
+                  },
+                  "description": "A query response with the \"hits\" property"
+                },
+                "400": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ErrorResult"
+                      }
+                    }
+                  },
+                  "description": "A response indicating an improperly formatted query"
+                }
+              },
+              "summary": "Make queries and return matching association hits. Supports JSONP and CORS as well.",
+              "tags": [
+                "query"
+              ],
+              "x-bte-kgs-operations": [
+                {
+                  "$ref": "#/components/x-bte-kgs-operations/disease-gene"
+                },
+                {
+                  "$ref": "#/components/x-bte-kgs-operations/gene-disease"
+                }
+              ]
+            },
+            "post": {
+              "parameters": [
+                {
+                  "$ref": "#/components/parameters/dotfield",
+                  "name": "dotfield"
+                },
+                {
+                  "$ref": "#/components/parameters/email",
+                  "name": "email"
+                },
+                {
+                  "$ref": "#/components/parameters/fields",
+                  "name": "fields"
+                },
+                {
+                  "$ref": "#/components/parameters/size",
+                  "name": "size"
+                },
+                {
+                  "$ref": "#/components/parameters/format",
+                  "name": "format"
+                }
+              ],
+              "requestBody": {
+                "content": {
+                  "application/x-www-form-urlencoded": {
+                    "schema": {
+                      "properties": {
+                        "q": {
+                          "description": "multiple query terms separated by comma (also \"+\" or whitespace).  Does not support wildcard queries",
+                          "type": "string"
+                        },
+                        "scopes": {
+                          "description": "a comma-separated list of fields as the search \"scopes\" (fields to search through for query term). The available \"fields\" that can be passed to the \"scopes\" parameter are listed in the **/metadata/fields** endpoint.string Default: \"scopes=_id\".",
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/QueryPOSTResult"
+                      }
+                    }
+                  },
+                  "description": "Query response objects with the \"hits\" property"
+                },
+                "400": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ErrorResult"
+                      }
+                    }
+                  },
+                  "description": "A response indicating an improperly formatted query"
+                }
+              },
+              "summary": "Make batch disease queries and return matching disease hits",
+              "tags": [
+                "query"
+              ]
+            }
+          }
+        }
+      ],
+      "servers": [
+        {
+          "description": "Encrypted Production server",
+          "url": "https://biothings.ncats.io/tcga_mut_freq_kp"
+        },
+        {
+          "description": "Production server",
+          "url": "http://biothings.ncats.io/tcga_mut_freq_kp"
+        }
+      ],
+      "tags": [
+        {
+          "name": "gene"
+        },
+        {
+          "name": "disease"
+        },
+        {
+          "name": "association"
+        },
+        {
+          "name": "annotation"
+        },
+        {
+          "name": "query"
+        },
+        {
+          "name": "translator"
+        },
+        {
+          "name": "biothings"
+        },
+        {
+          "name": "biothings_graph"
+        }
+      ],
+      "~raw": "H4sIAE2-Wl8C_-Vae3PcthH_Khi2ncjuvZS6malm0qkcOR6l0SOWO23Hp7nBkbg7RCRBA6Ckq0bfvbsL8Hk83slKnKT1HxYPBBb7-O0DCz4EKhMpz2RwxII_jSajSTBggUwXCgYeglClloeWnkXCZYzTViLO_jaXyq5kujQjqXBJyhOBL787_eebc_av03McvB_KiFZYm5mj8Xgp7Sqfj0KVjG_ErUzvZfqXiZuoVUzrtTCZSo2cx4JF4lbEwJ8OHmFOJEyoZWalSnHiiQrzRAB7OMDUgtmVYO-_eXvMznI_-K0WH3ORhmv290sGT3rN7sScGaFvZSjMCHe2QifmYnHlxurM1iUc87nKLc2X1jHas9Xx5SlOvRXaeGYPQa8oA24NozD04aEt0Js01OvMiohdahXlIdF1C5BaruNu7tKQW-LRhks-S3I7WwAzs5sMd9zYZRftfUlfoy740otSWH8pUuG2LUYiaQQ3rUFujAolaa71Ik2V7Rgn4zWHrOapiblVujlecr9leLbUPFs5ATJuV4bAPa6zhAOZMg72GddAwpZW-70WCyT4uzHAGKAKEDTjatI4UnYhRRzVnaIcI5Z2UaCppr7ej-y12rlpbbEb2G9npRNuGzu7EdIWQdzY1ypal8EBKNAzz7JYhqS-8f3w7u5uiCuHACxwChWJiGaZcAXcOLVqdGwrhdO_jNzfFlqTPLYyg1BQMw87PTGAXWQbnWW-ZiBMwkfsXFkBUYBbFuZaA2cx-jtTKfy1_EZQhJBpllsG27E8Y1axw8lkwhJ-L5M8GdAMiECW3ck4ZnNYnEgLu4zY-3UmjpixGjDEDmJp7IsRO-P3R0TBhRKYgky7ScHjo9eZ1CT-BxLy-vHRv6A458X_cjLpVemPxsOypkFpReJWd5rVzTTj46avlVxyrTm41GNHaD1mKB_GVLB9iF7T0L-a_yhCS3AMXn0C473svtFa6XfCgOG3MVeoDmwZ0T7IX8pk4jAF1naoRXT4wEGxNweUaIRu8K3SjJdCtrA1gA1srlMCQ6kAH8e88EEt-jWi2TVtVY8m44faDxk9kgqWoju4tGR9JwBKkAS71M_mwE4E6GbHDf4Zu8qzTGmY8d3VxfklqCZi31y8uwIi4A5xTFgV9zzJXCI7f3d8NcRsNvz-H8cnLv3jOAbHeihoiBE0sW11LlDFlZE7nOFzxM6Qx_Gchzd1CuXYbzz6Pjdg7B8muv2uJxj4WPCqK4Zvddg8vUnVXdryvw1n3c8JTk92-SRomUfc8l4HfAq-nJu4CNMJt-1ma6kIasaCu1KhLS28FbaaQ9UoxSf38xYwxrFiXmiV0LgvQUt9lMK3lFHA_Tk6gcCow0ao8COfyWMzeC_v6-v9yM_mde0qpbCLU-anmNCvLC3ZazwHuSfkkR_o7ONCcTv8O2ZHZxfnJxdH08D9hZLmz5OvDqdBD84__lpzwPMi-IKHws6M_I9oUKhG96JiIAE3PAJ_fyZ_eFYOQjnNhuR76q6ttf31hYGrsSv-_vVnTXKs_mrV9R3KFHgn7YrcfhqspDXTgPmT0Po3XE-f4ekKX8FxjupNX0F3Vgwo9mivIrUMgG7Xa2oUza0Y3izNEFkjgn1Zqmv62Jfyw6pZsf9aXDMsexrXqIdfsFPwLE9_VpR8hqf_Yj2Gj70dBuen1A7s6C6wAx4bBU77R_BYOD3eAYrBbSA2vhgxdqIA96myzDhUY_sgCrmOCqfoag9QrgQGOxsf3G07rDgpTqtFpWAoirhKC_hypIC5Az_BquKlXWmVL1foxTUpge_3QKCqHaceAEDDNVEgBswFy8B3YXsg56JWuVFpU8a1IPZgmnTH5pcv2xXmy5dMpFGmZGpHvotyIhYctH9UEv16JqNp0N1L-cnaJrvj-eXF1fu-iPlDM6IXR5H_3cg-xzBedkD64nwxBxXQFcEdn5Uwm3HzoSp2OtxirXLCJYKScdB0MbmBR8Bqgnxzn1xwUrODN9rn_LazmK2idQeraGetYkKE03JxSeGUBipH4h4-I3a6AHGwhnYBZhpA9T1gwEvh8UVLMlRxzDNDzgaScmaAH_DfGG9LWCRE5mlizIpZKsgxK5Q6Kh3LBiw3ZEQvFSt68RRL5DKVizUJ4EmCJvIQRBEvvG7nSsWCp6PKsxcQNUWfsus5sEPZnqLTdnEBtaFqUB0CA8OQFss85hokATihwlWuywufAbaDMVfkmi8FrQHJwBduZSRgiXNhgBftNGBGuUgIq1wwtIQuDeAgPeQGyYCxFmASdYcdZaIAhPtkLrP2DnTVzhwdQpMh8mQOHGFWwLlsnoc3UKyjVN4zfTwuAkHhBYAcsRS6ZqnDSbudvYX75vmoQwRPuybDp2W4SghHhClAFjtNGY8iWcDS5TMMN65579cScl06mnoewK1K7C-XgJMiv9_yOBcUzVB9MagRAJLWXAWCWhbzdZXdaiSdo5SO3UgJWy4NSpWfQwx8itLNPpip2jlP1fcBSLfh-i_Qkyj7xzKRtq7jMoyVTacyDVBgA6McGF9l-LoIJzvyIJcpKowFqNtT4em6HhXJtwrq7Yqiqidc7HSjX0PMKwJnrS_WDKEF67ssRHljPwOV1fQuA7lid3vCAJznFu-oqqThLmpLeA1q91tesQaLKKwgUHT3FEfueWUTUEgr_VUi4tRewcpyfZdgeGLfGac2IOIK1RsJ2cdYrqlEIZNDPALoyBIlgMNFHlMRm_ElTgO8AqTnMnVJqlZ_YXSqVwTbwx75YJ_4vi-xK875jmOH_JeuVHETCqSBzAsZUzZp1OAORluNtYvbqhO6w1i-Qbud3eLoAAeFn4vZqm28i9meDOhvbncizGcSKHpdNdubCPuY3jPvUb9vC8-78x6upnR36VAjONiC8D0Nhph1wAmQMERAlFTpSOgBU0Bc30kq9-F82HhbE5CIQ96rEYDjl-63lW9n9lnqsXzv8s9x-4uK5ml8JqOtFm_cmuPE69qRsHbjVD8CdWwBOQYrtM5t6JgTQlFothecHTu2D4jNi3jIFxeLnubPljv5Td2QQeixzBfBIlYuEBdsOcwTW9WNQJc623Jcd3wHUMi2XZt0pvvpPjyAEXDeJ0tqlbrpdjt6aXm83Sk77Anvv3o1U3rmuMKlIEZhxErSijlaUWeuwUBbxv1WkkGcxfbgpQPKHfu2Z7m7oy3904eg0RR1G-KXMr6V6T7jo7shCgNg4NTKkL7DK5uh8MKVLo1FV_8-e33xfXvVW-q9um-wGqf_soCtX-GO6LOz-Xpm6NpqYHJXYFe0P9ausmR0NA0eHPsfJteP0-APX06Oz0_g_-00j_46GR0GVeQOhtvnBlVSCrAwDHwFQD2W8ju42Yqb2S3XEoSe4TlyRhWenOdWmJlVM6_yWf2uutbimiU8y9B0R_0d6mL-0M_f6G-DSLl23zaeYbdTJTI0-JEhHnvp-z9fRb7GzBj4UzsZp9HurlBx5XKX0khz4PLGU-3eAZXd-PoUsNQvOEuoNBF09EUNLl_8f6GleaOxBS0dIMFWlQtc3YS7ospDgQr82BSvgTYdeVF8SFvO6dHs4yZEHzyKitVt6z-NPvz7L9xbk74iLQAA"
     },
     {
       "_id": "52f5867b9cc9cf8664565cc9ef2af276",
@@ -27546,681 +28407,6 @@
         }
       ],
       "~raw": "H4sIAHCbzl4C_-1ZW0_bMBT-K1G2R5q0RWJSn9bLBJUGrVbtCRByE9N4S-zMdhgo6n-fb2kbk9Ab0CHghfb43PJ95_icQO6SFGKQIrfjuMde02u6R46L8C0RgtwNCOYg4OozTACKpVoE4_QrhThAHqEzqY9BAuVJP6KIOT3PnQthCFlAUcoRwfJsEqAp4lCqc0gTNrqdQHqHAmUYcZ6yju-DjJMEcK_knSMeK62uPnXGZ90fo4nTHQ_l8R2kzMRoi_RlaCY8C6kQXeZ2HmNKwiyQ3xytJn1kNH4yDT-NACXMnV_LfMDMuC6eO6TZTAZeSmYQw7IkRAwCZglNoLKQU4BZDDihOl4KeMQUBb506wcRTFAA4huWTRkHOIB-Lg9QOFdaM6gJY1mSAPpQpNMu7Fzlk4povBakjDsX_d7wVNg5w4ETQQqPHOjNPKfVbH2RHuA9SFLNS6HZKc6QciLzXq0OnaOUUPgnQxSGQsppBiVjMjmg0uYPqVJnnCIsYFUYUMhSghnUOLSbTfXbyrqLHcAYCRBQ9JLpLyhqdy4r4r4x5bDxe8Yaot6pOjdP_pnCW2n8yQ9IImJAzJlfpe6XQZxfK8eaEkPuZjwUlfBBw-40LLrJsFDREwtOxNkU1VJSWG5JS__sW29ocXLlKmnn5KR15VrkLE7qiVF5vl1eHgH5BDeqaTYlRt2lH6zsyYqeSIaSojc0DwnBIanlwehuQ8NgJCiwWZDCTqt9_IiE4qCeA5Xg2-WghKBNQdU034yQLef5BymVpJQGunS-NFRZ1cTKrZ1KRUc4zbjJBIWrM9lVW2kCMEeBlJ_qUhBSknHbSNxK573vXn90Ph79vBjYtn0Tc1IUjFkTBQVCzBXcFIoFEoY3XDHESEb1om32WLti8mIrWF0jcv04l83rud6qszQllPcADyKheAtiBlfIvElAmkqOpbsneCj0G0a_vFc15IdprHh-TkB7w3cHoxhbut1KG9NzFqq8JGyDwWL6v3kwDWSNkIgsnrUgz0cXg9E7QE7PCF2F5U2kpgy36dQKXNeTsR-uuquExmuhaa1vZSDXtPSeWL5wcx8Oyo3aek_wXrrBD4_eamuXFtyaalyPyAH6WT_EK8JYfhUogbduldwJwEOskgcDddMdclckX2mH_C_w08vj8mXLNnr8CtQo7qTcYCX_vm1e4MTj_0U88ozjI8etXPqNbaliq70oeq3VtlEAlxuGK0zNrWVbqlEgDdXQq7DTs6Ji-G4XtHoGbRfYXLL58nKsMMPBFBX_g7Cv5x0s9yeqpsY2qRbx8w99uHpqpxoAAA=="
-    },
-    {
-      "_id": "5219cefb9d2b8d5df08c3a956fdd20f3",
-      "_meta": {
-        "ETag": "50a39fd8cb3d50b14e4bee341bb5fae58ebf4a603cccd0df00170bb68f96cde1",
-        "github_username": "kevinxin90",
-        "timestamp": "2020-09-11T00:01:16.822173",
-        "uptime_status": "good",
-        "uptime_ts": "2020-09-22T00:05:38.869857",
-        "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/tcga_mut_freq/smartapi.yaml"
-      },
-      "_score": 0.73723376,
-      "components": {
-        "parameters": {
-          "callback": {
-            "description": "you can pass a \"callback\" parameter to make a JSONP call. Type: string.",
-            "in": "query",
-            "name": "callback",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "dotfield": {
-            "description": "control the format of the returned chem object. If \"true\" or \"1\", all fields will be collapsed into a single level deep object (all nested objects will be a single level deep, using dotfield notation to signify the nested structure) Type: boolean. Default: false.",
-            "in": "query",
-            "name": "dotfield",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          "email": {
-            "description": "If you are regular users of our services, we encourage you to provide us with an email, so that we can better track the usage or follow up with you.",
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "facet_size": {
-            "description": "the number of facet buckets to return in the response. Type: integer. Default: 10. Max: 1000.",
-            "in": "query",
-            "name": "facet_size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "facets": {
-            "description": "a comma-separated list of fields to return facets on.  In addition to query hits, the fields notated in \"facets\" will be aggregated by value and bucklet counts will be displayed in the \"facets\" field of the response object. Type: string (list). Default: None. Max: 1000.",
-            "in": "query",
-            "name": "facets",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "fields": {
-            "description": "a comma-separated list of fields (in dotfield notation) used to limit the fields returned from the matching chem hit(s). The supported field names can be found from any chem object or from the /metadata/fields endpoint. If \"fields=all\", all available fields will be returned. Type: string (list). Default: all. Max: 1000.",
-            "in": "query",
-            "name": "fields",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "format": {
-            "description": "controls output format of server response, currently supports: \"json\", \"jsonld\", \"html\". Type: string. Default: json.",
-            "in": "query",
-            "name": "format",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "from": {
-            "description": "the number of matching chem hits to skip, starting from 0.  This can be useful for paging in combination with the \"size\" parameter. Type: integer. Default: None.",
-            "in": "query",
-            "name": "from",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "prefix": {
-            "description": "Pass a prefix string to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "prefix",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "search": {
-            "description": "Pass a search term to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "search",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "size": {
-            "description": "the maximum number of matching chem hits to return per batch. Type: integer. Default: 10.",
-            "in": "query",
-            "name": "size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "sort": {
-            "description": "the comma-separated list of fields to sort on. Prefix each with \"-\" for descending order, otherwise in ascending order. Default: sort by descending score.",
-            "in": "query",
-            "name": "sort",
-            "schema": {
-              "type": "string"
-            }
-          }
-        },
-        "schemas": {
-          "Association": {
-            "properties": {
-              "_id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "_id"
-            ],
-            "type": "object"
-          },
-          "ErrorResult": {
-            "properties": {
-              "message": {
-                "type": "string"
-              },
-              "success": {
-                "type": "boolean"
-              }
-            },
-            "type": "object"
-          },
-          "QueryPOSTResult": {
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Association"
-                },
-                {
-                  "properties": {
-                    "_score": {
-                      "format": "float",
-                      "type": "number"
-                    },
-                    "query": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              ]
-            },
-            "type": "array"
-          },
-          "QueryResult": {
-            "properties": {
-              "hits": {
-                "items": {
-                  "$ref": "#/components/schemas/Association"
-                },
-                "type": "array"
-              },
-              "max_score": {
-                "format": "float",
-                "type": "number"
-              },
-              "took": {
-                "type": "integer"
-              },
-              "total": {
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          },
-          "int64_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "format": "int64",
-                  "type": "integer"
-                },
-                "type": "array"
-              },
-              {
-                "format": "int64",
-                "type": "integer"
-              }
-            ]
-          },
-          "string_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "x-bte-kgs-operations": {
-          "disease-gene": [
-            {
-              "inputs": [
-                {
-                  "id": "MONDO",
-                  "semantic": "Disease"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "SYMBOL",
-                  "semantic": "Gene"
-                }
-              ],
-              "parameters": {
-                "fields": "association.freq_by_sample,subject.SYMBOL",
-                "q": "object.id:\"{inputs[0]}\"%20AND%20association.freq_by_sample:>0.1",
-                "size": "1000",
-                "sort": "-association.freq_by_sample"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_disease_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/disease-gene"
-              },
-              "source": "Multiomics Provider",
-              "supportBatch": false
-            }
-          ],
-          "gene-disease": [
-            {
-              "inputSeparator": ",",
-              "inputs": [
-                {
-                  "id": "SYMBOL",
-                  "semantic": "Gene"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "MONDO",
-                  "semantic": "Disease"
-                }
-              ],
-              "parameters": {
-                "fields": "association.freq_by_sample,object.MONDO",
-                "q": "subject.SYMBOL:'{inputs[0]}'%20AND%20association.freq_by_sample:>0.1",
-                "size": "1000",
-                "sort": "-association.freq_by_sample"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_disease_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/gene-disease"
-              },
-              "source": "Multiomics",
-              "supportBatch": true
-            }
-          ]
-        },
-        "x-bte-response-mapping": {
-          "disease-gene": {
-            "SYMBOL": "hits.subject.SYMBOL",
-            "frequency": "hits.association.freq_by_sample"
-          },
-          "gene-disease": {
-            "MONDO": "hits.object.MONDO",
-            "frequency": "hits.association.freq_by_sample"
-          }
-        }
-      },
-      "info": {
-        "contact": {
-          "email": "help@biothings.io",
-          "name": "JIWEN XIN",
-          "x-id": "https://github.com/kevinxin90",
-          "x-role": "responsible developer"
-        },
-        "description": "Documentation of the TCGA Mutation Frequency KP query web services.",
-        "termsOfService": "https://biothings.io/about",
-        "title": "TCGA Mutation Frequency KP API",
-        "version": "1.0"
-      },
-      "openapi": "3.0.0",
-      "paths": [
-        {
-          "path": "/association",
-          "pathitem": {
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "ids": {
-                          "description": "multiple association IDs separated by comma. Note that currently we only take the input ids up to 1000 maximum, the rest will be omitted. Type: string (list). Max: 1000.",
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "ids"
-                      ]
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "items": {
-                          "$ref": "#/components/schemas/Association"
-                        },
-                        "type": "array"
-                      }
-                    }
-                  },
-                  "description": "A list of matching association objects"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "For a list of association IDs, return the matching disease object",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/association/{associationid}",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Retrieve association objects based on Association ID  Supports JSONP and CORS as well.",
-                  "example": "NRAS-TCGA-LUAD",
-                  "in": "path",
-                  "name": "associationid",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/Association"
-                      }
-                    }
-                  },
-                  "description": "A matching association object"
-                },
-                "404": {
-                  "description": "A response indicating an unknown association ID"
-                }
-              },
-              "summary": "Retrieve association objects based on ID",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "in": "query",
-                  "name": "callback"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "KP metadata object"
-                }
-              },
-              "summary": "Get metadata about the data available from the API",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata/fields",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/search",
-                  "name": "search"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/prefix",
-                  "name": "prefix"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "metadata fields object"
-                }
-              },
-              "summary": "Get metadata about the data fields available",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/query",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Query string.",
-                  "example": "object.MONDO:\"MONDO:0005061\"",
-                  "in": "query",
-                  "name": "q",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/facet_size",
-                  "name": "facet_size"
-                },
-                {
-                  "$ref": "#/components/parameters/sort",
-                  "name": "sort"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/facets",
-                  "name": "facets"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/from",
-                  "name": "from"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryResult"
-                      }
-                    }
-                  },
-                  "description": "A query response with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make queries and return matching association hits. Supports JSONP and CORS as well.",
-              "tags": [
-                "query"
-              ],
-              "x-bte-kgs-operations": [
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/disease-gene"
-                },
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/gene-disease"
-                }
-              ]
-            },
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "q": {
-                          "description": "multiple query terms separated by comma (also \"+\" or whitespace).  Does not support wildcard queries",
-                          "type": "string"
-                        },
-                        "scopes": {
-                          "description": "a comma-separated list of fields as the search \"scopes\" (fields to search through for query term). The available \"fields\" that can be passed to the \"scopes\" parameter are listed in the **/metadata/fields** endpoint.string Default: \"scopes=_id\".",
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryPOSTResult"
-                      }
-                    }
-                  },
-                  "description": "Query response objects with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make batch disease queries and return matching disease hits",
-              "tags": [
-                "query"
-              ]
-            }
-          }
-        }
-      ],
-      "servers": [
-        {
-          "description": "Encrypted Production server",
-          "url": "https://biothings.ncats.io/tcga_mut_freq_kp"
-        },
-        {
-          "description": "Production server",
-          "url": "http://biothings.ncats.io/tcga_mut_freq_kp"
-        }
-      ],
-      "tags": [
-        {
-          "name": "gene"
-        },
-        {
-          "name": "disease"
-        },
-        {
-          "name": "association"
-        },
-        {
-          "name": "annotation"
-        },
-        {
-          "name": "query"
-        },
-        {
-          "name": "translator"
-        },
-        {
-          "name": "biothings"
-        },
-        {
-          "name": "biothings_graph"
-        }
-      ],
-      "~raw": "H4sIAE2-Wl8C_-Vae3PcthH_Khi2ncjuvZS6malm0qkcOR6l0SOWO23Hp7nBkbg7RCRBA6Ckq0bfvbsL8Hk83slKnKT1HxYPBBb7-O0DCz4EKhMpz2RwxII_jSajSTBggUwXCgYeglClloeWnkXCZYzTViLO_jaXyq5kujQjqXBJyhOBL787_eebc_av03McvB_KiFZYm5mj8Xgp7Sqfj0KVjG_ErUzvZfqXiZuoVUzrtTCZSo2cx4JF4lbEwJ8OHmFOJEyoZWalSnHiiQrzRAB7OMDUgtmVYO-_eXvMznI_-K0WH3ORhmv290sGT3rN7sScGaFvZSjMCHe2QifmYnHlxurM1iUc87nKLc2X1jHas9Xx5SlOvRXaeGYPQa8oA24NozD04aEt0Js01OvMiohdahXlIdF1C5BaruNu7tKQW-LRhks-S3I7WwAzs5sMd9zYZRftfUlfoy740otSWH8pUuG2LUYiaQQ3rUFujAolaa71Ik2V7Rgn4zWHrOapiblVujlecr9leLbUPFs5ATJuV4bAPa6zhAOZMg72GddAwpZW-70WCyT4uzHAGKAKEDTjatI4UnYhRRzVnaIcI5Z2UaCppr7ej-y12rlpbbEb2G9npRNuGzu7EdIWQdzY1ypal8EBKNAzz7JYhqS-8f3w7u5uiCuHACxwChWJiGaZcAXcOLVqdGwrhdO_jNzfFlqTPLYyg1BQMw87PTGAXWQbnWW-ZiBMwkfsXFkBUYBbFuZaA2cx-jtTKfy1_EZQhJBpllsG27E8Y1axw8lkwhJ-L5M8GdAMiECW3ck4ZnNYnEgLu4zY-3UmjpixGjDEDmJp7IsRO-P3R0TBhRKYgky7ScHjo9eZ1CT-BxLy-vHRv6A458X_cjLpVemPxsOypkFpReJWd5rVzTTj46avlVxyrTm41GNHaD1mKB_GVLB9iF7T0L-a_yhCS3AMXn0C473svtFa6XfCgOG3MVeoDmwZ0T7IX8pk4jAF1naoRXT4wEGxNweUaIRu8K3SjJdCtrA1gA1srlMCQ6kAH8e88EEt-jWi2TVtVY8m44faDxk9kgqWoju4tGR9JwBKkAS71M_mwE4E6GbHDf4Zu8qzTGmY8d3VxfklqCZi31y8uwIi4A5xTFgV9zzJXCI7f3d8NcRsNvz-H8cnLv3jOAbHeihoiBE0sW11LlDFlZE7nOFzxM6Qx_Gchzd1CuXYbzz6Pjdg7B8muv2uJxj4WPCqK4Zvddg8vUnVXdryvw1n3c8JTk92-SRomUfc8l4HfAq-nJu4CNMJt-1ma6kIasaCu1KhLS28FbaaQ9UoxSf38xYwxrFiXmiV0LgvQUt9lMK3lFHA_Tk6gcCow0ao8COfyWMzeC_v6-v9yM_mde0qpbCLU-anmNCvLC3ZazwHuSfkkR_o7ONCcTv8O2ZHZxfnJxdH08D9hZLmz5OvDqdBD84__lpzwPMi-IKHws6M_I9oUKhG96JiIAE3PAJ_fyZ_eFYOQjnNhuR76q6ttf31hYGrsSv-_vVnTXKs_mrV9R3KFHgn7YrcfhqspDXTgPmT0Po3XE-f4ekKX8FxjupNX0F3Vgwo9mivIrUMgG7Xa2oUza0Y3izNEFkjgn1Zqmv62Jfyw6pZsf9aXDMsexrXqIdfsFPwLE9_VpR8hqf_Yj2Gj70dBuen1A7s6C6wAx4bBU77R_BYOD3eAYrBbSA2vhgxdqIA96myzDhUY_sgCrmOCqfoag9QrgQGOxsf3G07rDgpTqtFpWAoirhKC_hypIC5Az_BquKlXWmVL1foxTUpge_3QKCqHaceAEDDNVEgBswFy8B3YXsg56JWuVFpU8a1IPZgmnTH5pcv2xXmy5dMpFGmZGpHvotyIhYctH9UEv16JqNp0N1L-cnaJrvj-eXF1fu-iPlDM6IXR5H_3cg-xzBedkD64nwxBxXQFcEdn5Uwm3HzoSp2OtxirXLCJYKScdB0MbmBR8Bqgnxzn1xwUrODN9rn_LazmK2idQeraGetYkKE03JxSeGUBipH4h4-I3a6AHGwhnYBZhpA9T1gwEvh8UVLMlRxzDNDzgaScmaAH_DfGG9LWCRE5mlizIpZKsgxK5Q6Kh3LBiw3ZEQvFSt68RRL5DKVizUJ4EmCJvIQRBEvvG7nSsWCp6PKsxcQNUWfsus5sEPZnqLTdnEBtaFqUB0CA8OQFss85hokATihwlWuywufAbaDMVfkmi8FrQHJwBduZSRgiXNhgBftNGBGuUgIq1wwtIQuDeAgPeQGyYCxFmASdYcdZaIAhPtkLrP2DnTVzhwdQpMh8mQOHGFWwLlsnoc3UKyjVN4zfTwuAkHhBYAcsRS6ZqnDSbudvYX75vmoQwRPuybDp2W4SghHhClAFjtNGY8iWcDS5TMMN65579cScl06mnoewK1K7C-XgJMiv9_yOBcUzVB9MagRAJLWXAWCWhbzdZXdaiSdo5SO3UgJWy4NSpWfQwx8itLNPpip2jlP1fcBSLfh-i_Qkyj7xzKRtq7jMoyVTacyDVBgA6McGF9l-LoIJzvyIJcpKowFqNtT4em6HhXJtwrq7Yqiqidc7HSjX0PMKwJnrS_WDKEF67ssRHljPwOV1fQuA7lid3vCAJznFu-oqqThLmpLeA1q91tesQaLKKwgUHT3FEfueWUTUEgr_VUi4tRewcpyfZdgeGLfGac2IOIK1RsJ2cdYrqlEIZNDPALoyBIlgMNFHlMRm_ElTgO8AqTnMnVJqlZ_YXSqVwTbwx75YJ_4vi-xK875jmOH_JeuVHETCqSBzAsZUzZp1OAORluNtYvbqhO6w1i-Qbud3eLoAAeFn4vZqm28i9meDOhvbncizGcSKHpdNdubCPuY3jPvUb9vC8-78x6upnR36VAjONiC8D0Nhph1wAmQMERAlFTpSOgBU0Bc30kq9-F82HhbE5CIQ96rEYDjl-63lW9n9lnqsXzv8s9x-4uK5ml8JqOtFm_cmuPE69qRsHbjVD8CdWwBOQYrtM5t6JgTQlFothecHTu2D4jNi3jIFxeLnubPljv5Td2QQeixzBfBIlYuEBdsOcwTW9WNQJc623Jcd3wHUMi2XZt0pvvpPjyAEXDeJ0tqlbrpdjt6aXm83Sk77Anvv3o1U3rmuMKlIEZhxErSijlaUWeuwUBbxv1WkkGcxfbgpQPKHfu2Z7m7oy3904eg0RR1G-KXMr6V6T7jo7shCgNg4NTKkL7DK5uh8MKVLo1FV_8-e33xfXvVW-q9um-wGqf_soCtX-GO6LOz-Xpm6NpqYHJXYFe0P9ausmR0NA0eHPsfJteP0-APX06Oz0_g_-00j_46GR0GVeQOhtvnBlVSCrAwDHwFQD2W8ju42Yqb2S3XEoSe4TlyRhWenOdWmJlVM6_yWf2uutbimiU8y9B0R_0d6mL-0M_f6G-DSLl23zaeYbdTJTI0-JEhHnvp-z9fRb7GzBj4UzsZp9HurlBx5XKX0khz4PLGU-3eAZXd-PoUsNQvOEuoNBF09EUNLl_8f6GleaOxBS0dIMFWlQtc3YS7ospDgQr82BSvgTYdeVF8SFvO6dHs4yZEHzyKitVt6z-NPvz7L9xbk74iLQAA"
     },
     {
       "_id": "cc7324e732c4ffc7157a468bfbd0778c",
