@@ -23,9 +23,13 @@ def process_publications(res):
     if "pubmed" in res:
         if not isinstance(res["pubmed"], list):
             res["pubmed"] = [str(res["pubmed"])]
-        res["publications"] = [("PMID:" + str(item)) for item in res["pubmed"]]
+        res["publications"] = [
+            ("PMID:" + str(item).strip("PMID:")) for item in res["pubmed"]
+        ]
     if "pmc" in res:
         if not isinstance(res["pmc"], list):
             res["pmc"] = [str(res["pmc"])]
-        res["publications"] = [("PMC:" + str(item)) for item in res["pmc"]]
+        res["publications"] = [
+            ("PMC:" + str(item).strip("PMC:")) for item in res["pmc"]
+        ]
     return res
