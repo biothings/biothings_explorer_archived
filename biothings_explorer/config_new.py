@@ -165,7 +165,16 @@ ID_RESOLVING_APIS = {
         },
     },
     "Disease": {
-        "id_ranks": ["MONDO", "DOID", "OMIM", "ORPHANET", "UMLS", "MESH", "name"],
+        "id_ranks": [
+            "MONDO",
+            "DOID",
+            "OMIM",
+            "ORPHANET",
+            "UMLS",
+            "MESH",
+            "name",
+            "OMOP",
+        ],
         "semantic": "Disease",
         "api_name": "mydisease.info",
         "url": "http://mydisease.info/v1",
@@ -183,6 +192,7 @@ ID_RESOLVING_APIS = {
             "MESH": ["mondo.xrefs.mesh", "disease_ontology.xrefs.mesh", "ctd.mesh"],
             "OMIM": ["mondo.xrefs.omim", "hpo.omim"],
             "ORPHANET": ["hpo.orphanet", "mondo.xrefs.orphanet"],
+            "OMOP": ["mondo.xrefs.cohd"],
         },
     },
     "PhenotypicFeature": {
