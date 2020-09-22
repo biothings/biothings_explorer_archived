@@ -9,6 +9,7 @@ from .transformers.semmed_transformer import SemmedTransformer
 from .transformers.mut_freq_transformer import MutFreqTransformer
 from .transformers.drug_response_transformer import DrugResponseTransformer
 from .transformers.reasoner_transformer import ReasonerTransformer
+from .transformers.cohd_transformer import COHDTransformer
 
 
 class Transformer:
@@ -39,6 +40,8 @@ class Transformer:
             self.tf = CTDTransformer(self.data)
         elif "opentarget" in tags:
             self.tf = OpenTargetTransformer(self.data)
+        elif api == "COHD API":
+            self.tf = COHDTransformer(self.data)
         else:
             self.tf = BaseTransformer(self.data)
 

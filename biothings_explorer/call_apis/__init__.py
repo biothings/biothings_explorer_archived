@@ -248,7 +248,7 @@ class APIQueryDispatcher:
                 )
                 return
             except Exception as e:
-                # traceback.print_exc()
+                traceback.print_exc()
                 print(
                     "API call to {} with input {} failed with unknown response".format(
                         edge["association"]["api_name"], edge["input"]
