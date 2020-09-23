@@ -1,4 +1,4 @@
-"""
+ """
 Function for filtering based on the label of an edges (ie. related_to, positively_regulates, etc)
 
 Parameters:
@@ -13,12 +13,15 @@ from .edges import filter_node_degree
 
 def filter_label(G, label, count=50):
 
+    # get edges with specified label(s)
     val_edges = []
     for edge in G.edges:
         if G[edge[0]][edge[1]][edge[2]]['label'] in label:
             val_edges.append(edge)
 
+    # make subgraph with filtered edges
     subG = G.edge_subgraph(val_edges)
+    # filter remaining edges by node degree
     subG = filter_node_degree(subG, count, 'EdgeLabel')
 
     return subG
