@@ -165,7 +165,16 @@ ID_RESOLVING_APIS = {
         },
     },
     "Disease": {
-        "id_ranks": ["MONDO", "DOID", "OMIM", "ORPHANET", "UMLS", "MESH", "name"],
+        "id_ranks": [
+            "MONDO",
+            "DOID",
+            "OMIM",
+            "ORPHANET",
+            "UMLS",
+            "MESH",
+            "name",
+            "OMOP",
+        ],
         "semantic": "Disease",
         "api_name": "mydisease.info",
         "url": "http://mydisease.info/v1",
@@ -183,6 +192,7 @@ ID_RESOLVING_APIS = {
             "MESH": ["mondo.xrefs.mesh", "disease_ontology.xrefs.mesh", "ctd.mesh"],
             "OMIM": ["mondo.xrefs.omim", "hpo.omim"],
             "ORPHANET": ["hpo.orphanet", "mondo.xrefs.orphanet"],
+            "OMOP": ["mondo.xrefs.cohd"],
         },
     },
     "PhenotypicFeature": {
@@ -291,3 +301,39 @@ ID_RESOLVING_APIS = {
         },
     },
 }
+
+MAX_CONCURRENT_QUERIES_ON_SINGLE_API = 5
+
+ALWAYS_PREFIXED = [
+    "RHEA",
+    "GO",
+    "CHEBI",
+    "HP",
+    "MONDO",
+    "DOID",
+    "EFO",
+    "UBERON",
+    "MP",
+    "CL",
+    "MGI",
+]
+
+SEMANTIC_TYPES_TO_EXPAND = [
+    "Disease",
+    "PhenotypicFeature",
+    "AnatomicalEntity",
+    "BiologicalProcess",
+    "CellularComponent",
+    "MolecularActivity",
+]
+
+EXPAND_API_LIST = [
+    "mydisease.info API",
+    "Gene Ontology Cellular Component API",
+    "Gene Ontology Biological Process API",
+    "UBERON Ontology API",
+    "Gene Ontology Molecular Activity API",
+    "Human Phenotype Ontology API",
+]
+
+BTE_FILTERS = ["nodeDegree", "ngd", "drugPhase", "survivalProbability"]
