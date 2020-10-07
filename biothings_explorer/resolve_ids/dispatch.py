@@ -43,6 +43,9 @@ class Dispatcher:
                 res["invalid"].add(_id)
             else:
                 prefix = splitted[0]
+                if semantic_type not in ID_RESOLVING_APIS:
+                    res["invalid"].add(_id)
+                    continue
                 if prefix not in ID_RESOLVING_APIS[semantic_type]["mapping"]:
                     res["invalid"].add(_id)
                     continue
