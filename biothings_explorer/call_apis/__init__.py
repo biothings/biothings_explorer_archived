@@ -93,13 +93,14 @@ class APIQueryDispatcher:
                             )
                         )
                     if res.status >= 400:
-                        print(
-                            "API call to {} with input {} failed with status code {}".format(
-                                edge["association"]["api_name"],
-                                edge["input"],
-                                res.status,
+                        if self.verbose:
+                            print(
+                                "API call to {} with input {} failed with status code {}".format(
+                                    edge["association"]["api_name"],
+                                    edge["input"],
+                                    res.status,
+                                )
                             )
-                        )
                         return
                     try:
                         res = await res.json()
@@ -146,19 +147,21 @@ class APIQueryDispatcher:
                         self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except asyncio.TimeoutError:
-                print(
-                    "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    print(
+                        "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
             except Exception as e:
-                traceback.print_exc()
-                print(
-                    "API call to {} with input {} failed with unknown response".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    traceback.print_exc()
+                    print(
+                        "API call to {} with input {} failed with unknown response".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
         elif qb.config.get("method") == "get":
             try:
@@ -186,15 +189,14 @@ class APIQueryDispatcher:
                             )
                         )
                     if res.status >= 400:
-                        print(
-                            "API call to {} with input {} failed with status code {}".format(
-                                edge["association"]["api_name"],
-                                edge["input"],
-                                res.status,
+                        if self.verbose:
+                            print(
+                                "API call to {} with input {} failed with status code {}".format(
+                                    edge["association"]["api_name"],
+                                    edge["input"],
+                                    res.status,
+                                )
                             )
-                        )
-                        res = await res.json()
-                        print(res)
                         return
                     try:
                         res = await res.json()
@@ -241,19 +243,21 @@ class APIQueryDispatcher:
                         self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except asyncio.TimeoutError:
-                print(
-                    "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    print(
+                        "API call to {} with input {} failed with timeout error. Current timeout limit is 5 seconds".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
             except Exception as e:
-                traceback.print_exc()
-                print(
-                    "API call to {} with input {} failed with unknown response".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    traceback.print_exc()
+                    print(
+                        "API call to {} with input {} failed with unknown response".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
         elif qb.config.get("method") == "post":
             try:
@@ -283,14 +287,15 @@ class APIQueryDispatcher:
                             )
                         )
                     if res.status >= 400:
-                        print(
-                            "API call to {} with input {} failed with status code {}".format(
-                                edge["association"]["api_name"],
-                                edge["input"],
-                                res.status,
+                        if self.verbose:
+                            print(
+                                "API call to {} with input {} failed with status code {}".format(
+                                    edge["association"]["api_name"],
+                                    edge["input"],
+                                    res.status,
+                                )
                             )
-                        )
-                        print("config", qb.config)
+                            print("config", qb.config)
                         return
                     res = await res.json()
                     tf = Transformer({"response": res, "edge": edge})
@@ -333,19 +338,21 @@ class APIQueryDispatcher:
                         self.api_id[edge["association"]["api_name"]]["current"] += 1
                     return result
             except asyncio.TimeoutError:
-                print(
-                    "API call to {} with input {} failed with timeout error. Current timeout limit is 20 seconds".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    print(
+                        "API call to {} with input {} failed with timeout error. Current timeout limit is 20 seconds".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
             except Exception as e:
-                traceback.print_exc()
-                print(
-                    "API call to {} with input {} failed with unknown response".format(
-                        edge["association"]["api_name"], edge["input"]
+                if self.verbose:
+                    traceback.print_exc()
+                    print(
+                        "API call to {} with input {} failed with unknown response".format(
+                            edge["association"]["api_name"], edge["input"]
+                        )
                     )
-                )
                 return
 
     async def annotate(self, res, session):
@@ -371,10 +378,18 @@ class APIQueryDispatcher:
         tasks = defaultdict(list)
         cnt = Counter()
         for edge in self.edges:
-            api = edge["association"]["api_name"]
+            if edge["query_operation"]["server"].startswith(
+                "https://biothings.ncats.io"
+            ):
+                api = "pending API"
+            else:
+                api = edge["association"]["api_name"]
             cnt[api] += 1
             if api == "MyVariant.info API":
                 tasks[cnt[api]].append(self.callSingleAPI(edge, session))
+            if api == "pending API":
+                task_id = floor(cnt[api] / 2)
+                tasks[task_id].append(self.callSingleAPI(edge, session))
             else:
                 task_id = floor(cnt[api] / MAX_CONCURRENT_QUERIES_ON_SINGLE_API)
                 tasks[task_id].append(self.callSingleAPI(edge, session))
