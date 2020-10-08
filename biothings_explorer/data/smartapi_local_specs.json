@@ -42962,7 +42962,7 @@
               "requestBody": {
                 "body": {
                   "q": "{inputs[0]}",
-                  "scopes": "pathway.reactome"
+                  "scopes": "pathway.reactome.id"
                 },
                 "header": "application/x-www-form-urlencoded"
               },
@@ -42994,7 +42994,7 @@
               "requestBody": {
                 "body": {
                   "q": "{inputs[0]}",
-                  "scopes": "pathway.wikipathways"
+                  "scopes": "pathway.wikipathways.id"
                 },
                 "header": "application/x-www-form-urlencoded"
               },
