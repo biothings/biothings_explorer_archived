@@ -11424,7 +11424,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Phenotype API",
         "version": "1.0"
@@ -15771,7 +15771,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Chemical API",
         "version": "1.0"
@@ -19190,7 +19190,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Biological Process API",
         "version": "1.0"
@@ -23633,7 +23633,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [semmed disease](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [semmed disease](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Disease API",
         "version": "1.0"
@@ -25023,11 +25023,11 @@
       "servers": [
         {
           "description": "Encrypted Production server",
-          "url": "https://pending.biothings.io/mgigene2phenotype"
+          "url": "https://biothings.ncats.io/mgigene2phenotype"
         },
         {
           "description": "Production server",
-          "url": "http://pending.biothings.io/mgigene2phenotype"
+          "url": "http://biothings.ncats.io/mgigene2phenotype"
         }
       ],
       "tags": [
@@ -25472,681 +25472,6 @@
         }
       ],
       "~raw": "H4sIAJA2B18C_81WTXPbNhD9Kzs8tTMSKctOneRUj-162sZOOvIkB8ujAckViYgEaADURzT6710A1JctKfLUh_pgS8DDw2L37VvPA1mhYBUPPkJwGnbCTtCCgIuhpIV5MEaluRTNpt0y3BRov9_OblBgaKFw8eVPu5eiThSvTHPiSiZ1icIwuwByCCZH2DxmP8E_NaoZTDAGjWrME9QhfEKmBJRSIbBY1gYeNo49_pIbU32MonKWLdeiX11sqEr9edjzPDaEHUgHiiw8kRRbYtxDBSvdgcu8FgVy-FZbxLStpH-tQl1JoXlcIKQ4xoLSpiwES8YLdxUW1e8bF_nzPF2GoSmOjJu8jsNElpHAiYUGiwXh7Msp0wR9mAe1KvaEPj7dkeUvSqZ14lLsaYLFo80Fyxq-5dP8da2NxzIhpK_O9vqTLcn2klFM6IIZ2dBXzOTaZS7yaPsxQ59MXZclc2vBLRsh2JvBwYCJFBSa2paXmSTnIvPbOTc6cMSKrjSrbKxi8rpch_cyE15J2igiDeF6ysqqQA394PLq726fDvSDu9tB5133fffcf-12zn47_TBgph-EcJ_b0hoqJ6ZNtHpGCplCwgTECENZU_TMQFOaVCY63KwPiohShNrYLZ-XQSPqMDdlYWNW-FRzhVYWRtXoRDJmRY33s8o-9GFZeJ5S6_Ahp0yEUmVRnokk1LMyloVT7x6YwqHGp0OIWnAb8k8glZLmEKRK40PbMZcJU4aFVigTNjuEHWGWHYOb8BFvYPpgaDlTZTaKw2PACskCZEnpsLLWSU4N7URsfD0Cryfq08fWygbQS7_b6bi_z3R40ahnCQYZf8fEwIS6n0Rnld4PgBJMFmJmjc802K-bUpi7NnNmQGfCAZkJgTfVsu9VIombIrsu3qIhpMIfzg3egM0r8limLRG_JKNmO_6NBJZCliQZV5pp-6_e57tPV5fk6jg1e2z37vLivte-ZyJDKitGa19r0xCkMmScCj6L4kLGUck0GdGWBX_XUhTpIPGXNFvLr6HdJaU4T49cxub2N08X-_zxD6mAQcbHKLwP8rS1NEg7LrdN0gvpkE3669Ze6dL70iqvnQaALr8m0ZVxsb4cwyxswUnn5LwF13e9m479OTnvdM_eh3BhY7P2BQ3DjT8GE6lGGoyUwIfADXBNyKpgCUFjsn2geQdS4JK_e_bu_MPZfzLEtSr3dzf6171pcz-rxE979606pPHtY4lWNv-cxDp72Jtwrdv0v4N5BZ-fCVt8NAaOJXATY_uw9-dwNSyOb_6X82Unsxstx7NuT6KdjMt58QrW9YjZybg51l7Buj0NdzKvBuHxrDtm5__PXReLfwHrmvLutwwAAA=="
-    },
-    {
-      "_id": "5219cefb9d2b8d5df08c3a956fdd20f3",
-      "_meta": {
-        "ETag": "50a39fd8cb3d50b14e4bee341bb5fae58ebf4a603cccd0df00170bb68f96cde1",
-        "github_username": "kevinxin90",
-        "timestamp": "2020-09-11T00:01:16.822173",
-        "uptime_status": "good",
-        "uptime_ts": "2020-09-22T00:05:38.869857",
-        "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/tcga_mut_freq/smartapi.yaml"
-      },
-      "_score": 0.752544,
-      "components": {
-        "parameters": {
-          "callback": {
-            "description": "you can pass a \"callback\" parameter to make a JSONP call. Type: string.",
-            "in": "query",
-            "name": "callback",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "dotfield": {
-            "description": "control the format of the returned chem object. If \"true\" or \"1\", all fields will be collapsed into a single level deep object (all nested objects will be a single level deep, using dotfield notation to signify the nested structure) Type: boolean. Default: false.",
-            "in": "query",
-            "name": "dotfield",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          "email": {
-            "description": "If you are regular users of our services, we encourage you to provide us with an email, so that we can better track the usage or follow up with you.",
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "facet_size": {
-            "description": "the number of facet buckets to return in the response. Type: integer. Default: 10. Max: 1000.",
-            "in": "query",
-            "name": "facet_size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "facets": {
-            "description": "a comma-separated list of fields to return facets on.  In addition to query hits, the fields notated in \"facets\" will be aggregated by value and bucklet counts will be displayed in the \"facets\" field of the response object. Type: string (list). Default: None. Max: 1000.",
-            "in": "query",
-            "name": "facets",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "fields": {
-            "description": "a comma-separated list of fields (in dotfield notation) used to limit the fields returned from the matching chem hit(s). The supported field names can be found from any chem object or from the /metadata/fields endpoint. If \"fields=all\", all available fields will be returned. Type: string (list). Default: all. Max: 1000.",
-            "in": "query",
-            "name": "fields",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "format": {
-            "description": "controls output format of server response, currently supports: \"json\", \"jsonld\", \"html\". Type: string. Default: json.",
-            "in": "query",
-            "name": "format",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "from": {
-            "description": "the number of matching chem hits to skip, starting from 0.  This can be useful for paging in combination with the \"size\" parameter. Type: integer. Default: None.",
-            "in": "query",
-            "name": "from",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "prefix": {
-            "description": "Pass a prefix string to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "prefix",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "search": {
-            "description": "Pass a search term to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "search",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "size": {
-            "description": "the maximum number of matching chem hits to return per batch. Type: integer. Default: 10.",
-            "in": "query",
-            "name": "size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "sort": {
-            "description": "the comma-separated list of fields to sort on. Prefix each with \"-\" for descending order, otherwise in ascending order. Default: sort by descending score.",
-            "in": "query",
-            "name": "sort",
-            "schema": {
-              "type": "string"
-            }
-          }
-        },
-        "schemas": {
-          "Association": {
-            "properties": {
-              "_id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "_id"
-            ],
-            "type": "object"
-          },
-          "ErrorResult": {
-            "properties": {
-              "message": {
-                "type": "string"
-              },
-              "success": {
-                "type": "boolean"
-              }
-            },
-            "type": "object"
-          },
-          "QueryPOSTResult": {
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Association"
-                },
-                {
-                  "properties": {
-                    "_score": {
-                      "format": "float",
-                      "type": "number"
-                    },
-                    "query": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              ]
-            },
-            "type": "array"
-          },
-          "QueryResult": {
-            "properties": {
-              "hits": {
-                "items": {
-                  "$ref": "#/components/schemas/Association"
-                },
-                "type": "array"
-              },
-              "max_score": {
-                "format": "float",
-                "type": "number"
-              },
-              "took": {
-                "type": "integer"
-              },
-              "total": {
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          },
-          "int64_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "format": "int64",
-                  "type": "integer"
-                },
-                "type": "array"
-              },
-              {
-                "format": "int64",
-                "type": "integer"
-              }
-            ]
-          },
-          "string_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "x-bte-kgs-operations": {
-          "disease-gene": [
-            {
-              "inputs": [
-                {
-                  "id": "MONDO",
-                  "semantic": "Disease"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "SYMBOL",
-                  "semantic": "Gene"
-                }
-              ],
-              "parameters": {
-                "fields": "association.freq_by_sample,subject.SYMBOL",
-                "q": "object.id:\"{inputs[0]}\"%20AND%20association.freq_by_sample:>0.1",
-                "size": "1000",
-                "sort": "-association.freq_by_sample"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_disease_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/disease-gene"
-              },
-              "source": "Multiomics Provider",
-              "supportBatch": false
-            }
-          ],
-          "gene-disease": [
-            {
-              "inputSeparator": ",",
-              "inputs": [
-                {
-                  "id": "SYMBOL",
-                  "semantic": "Gene"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "MONDO",
-                  "semantic": "Disease"
-                }
-              ],
-              "parameters": {
-                "fields": "association.freq_by_sample,object.MONDO",
-                "q": "subject.SYMBOL:'{inputs[0]}'%20AND%20association.freq_by_sample:>0.1",
-                "size": "1000",
-                "sort": "-association.freq_by_sample"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_disease_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/gene-disease"
-              },
-              "source": "Multiomics",
-              "supportBatch": true
-            }
-          ]
-        },
-        "x-bte-response-mapping": {
-          "disease-gene": {
-            "SYMBOL": "hits.subject.SYMBOL",
-            "frequency": "hits.association.freq_by_sample"
-          },
-          "gene-disease": {
-            "MONDO": "hits.object.MONDO",
-            "frequency": "hits.association.freq_by_sample"
-          }
-        }
-      },
-      "info": {
-        "contact": {
-          "email": "help@biothings.io",
-          "name": "JIWEN XIN",
-          "x-id": "https://github.com/kevinxin90",
-          "x-role": "responsible developer"
-        },
-        "description": "Documentation of the TCGA Mutation Frequency KP query web services.",
-        "termsOfService": "https://biothings.io/about",
-        "title": "TCGA Mutation Frequency KP API",
-        "version": "1.0"
-      },
-      "openapi": "3.0.0",
-      "paths": [
-        {
-          "path": "/association",
-          "pathitem": {
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "ids": {
-                          "description": "multiple association IDs separated by comma. Note that currently we only take the input ids up to 1000 maximum, the rest will be omitted. Type: string (list). Max: 1000.",
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "ids"
-                      ]
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "items": {
-                          "$ref": "#/components/schemas/Association"
-                        },
-                        "type": "array"
-                      }
-                    }
-                  },
-                  "description": "A list of matching association objects"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "For a list of association IDs, return the matching disease object",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/association/{associationid}",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Retrieve association objects based on Association ID  Supports JSONP and CORS as well.",
-                  "example": "NRAS-TCGA-LUAD",
-                  "in": "path",
-                  "name": "associationid",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/Association"
-                      }
-                    }
-                  },
-                  "description": "A matching association object"
-                },
-                "404": {
-                  "description": "A response indicating an unknown association ID"
-                }
-              },
-              "summary": "Retrieve association objects based on ID",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "in": "query",
-                  "name": "callback"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "KP metadata object"
-                }
-              },
-              "summary": "Get metadata about the data available from the API",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata/fields",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/search",
-                  "name": "search"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/prefix",
-                  "name": "prefix"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "metadata fields object"
-                }
-              },
-              "summary": "Get metadata about the data fields available",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/query",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Query string.",
-                  "example": "object.MONDO:\"MONDO:0005061\"",
-                  "in": "query",
-                  "name": "q",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/facet_size",
-                  "name": "facet_size"
-                },
-                {
-                  "$ref": "#/components/parameters/sort",
-                  "name": "sort"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/facets",
-                  "name": "facets"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/from",
-                  "name": "from"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryResult"
-                      }
-                    }
-                  },
-                  "description": "A query response with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make queries and return matching association hits. Supports JSONP and CORS as well.",
-              "tags": [
-                "query"
-              ],
-              "x-bte-kgs-operations": [
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/disease-gene"
-                },
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/gene-disease"
-                }
-              ]
-            },
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "q": {
-                          "description": "multiple query terms separated by comma (also \"+\" or whitespace).  Does not support wildcard queries",
-                          "type": "string"
-                        },
-                        "scopes": {
-                          "description": "a comma-separated list of fields as the search \"scopes\" (fields to search through for query term). The available \"fields\" that can be passed to the \"scopes\" parameter are listed in the **/metadata/fields** endpoint.string Default: \"scopes=_id\".",
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryPOSTResult"
-                      }
-                    }
-                  },
-                  "description": "Query response objects with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make batch disease queries and return matching disease hits",
-              "tags": [
-                "query"
-              ]
-            }
-          }
-        }
-      ],
-      "servers": [
-        {
-          "description": "Encrypted Production server",
-          "url": "https://biothings.ncats.io/tcga_mut_freq_kp"
-        },
-        {
-          "description": "Production server",
-          "url": "http://biothings.ncats.io/tcga_mut_freq_kp"
-        }
-      ],
-      "tags": [
-        {
-          "name": "gene"
-        },
-        {
-          "name": "disease"
-        },
-        {
-          "name": "association"
-        },
-        {
-          "name": "annotation"
-        },
-        {
-          "name": "query"
-        },
-        {
-          "name": "translator"
-        },
-        {
-          "name": "biothings"
-        },
-        {
-          "name": "biothings_graph"
-        }
-      ],
-      "~raw": "H4sIAE2-Wl8C_-Vae3PcthH_Khi2ncjuvZS6malm0qkcOR6l0SOWO23Hp7nBkbg7RCRBA6Ckq0bfvbsL8Hk83slKnKT1HxYPBBb7-O0DCz4EKhMpz2RwxII_jSajSTBggUwXCgYeglClloeWnkXCZYzTViLO_jaXyq5kujQjqXBJyhOBL787_eebc_av03McvB_KiFZYm5mj8Xgp7Sqfj0KVjG_ErUzvZfqXiZuoVUzrtTCZSo2cx4JF4lbEwJ8OHmFOJEyoZWalSnHiiQrzRAB7OMDUgtmVYO-_eXvMznI_-K0WH3ORhmv290sGT3rN7sScGaFvZSjMCHe2QifmYnHlxurM1iUc87nKLc2X1jHas9Xx5SlOvRXaeGYPQa8oA24NozD04aEt0Js01OvMiohdahXlIdF1C5BaruNu7tKQW-LRhks-S3I7WwAzs5sMd9zYZRftfUlfoy740otSWH8pUuG2LUYiaQQ3rUFujAolaa71Ik2V7Rgn4zWHrOapiblVujlecr9leLbUPFs5ATJuV4bAPa6zhAOZMg72GddAwpZW-70WCyT4uzHAGKAKEDTjatI4UnYhRRzVnaIcI5Z2UaCppr7ej-y12rlpbbEb2G9npRNuGzu7EdIWQdzY1ypal8EBKNAzz7JYhqS-8f3w7u5uiCuHACxwChWJiGaZcAXcOLVqdGwrhdO_jNzfFlqTPLYyg1BQMw87PTGAXWQbnWW-ZiBMwkfsXFkBUYBbFuZaA2cx-jtTKfy1_EZQhJBpllsG27E8Y1axw8lkwhJ-L5M8GdAMiECW3ck4ZnNYnEgLu4zY-3UmjpixGjDEDmJp7IsRO-P3R0TBhRKYgky7ScHjo9eZ1CT-BxLy-vHRv6A458X_cjLpVemPxsOypkFpReJWd5rVzTTj46avlVxyrTm41GNHaD1mKB_GVLB9iF7T0L-a_yhCS3AMXn0C473svtFa6XfCgOG3MVeoDmwZ0T7IX8pk4jAF1naoRXT4wEGxNweUaIRu8K3SjJdCtrA1gA1srlMCQ6kAH8e88EEt-jWi2TVtVY8m44faDxk9kgqWoju4tGR9JwBKkAS71M_mwE4E6GbHDf4Zu8qzTGmY8d3VxfklqCZi31y8uwIi4A5xTFgV9zzJXCI7f3d8NcRsNvz-H8cnLv3jOAbHeihoiBE0sW11LlDFlZE7nOFzxM6Qx_Gchzd1CuXYbzz6Pjdg7B8muv2uJxj4WPCqK4Zvddg8vUnVXdryvw1n3c8JTk92-SRomUfc8l4HfAq-nJu4CNMJt-1ma6kIasaCu1KhLS28FbaaQ9UoxSf38xYwxrFiXmiV0LgvQUt9lMK3lFHA_Tk6gcCow0ao8COfyWMzeC_v6-v9yM_mde0qpbCLU-anmNCvLC3ZazwHuSfkkR_o7ONCcTv8O2ZHZxfnJxdH08D9hZLmz5OvDqdBD84__lpzwPMi-IKHws6M_I9oUKhG96JiIAE3PAJ_fyZ_eFYOQjnNhuR76q6ttf31hYGrsSv-_vVnTXKs_mrV9R3KFHgn7YrcfhqspDXTgPmT0Po3XE-f4ekKX8FxjupNX0F3Vgwo9mivIrUMgG7Xa2oUza0Y3izNEFkjgn1Zqmv62Jfyw6pZsf9aXDMsexrXqIdfsFPwLE9_VpR8hqf_Yj2Gj70dBuen1A7s6C6wAx4bBU77R_BYOD3eAYrBbSA2vhgxdqIA96myzDhUY_sgCrmOCqfoag9QrgQGOxsf3G07rDgpTqtFpWAoirhKC_hypIC5Az_BquKlXWmVL1foxTUpge_3QKCqHaceAEDDNVEgBswFy8B3YXsg56JWuVFpU8a1IPZgmnTH5pcv2xXmy5dMpFGmZGpHvotyIhYctH9UEv16JqNp0N1L-cnaJrvj-eXF1fu-iPlDM6IXR5H_3cg-xzBedkD64nwxBxXQFcEdn5Uwm3HzoSp2OtxirXLCJYKScdB0MbmBR8Bqgnxzn1xwUrODN9rn_LazmK2idQeraGetYkKE03JxSeGUBipH4h4-I3a6AHGwhnYBZhpA9T1gwEvh8UVLMlRxzDNDzgaScmaAH_DfGG9LWCRE5mlizIpZKsgxK5Q6Kh3LBiw3ZEQvFSt68RRL5DKVizUJ4EmCJvIQRBEvvG7nSsWCp6PKsxcQNUWfsus5sEPZnqLTdnEBtaFqUB0CA8OQFss85hokATihwlWuywufAbaDMVfkmi8FrQHJwBduZSRgiXNhgBftNGBGuUgIq1wwtIQuDeAgPeQGyYCxFmASdYcdZaIAhPtkLrP2DnTVzhwdQpMh8mQOHGFWwLlsnoc3UKyjVN4zfTwuAkHhBYAcsRS6ZqnDSbudvYX75vmoQwRPuybDp2W4SghHhClAFjtNGY8iWcDS5TMMN65579cScl06mnoewK1K7C-XgJMiv9_yOBcUzVB9MagRAJLWXAWCWhbzdZXdaiSdo5SO3UgJWy4NSpWfQwx8itLNPpip2jlP1fcBSLfh-i_Qkyj7xzKRtq7jMoyVTacyDVBgA6McGF9l-LoIJzvyIJcpKowFqNtT4em6HhXJtwrq7Yqiqidc7HSjX0PMKwJnrS_WDKEF67ssRHljPwOV1fQuA7lid3vCAJznFu-oqqThLmpLeA1q91tesQaLKKwgUHT3FEfueWUTUEgr_VUi4tRewcpyfZdgeGLfGac2IOIK1RsJ2cdYrqlEIZNDPALoyBIlgMNFHlMRm_ElTgO8AqTnMnVJqlZ_YXSqVwTbwx75YJ_4vi-xK875jmOH_JeuVHETCqSBzAsZUzZp1OAORluNtYvbqhO6w1i-Qbud3eLoAAeFn4vZqm28i9meDOhvbncizGcSKHpdNdubCPuY3jPvUb9vC8-78x6upnR36VAjONiC8D0Nhph1wAmQMERAlFTpSOgBU0Bc30kq9-F82HhbE5CIQ96rEYDjl-63lW9n9lnqsXzv8s9x-4uK5ml8JqOtFm_cmuPE69qRsHbjVD8CdWwBOQYrtM5t6JgTQlFothecHTu2D4jNi3jIFxeLnubPljv5Td2QQeixzBfBIlYuEBdsOcwTW9WNQJc623Jcd3wHUMi2XZt0pvvpPjyAEXDeJ0tqlbrpdjt6aXm83Sk77Anvv3o1U3rmuMKlIEZhxErSijlaUWeuwUBbxv1WkkGcxfbgpQPKHfu2Z7m7oy3904eg0RR1G-KXMr6V6T7jo7shCgNg4NTKkL7DK5uh8MKVLo1FV_8-e33xfXvVW-q9um-wGqf_soCtX-GO6LOz-Xpm6NpqYHJXYFe0P9ausmR0NA0eHPsfJteP0-APX06Oz0_g_-00j_46GR0GVeQOhtvnBlVSCrAwDHwFQD2W8ju42Yqb2S3XEoSe4TlyRhWenOdWmJlVM6_yWf2uutbimiU8y9B0R_0d6mL-0M_f6G-DSLl23zaeYbdTJTI0-JEhHnvp-z9fRb7GzBj4UzsZp9HurlBx5XKX0khz4PLGU-3eAZXd-PoUsNQvOEuoNBF09EUNLl_8f6GleaOxBS0dIMFWlQtc3YS7ospDgQr82BSvgTYdeVF8SFvO6dHs4yZEHzyKitVt6z-NPvz7L9xbk74iLQAA"
     },
     {
       "_id": "52f5867b9cc9cf8664565cc9ef2af276",
@@ -30478,11 +29803,11 @@
       "servers": [
         {
           "description": "Encrypted Production server",
-          "url": "https://pending.biothings.io/DISEASES"
+          "url": "https://biothings.ncats.io/DISEASES"
         },
         {
           "description": "Production server",
-          "url": "http://pending.biothings.io/DISEASES"
+          "url": "http://biothings.ncats.io/DISEASES"
         }
       ],
       "tags": [
@@ -30854,7 +30179,7 @@
               ],
               "parameters": {
                 "direct": true,
-                "gene_id": "REACT:{inputs[0]}",
+                "pathway_id": "REACT:{inputs[0]}",
                 "rows": 200,
                 "unselect_evidence": true
               },
@@ -43613,6 +42938,71 @@
               },
               "source": "CPDB",
               "supportBatch": true
+            },
+            {
+              "inputSeparator": ",",
+              "outputs": [
+                {
+                  "id": "NCBIGene",
+                  "semantic": "Gene"
+                }
+              ],
+              "method": "post",
+              "inputs": [
+                {
+                  "id": "REACT",
+                  "semantic": "Pathway"
+                }
+              ],
+              "parameters": {
+                "fields": "entrezgene",
+                "species": "human"
+              },
+              "predicate": "functional_association",
+              "requestBody": {
+                "body": {
+                  "q": "{inputs[0]}",
+                  "scopes": "pathway.reactome"
+                },
+                "header": "application/x-www-form-urlencoded"
+              },
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/gene"
+              },
+              "source": "CPDB",
+              "supportBatch": true
+            },
+            {
+              "inputSeparator": ",",
+              "outputs": [
+                {
+                  "id": "NCBIGene",
+                  "semantic": "Gene"
+                }
+              ],
+              "method": "post",
+              "inputs": [
+                {
+                  "id": "WIKIPATHWAYS",
+                  "semantic": "Pathway"
+                }
+              ],
+              "parameters": {
+                "fields": "entrezgene"
+              },
+              "predicate": "functional_association",
+              "requestBody": {
+                "body": {
+                  "q": "{inputs[0]}",
+                  "scopes": "pathway.wikipathways"
+                },
+                "header": "application/x-www-form-urlencoded"
+              },
+              "response_mapping": {
+                "$ref": "#/components/x-bte-response-mapping/gene"
+              },
+              "source": "CPDB",
+              "supportBatch": true
             }
           ]
         },
@@ -43626,6 +43016,9 @@
           "SYMBOL": "symbol",
           "UMLS": "umls.cui",
           "description": "summary",
+          "gene": {
+            "NCBIGene": "entrezgene"
+          },
           "functional_association_bp": {
             "GO": "go.BP.id",
             "evidence": "go.BP.evidence",
@@ -49384,11 +48777,11 @@
       "servers": [
         {
           "description": "Encrypted Production server",
-          "url": "https://pending.biothings.io/pfocr"
+          "url": "https://biothings.ncats.io/pfocr"
         },
         {
           "description": "Production server",
-          "url": "http://pending.biothings.io/pfocr"
+          "url": "http://biothings.ncats.io/pfocr"
         }
       ],
       "tags": [
@@ -52442,7 +51835,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Gene API",
         "version": "1.0"
@@ -58879,7 +58272,7 @@
           "x-id": "https://github.com/newgene",
           "x-role": "responsible developer"
         },
-        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://pending.biothings.io/semmed)",
+        "description": "Documentation of the SEMMED disease query web services.  Learn more about [mydisease.info](http://biothings.ncats.io/semmed)",
         "termsOfService": "http://biothings.ncats.io",
         "title": "SEMMED Anatomy API",
         "version": "1.0"
@@ -60017,11 +59410,11 @@
       "servers": [
         {
           "description": "Encrypted Production server",
-          "url": "https://pending.biothings.io/ebigene2phenotype"
+          "url": "https://biothings.ncats.io/ebigene2phenotype"
         },
         {
           "description": "Production server",
-          "url": "http://pending.biothings.io/ebigene2phenotype"
+          "url": "http://biothings.ncats.io/ebigene2phenotype"
         }
       ],
       "tags": [
@@ -60137,687 +59530,6 @@
         }
       ],
       "~raw": "H4sIANqErl0C_21UwVLbMBD9lR2f2pnGDoVpB06lpEw50BZCD53CQZbWtgZZMtIqIcPk37uSEwgpN1vaffv27Vs9FW5AKwZdnEBxWE7LafEBioB-gT7w2d-nInqTLjui4aSqlstlqdCQeKDS-bbi1GpxUKzvOE3bxnHoU6EwSK8H0s6m1Nv48eP009XNrIZ3OReubmAmSNQi4HvQAQR4DC56idA4D_g4GOe1bYE6BGwalBTANeAsAt_3ziMoH1s-tDmGAbUlpi1MCRcEnQhQI1qoozYEjXc9F1GoFVrSjUYFIdYBKaGiYXzvpPBKu9YLDrUq4ycmLsRUjemCIDhzJva1FvDb6qSRphVcotJSGDjDRKG8tbf2nFkmOXwvkgqJZueWmaraNA5L5qhwwdV5BswHMd__Pff4EBnKrOA03PPNVcSQUMLdu80UdifQiIf3XDPNLRMaNT_YzpI0Gdybwumvi3yFvg8_mznLpiVuhxwYv9XUxbqUrq9ImEktYj_WTOkpVTpLQlKeNvZCZ4tYLe9LEsRTItJf5EaqElUs1pxkuIoNmJOs6HPFM4-s0AJZ2L7nFuHrn8mPs8n8FI5G_q_tJzfhcozOAmxgQ1WvJlZOgqg4tSrWqSSJdmPjbUHywgbDJH1Cf5xotQNvpaBQWt2VrVtUL6FV4v-CcaqS0gizZJFrZCHSjK9xcJ6Sa-erQNiHNwoM3E5Za8fyOePaVW5g-1Ndfpt_r2bTg0_H08-vKyYzvj6RRtvsuuSncf8GQV3I6lZsIL_Kny2OUwqx70U-KxKvvRUtcjpbH-l58Xdr5150Dh2h-TfZVHtM7ZGPmN4N2bEZcjlaDTk5UNrjPP69kj_3dhmed9OHEs7zMyD6wSBElvrgcHp8fHSUnwfRa6eEZ5uVY-O8Pz7v2YXaYxgGl6yxeZUaEQ299ULNxivYJrB51tk_-Mh6WGFmToa3Ev936M5q5q7ZqQzJnY35o0T5e73PcL0_hKeRQlZhJ-UhvQdfndIvhwFl9PwWzRP8y3GHQu1AsWXun3_YO6YWcnOwC5LGf7f-B5D9ux8bBgAA"
-    },
-    {
-      "_id": "adf20dd6ff23dfe18e8e012bde686e31",
-      "_meta": {
-        "ETag": "1b11ced56a11abc222c75a20398e28e778ee77b7674e769230aa364656b5762b",
-        "github_username": "kevinxin90",
-        "timestamp": "2020-09-11T00:02:27.304690",
-        "uptime_status": "good",
-        "uptime_ts": "2020-09-22T00:06:16.235731",
-        "url": "https://raw.githubusercontent.com/NCATS-Tangerine/translator-api-registry/master/drug_response_kp/smartapi.yaml"
-      },
-      "_score": 0.3517608,
-      "components": {
-        "parameters": {
-          "callback": {
-            "description": "you can pass a \"callback\" parameter to make a JSONP call. Type: string.",
-            "in": "query",
-            "name": "callback",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "dotfield": {
-            "description": "control the format of the returned chem object. If \"true\" or \"1\", all fields will be collapsed into a single level deep object (all nested objects will be a single level deep, using dotfield notation to signify the nested structure) Type: boolean. Default: false.",
-            "in": "query",
-            "name": "dotfield",
-            "schema": {
-              "type": "boolean"
-            }
-          },
-          "email": {
-            "description": "If you are regular users of our services, we encourage you to provide us with an email, so that we can better track the usage or follow up with you.",
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "facet_size": {
-            "description": "the number of facet buckets to return in the response. Type: integer. Default: 10. Max: 1000.",
-            "in": "query",
-            "name": "facet_size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "facets": {
-            "description": "a comma-separated list of fields to return facets on.  In addition to query hits, the fields notated in \"facets\" will be aggregated by value and bucklet counts will be displayed in the \"facets\" field of the response object. Type: string (list). Default: None. Max: 1000.",
-            "in": "query",
-            "name": "facets",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "fields": {
-            "description": "a comma-separated list of fields (in dotfield notation) used to limit the fields returned from the matching chem hit(s). The supported field names can be found from any chem object or from the /metadata/fields endpoint. If \"fields=all\", all available fields will be returned. Type: string (list). Default: all. Max: 1000.",
-            "in": "query",
-            "name": "fields",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "format": {
-            "description": "controls output format of server response, currently supports: \"json\", \"jsonld\", \"html\". Type: string. Default: json.",
-            "in": "query",
-            "name": "format",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "from": {
-            "description": "the number of matching chem hits to skip, starting from 0.  This can be useful for paging in combination with the \"size\" parameter. Type: integer. Default: None.",
-            "in": "query",
-            "name": "from",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "prefix": {
-            "description": "Pass a prefix string to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "prefix",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "search": {
-            "description": "Pass a search term to filter the available fields. Type: string. Default: None.",
-            "in": "query",
-            "name": "search",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "size": {
-            "description": "the maximum number of matching chem hits to return per batch. Type: integer. Default: 10.",
-            "in": "query",
-            "name": "size",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          "sort": {
-            "description": "the comma-separated list of fields to sort on. Prefix each with \"-\" for descending order, otherwise in ascending order. Default: sort by descending score.",
-            "in": "query",
-            "name": "sort",
-            "schema": {
-              "type": "string"
-            }
-          }
-        },
-        "schemas": {
-          "Association": {
-            "properties": {
-              "_id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "_id"
-            ],
-            "type": "object"
-          },
-          "ErrorResult": {
-            "properties": {
-              "message": {
-                "type": "string"
-              },
-              "success": {
-                "type": "boolean"
-              }
-            },
-            "type": "object"
-          },
-          "QueryPOSTResult": {
-            "items": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Association"
-                },
-                {
-                  "properties": {
-                    "_score": {
-                      "format": "float",
-                      "type": "number"
-                    },
-                    "query": {
-                      "type": "string"
-                    }
-                  },
-                  "type": "object"
-                }
-              ]
-            },
-            "type": "array"
-          },
-          "QueryResult": {
-            "properties": {
-              "hits": {
-                "items": {
-                  "$ref": "#/components/schemas/Association"
-                },
-                "type": "array"
-              },
-              "max_score": {
-                "format": "float",
-                "type": "number"
-              },
-              "took": {
-                "type": "integer"
-              },
-              "total": {
-                "type": "integer"
-              }
-            },
-            "type": "object"
-          },
-          "int64_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "format": "int64",
-                  "type": "integer"
-                },
-                "type": "array"
-              },
-              {
-                "format": "int64",
-                "type": "integer"
-              }
-            ]
-          },
-          "string_or_array": {
-            "oneOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "x-bte-kgs-operations": {
-          "chemical-gene": [
-            {
-              "inputs": [
-                {
-                  "id": "PUBCHEM",
-                  "semantic": "ChemicalSubstance"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "NCBIGene",
-                  "semantic": "Gene"
-                }
-              ],
-              "parameters": {
-                "fields": "association.context.disease.mondo,subject.NCBIGene,association.effect_size,association.pvalue",
-                "q": "object.PUBCHEM:{inputs[0]}%20AND%20association.effect_size:<0%20AND%20association.pvalue:<0.05",
-                "size": "1000",
-                "sort": "association.pvalue"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_drug_response_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/chemical-gene"
-              },
-              "source": "Multiomics Provider",
-              "supportBatch": false
-            }
-          ],
-          "gene-chemical": [
-            {
-              "inputs": [
-                {
-                  "id": "NCBIGene",
-                  "semantic": "Gene"
-                }
-              ],
-              "outputs": [
-                {
-                  "id": "PUBCHEM",
-                  "semantic": "ChemicalSubstance"
-                }
-              ],
-              "parameters": {
-                "fields": "association.context.disease.mondo,object.PUBCHEM,association.effect_size,association.pvalue",
-                "q": "subject.NCBIGene:{inputs[0]}%20AND%20association.effect_size:<0%20AND%20association.pvalue:<0.05",
-                "size": "1000",
-                "sort": "association.pvalue"
-              },
-              "predicate": "gene_has_variant_that_contributes_to_drug_response_association",
-              "response_mapping": {
-                "$ref": "#/components/x-bte-response-mapping/gene-chemical"
-              },
-              "source": "Multiomics Provider",
-              "supportBatch": false
-            }
-          ]
-        },
-        "x-bte-response-mapping": {
-          "chemical-gene": {
-            "NCBIGene": "hits.subject.NCBIGene",
-            "disease_context": "hits.association.context.disease.mondo",
-            "effect_size": "hits.association.effect_size",
-            "pvalue": "hits.association.pvalue"
-          },
-          "gene-chemical": {
-            "PUBCHEM": "hits.object.PUBCHEM",
-            "disease_context": "hits.association.context.disease.mondo",
-            "effect_size": "hits.association.effect_size",
-            "pvalue": "hits.association.pvalue"
-          }
-        }
-      },
-      "info": {
-        "contact": {
-          "email": "help@biothings.io",
-          "name": "JIWEN XIN",
-          "x-id": "https://github.com/kevinxin90",
-          "x-role": "responsible developer"
-        },
-        "description": "Documentation of the Drug Response KP query web services.",
-        "termsOfService": "https://biothings.io/about",
-        "title": "Drug Response KP API",
-        "version": "1.0"
-      },
-      "openapi": "3.0.0",
-      "paths": [
-        {
-          "path": "/association",
-          "pathitem": {
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "ids": {
-                          "description": "multiple association IDs separated by comma. Note that currently we only take the input ids up to 1000 maximum, the rest will be omitted. Type: string (list). Max: 1000.",
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "ids"
-                      ]
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "items": {
-                          "$ref": "#/components/schemas/Association"
-                        },
-                        "type": "array"
-                      }
-                    }
-                  },
-                  "description": "A list of matching association objects"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "For a list of association IDs, return the matching disease object",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/association/{associationid}",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Retrieve association objects based on Association ID  Supports JSONP and CORS as well.",
-                  "example": "NRAS-TCGA-LUAD",
-                  "in": "path",
-                  "name": "associationid",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/Association"
-                      }
-                    }
-                  },
-                  "description": "A matching association object"
-                },
-                "404": {
-                  "description": "A response indicating an unknown association ID"
-                }
-              },
-              "summary": "Retrieve association objects based on ID",
-              "tags": [
-                "association"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "in": "query",
-                  "name": "callback"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "KP metadata object"
-                }
-              },
-              "summary": "Get metadata about the data available from the API",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/metadata/fields",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/search",
-                  "name": "search"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/prefix",
-                  "name": "prefix"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "metadata fields object"
-                }
-              },
-              "summary": "Get metadata about the data fields available",
-              "tags": [
-                "metadata"
-              ]
-            }
-          }
-        },
-        {
-          "path": "/query",
-          "pathitem": {
-            "get": {
-              "parameters": [
-                {
-                  "description": "Query string.",
-                  "example": "subject.NCBIGene:51742",
-                  "in": "query",
-                  "name": "q",
-                  "required": true,
-                  "schema": {
-                    "type": "string"
-                  }
-                },
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/facet_size",
-                  "name": "facet_size"
-                },
-                {
-                  "$ref": "#/components/parameters/sort",
-                  "name": "sort"
-                },
-                {
-                  "$ref": "#/components/parameters/callback",
-                  "name": "callback"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/facets",
-                  "name": "facets"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/from",
-                  "name": "from"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryResult"
-                      }
-                    }
-                  },
-                  "description": "A query response with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make queries and return matching association hits. Supports JSONP and CORS as well.",
-              "tags": [
-                "query"
-              ],
-              "x-bte-kgs-operations": [
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/chemical-gene"
-                },
-                {
-                  "$ref": "#/components/x-bte-kgs-operations/gene-chemical"
-                }
-              ]
-            },
-            "post": {
-              "parameters": [
-                {
-                  "$ref": "#/components/parameters/dotfield",
-                  "name": "dotfield"
-                },
-                {
-                  "$ref": "#/components/parameters/email",
-                  "name": "email"
-                },
-                {
-                  "$ref": "#/components/parameters/fields",
-                  "name": "fields"
-                },
-                {
-                  "$ref": "#/components/parameters/size",
-                  "name": "size"
-                },
-                {
-                  "$ref": "#/components/parameters/format",
-                  "name": "format"
-                }
-              ],
-              "requestBody": {
-                "content": {
-                  "application/x-www-form-urlencoded": {
-                    "schema": {
-                      "properties": {
-                        "q": {
-                          "description": "multiple query terms separated by comma (also \"+\" or whitespace).  Does not support wildcard queries",
-                          "type": "string"
-                        },
-                        "scopes": {
-                          "description": "a comma-separated list of fields as the search \"scopes\" (fields to search through for query term). The available \"fields\" that can be passed to the \"scopes\" parameter are listed in the **/metadata/fields** endpoint.string Default: \"scopes=_id\".",
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "responses": {
-                "200": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/QueryPOSTResult"
-                      }
-                    }
-                  },
-                  "description": "Query response objects with the \"hits\" property"
-                },
-                "400": {
-                  "content": {
-                    "application/json": {
-                      "schema": {
-                        "$ref": "#/components/schemas/ErrorResult"
-                      }
-                    }
-                  },
-                  "description": "A response indicating an improperly formatted query"
-                }
-              },
-              "summary": "Make batch disease queries and return matching disease hits",
-              "tags": [
-                "query"
-              ]
-            }
-          }
-        }
-      ],
-      "servers": [
-        {
-          "description": "Encrypted Production server",
-          "url": "https://biothings.ncats.io/drug_response_kp"
-        },
-        {
-          "description": "Production server",
-          "url": "http://biothings.ncats.io/drug_response_kp"
-        }
-      ],
-      "tags": [
-        {
-          "name": "gene"
-        },
-        {
-          "name": "disease"
-        },
-        {
-          "name": "chemical"
-        },
-        {
-          "name": "association"
-        },
-        {
-          "name": "annotation"
-        },
-        {
-          "name": "query"
-        },
-        {
-          "name": "translator"
-        },
-        {
-          "name": "biothings"
-        },
-        {
-          "name": "biothings_graph"
-        }
-      ],
-      "~raw": "H4sIAJO-Wl8C_-1a-2_cuBH-Vwi1BZzU-3Caa1GjB9Sx09TXxvbFObRAbCy4EneXZ0lUSMrrreH_vTND6rla7dq-y-WK3g-XNcXHPL75ZjjSfaAykfJMBocs-MNwPBwH-yyQ6UzBwH0QqtTy0NJvkXAZ47SFiLO_TqWyC5nOzVAqXJLyRODD707_9faM_fv0DAfvBjKiFdZm5nA0mku7yKfDUCWjG3Er0zuZ_nnsJmoV03otTKZSI6exYJG4FTHIp4MHmBMJE2qZWalSnHiiwjwRIB4OMDVjdiHYic7n7IPbQrB_XLDPudArthRTZoS-laEwQzzPCp2Y89mlG6uLWNdrxKcqtzRfWife2gFHF6c44VZo4wU7ABuivHggjMLQp_u28G_TUK8yKyJ2oVWUh6SDW4C75TrulikNuSXJIpBj4m0lJjcZnrh2yra9d936Gi3A516VwtNzkQp3bDESSSO4aQ2GC5HIkMfNUW6MCiX5rvUgTZXtGCdHNoes5qmJuVW6OV7qtGF4Mtc8Wzi1Mm4XhuA9qouEA5kyDvgZ17CFLX35Wy1muOFvRgBksBKA0IyqSaNI2ZkUcVQPi3KMRNq2A0019fV-ZKfVLlBri93AbicrnXDbONmNkLW0ADcY-0ZFq5IeYAf6zbMsBj-j-UZ3g-VyOcCVA4CbSEMViYhmGYQDd2bVGNpWCmd_Gbl_WxhO8tjKDMig5h52emIA0Sg2htB0xUCZhA_ZmbICeIBbFuZag2Qxxj5TKfxr-Y0gjpBpllsGx7E8Y1axg_F4zBJ-J5M82acZAH7LljKO2RQWJ9LCKUP2cZWJQ2asBgyxvVga-2LI3vO7Q9rB0QpMQaHdpODhwdtMalL_Eyl5_fDgH7gQc2q_Go97Tfqj8bCsWVBakbjVnW51M83oqBlrpZRcaw4h9dBBrkcM9UNWBd-HGDUN-6vpjyK0BMfg9RME7xX3rdZKA8WC4zcJV5gOfBnROShfymTiMAXedqhFdHjiIEbOASUaoRv8TWnGSyVb2NqHA2yuUwJDaQDPbl75oMaJDTa7pqPqbDK6r_0howcywVx0k0tL1w8CoARpsMv8bAriRIBudtSQn7HLPMuUhhnfXZ6fXYBpInZ8_uESNoFwiGPCqrjjSeaS2tmHo8vBx-N3R4N__nB04goAHEdyrFNBQ42giW2rc4EmrpzcEQxfgjsh1cRTHt7UdyjHfuXs-1zC2J0muuOuhww8F7zu4vCNAZunN6lapq34WwvW3YLg9GRbTIKVecQt7w3Ax-DLhYljmE64bXZby0RQSRbSlQZtWeGdsNUcqkyJn9yft4AxjjXzTKuExn1hWtqjVL5ljALuz7EJEKMOG1ThR75QxGbwXN7V1_uRny3q2lVK4RdnzKe40K8sPdnrPAe5R-SR7-ke5Ki4Tf8mJ2mHZ8dvTt9BUX_4zcGfXr_qwffnr5X7n8fcMx4KOzHyP6KxQzW60y4GEm8jEvDvLxQHz8o9qKdZ03xH27Wttru9kLAap-LfX3-2pIDqr1Jd76FMfUtpFxTuV8FCWnMVMH8DWv2K6-j3eKvCR3CNozrTV86dlQKqPdypOC2Jz516TS2iqRWDm7kZoGi0YV926po-KnoRg6p3sftiXDOouhnXaIlfsEfwrFh_Fk8-I9Z_se7C597egotUagp29BXYHo-NgrD9PcQs3BuXgGMIHGDHF0PGThQgP1WWGYdrbBxEIddRERZdjQHKliBgZ8uDu2MHlSTFPbWoEQzxiKuxQC63FQi35ydYVTy0C63y-QLjuKYlyP0RNqiqxisPANjDtU-ABaaCZRC9cDxs53irPKj0KeNakHgwTboL88uX7dry5Usm0ihTMrVD3z85ETMO1j8sN_12IqOroLuL8pM1TLYz-sX55cc-zvy-yenFJeR_l9unSORl76OP6Ys5aIAuDndyVsqs8-Z9Ve50hMVK5YRLBCXjYOlicgOPgNUE5eY-veCkZu9uuMvNbWs5W7F1h6joZ61iQoSzcvGCwhkNTI6be_gM2ekM1MEq2hHMVXBwBRKALEXEF83IUMUxzwwFG2jKmQF5IH5jfFPCIiEyvydyVsxSQYFZodTt0rFsn-WGnOi1YkUXnrhEzlM5W5ECfkuwRB6CKuKFt-1UqVjwdFhF9gxYU_QZu54DO4ztd3TWLl4-rZkaTIfAQBrSYp7HXIMmACc0uMp1-dpnHxvBmCtyzeeC1oBmEAu3MhKwxIUwwItO2mdGOSaEVY4MLaFLAzjIDrnBbcBZM3CJWmIvmXaAjft0LrP2FnTVbh0dSpMj8mQKEmFWwLlsmoc3UK6jVj4yPR8XRFBEASBHzIWueepg3G5kb5C-eUPqUMHvXdPhaRmuUsJtwhQgi52mjEeRLGDp8hnSjWvb-7WEXJeOrrwMEFYl9udzwEmR3295nAtiMzRfDGYEgKS1UAFSy2K-qrJbbUsXKGVgN1LChtcFpcnPgAMfY3SzC2aqRs5j7b0H2q2F_guMJMr-sUykrdu4pLGy3VSmASI2cMqe8VWGr4twstse9DJFhTEDc_tdeLqqsyLFVrF7u6Ko6gnHnW70W-C8gjhrHbEmhRaib_MQ5Y3dHFRW09sc5IrdzQkDcJ5bfDtVJQ334raE137tzZY3rMEiCisIVN39iiP3e2ETMEgr_VUq4tRexcpyfZtieGffylNrEHGF6o2E7GMs11SikMuBjwA6skQJ4HCWx1TEZnyO0wCvAOmpTF2SqtVfyE71imAz7VEM9qnvOxPbeM73Gjv0v3CliptQIA10nsmYskmjBncw2uisbdJWPdAtzvKt2c3iFlcHuCj8XMJWDeNtwvZkQP_OdivCfCaBotdVs72JsE_oHfMedfw2yLw97-FqSncXDjWCgy8I31fBALMOBAFuDAyImiodCb3PFGyul5LKfbgfNp7WFKTNIe_VNoDrl-73lW9o9nnqoXzu8s9R-1uK5m18IqONHm-8L8eJ17UrYe1dU_0K1HEE5Bis0DqPoWtOCEWh2VxwdpzYviA2X8FDvjif9TR_NryNX7cNOYR-lvkimMXKEXEhlsM8iVW9C-gyZ1uP644vAArdNluT7nQ_3ScHMALB-2hNrVI33WFHDy2PNwdlhz_h-R9fT5SeOKlwKahROLHStBKOVtSFawjQ1nG3leQQ57EdZOmAcse57VnurdGGDup90GyLuhPxIxnfy3Tf8F388Ob472_fExOAj1MrQxw-9msv8ynk8DQUrpfn6pjGBsXrpfYONOY_xmo0A8p6tv4ud0g9lDs79O2GYaLSSO2332Ht15eI2Qye0b2lMZ5R-Y_yfK6gMfSKHt47G3waXz_87tX46OwE_r9h18O_jDunuAPg6XD8TVBlhqBbCJ_rAqw3A19YUOum_NxusuBmcsu1BONN8Ho6ocJRTnMrzMSqSfPbvfor8Fr_bJLwLENcHPb3v4v5Az9_vX0OCuXafT_5HnupCh4b_KQRL9X0taGvUd9g3g18T4B83eymb8Dcdsh04OxxQH0G5pp4eQri1t68_h9zbcy13ro8HXMVA7bP6OTA-wp8-LUsvrlqe4teo1cOKedtcBhO94bvmln5xKNs4lHXObsTkWSedmDdlwFR7NPE7VeoBfz3X1oYS7uYLgAA"
     },
     {
       "_id": "e3edd325c76f2992a111b43a907a4870",
