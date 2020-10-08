@@ -28,9 +28,9 @@ def annotateEdgesWithInput(edges, inputs):
                         input_ids.add(val)
                         original_input[id2curie(prefix, val)] = _input
             input_ids = list(input_ids)
-            step = 1000
+            step = 500
             for i in range(0, len(input_ids), step):
-                copy_edge["input"] = input_ids[i : i + 1000]
+                copy_edge["input"] = input_ids[i : i + step]
                 copy_edge["original_input"] = original_input
                 annotatedEdges.append(deepcopy(copy_edge))
         else:
@@ -178,7 +178,12 @@ def stepResult2PandasTable(result, step, total_steps, extra_fields=[]):
             }
             if isinstance(extra_fields, list) and len(extra_fields) > 0:
                 for field in extra_fields:
-                    if field in ["drug_phase", "ngd", "survival_prob_change"]:
+                    if field in [
+                        "drug_phase",
+                        "ngd",
+                        "survival_prob_change",
+                        "edgesOut",
+                    ]:
                         field = "$" + field
                     if field in rec:
                         if field in ["pvalue"]:

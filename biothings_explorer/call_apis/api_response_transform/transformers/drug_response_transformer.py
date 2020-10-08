@@ -3,6 +3,8 @@ from .biothings_transformer import BioThingsTransformer
 
 class DrugResponseTransformer(BioThingsTransformer):
     def wrap(self, res):
+        if "filter" not in self.edge or "disease_context" not in self.edge["filter"]:
+            return []
         if "hits" not in res or not isinstance(res.get("hits"), list):
             return res
         for doc in res.get("hits"):

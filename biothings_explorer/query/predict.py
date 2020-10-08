@@ -90,13 +90,13 @@ class Predict:
             predicates = None
         return predicates
 
-    def _annotate_results(self, step):
+    def _annotate_results(self, step, source_types):
         # print("annotating results with NodeDegree!")
         # ft = NodeDegreeFilter(self.steps_results[step], {})
         # ft.annotateNodeDegree()
         # self.steps_results[step] = ft.stepResult
         if "annotate" in self.config and isinstance(self.config["annotate"], list):
-            ft = Filter(self.steps_results[step], self.config["annotate"])
+            ft = Filter(self.steps_results[step], self.config["annotate"], source_types)
             ft.annotate()
             self.steps_results[step] = ft.stepResult
             return ft
@@ -135,6 +135,7 @@ class Predict:
             if verbose:
                 self.pt.print_query_plan_begin_message(i + 1)
             inputs = groupsIDsbySemanticType(inputs)
+            source_types = list(inputs.keys())
             predicates = self._get_predicates_from_config(i)
             if verbose:
                 print(
@@ -165,7 +166,7 @@ class Predict:
             )
             if verbose:
                 self.pt.print_individual_query_step_summary(inputs)
-            ft = self._annotate_results(i)
+            ft = self._annotate_results(i, source_types)
             inputs = self._filter_results(i, ft)
         self.query_completes = True
         if verbose:

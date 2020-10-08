@@ -2,15 +2,17 @@ from .nodeDegree import NodeDegreeFilter
 from .ngd import NGDFilter
 from .drugPhase import DrugPhaseFilter
 from .hypothesis import HypothesisFilter
+from .specificity import SpecificityFilter
 from functools import partial
 
-BTE_FILTERS = ["nodeDegree", "ngd", "drugPhase", "survivalProbability"]
+BTE_FILTERS = ["nodeDegree", "ngd", "drugPhase", "survivalProbability", "edgesOut"]
 
 
 class Filter:
-    def __init__(self, stepResult, criteria):
+    def __init__(self, stepResult, criteria, source_types):
         self.stepResult = stepResult
         self.criteria = criteria
+        self.source_types = source_types
         self.annotated = False
 
     def annotate(self):
@@ -19,6 +21,9 @@ class Filter:
         if "ngd" in self.criteria:
             f = NGDFilter(self.stepResult, {})
             f.annotateNGD()
+        if "edgesOut" in self.criteria:
+            f = SpecificityFilter(self.stepResult, {}, self.source_types)
+            f.annotate()
         if "drugPhase" in self.criteria:
             f = DrugPhaseFilter(self.stepResult, {})
             f.annotate()
