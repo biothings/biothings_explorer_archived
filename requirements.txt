@@ -6,8 +6,6 @@ ipykernel==5.3.4
 ipython==7.18.1
 aiohttp
 jupyter
-ipython
-ipykernel
 pandas
 pyyaml
 nest_asyncio
