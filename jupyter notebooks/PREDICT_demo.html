@@ -12947,8 +12947,13 @@ ul.typeahead-list  > li > a.pull-right {
 /*# sourceMappingURL=style.min.css.map */
     </style>
 <style type="text/css">
-    .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f8f8f8; }
+    pre { line-height: 125%; margin: 0; }
+td.linenos pre { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
+span.linenos { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
+td.linenos pre.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
 .highlight .c { color: #408080; font-style: italic } /* Comment */
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
@@ -14376,7 +14381,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## import modules from biothings_explorer</span>
@@ -14391,28 +14396,34 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hint_display</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">hint_result</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## functions to add to modules?</span>
+<span class="k">def</span> <span class="nf">hint_display</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">hint_result</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    input: query (string used in hint query), hint_result (object returned from hint query)</span>
-<span class="sd">    hint_result is a dictionary of lists of dictionaries</span>
-<span class="sd">    returns: None</span>
-<span class="sd">    show the name and type of all results returned by the query</span>
+<span class="sd">    show the type, name, number of IDs for all results returned by the query</span>
+<span class="sd">    </span>
+<span class="sd">    :param: query: string used in hint query</span>
+<span class="sd">    :param: hint_result: object returned from hint query, a dictionary of lists of dictionaries</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">]</span>  <span class="c1">## replace with the parts of the BioThings object you want to see</span>
+    <span class="c1">## function needs to be rewritten if it&#39;s going to give the exact index of each object within its type </span>
+    <span class="n">display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]</span>  <span class="c1">## replace with the parts of the BioThings object you want to see</span>
     <span class="n">concise_results</span> <span class="o">=</span> <span class="p">[]</span>
-    
     <span class="k">for</span> <span class="n">BT_type</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">hint_result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>  <span class="c1">## basically if it&#39;s not empty</span>
             <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
-                <span class="n">concise_results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">items</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">display</span><span class="p">])</span>
-    
+                <span class="c1">## number of identifiers per object: number of keys - 4 (name, primary, display, type)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span>
+                <span class="n">concise_results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">items</span><span class="p">[</span><span class="n">display</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">items</span><span class="p">[</span><span class="n">display</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> 
+                                         <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">)))</span>
+                    
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{total}</span><span class="s1"> BioThings objects returned for </span><span class="si">{ht}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>\
                 <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">concise_results</span><span class="p">),</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">query</span><span class="p">))</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">display_info</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">concise_results</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">: </span><span class="si">{val}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">display_info</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">display_info</span> <span class="ow">in</span> <span class="n">concise_results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">, </span><span class="si">{1}</span><span class="s1">, num of IDs: </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">display_info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">display_info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">display_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
 </pre></div>
 
     </div>
@@ -14439,7 +14450,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
@@ -14464,14 +14475,18 @@ $(document).ready(function () {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 7 BioThings objects returned for hyperphenylalaninemia:
-0: [&#39;mild hyperphenylalaninemia&#39;, &#39;Disease&#39;]
-1: [&#39;tetrahydrobiopterin-responsive hyperphenylalaninemia/phenylketonuria&#39;, &#39;Disease&#39;]
-2: [&#39;obsolete hyperphenylalaninemia, BH4-deficient&#39;, &#39;Disease&#39;]
-3: [&#39;BH4-deficient hyperphenylalaninemia A&#39;, &#39;Disease&#39;]
-4: [&#39;hyperphenylalaninemia due to tetrahydrobiopterin deficiency&#39;, &#39;Disease&#39;]
-5: [&#39;Hyperphenylalaninemia due to dhpr-deficiency&#39;, &#39;Pathway&#39;]
-6: [&#39;Hyperphenylalaninemia due to 6-pyruvoyltetrahydropterin synthase deficiency (ptps)&#39;, &#39;Pathway&#39;]
+<pre>There are 11 BioThings objects returned for hyperphenylalaninemia:
+Disease, mild hyperphenylalaninemia, num of IDs: 2
+Disease, Transient hyperphenylalaninemia, num of IDs: 2
+Disease, Maternal hyperphenylalaninemia, num of IDs: 2
+Disease, Atypical hyperphenylalaninemia, num of IDs: 2
+Disease, hyperphenylalaninemia due to tetrahydrobiopterin deficiency, num of IDs: 3
+PhenotypicFeature, Hyperphenylalaninemia, num of IDs: 3
+PhenotypicFeature, Atypical hyperphenylalaninemia, num of IDs: 2
+PhenotypicFeature, Transient hyperphenylalaninemia, num of IDs: 2
+PhenotypicFeature, Maternal hyperphenylalaninemia, num of IDs: 2
+Pathway, Hyperphenylalaninemia due to dhpr-deficiency, num of IDs: 0
+Pathway, Hyperphenylalaninemia due to 6-pyruvoyltetrahydropterin synthase deficiency (ptps), num of IDs: 0
 </pre>
 </div>
 </div>
@@ -14490,7 +14505,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## select the first Disease object for our hyperphenylalaninemia query</span>
@@ -14508,7 +14523,7 @@ $(document).ready(function () {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -14549,7 +14564,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">FindConnection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
@@ -14615,7 +14630,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span> <span class="o">=</span> <span class="n">hyperphenylalaninemia</span><span class="p">,</span> \
@@ -14639,7 +14654,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## set verbose=True will display all steps which BTE takes to find the connection</span>
@@ -14679,30 +14694,30 @@ Because mild hyperphenylalaninemia is of type &#39;Disease&#39;, BTE will query 
 
 BTE found 5 apis:
 
-API 1. pharos(1 API call)
-API 2. scigraph(1 API call)
-API 3. biolink(1 API call)
-API 4. scibite(1 API call)
-API 5. hetio(1 API call)
+API 1. scigraph(1 API call)
+API 2. biolink(1 API call)
+API 3. pharos(1 API call)
+API 4. hetio(1 API call)
+API 5. scibite(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 3.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019335/genes?rows=200
-API 4.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0019335
-API 4.1 scibite failed
-API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0019335
-API 2.1 scigraph failed
-API 1.1: https://automat.renci.org/pharos/disease/gene/MONDO:0019335
-API 5.1: https://automat.renci.org/hetio/disease/gene/MONDO:0019335
+API 2.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0019335/genes?rows=200
+API 1.1: https://automat.renci.org/cord19-scigraph/disease/gene/MONDO:0019335
+API 3.1: https://automat.renci.org/pharos/disease/gene/MONDO:0019335
+API 5.1: https://automat.renci.org/cord19-scibite/disease/gene/MONDO:0019335
+API 4.1: https://automat.renci.org/hetio/disease/gene/MONDO:0019335
 
 
 ==== Step #3: Output normalization ====
 
-API 1.1 pharos: No hits
-API 5.1 hetio: No hits
-API 3.1 biolink: 1 hits
+API 1.1 scigraph: No hits
+API 3.1 pharos: No hits
+API 5.1 scibite: No hits
+API 4.1 hetio: No hits
+API 2.1 biolink: 1 hits
 
 After id-to-object translation, BTE retrieved 1 unique objects.
 
@@ -14716,69 +14731,66 @@ Because None is of type &#39;Gene&#39;, BTE will query our meta-KG for APIs that
 
 BTE found 10 apis:
 
-API 1. pharos(1 API call)
-API 2. chembio(1 API call)
-API 3. opentarget(1 API call)
-API 4. mychem(3 API calls)
-API 5. hmdb(1 API call)
-API 6. dgidb(1 API call)
-API 7. cord_gene(1 API call)
-API 8. scibite(1 API call)
-API 9. semmed_gene(10 API calls)
-API 10. scigraph(1 API call)
+API 1. cord_gene(1 API call)
+API 2. scigraph(1 API call)
+API 3. mychem(3 API calls)
+API 4. pharos(1 API call)
+API 5. dgidb(1 API call)
+API 6. opentarget(1 API call)
+API 7. scibite(1 API call)
+API 8. chembio(1 API call)
+API 9. hmdb(1 API call)
+API 10. semmed_gene(10 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 4.3: https://mychem.info/v1/query?fields=chembl.molecule_chembl_id&amp;size=250 (POST -d q=PAH&amp;scopes=drugcentral.bioactivity.uniprot.gene_symbol)
-API 9.9: https://biothings.ncats.io/semmedgene/query?fields=disrupted_by (POST -d q=C1418251&amp;scopes=umls)
-API 9.1: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulates (POST -d q=C1418251&amp;scopes=umls)
-API 9.2: https://biothings.ncats.io/semmedgene/query?fields=physically_interacts_with (POST -d q=C1418251&amp;scopes=umls)
-API 7.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAH
-API 4.2: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PAH&amp;scopes=drugbank.enzymes.gene_name)
-API 9.6: https://biothings.ncats.io/semmedgene/query?fields=positively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
-API 9.10: https://biothings.ncats.io/semmedgene/query?fields=positively_regulates (POST -d q=C1418251&amp;scopes=umls)
-API 9.4: https://biothings.ncats.io/semmedgene/query?fields=affected_by (POST -d q=C1418251&amp;scopes=umls)
-API 9.5: https://biothings.ncats.io/semmedgene/query?fields=related_to (POST -d q=C1418251&amp;scopes=umls)
-API 9.3: https://biothings.ncats.io/semmedgene/query?fields=affects (POST -d q=C1418251&amp;scopes=umls)
-API 9.7: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
-API 9.8: https://biothings.ncats.io/semmedgene/query?fields=disrupts (POST -d q=C1418251&amp;scopes=umls)
-API 4.1: https://mychem.info/v1/query?fields=drugbank.id&amp;size=250 (POST -d q=PAH&amp;scopes=drugbank.targets.gene_name)
-API 6.1: https://biothings.ncats.io/cord_gene/query?fields=associated_with (POST -d q=8582&amp;scopes=hgnc)
-API 3.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=100&amp;fields=drug
-API 8.1: https://automat.renci.org/cord19_scibite_v2/gene/chemical_substance/NCBIGene:5053
-API 8.1 scibite failed
-API 10.1: https://automat.renci.org/cord19_scigraph_v2/gene/chemical_substance/NCBIGene:5053
-API 10.1 scigraph failed
-API 1.1: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5053
-API 2.1: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5053
-API 5.1: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5053
+API 10.5: https://biothings.ncats.io/semmedgene/query?fields=related_to (POST -d q=C1418251&amp;scopes=umls)
+API 10.4: https://biothings.ncats.io/semmedgene/query?fields=affected_by (POST -d q=C1418251&amp;scopes=umls)
+API 10.8: https://biothings.ncats.io/semmedgene/query?fields=disrupts (POST -d q=C1418251&amp;scopes=umls)
+API 10.3: https://biothings.ncats.io/semmedgene/query?fields=affects (POST -d q=C1418251&amp;scopes=umls)
+API 10.2: https://biothings.ncats.io/semmedgene/query?fields=physically_interacts_with (POST -d q=C1418251&amp;scopes=umls)
+API 10.7: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
+API 10.9: https://biothings.ncats.io/semmedgene/query?fields=disrupted_by (POST -d q=C1418251&amp;scopes=umls)
+API 10.10: https://biothings.ncats.io/semmedgene/query?fields=positively_regulates (POST -d q=C1418251&amp;scopes=umls)
+API 10.6: https://biothings.ncats.io/semmedgene/query?fields=positively_regulated_by (POST -d q=C1418251&amp;scopes=umls)
+API 10.1: https://biothings.ncats.io/semmedgene/query?fields=negatively_regulates (POST -d q=C1418251&amp;scopes=umls)
+API 1.1: https://biothings.ncats.io/cord_gene/query?fields=associated_with (POST -d q=8582&amp;scopes=hgnc)
+API 6.1: https://platform-api.opentargets.io/v3/platform/public/evidence/filter?target=ENSG00000171759&amp;datasource=chembl&amp;size=100&amp;fields=drug
+API 7.1: https://automat.renci.org/cord19-scibite/gene/chemical_substance/NCBIGene:5053
+API 8.1: https://automat.renci.org/chembio/gene/chemical_substance/NCBIGene:5053
+API 9.1: https://automat.renci.org/hmdb/gene/chemical_substance/NCBIGene:5053
+API 4.1: https://automat.renci.org/pharos/gene/chemical_substance/NCBIGene:5053
+API 2.1: https://automat.renci.org/cord19-scigraph/gene/chemical_substance/NCBIGene:5053
+API 5.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?genes=PAH
 
 
 ==== Step #3: Output normalization ====
 
-API 3.1 opentarget: 43 hits
-API 9.1 semmed_gene: 6 hits
-API 9.2 semmed_gene: 53 hits
-API 9.3 semmed_gene: No hits
-API 9.4 semmed_gene: No hits
-API 9.5 semmed_gene: No hits
-API 7.1 dgidb: 8 hits
-API 9.6 semmed_gene: 11 hits
-API 4.1 mychem: 8 hits
-API 6.1 cord_gene: 135 hits
-API 9.7 semmed_gene: 15 hits
-API 1.1 pharos: 2 hits
-API 9.8 semmed_gene: No hits
-API 2.1 chembio: 1 hits
-API 4.2 mychem: 1 hits
-API 9.9 semmed_gene: No hits
-API 5.1 hmdb: 11 hits
-API 4.3 mychem: 1 hits
-API 9.10 semmed_gene: 7 hits
+API 6.1 opentarget: 42 hits
+API 10.1 semmed_gene: 6 hits
+API 10.2 semmed_gene: 53 hits
+API 10.3 semmed_gene: No hits
+API 10.4 semmed_gene: No hits
+API 10.5 semmed_gene: No hits
+API 5.1 dgidb: No hits
+API 7.1 scibite: 1 hits
+API 10.6 semmed_gene: 11 hits
+API 3.1 mychem: 8 hits
+API 2.1 scigraph: 52 hits
+API 1.1 cord_gene: 135 hits
+API 10.7 semmed_gene: 15 hits
+API 4.1 pharos: 2 hits
+API 10.8 semmed_gene: No hits
+API 8.1 chembio: 1 hits
+API 3.2 mychem: 1 hits
+API 10.9 semmed_gene: No hits
+API 9.1 hmdb: 11 hits
+API 3.3 mychem: 1 hits
+API 10.10 semmed_gene: 7 hits
 
-After id-to-object translation, BTE retrieved 228 unique objects.
+After id-to-object translation, BTE retrieved 262 unique objects.
 
 ==========
 ========== Final assembly of results ==========
@@ -14786,7 +14798,7 @@ After id-to-object translation, BTE retrieved 228 unique objects.
 
 
 In the #1 query, BTE found 1 unique Gene nodes
-In the #2 query, BTE found 228 unique ChemicalSubstance nodes
+In the #2 query, BTE found 262 unique ChemicalSubstance nodes
 </pre>
 </div>
 </div>
@@ -14813,7 +14825,7 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -14851,14 +14863,14 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(244, 16)
+<pre>(289, 16)
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -14901,7 +14913,45 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
   </thead>
   <tbody>
     <tr>
-      <th>157</th>
+      <th>343</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>AP24534</td>
+      <td>name:AP24534</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Gene API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>GLYOXYLATE</td>
+      <td>name:GLYOXYLATE</td>
+    </tr>
+    <tr>
+      <th>153</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -14914,13 +14964,13 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>physically_interacts_with</td>
       <td>SEMMED</td>
       <td>SEMMED Gene API</td>
-      <td>1972801</td>
+      <td>11386853</td>
       <td>ChemicalSubstance</td>
-      <td>AMITRIPTYLINE</td>
-      <td>name:AMITRIPTYLINE</td>
+      <td>GLYCERIN</td>
+      <td>name:GLYCERIN</td>
     </tr>
     <tr>
-      <th>294</th>
+      <th>321</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -14935,11 +14985,11 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>CORD Gene API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>ISOBUTANOL</td>
-      <td>name:ISOBUTANOL</td>
+      <td>PYRROLIDINE DITHIOCARBAMATE</td>
+      <td>name:PYRROLIDINE DITHIOCARBAMATE</td>
     </tr>
     <tr>
-      <th>217</th>
+      <th>163</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -14949,35 +14999,16 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>Gene</td>
       <td>PAH</td>
       <td>NCBIGene:5053</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Gene API</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>MONOCROTALINE</td>
-      <td>name:MONOCROTALINE</td>
-    </tr>
-    <tr>
-      <th>176</th>
-      <td>MILD HYPERPHENYLALANINEMIA</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>None</td>
-      <td>BioLink API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PAH</td>
-      <td>NCBIGene:5053</td>
-      <td>physically_interacts_with</td>
+      <td>positively_regulated_by</td>
       <td>SEMMED</td>
       <td>SEMMED Gene API</td>
-      <td>11055810</td>
+      <td>10964764</td>
       <td>ChemicalSubstance</td>
-      <td>PEROXOVANADATE</td>
-      <td>name:PEROXOVANADATE</td>
+      <td>OCHRATOXINS</td>
+      <td>name:OCHRATOXINS</td>
     </tr>
     <tr>
-      <th>48</th>
+      <th>59</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -14992,11 +15023,11 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>CORD Gene API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>CHEBI:33893</td>
-      <td>CHEBI:CHEBI:33893</td>
+      <td>CHEBI:50904</td>
+      <td>CHEBI:CHEBI:50904</td>
     </tr>
     <tr>
-      <th>236</th>
+      <th>209</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -15006,54 +15037,16 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>Gene</td>
       <td>PAH</td>
       <td>NCBIGene:5053</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Gene API</td>
-      <td>None</td>
-      <td>ChemicalSubstance</td>
-      <td>PROLINATE</td>
-      <td>name:PROLINATE</td>
-    </tr>
-    <tr>
-      <th>166</th>
-      <td>MILD HYPERPHENYLALANINEMIA</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>None</td>
-      <td>BioLink API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PAH</td>
-      <td>NCBIGene:5053</td>
-      <td>physically_interacts_with</td>
+      <td>negatively_regulated_by</td>
       <td>SEMMED</td>
       <td>SEMMED Gene API</td>
-      <td>16676991,20638309</td>
+      <td>10839989</td>
       <td>ChemicalSubstance</td>
-      <td>OXYGEN</td>
-      <td>name:OXYGEN</td>
+      <td>BIOPTERIN</td>
+      <td>name:BIOPTERIN</td>
     </tr>
     <tr>
-      <th>132</th>
-      <td>MILD HYPERPHENYLALANINEMIA</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>None</td>
-      <td>BioLink API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>PAH</td>
-      <td>NCBIGene:5053</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Gene API</td>
-      <td>23523934</td>
-      <td>ChemicalSubstance</td>
-      <td>HYDROGEN PEROXIDE</td>
-      <td>name:HYDROGEN PEROXIDE</td>
-    </tr>
-    <tr>
-      <th>223</th>
+      <th>244</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -15064,15 +15057,15 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>PAH</td>
       <td>NCBIGene:5053</td>
       <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Gene API</td>
+      <td>scigraph</td>
+      <td>Automat CORD19 Scigraph API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>D 21266</td>
-      <td>name:D 21266</td>
+      <td>PYRENE</td>
+      <td>name:PYRENE</td>
     </tr>
     <tr>
-      <th>41</th>
+      <th>58</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>
@@ -15087,8 +15080,27 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
       <td>CORD Gene API</td>
       <td>None</td>
       <td>ChemicalSubstance</td>
-      <td>CHEBI:24632</td>
-      <td>CHEBI:CHEBI:24632</td>
+      <td>CHEBI:50112</td>
+      <td>CHEBI:CHEBI:50112</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>MILD HYPERPHENYLALANINEMIA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>None</td>
+      <td>BioLink API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PAH</td>
+      <td>NCBIGene:5053</td>
+      <td>related_to</td>
+      <td>scigraph</td>
+      <td>Automat CORD19 Scigraph API</td>
+      <td>None</td>
+      <td>ChemicalSubstance</td>
+      <td>CHEBI:76413</td>
+      <td>CHEBI:CHEBI:76413</td>
     </tr>
   </tbody>
 </table>
@@ -15112,7 +15124,7 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -15128,22 +15140,22 @@ In the #2 query, BTE found 228 unique ChemicalSubstance nodes
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[10]:</div>
+    <div class="prompt output_prompt">Out[9]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>SAPROPTERIN            5
-HYDROCORTISONE         3
-NOREPINEPHRINE         3
-PTERINS                3
-L-PHENYLALANINE        3
-SEROTONIN              2
-HYDROGEN PEROXIDE      2
-MELANIN                2
-OMEGA-3 FATTY ACIDS    2
-METALS                 2
+<pre>SAPROPTERIN          4
+(R)-NORADRENALINE    4
+CORTISOL             3
+PTERINS              3
+DIOXYGEN             3
+(R)-ADRENALINE       3
+WATER                3
+BENZO(A)PYRENE       2
+CHEBI:24632          2
+CHEBI:59659          2
 Name: output_name, dtype: int64</pre>
 </div>
 
@@ -15165,7 +15177,7 @@ Name: output_name, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">output_name</span> <span class="o">==</span> <span class="s2">&quot;NITRIC OXIDE&quot;</span><span class="p">]</span>
@@ -15181,7 +15193,7 @@ Name: output_name, dtype: int64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -15224,7 +15236,7 @@ Name: output_name, dtype: int64</pre>
   </thead>
   <tbody>
     <tr>
-      <th>276</th>
+      <th>328</th>
       <td>MILD HYPERPHENYLALANINEMIA</td>
       <td>Disease</td>
       <td>related_to</td>

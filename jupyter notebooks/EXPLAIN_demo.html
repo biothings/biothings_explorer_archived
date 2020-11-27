@@ -12947,8 +12947,13 @@ ul.typeahead-list  > li > a.pull-right {
 /*# sourceMappingURL=style.min.css.map */
     </style>
 <style type="text/css">
-    .highlight .hll { background-color: #ffffcc }
-.highlight  { background: #f8f8f8; }
+    pre { line-height: 125%; margin: 0; }
+td.linenos pre { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
+span.linenos { color: #000000; background-color: #f0f0f0; padding: 0 5px 0 5px; }
+td.linenos pre.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding: 0 5px 0 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
 .highlight .c { color: #408080; font-style: italic } /* Comment */
 .highlight .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
@@ -14377,7 +14382,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import modules from biothings_explorer</span>
@@ -14392,28 +14397,34 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">hint_display</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">hint_result</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## functions to add to modules?</span>
+<span class="k">def</span> <span class="nf">hint_display</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">hint_result</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    input: query (string used in hint query), hint_result (object returned from hint query)</span>
-<span class="sd">    hint_result is a dictionary of lists of dictionaries</span>
-<span class="sd">    returns: None</span>
-<span class="sd">    show the name and type of all results returned by the query</span>
+<span class="sd">    show the type, name, number of IDs for all results returned by the query</span>
+<span class="sd">    </span>
+<span class="sd">    :param: query: string used in hint query</span>
+<span class="sd">    :param: hint_result: object returned from hint query, a dictionary of lists of dictionaries</span>
+<span class="sd">    </span>
+<span class="sd">    Returns: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">]</span>  <span class="c1">## replace with the parts of the BioThings object you want to see</span>
+    <span class="c1">## function needs to be rewritten if it&#39;s going to give the exact index of each object within its type </span>
+    <span class="n">display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]</span>  <span class="c1">## replace with the parts of the BioThings object you want to see</span>
     <span class="n">concise_results</span> <span class="o">=</span> <span class="p">[]</span>
-    
     <span class="k">for</span> <span class="n">BT_type</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">hint_result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>  <span class="c1">## basically if it&#39;s not empty</span>
             <span class="k">for</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
-                <span class="n">concise_results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">items</span><span class="p">[</span><span class="n">ele</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">display</span><span class="p">])</span>
-    
+                <span class="c1">## number of identifiers per object: number of keys - 4 (name, primary, display, type)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span>
+                <span class="n">concise_results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">items</span><span class="p">[</span><span class="n">display</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">items</span><span class="p">[</span><span class="n">display</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> 
+                                         <span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">)))</span>
+                    
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are </span><span class="si">{total}</span><span class="s1"> BioThings objects returned for </span><span class="si">{ht}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>\
                 <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">concise_results</span><span class="p">),</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">query</span><span class="p">))</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">display_info</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">concise_results</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{i}</span><span class="s1">: </span><span class="si">{val}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">display_info</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">display_info</span> <span class="ow">in</span> <span class="n">concise_results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">, </span><span class="si">{1}</span><span class="s1">, num of IDs: </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">display_info</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">display_info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">display_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
 </pre></div>
 
     </div>
@@ -14440,7 +14451,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
@@ -14465,9 +14476,13 @@ $(document).ready(function () {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 2 BioThings objects returned for chronic myelogenous leukemia:
-0: [&#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39;, &#39;Disease&#39;]
-1: [&#39;blast phase chronic myelogenous leukemia, BCR-ABL1 positive&#39;, &#39;Disease&#39;]
+<pre>There are 6 BioThings objects returned for chronic myelogenous leukemia:
+Disease, chronic myelogenous leukemia, BCR-ABL1 positive, num of IDs: 6
+Disease, Philadelphia chromosome positive chronic myelogenous leukemia, num of IDs: 2
+Disease, Philadelphia chromosome negative chronic myelogenous leukemia, num of IDs: 2
+Disease, Chronic myelogenous leukemia, BCR/ABL positive, num of IDs: 2
+Disease, blast phase chronic myelogenous leukemia, BCR-ABL1 positive, num of IDs: 3
+PhenotypicFeature, Chronic myelogenous leukemia, num of IDs: 3
 </pre>
 </div>
 </div>
@@ -14486,7 +14501,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select the first Disease object for our CML query</span>
@@ -14504,7 +14519,7 @@ $(document).ready(function () {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -14514,12 +14529,13 @@ $(document).ready(function () {
  &#39;DOID&#39;: &#39;DOID:8552&#39;,
  &#39;UMLS&#39;: &#39;C0023473&#39;,
  &#39;name&#39;: &#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39;,
+ &#39;MESH&#39;: &#39;D015464&#39;,
  &#39;OMIM&#39;: &#39;608232&#39;,
  &#39;ORPHANET&#39;: &#39;521&#39;,
  &#39;primary&#39;: {&#39;identifier&#39;: &#39;MONDO&#39;,
   &#39;cls&#39;: &#39;Disease&#39;,
   &#39;value&#39;: &#39;MONDO:0011996&#39;},
- &#39;display&#39;: &#39;MONDO(MONDO:0011996) DOID(DOID:8552) OMIM(608232) ORPHANET(521) UMLS(C0023473) name(chronic myelogenous leukemia, BCR-ABL1 positive)&#39;,
+ &#39;display&#39;: &#39;MONDO(MONDO:0011996) DOID(DOID:8552) OMIM(608232) ORPHANET(521) UMLS(C0023473) MESH(D015464) name(chronic myelogenous leukemia, BCR-ABL1 positive)&#39;,
  &#39;type&#39;: &#39;Disease&#39;}</pre>
 </div>
 
@@ -14531,7 +14547,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find all potential representations of imatinib</span>
@@ -14555,17 +14571,12 @@ $(document).ready(function () {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 10 BioThings objects returned for imatinib:
-0: [&#39;imatinib&#39;, &#39;ChemicalSubstance&#39;]
-1: [&#39;imatinib methanesulfonate&#39;, &#39;ChemicalSubstance&#39;]
-2: [&#39;linkable imatinib analogue&#39;, &#39;ChemicalSubstance&#39;]
-3: [&#39;IMATINIB&#39;, &#39;ChemicalSubstance&#39;]
-4: [&#39;IMATINIB MESYLATE&#39;, &#39;ChemicalSubstance&#39;]
-5: [&#39;HYPEREOSINOPHILIC SYNDROME, IDIOPATHIC, RESISTANT TO IMATINIB&#39;, &#39;Disease&#39;]
-6: [&#39;CHRONIC MYELOID LEUKEMIA, RESISTANT TO IMATINIB&#39;, &#39;Disease&#39;]
-7: [&#39;LEUKEMIA, PHILADELPHIA CHROMOSOME-POSITIVE, RESISTANT TO IMATINIB&#39;, &#39;Disease&#39;]
-8: [&#39;Imatinib Pathway, Pharmacokinetics/Pharmacodynamics&#39;, &#39;Pathway&#39;]
-9: [&#39;Imatinib and Chronic Myeloid Leukemia&#39;, &#39;Pathway&#39;]
+<pre>There are 5 BioThings objects returned for imatinib:
+ChemicalSubstance, IMATINIB, num of IDs: 9
+ChemicalSubstance, Imatinib, num of IDs: 6
+ChemicalSubstance, IMATINIB MESYLATE, num of IDs: 9
+Pathway, Imatinib Pathway, Pharmacokinetics/Pharmacodynamics, num of IDs: 1
+Pathway, Imatinib and Chronic Myeloid Leukemia, num of IDs: 1
 </pre>
 </div>
 </div>
@@ -14584,7 +14595,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select the correct representation of imatinib</span>
@@ -14602,19 +14613,26 @@ $(document).ready(function () {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;DRUGBANK&#39;: &#39;DB00619&#39;,
+<pre>{&#39;CHEMBL.COMPOUND&#39;: &#39;CHEMBL941&#39;,
+ &#39;DRUGBANK&#39;: &#39;DB00619&#39;,
+ &#39;PUBCHEM&#39;: 5291,
  &#39;CHEBI&#39;: &#39;CHEBI:45783&#39;,
- &#39;name&#39;: &#39;imatinib&#39;,
+ &#39;UMLS&#39;: &#39;C0935989&#39;,
+ &#39;MESH&#39;: &#39;D000068877&#39;,
+ &#39;UNII&#39;: &#39;8A1O1M485B&#39;,
+ &#39;INCHIKEY&#39;: &#39;KTUFNOKKBVMGRW-UHFFFAOYSA-N&#39;,
+ &#39;INCHI&#39;: &#39;InChI=1S/C29H31N7O/c1-21-5-10-25(18-27(21)34-29-31-13-11-26(33-29)24-4-3-12-30-19-24)32-28(37)23-8-6-22(7-9-23)20-36-16-14-35(2)15-17-36/h3-13,18-19H,14-17,20H2,1-2H3,(H,32,37)(H,31,33,34)&#39;,
+ &#39;name&#39;: &#39;IMATINIB&#39;,
  &#39;primary&#39;: {&#39;identifier&#39;: &#39;CHEBI&#39;,
   &#39;cls&#39;: &#39;ChemicalSubstance&#39;,
   &#39;value&#39;: &#39;CHEBI:45783&#39;},
- &#39;display&#39;: &#39;CHEBI(CHEBI:45783) DRUGBANK(DB00619) name(imatinib)&#39;,
+ &#39;display&#39;: &#39;CHEBI(CHEBI:45783) CHEMBL.COMPOUND(CHEMBL941) DRUGBANK(DB00619) PUBCHEM(5291) MESH(D000068877) UNII(8A1O1M485B) UMLS(C0935989) name(IMATINIB)&#39;,
  &#39;type&#39;: &#39;ChemicalSubstance&#39;}</pre>
 </div>
 
@@ -14642,7 +14660,7 @@ $(document).ready(function () {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">FindConnection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
@@ -14708,7 +14726,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span> <span class="o">=</span> <span class="n">cml</span><span class="p">,</span> <span class="n">output_obj</span> <span class="o">=</span> <span class="n">imatinib</span><span class="p">,</span> \
@@ -14731,7 +14749,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set verbose=True will display all steps which BTE takes to find the connection</span>
@@ -14756,7 +14774,7 @@ __init__(self, input_obj, output_obj, intermediate_nodes, registry=None)
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39; and &#39;imatinib&#39;. Paths will have 1 intermediate node.
+BTE will find paths that join &#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39; and &#39;IMATINIB&#39;. Paths will have 1 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
@@ -14771,167 +14789,164 @@ Because chronic myelogenous leukemia, BCR-ABL1 positive is of type &#39;Disease&
 
 BTE found 10 apis:
 
-API 1. pharos(1 API call)
-API 2. scigraph(1 API call)
-API 3. cord_disease(1 API call)
-API 4. semmed_disease(15 API calls)
-API 5. hetio(1 API call)
-API 6. DISEASES(1 API call)
-API 7. mgi_gene2phenotype(1 API call)
-API 8. mydisease(1 API call)
-API 9. biolink(1 API call)
-API 10. scibite(1 API call)
+API 1. scibite(1 API call)
+API 2. semmed_disease(15 API calls)
+API 3. pharos(1 API call)
+API 4. cord_disease(1 API call)
+API 5. biolink(1 API call)
+API 6. hetio(1 API call)
+API 7. mydisease(1 API call)
+API 8. scigraph(1 API call)
+API 9. mgi_gene2phenotype(1 API call)
+API 10. DISEASES(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.1: https://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0023474,C0023473&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
-API 8.1: https://pending.biothings.io/mgigene2phenotype/query?fields=_id&amp;size=300 (POST -d q=DOID:8552&amp;scopes=mgi.associated_with_disease.doid)
-API 6.1: https://pending.biothings.io/DISEASES/query?fields=DISEASES.associatedWith (POST -d q=DOID:8552&amp;scopes=DISEASES.doid)
-API 4.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 9.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=200
-API 3.1: https://biothings.ncats.io/cord_disease/query?fields=associated_with (POST -d q=DOID:8552&amp;scopes=doid)
-API 4.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 4.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0023474,C0023473&amp;scopes=umls)
-API 10.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0011996
-API 10.1 scibite failed
-API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0011996
-API 2.1 scigraph failed
-API 1.1: https://automat.renci.org/pharos/disease/gene/MONDO:0011996
-API 5.1: https://automat.renci.org/hetio/disease/gene/MONDO:0011996
+API 5.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011996/genes?rows=200
+API 7.1: https://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0023473&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
+API 4.1: https://biothings.ncats.io/cord_disease/query?fields=associated_with (POST -d q=DOID:8552&amp;scopes=doid)
+API 2.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0023473&amp;scopes=umls)
+API 2.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0023473&amp;scopes=umls)
+API 2.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0023473&amp;scopes=umls)
+API 2.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0023473&amp;scopes=umls)
+API 2.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0023473&amp;scopes=umls)
+API 2.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0023473&amp;scopes=umls)
+API 2.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0023473&amp;scopes=umls)
+API 2.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0023473&amp;scopes=umls)
+API 2.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0023473&amp;scopes=umls)
+API 2.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0023473&amp;scopes=umls)
+API 10.1: https://pending.biothings.io/DISEASES/query?fields=DISEASES.associatedWith (POST -d q=DOID:8552&amp;scopes=DISEASES.doid)
+API 9.1: https://pending.biothings.io/mgigene2phenotype/query?fields=_id&amp;size=300 (POST -d q=DOID:8552&amp;scopes=mgi.associated_with_disease.doid)
+API 1.1: https://automat.renci.org/cord19-scibite/disease/gene/MONDO:0011996
+API 3.1: https://automat.renci.org/pharos/disease/gene/MONDO:0011996
+API 6.1: https://automat.renci.org/hetio/disease/gene/MONDO:0011996
+API 8.1: https://automat.renci.org/cord19-scigraph/disease/gene/MONDO:0011996
 
 
 ==== Step #3: Output normalization ====
 
-API 8.1 mgi_gene2phenotype: 8 hits
-API 4.1 semmed_disease: No hits
-API 4.2 semmed_disease: No hits
-API 6.1 DISEASES: 3 hits
-API 4.3 semmed_disease: 7 hits
-API 4.4 semmed_disease: No hits
-API 4.5 semmed_disease: No hits
-API 4.6 semmed_disease: 136 hits
-API 4.7 semmed_disease: No hits
-API 1.1 pharos: 7 hits
-API 4.8 semmed_disease: No hits
-API 4.9 semmed_disease: 26 hits
-API 3.1 cord_disease: 146 hits
-API 4.10 semmed_disease: 64 hits
-API 5.1 hetio: No hits
-API 4.11 semmed_disease: No hits
-API 4.12 semmed_disease: 557 hits
-API 7.1 mydisease: No hits
-API 4.13 semmed_disease: No hits
-API 4.14 semmed_disease: 92 hits
-API 9.1 biolink: 4 hits
-API 4.15 semmed_disease: No hits
+API 9.1 mgi_gene2phenotype: 8 hits
+API 2.1 semmed_disease: No hits
+API 2.2 semmed_disease: No hits
+API 10.1 DISEASES: 2 hits
+API 2.3 semmed_disease: 7 hits
+API 2.4 semmed_disease: No hits
+API 2.5 semmed_disease: No hits
+API 2.6 semmed_disease: 131 hits
+API 2.7 semmed_disease: No hits
+API 8.1 scigraph: 3 hits
+API 3.1 pharos: 39 hits
+API 2.8 semmed_disease: No hits
+API 2.9 semmed_disease: 26 hits
+API 4.1 cord_disease: 146 hits
+API 2.10 semmed_disease: 63 hits
+API 1.1 scibite: 12 hits
+API 6.1 hetio: No hits
+API 2.11 semmed_disease: No hits
+API 2.12 semmed_disease: 537 hits
+API 7.1 mydisease: 1272 hits
+API 2.13 semmed_disease: No hits
+API 2.14 semmed_disease: 90 hits
+API 5.1 biolink: 4 hits
+API 2.15 semmed_disease: No hits
 
-After id-to-object translation, BTE retrieved 740 unique objects.
+After id-to-object translation, BTE retrieved 1650 unique objects.
 
 
 ==========
-========== QUERY #2 -- fetch all Gene entities linked to &#39;imatinib&#39; ==========
+========== QUERY #2 -- fetch all Gene entities linked to &#39;IMATINIB&#39; ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because imatinib is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
+Because IMATINIB is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
 
 BTE found 10 apis:
 
-API 1. cord_chemical(1 API call)
+API 1. scibite(1 API call)
 API 2. pharos(1 API call)
-API 3. scigraph(1 API call)
-API 4. mychem(3 API calls)
-API 5. chembio(1 API call)
-API 6. ctd(2 API calls)
-API 7. semmed_chemical(13 API calls)
-API 8. dgidb(2 API calls)
-API 9. hmdb(1 API call)
-API 10. scibite(1 API call)
+API 3. chembio(1 API call)
+API 4. hmdb(1 API call)
+API 5. mychem(3 API calls)
+API 6. dgidb(2 API calls)
+API 7. ctd(2 API calls)
+API 8. scigraph(1 API call)
+API 9. cord_chemical(1 API call)
+API 10. semmed_chemical(13 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.2: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulates (POST -d q=C0935989&amp;scopes=umls)
-API 7.5: https://biothings.ncats.io/semmedchemical/query?fields=related_to (POST -d q=C0935989&amp;scopes=umls)
-API 7.8: https://biothings.ncats.io/semmedchemical/query?fields=produces (POST -d q=C0935989&amp;scopes=umls)
-API 1.1: https://biothings.ncats.io/cord_chemical/query?fields=associated_with (POST -d q=CHEBI:45783&amp;scopes=chebi)
-API 6.3: https://mychem.info/v1/query?fields=drugbank.enzymes (POST -d q=DB00619&amp;scopes=drugbank.id)
-API 7.3: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
-API 6.2: https://mychem.info/v1/query?fields=drugcentral.bioactivity (POST -d q=CHEMBL1642,CHEMBL941&amp;scopes=chembl.molecule_chembl_id)
-API 7.6: https://biothings.ncats.io/semmedchemical/query?fields=disrupts (POST -d q=C0935989&amp;scopes=umls)
-API 6.1: https://mychem.info/v1/query?fields=drugbank.targets (POST -d q=DB00619&amp;scopes=drugbank.id)
-API 7.7: https://biothings.ncats.io/semmedchemical/query?fields=coexists_with (POST -d q=C0935989&amp;scopes=umls)
-API 7.10: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulates (POST -d q=C0935989&amp;scopes=umls)
-API 7.12: https://biothings.ncats.io/semmedchemical/query?fields=affected_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.4: https://biothings.ncats.io/semmedchemical/query?fields=disrupted_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.13: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.11: https://biothings.ncats.io/semmedchemical/query?fields=affects (POST -d q=C0935989&amp;scopes=umls)
-API 7.9: https://biothings.ncats.io/semmedchemical/query?fields=produced_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.1: https://biothings.ncats.io/semmedchemical/query?fields=physically_interacts_with (POST -d q=C0935989&amp;scopes=umls)
-API 8.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL1642
-API 8.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL941
-API 4.2: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=C097613
-API 4.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=D000068877
-API 10.1: https://automat.renci.org/cord19_scibite_v2/chemical_substance/gene/CHEBI:45783
-API 10.1 scibite failed
-API 3.1: https://automat.renci.org/cord19_scigraph_v2/chemical_substance/gene/CHEBI:45783
-API 3.1 scigraph failed
+API 10.10: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulates (POST -d q=C0935989&amp;scopes=umls)
+API 10.8: https://biothings.ncats.io/semmedchemical/query?fields=produces (POST -d q=C0935989&amp;scopes=umls)
+API 10.5: https://biothings.ncats.io/semmedchemical/query?fields=related_to (POST -d q=C0935989&amp;scopes=umls)
+API 10.4: https://biothings.ncats.io/semmedchemical/query?fields=disrupted_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.3: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.6: https://biothings.ncats.io/semmedchemical/query?fields=disrupts (POST -d q=C0935989&amp;scopes=umls)
+API 10.2: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulates (POST -d q=C0935989&amp;scopes=umls)
+API 10.11: https://biothings.ncats.io/semmedchemical/query?fields=affects (POST -d q=C0935989&amp;scopes=umls)
+API 10.9: https://biothings.ncats.io/semmedchemical/query?fields=produced_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.1: https://biothings.ncats.io/semmedchemical/query?fields=physically_interacts_with (POST -d q=C0935989&amp;scopes=umls)
+API 10.13: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.12: https://biothings.ncats.io/semmedchemical/query?fields=affected_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.7: https://biothings.ncats.io/semmedchemical/query?fields=coexists_with (POST -d q=C0935989&amp;scopes=umls)
+API 9.1: https://biothings.ncats.io/cord_chemical/query?fields=associated_with (POST -d q=CHEBI:45783&amp;scopes=chebi)
 API 2.1: https://automat.renci.org/pharos/chemical_substance/gene/CHEBI:45783
-API 5.1: https://automat.renci.org/chembio/chemical_substance/gene/CHEBI:45783
-API 9.1: https://automat.renci.org/hmdb/chemical_substance/gene/CHEBI:45783
+API 1.1: https://automat.renci.org/cord19-scibite/chemical_substance/gene/CHEBI:45783
+API 4.1: https://automat.renci.org/chembio/chemical_substance/gene/CHEBI:45783
+API 8.1: https://automat.renci.org/cord19-scigraph/chemical_substance/gene/CHEBI:45783
+API 3.1: https://automat.renci.org/hmdb/chemical_substance/gene/CHEBI:45783
+API 6.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL941
+API 6.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL1642
+API 7.2: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=C097613
+API 7.2 ctd failed
+API 7.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=D000068877
+API 7.1 ctd failed
 
 
 ==== Step #3: Output normalization ====
 
-API 7.1 semmed_chemical: 226 hits
-API 5.1 chembio: No hits
-API 6.1 mychem: 9 hits
-API 6.2 mychem: 80 hits
-API 6.3 mychem: 9 hits
-API 2.1 pharos: 6 hits
-API 7.2 semmed_chemical: 96 hits
-API 7.3 semmed_chemical: 36 hits
-API 7.4 semmed_chemical: No hits
-API 7.5 semmed_chemical: No hits
-API 8.1 dgidb: 5 hits
-API 8.2 dgidb: 34 hits
-API 9.1 hmdb: No hits
-API 7.6 semmed_chemical: No hits
-API 7.7 semmed_chemical: 119 hits
-API 7.8 semmed_chemical: No hits
-API 7.9 semmed_chemical: 11 hits
-API 1.1 cord_chemical: 172 hits
-API 4.1 ctd: 199 hits
-API 4.2 ctd: No hits
-API 7.10 semmed_chemical: 166 hits
-API 7.11 semmed_chemical: No hits
-API 7.12 semmed_chemical: No hits
-API 7.13 semmed_chemical: 39 hits
+API 10.1 semmed_chemical: 226 hits
+API 4.1 chembio: No hits
+API 1.1 scibite: 8 hits
+API 5.1 mychem: 9 hits
+API 5.2 mychem: 80 hits
+API 5.3 mychem: 9 hits
+API 2.1 pharos: 21 hits
+API 10.2 semmed_chemical: 96 hits
+API 8.1 scigraph: 3 hits
+API 10.3 semmed_chemical: 36 hits
+API 10.4 semmed_chemical: No hits
+API 10.5 semmed_chemical: No hits
+API 6.1 dgidb: No hits
+API 6.2 dgidb: No hits
+API 3.1 hmdb: No hits
+API 10.6 semmed_chemical: No hits
+API 10.7 semmed_chemical: 119 hits
+API 10.8 semmed_chemical: No hits
+API 10.9 semmed_chemical: 11 hits
+API 9.1 cord_chemical: 172 hits
+API 10.10 semmed_chemical: 166 hits
+API 10.11 semmed_chemical: No hits
+API 10.12 semmed_chemical: No hits
+API 10.13 semmed_chemical: 39 hits
 
-After id-to-object translation, BTE retrieved 728 unique objects.
+After id-to-object translation, BTE retrieved 608 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39; and &#39;imatinib&#39;
+BTE found 328 unique intermediate nodes connecting &#39;chronic myelogenous leukemia, BCR-ABL1 positive&#39; and &#39;IMATINIB&#39;
 </pre>
 </div>
 </div>
@@ -14958,7 +14973,7 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">fc</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -14986,14 +15001,14 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(1028, 16)
+<pre>(1249, 16)
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[11]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -15036,83 +15051,7 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
   </thead>
   <tbody>
     <tr>
-      <th>1319</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>affected_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>27573699</td>
-      <td>Gene</td>
-      <td>MYC</td>
-      <td>NCBIGene:4609</td>
-      <td>positively_regulated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>22842456</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>563</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>None</td>
-      <td>BioLink API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>BCR</td>
-      <td>NCBIGene:613</td>
-      <td>positively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>20228846,22204395,22641215</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>1092</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>caused_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>10092207,10224280,10490629,10676660,10833515,1...</td>
-      <td>Gene</td>
-      <td>MTTP</td>
-      <td>NCBIGene:4547</td>
-      <td>coexists_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>12669727,15283151,21505592,22713161,23434731</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>1537</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>10688886</td>
-      <td>Gene</td>
-      <td>SQSTM1</td>
-      <td>NCBIGene:8878</td>
-      <td>related_to</td>
-      <td>CTD</td>
-      <td>CTD API</td>
-      <td>22641616,30165626</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>700</th>
+      <th>663</th>
       <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
       <td>Disease</td>
       <td>treated_by</td>
@@ -15122,35 +15061,111 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
       <td>Gene</td>
       <td>KIT</td>
       <td>NCBIGene:3815</td>
-      <td>positively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>17139461,28765927,28878021</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>911</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>affected_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>22823957</td>
-      <td>Gene</td>
-      <td>ABCB1</td>
-      <td>NCBIGene:5243</td>
       <td>physically_interacts_with</td>
       <td>SEMMED</td>
       <td>SEMMED Chemical API</td>
-      <td>16157201,17495881,17690695,18669873,19225039,2...</td>
+      <td>12481435,12672043,14645423,15689683,15893416,1...</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>name:IMATINIB</td>
     </tr>
     <tr>
-      <th>1264</th>
+      <th>1801</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>29041012</td>
+      <td>Gene</td>
+      <td>WT1</td>
+      <td>NCBIGene:7490</td>
+      <td>coexists_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>19580340</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>983</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>15995325</td>
+      <td>Gene</td>
+      <td>FGFR1</td>
+      <td>NCBIGene:2260</td>
+      <td>physically_interacts_with</td>
+      <td>drugcentral</td>
+      <td>MyChem.info API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>990</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>29096333</td>
+      <td>Gene</td>
+      <td>EPHB4</td>
+      <td>NCBIGene:2050</td>
+      <td>physically_interacts_with</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>24415355</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>903</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>pharos</td>
+      <td>Automat PHAROS API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>ABL1</td>
+      <td>NCBIGene:25</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>26251899</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>1468</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>disgenet</td>
+      <td>mydisease.info API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>CXCR4</td>
+      <td>NCBIGene:7852</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>24502926</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>1571</th>
       <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
       <td>Disease</td>
       <td>caused_by</td>
@@ -15169,58 +15184,58 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
       <td>name:IMATINIB</td>
     </tr>
     <tr>
-      <th>759</th>
+      <th>684</th>
       <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
       <td>Disease</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Disease API</td>
-      <td>None</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>15717993,16205964,16596277,17694264,17891251,2...</td>
       <td>Gene</td>
       <td>KIT</td>
       <td>NCBIGene:3815</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Chemical API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>959</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>18577744,18984583,21154127,24091144,25965880</td>
-      <td>Gene</td>
-      <td>LYN</td>
-      <td>NCBIGene:4067</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Chemical API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>935</th>
-      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Disease API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>SRC</td>
-      <td>NCBIGene:6714</td>
-      <td>physically_interacts_with</td>
+      <td>coexists_with</td>
       <td>SEMMED</td>
       <td>SEMMED Chemical API</td>
-      <td>27087366</td>
+      <td>16143881,17208434,17372901,18234488,21181476,2...</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>766</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PDGFRA</td>
+      <td>NCBIGene:5156</td>
+      <td>physically_interacts_with</td>
+      <td>drugbank</td>
+      <td>MyChem.info API</td>
+      <td>15894928,15921304,15928335,15946589,15995325</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>1836</th>
+      <td>CHRONIC MYELOGENOUS LEUKEMIA, BCR-ABL1 POSITIVE</td>
+      <td>Disease</td>
+      <td>treated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>24574458</td>
+      <td>Gene</td>
+      <td>IL2RA</td>
+      <td>NCBIGene:3559</td>
+      <td>negatively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>18190601</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>name:IMATINIB</td>
@@ -15247,7 +15262,7 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -15263,22 +15278,22 @@ BTE found 249 unique intermediate nodes connecting &#39;chronic myelogenous leuk
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[12]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>BCR      210
-ABL1      78
-KIT       72
+<pre>BCR      156
+ABL1      81
+KIT       80
 MTTP      42
-AKT1      36
+AKT1      30
 TP53      25
-ABCG2     20
-ABCB1     18
-LYN       18
-PTEN      16
+JAK2      24
+ABCB1     21
+ABCG2     21
+LYN       20
 Name: node1_name, dtype: int64</pre>
 </div>
 
@@ -15300,7 +15315,7 @@ Name: node1_name, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fetch all articles connecting &#39;chronic myelogenous leukemia&#39; and &#39;ABL1&#39;</span>
@@ -15350,7 +15365,7 @@ http://pubmed.gov/20809971
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fetch all articles connecting &#39;ABL1&#39; and &#39;Imatinib</span>
@@ -15378,7 +15393,7 @@ http://pubmed.gov/20809971
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 29 articles supporting the edge between ABL1 and imatinib. Sampling of 10 of those:
+<pre>There are 11 articles supporting the edge between ABL1 and imatinib. Sampling of 10 of those:
 http://pubmed.gov/15799618
 http://pubmed.gov/15917650
 http://pubmed.gov/15949566
@@ -15414,7 +15429,7 @@ http://pubmed.gov/21693657
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">ht</span> <span class="o">=</span> <span class="n">Hint</span><span class="p">()</span>
@@ -15440,11 +15455,12 @@ http://pubmed.gov/21693657
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>There are 4 BioThings objects returned for gastrointestinal stromal tumor:
-0: [&#39;gastrointestinal stromal tumor&#39;, &#39;Disease&#39;]
-1: [&#39;GASTROINTESTINAL STROMAL TUMOR, FAMILIAL&#39;, &#39;Disease&#39;]
-2: [&#39;Gastric Gastrointestinal Stromal Tumor&#39;, &#39;Disease&#39;]
-3: [&#39;colorectal gastrointestinal stromal tumor&#39;, &#39;Disease&#39;]
+<pre>There are 5 BioThings objects returned for gastrointestinal stromal tumor:
+Disease, gastrointestinal stromal tumor, num of IDs: 6
+Disease, colorectal gastrointestinal stromal tumor, num of IDs: 2
+Disease, Gastrointestinal stromal tumor, benign, num of IDs: 2
+Disease, Childhood Gastrointestinal Stromal Tumor, num of IDs: 2
+Disease, GASTROINTESTINAL STROMAL TUMOR, FAMILIAL, num of IDs: 2
 </pre>
 </div>
 </div>
@@ -15463,7 +15479,7 @@ http://pubmed.gov/21693657
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select the correct representation of CML</span>
@@ -15481,7 +15497,7 @@ http://pubmed.gov/21693657
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -15517,7 +15533,7 @@ http://pubmed.gov/21693657
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc2</span> <span class="o">=</span> <span class="n">FindConnection</span><span class="p">(</span><span class="n">input_obj</span> <span class="o">=</span> <span class="n">gist</span><span class="p">,</span> <span class="n">output_obj</span> <span class="o">=</span> <span class="n">imatinib</span><span class="p">,</span> \
@@ -15531,7 +15547,7 @@ http://pubmed.gov/21693657
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fc2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
@@ -15555,7 +15571,7 @@ http://pubmed.gov/21693657
 ========== QUERY PARAMETER SUMMARY ==========
 ==========
 
-BTE will find paths that join &#39;gastrointestinal stromal tumor&#39; and &#39;imatinib&#39;. Paths will have 1 intermediate node.
+BTE will find paths that join &#39;gastrointestinal stromal tumor&#39; and &#39;IMATINIB&#39;. Paths will have 1 intermediate node.
 
 Intermediate node #1 will have these type constraints: Gene
 
@@ -15570,167 +15586,164 @@ Because gastrointestinal stromal tumor is of type &#39;Disease&#39;, BTE will qu
 
 BTE found 10 apis:
 
-API 1. pharos(1 API call)
-API 2. scigraph(1 API call)
-API 3. cord_disease(1 API call)
-API 4. semmed_disease(15 API calls)
-API 5. hetio(1 API call)
-API 6. DISEASES(1 API call)
-API 7. mgi_gene2phenotype(1 API call)
-API 8. mydisease(1 API call)
-API 9. biolink(1 API call)
-API 10. scibite(1 API call)
+API 1. scibite(1 API call)
+API 2. semmed_disease(15 API calls)
+API 3. pharos(1 API call)
+API 4. cord_disease(1 API call)
+API 5. biolink(1 API call)
+API 6. hetio(1 API call)
+API 7. mydisease(1 API call)
+API 8. scigraph(1 API call)
+API 9. mgi_gene2phenotype(1 API call)
+API 10. DISEASES(1 API call)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 7.1: https://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0238198&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
-API 4.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0238198&amp;scopes=umls)
-API 4.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0238198&amp;scopes=umls)
-API 4.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0238198&amp;scopes=umls)
-API 4.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0238198&amp;scopes=umls)
-API 4.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0238198&amp;scopes=umls)
-API 4.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0238198&amp;scopes=umls)
-API 4.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0238198&amp;scopes=umls)
-API 6.1: https://pending.biothings.io/DISEASES/query?fields=DISEASES.associatedWith (POST -d q=DOID:9253&amp;scopes=DISEASES.doid)
-API 8.1: https://pending.biothings.io/mgigene2phenotype/query?fields=_id&amp;size=300 (POST -d q=DOID:9253&amp;scopes=mgi.associated_with_disease.doid)
-API 4.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0238198&amp;scopes=umls)
-API 4.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0238198&amp;scopes=umls)
-API 4.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0238198&amp;scopes=umls)
-API 4.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0238198&amp;scopes=umls)
-API 3.1: https://biothings.ncats.io/cord_disease/query?fields=associated_with (POST -d q=DOID:9253&amp;scopes=doid)
-API 4.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0238198&amp;scopes=umls)
-API 4.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0238198&amp;scopes=umls)
-API 4.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0238198&amp;scopes=umls)
-API 4.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0238198&amp;scopes=umls)
-API 9.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011719/genes?rows=200
-API 2.1: https://automat.renci.org/cord19_scigraph_v2/disease/gene/MONDO:0011719
-API 2.1 scigraph failed
-API 10.1: https://automat.renci.org/cord19_scibite_v2/disease/gene/MONDO:0011719
-API 10.1 scibite failed
-API 5.1: https://automat.renci.org/hetio/disease/gene/MONDO:0011719
-API 1.1: https://automat.renci.org/pharos/disease/gene/MONDO:0011719
+API 5.1: https://api.monarchinitiative.org/api/bioentity/disease/MONDO:0011719/genes?rows=200
+API 7.1: https://mydisease.info/v1/query?fields=disgenet.genes_related_to_disease.gene_id (POST -d q=C0238198,C3179349&amp;scopes=mondo.xrefs.umls, disgenet.xrefs.umls)
+API 9.1: https://pending.biothings.io/mgigene2phenotype/query?fields=_id&amp;size=300 (POST -d q=DOID:9253&amp;scopes=mgi.associated_with_disease.doid)
+API 10.1: https://pending.biothings.io/DISEASES/query?fields=DISEASES.associatedWith (POST -d q=DOID:9253&amp;scopes=DISEASES.doid)
+API 2.14: https://biothings.ncats.io/semmed/query?fields=caused_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 4.1: https://biothings.ncats.io/cord_disease/query?fields=associated_with (POST -d q=DOID:9253&amp;scopes=doid)
+API 2.4: https://biothings.ncats.io/semmed/query?fields=positively_regulates (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.1: https://biothings.ncats.io/semmed/query?fields=affects (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.11: https://biothings.ncats.io/semmed/query?fields=negatively_regulates (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.10: https://biothings.ncats.io/semmed/query?fields=affected_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.13: https://biothings.ncats.io/semmed/query?fields=disrupts (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.6: https://biothings.ncats.io/semmed/query?fields=treated_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.5: https://biothings.ncats.io/semmed/query?fields=physically_interacts_with (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.7: https://biothings.ncats.io/semmed/query?fields=positively_regulated_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.15: https://biothings.ncats.io/semmed/query?fields=negatively_regulated_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.3: https://biothings.ncats.io/semmed/query?fields=prevented_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.8: https://biothings.ncats.io/semmed/query?fields=derives_from (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.9: https://biothings.ncats.io/semmed/query?fields=disrupted_by (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.2: https://biothings.ncats.io/semmed/query?fields=coexists_with (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 2.12: https://biothings.ncats.io/semmed/query?fields=related_to (POST -d q=C0238198,C3179349&amp;scopes=umls)
+API 8.1: https://automat.renci.org/cord19-scigraph/disease/gene/MONDO:0011719
+API 3.1: https://automat.renci.org/pharos/disease/gene/MONDO:0011719
+API 1.1: https://automat.renci.org/cord19-scibite/disease/gene/MONDO:0011719
+API 6.1: https://automat.renci.org/hetio/disease/gene/MONDO:0011719
 
 
 ==== Step #3: Output normalization ====
 
-API 8.1 mgi_gene2phenotype: 1 hits
-API 4.1 semmed_disease: No hits
-API 4.2 semmed_disease: 1 hits
-API 6.1 DISEASES: 38 hits
-API 4.3 semmed_disease: 1 hits
-API 4.4 semmed_disease: No hits
-API 4.5 semmed_disease: 1 hits
-API 4.6 semmed_disease: 53 hits
-API 4.7 semmed_disease: No hits
-API 1.1 pharos: 30 hits
-API 4.8 semmed_disease: No hits
-API 4.9 semmed_disease: 4 hits
-API 3.1 cord_disease: 64 hits
-API 4.10 semmed_disease: 18 hits
-API 5.1 hetio: No hits
-API 4.11 semmed_disease: No hits
-API 4.12 semmed_disease: 250 hits
-API 7.1 mydisease: 51 hits
-API 4.13 semmed_disease: No hits
-API 4.14 semmed_disease: 17 hits
-API 9.1 biolink: 5 hits
-API 4.15 semmed_disease: No hits
+API 9.1 mgi_gene2phenotype: 1 hits
+API 2.1 semmed_disease: No hits
+API 2.2 semmed_disease: 1 hits
+API 10.1 DISEASES: 36 hits
+API 2.3 semmed_disease: 1 hits
+API 2.4 semmed_disease: No hits
+API 2.5 semmed_disease: 1 hits
+API 2.6 semmed_disease: 53 hits
+API 2.7 semmed_disease: No hits
+API 8.1 scigraph: No hits
+API 3.1 pharos: 111 hits
+API 2.8 semmed_disease: No hits
+API 2.9 semmed_disease: 4 hits
+API 4.1 cord_disease: 64 hits
+API 2.10 semmed_disease: 18 hits
+API 1.1 scibite: 3 hits
+API 6.1 hetio: No hits
+API 2.11 semmed_disease: No hits
+API 2.12 semmed_disease: 250 hits
+API 7.1 mydisease: 164 hits
+API 2.13 semmed_disease: No hits
+API 2.14 semmed_disease: 17 hits
+API 5.1 biolink: 5 hits
+API 2.15 semmed_disease: No hits
 
-After id-to-object translation, BTE retrieved 385 unique objects.
+After id-to-object translation, BTE retrieved 444 unique objects.
 
 
 ==========
-========== QUERY #2 -- fetch all Gene entities linked to &#39;imatinib&#39; ==========
+========== QUERY #2 -- fetch all Gene entities linked to &#39;IMATINIB&#39; ==========
 ==========
 
 ==== Step #1: Query path planning ====
 
-Because imatinib is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
+Because IMATINIB is of type &#39;ChemicalSubstance&#39;, BTE will query our meta-KG for APIs that can take &#39;ChemicalSubstance&#39; as input and &#39;Gene&#39; as output
 
 BTE found 10 apis:
 
-API 1. cord_chemical(1 API call)
+API 1. scibite(1 API call)
 API 2. pharos(1 API call)
-API 3. scigraph(1 API call)
-API 4. mychem(3 API calls)
-API 5. chembio(1 API call)
-API 6. ctd(2 API calls)
-API 7. semmed_chemical(13 API calls)
-API 8. dgidb(2 API calls)
-API 9. hmdb(1 API call)
-API 10. scibite(1 API call)
+API 3. chembio(1 API call)
+API 4. hmdb(1 API call)
+API 5. mychem(3 API calls)
+API 6. dgidb(2 API calls)
+API 7. ctd(2 API calls)
+API 8. scigraph(1 API call)
+API 9. cord_chemical(1 API call)
+API 10. semmed_chemical(13 API calls)
 
 
 ==== Step #2: Query path execution ====
 NOTE: API requests are dispatched in parallel, so the list of APIs below is ordered by query time.
 
-API 8.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL1642
-API 7.2: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulates (POST -d q=C0935989&amp;scopes=umls)
-API 7.12: https://biothings.ncats.io/semmedchemical/query?fields=affected_by (POST -d q=C0935989&amp;scopes=umls)
-API 6.2: https://mychem.info/v1/query?fields=drugcentral.bioactivity (POST -d q=CHEMBL1642,CHEMBL941&amp;scopes=chembl.molecule_chembl_id)
-API 7.1: https://biothings.ncats.io/semmedchemical/query?fields=physically_interacts_with (POST -d q=C0935989&amp;scopes=umls)
-API 7.8: https://biothings.ncats.io/semmedchemical/query?fields=produces (POST -d q=C0935989&amp;scopes=umls)
-API 7.5: https://biothings.ncats.io/semmedchemical/query?fields=related_to (POST -d q=C0935989&amp;scopes=umls)
-API 7.3: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.6: https://biothings.ncats.io/semmedchemical/query?fields=disrupts (POST -d q=C0935989&amp;scopes=umls)
-API 7.11: https://biothings.ncats.io/semmedchemical/query?fields=affects (POST -d q=C0935989&amp;scopes=umls)
-API 1.1: https://biothings.ncats.io/cord_chemical/query?fields=associated_with (POST -d q=CHEBI:45783&amp;scopes=chebi)
-API 7.7: https://biothings.ncats.io/semmedchemical/query?fields=coexists_with (POST -d q=C0935989&amp;scopes=umls)
-API 7.9: https://biothings.ncats.io/semmedchemical/query?fields=produced_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.4: https://biothings.ncats.io/semmedchemical/query?fields=disrupted_by (POST -d q=C0935989&amp;scopes=umls)
-API 7.10: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulates (POST -d q=C0935989&amp;scopes=umls)
-API 7.13: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
-API 6.1: https://mychem.info/v1/query?fields=drugbank.targets (POST -d q=DB00619&amp;scopes=drugbank.id)
-API 6.3: https://mychem.info/v1/query?fields=drugbank.enzymes (POST -d q=DB00619&amp;scopes=drugbank.id)
-API 4.2: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=C097613
-API 4.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=D000068877
-API 8.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL941
-API 10.1: https://automat.renci.org/cord19_scibite_v2/chemical_substance/gene/CHEBI:45783
-API 10.1 scibite failed
-API 3.1: https://automat.renci.org/cord19_scigraph_v2/chemical_substance/gene/CHEBI:45783
-API 3.1 scigraph failed
-API 5.1: https://automat.renci.org/chembio/chemical_substance/gene/CHEBI:45783
-API 9.1: https://automat.renci.org/hmdb/chemical_substance/gene/CHEBI:45783
+API 9.1: https://biothings.ncats.io/cord_chemical/query?fields=associated_with (POST -d q=CHEBI:45783&amp;scopes=chebi)
+API 10.13: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.9: https://biothings.ncats.io/semmedchemical/query?fields=produced_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.2: https://biothings.ncats.io/semmedchemical/query?fields=positively_regulates (POST -d q=C0935989&amp;scopes=umls)
+API 10.3: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulated_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.10: https://biothings.ncats.io/semmedchemical/query?fields=negatively_regulates (POST -d q=C0935989&amp;scopes=umls)
+API 10.7: https://biothings.ncats.io/semmedchemical/query?fields=coexists_with (POST -d q=C0935989&amp;scopes=umls)
+API 10.6: https://biothings.ncats.io/semmedchemical/query?fields=disrupts (POST -d q=C0935989&amp;scopes=umls)
+API 10.11: https://biothings.ncats.io/semmedchemical/query?fields=affects (POST -d q=C0935989&amp;scopes=umls)
+API 10.5: https://biothings.ncats.io/semmedchemical/query?fields=related_to (POST -d q=C0935989&amp;scopes=umls)
+API 10.4: https://biothings.ncats.io/semmedchemical/query?fields=disrupted_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.12: https://biothings.ncats.io/semmedchemical/query?fields=affected_by (POST -d q=C0935989&amp;scopes=umls)
+API 10.8: https://biothings.ncats.io/semmedchemical/query?fields=produces (POST -d q=C0935989&amp;scopes=umls)
+API 10.1: https://biothings.ncats.io/semmedchemical/query?fields=physically_interacts_with (POST -d q=C0935989&amp;scopes=umls)
+API 4.1: https://automat.renci.org/chembio/chemical_substance/gene/CHEBI:45783
+API 3.1: https://automat.renci.org/hmdb/chemical_substance/gene/CHEBI:45783
+API 8.1: https://automat.renci.org/cord19-scigraph/chemical_substance/gene/CHEBI:45783
+API 1.1: https://automat.renci.org/cord19-scibite/chemical_substance/gene/CHEBI:45783
 API 2.1: https://automat.renci.org/pharos/chemical_substance/gene/CHEBI:45783
+API 6.2: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL1642
+API 6.1: http://dgidb.genome.wustl.edu/api/v2/interactions.json?drugs=CHEMBL941
+API 7.2: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=C097613
+API 7.2 ctd failed
+API 7.1: http://ctdbase.org/tools/batchQuery.go?inputType=chem&amp;report=genes_curated&amp;format=json&amp;inputTerms=D000068877
+API 7.1 ctd failed
 
 
 ==== Step #3: Output normalization ====
 
-API 7.1 semmed_chemical: 226 hits
-API 5.1 chembio: No hits
-API 6.1 mychem: 9 hits
-API 6.2 mychem: 80 hits
-API 6.3 mychem: 9 hits
-API 2.1 pharos: 6 hits
-API 7.2 semmed_chemical: 96 hits
-API 7.3 semmed_chemical: 36 hits
-API 7.4 semmed_chemical: No hits
-API 7.5 semmed_chemical: No hits
-API 8.1 dgidb: 5 hits
-API 8.2 dgidb: 34 hits
-API 9.1 hmdb: No hits
-API 7.6 semmed_chemical: No hits
-API 7.7 semmed_chemical: 119 hits
-API 7.8 semmed_chemical: No hits
-API 7.9 semmed_chemical: 11 hits
-API 1.1 cord_chemical: 172 hits
-API 4.1 ctd: 199 hits
-API 4.2 ctd: No hits
-API 7.10 semmed_chemical: 166 hits
-API 7.11 semmed_chemical: No hits
-API 7.12 semmed_chemical: No hits
-API 7.13 semmed_chemical: 39 hits
+API 10.1 semmed_chemical: 226 hits
+API 4.1 chembio: No hits
+API 1.1 scibite: 8 hits
+API 5.1 mychem: 9 hits
+API 5.2 mychem: 80 hits
+API 5.3 mychem: 9 hits
+API 2.1 pharos: 21 hits
+API 10.2 semmed_chemical: 96 hits
+API 8.1 scigraph: 3 hits
+API 10.3 semmed_chemical: 36 hits
+API 10.4 semmed_chemical: No hits
+API 10.5 semmed_chemical: No hits
+API 6.1 dgidb: No hits
+API 6.2 dgidb: No hits
+API 3.1 hmdb: No hits
+API 10.6 semmed_chemical: No hits
+API 10.7 semmed_chemical: 119 hits
+API 10.8 semmed_chemical: No hits
+API 10.9 semmed_chemical: 11 hits
+API 9.1 cord_chemical: 172 hits
+API 10.10 semmed_chemical: 166 hits
+API 10.11 semmed_chemical: No hits
+API 10.12 semmed_chemical: No hits
+API 10.13 semmed_chemical: 39 hits
 
-After id-to-object translation, BTE retrieved 728 unique objects.
+After id-to-object translation, BTE retrieved 608 unique objects.
 
 ==========
 ========== Final assembly of results ==========
 ==========
 
 
-BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal tumor&#39; and &#39;imatinib&#39;
+BTE found 135 unique intermediate nodes connecting &#39;gastrointestinal stromal tumor&#39; and &#39;IMATINIB&#39;
 </pre>
 </div>
 </div>
@@ -15741,7 +15754,7 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">fc2</span><span class="o">.</span><span class="n">display_table_view</span><span class="p">()</span>
@@ -15769,14 +15782,14 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(772, 16)
+<pre>(790, 16)
 </pre>
 </div>
 </div>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -15819,46 +15832,8 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
   </thead>
   <tbody>
     <tr>
-      <th>694</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>treated_by</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>24399735</td>
-      <td>Gene</td>
-      <td>CYP3A4</td>
-      <td>NCBIGene:1576</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Chemical API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>707</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Disease API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>EGFR</td>
-      <td>NCBIGene:1956</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>15887238,16476837</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>675</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
+      <th>854</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
       <td>Disease</td>
       <td>related_to</td>
       <td>SEMMED</td>
@@ -15867,63 +15842,6 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
       <td>Gene</td>
       <td>PDGFRB</td>
       <td>NCBIGene:5159</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>28028030</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>919</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>SEMMED</td>
-      <td>SEMMED Disease API</td>
-      <td>20028860</td>
-      <td>Gene</td>
-      <td>H2AX</td>
-      <td>NCBIGene:3014</td>
-      <td>physically_interacts_with</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>22388075</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>990</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>Translator Text Mining Provider</td>
-      <td>CORD Disease API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>BCL2</td>
-      <td>NCBIGene:596</td>
-      <td>related_to</td>
-      <td>CTD</td>
-      <td>CTD API</td>
-      <td>23994742</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>975</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>DISEASE</td>
-      <td>DISEASES API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>SPINK5</td>
-      <td>NCBIGene:11005</td>
       <td>related_to</td>
       <td>Translator Text Mining Provider</td>
       <td>CORD Chemical API</td>
@@ -15933,35 +15851,16 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
       <td>name:IMATINIB</td>
     </tr>
     <tr>
-      <th>431</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
+      <th>245</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
       <td>Disease</td>
-      <td>caused_by</td>
+      <td>prevented_by</td>
       <td>SEMMED</td>
       <td>SEMMED Disease API</td>
-      <td>10779223,11706520,12938260,27771813</td>
+      <td>21814597</td>
       <td>Gene</td>
       <td>KIT</td>
       <td>NCBIGene:3815</td>
-      <td>negatively_regulates</td>
-      <td>SEMMED</td>
-      <td>SEMMED Chemical API</td>
-      <td>12938280,14531349,15139047,15966213,16614006,1...</td>
-      <td>Gene</td>
-      <td>IMATINIB</td>
-      <td>name:IMATINIB</td>
-    </tr>
-    <tr>
-      <th>730</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
-      <td>Disease</td>
-      <td>related_to</td>
-      <td>DISEASE</td>
-      <td>DISEASES API</td>
-      <td>None</td>
-      <td>Gene</td>
-      <td>BRAF</td>
-      <td>NCBIGene:673</td>
       <td>physically_interacts_with</td>
       <td>drugcentral</td>
       <td>MyChem.info API</td>
@@ -15971,38 +15870,152 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
       <td>name:IMATINIB</td>
     </tr>
     <tr>
-      <th>200</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
+      <th>1088</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>DISEASE</td>
+      <td>DISEASES API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>TP53</td>
+      <td>NCBIGene:7157</td>
+      <td>positively_regulated_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>19150257</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>464</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>KIT</td>
+      <td>NCBIGene:3815</td>
+      <td>positively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>28016253</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>882</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
       <td>Disease</td>
       <td>related_to</td>
       <td>Translator Text Mining Provider</td>
       <td>CORD Disease API</td>
       <td>None</td>
       <td>Gene</td>
-      <td>BCR</td>
-      <td>NCBIGene:613</td>
-      <td>related_to</td>
-      <td>CTD</td>
-      <td>CTD API</td>
-      <td>20222756</td>
+      <td>EGFR</td>
+      <td>NCBIGene:1956</td>
+      <td>positively_regulates</td>
+      <td>SEMMED</td>
+      <td>SEMMED Chemical API</td>
+      <td>15844661</td>
       <td>Gene</td>
       <td>IMATINIB</td>
       <td>name:IMATINIB</td>
     </tr>
     <tr>
-      <th>965</th>
-      <td>GASTROINTESTINAL STROMAL TUMOR</td>
+      <th>230</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
       <td>Disease</td>
-      <td>caused_by</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>KIT</td>
+      <td>NCBIGene:3815</td>
+      <td>physically_interacts_with</td>
+      <td>drugbank</td>
+      <td>MyChem.info API</td>
+      <td>16087693,16865565,17369583,17458563,17559139</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>605</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>treated_by</td>
       <td>SEMMED</td>
       <td>SEMMED Disease API</td>
-      <td>28862263</td>
+      <td>15717993,16596277,16740027,17064855,17534660,1...</td>
       <td>Gene</td>
-      <td>NF1</td>
-      <td>NCBIGene:4763</td>
+      <td>KIT</td>
+      <td>NCBIGene:3815</td>
       <td>related_to</td>
       <td>Translator Text Mining Provider</td>
       <td>CORD Chemical API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>923</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>affected_by</td>
+      <td>SEMMED</td>
+      <td>SEMMED Disease API</td>
+      <td>18615679</td>
+      <td>Gene</td>
+      <td>BRAF</td>
+      <td>NCBIGene:673</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Chemical API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>1036</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>Translator Text Mining Provider</td>
+      <td>CORD Disease API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>FIP1L1</td>
+      <td>NCBIGene:81608</td>
+      <td>related_to</td>
+      <td>scibite</td>
+      <td>Automat CORD19 Scibite API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>IMATINIB</td>
+      <td>name:IMATINIB</td>
+    </tr>
+    <tr>
+      <th>781</th>
+      <td>GASTROINTESTINAL STROMAL SARCOMA</td>
+      <td>Disease</td>
+      <td>related_to</td>
+      <td>pharos</td>
+      <td>Automat PHAROS API</td>
+      <td>None</td>
+      <td>Gene</td>
+      <td>PDGFRA</td>
+      <td>NCBIGene:5156</td>
+      <td>related_to</td>
+      <td>pharos</td>
+      <td>Automat PHAROS API</td>
       <td>None</td>
       <td>Gene</td>
       <td>IMATINIB</td>
@@ -16021,7 +16034,7 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">node1_name</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -16037,22 +16050,22 @@ BTE found 130 unique intermediate nodes connecting &#39;gastrointestinal stromal
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>KIT       306
-PDGFRA     88
-BCR        45
-VEGFA      24
-BRAF       20
-TP53       20
+<pre>KIT       288
+PDGFRA     81
+BCR        48
+TP53       30
+ABL1       27
+VEGFA      20
+BRAF       15
+CD34       15
+PDGFRB     14
 MTTP       14
-ABL1       13
-CD34       12
-FIP1L1     12
 Name: node1_name, dtype: int64</pre>
 </div>
 
