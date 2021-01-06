@@ -9,4 +9,3 @@ jupyter
 pandas
 pyyaml
 nest_asyncio
--e git+https://github.com/mmayers12/data_tools.git#egg=data_tools
