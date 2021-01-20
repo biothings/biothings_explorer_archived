@@ -19,7 +19,7 @@ install_requires = [
 
 setup(
     name="biothings_explorer",
-    version="0.0.1",
+    version="1.0.0",
     author="Jiwen Xin, Chunlei Wu",
     author_email="cwu@scripps.edu",
     description="Python Client for BioThings Explorer",
