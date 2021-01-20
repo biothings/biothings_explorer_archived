@@ -31,8 +31,8 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest tests --disable-warnings --ignore=tests/test_apis
-    - name: Coverage
-      run: |
-        coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
-        coverage xml -o coverage.xml
-        bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
+    # - name: Coverage
+    #   run: |
+    #     coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
+    #     coverage xml -o coverage.xml
+    #     bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
