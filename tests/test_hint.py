@@ -106,7 +106,7 @@ class TestHint(unittest.TestCase):
         res = self.ht.query("AZT")
         names = [item.get("name") for item in res.get("ChemicalSubstance")]
         self.assertIsNotNone(res)
-        self.assertIn("zidovudine", names)
+        self.assertIn("ZIDOVUDINE", names)
 
     def test_chemical_with_international_brand_names(self):
         """Test the output of Hint query when providing drug international brand name as input."""
@@ -150,3 +150,8 @@ class TestHint(unittest.TestCase):
         ids = [item.get("MONDO") for item in bioentity]
         self.assertIsNotNone(res)
         self.assertIn("MONDO:0011719", ids)
+
+    def test_if_response_is_empty_list(self):
+        """Test if API response is a empty list"""
+        res = self.ht.query("APP")
+        self.assertIsNotNone(res)
