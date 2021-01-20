@@ -30,7 +30,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        python -m pytest tests --disable-warnings
+        python -m pytest tests --disable-warnings --ignore=tests/test_apis
     - name: Coverage
       run: |
         coverage run -m pytest tests
