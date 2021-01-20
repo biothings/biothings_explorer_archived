@@ -34,7 +34,7 @@ jobs:
     - name: Test and Coverage
       run: |
         coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
-        coverage xml -o coverage.xml
+        coverage xml -o /github/workspace/coverage.xml
     - name: current folder
       run: |
         pwd
