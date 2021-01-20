@@ -39,11 +39,13 @@ jobs:
       run: |
         pwd
         ls
-        sudo mv coverage.xml /github/workspace
         # bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
     - uses: actions/checkout@master
     - name: Run codacy-coverage-reporter
       uses: codacy/codacy-coverage-reporter-action@master
+      run: |
+        ls
+        sudo mv coverage.xml /github/workspace
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         coverage-reports: coverage.xml
