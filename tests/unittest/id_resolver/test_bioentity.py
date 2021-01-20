@@ -27,7 +27,7 @@ class TestBioEntityClass(unittest.TestCase):
     def test_get_primary_id(self):
         entity = BioEntity("Gene", CDK2_DB_IDs)
         primary_id = entity.get_primary_id()
-        self.assertEqual(primary_id, "1017")
+        self.assertEqual(primary_id, "NCBIGene:1017")
 
     def test_get_label_if_symbol_provided(self):
         entity = BioEntity("Gene", CDK2_DB_IDs)
@@ -42,7 +42,7 @@ class TestBioEntityClass(unittest.TestCase):
     def test_get_label_if_symbol_and_label_are_not_provided(self):
         entity = BioEntity("ChemicalSubstance", CHEMBL7512_DB_IDS)
         label = entity.get_label()
-        self.assertEqual(label, "CHEMBL7512")
+        self.assertEqual(label, "CHEMBL.COMPOUND:CHEMBL7512")
 
     def test_get_curies(self):
         entity = BioEntity("Disease", KARTAGENER_SYNDROME_DB_IDS)
