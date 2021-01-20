@@ -34,10 +34,12 @@ jobs:
     - name: Test and Coverage
       run: |
         coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
-        coverage xml -o coverage.xml && sudo mv coverage.xml /github/workspace/coverage.xml
+        coverage xml -o coverage.xml 
     - name: current folder
       run: |
         pwd
+        ls
+        sudo mv coverage.xml /github/workspace/coverage.xml
         # bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
     - uses: actions/checkout@master
     - name: Run codacy-coverage-reporter
