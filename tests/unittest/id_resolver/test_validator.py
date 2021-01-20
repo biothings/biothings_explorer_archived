@@ -49,4 +49,3 @@ class TestValidatorClass(unittest.TestCase):
         validator = Validator(input_ids)
         validator.validate()
         self.assertEqual(validator.get_valid_inputs(), {"Gene": ["NCBIGene:123"]})
-
