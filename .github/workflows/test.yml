@@ -34,20 +34,26 @@ jobs:
     - name: Test and Coverage
       run: |
         coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
-        coverage xml -o coverage.xml 
-    - name: current folder
-      run: |
-        pwd
-        ls
-        # bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
-    - uses: actions/checkout@master
-    - name: Run codacy-coverage-reporter
-      uses: codacy/codacy-coverage-reporter-action@master
-      run: |
-        ls
-        sudo mv coverage.xml /github/workspace
+        coverage xml -o coverage.xml
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v2
       with:
-        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: coverage.xml
+        name: coverage
+        path: coverage.xml
+  codacy-coverage-reporter:
+    runs-on: ubuntu-latest
+    name: codacy-coverage-reporter
+    needs: build
+    steps:
+      - uses: actions/checkout@master
+      - name: Download coverage
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
 
       
