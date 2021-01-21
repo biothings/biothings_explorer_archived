@@ -5,12 +5,13 @@ name: Test BioThings Explorer Python Package
 
 on:
   push:
-    branches: [ master,  fix_issue_147, resolve_ids_refactor ]
+    branches:
+      - '**'
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
+  test_and_coverage:
 
     runs-on: ubuntu-latest
     strategy:
@@ -28,11 +29,32 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest coverage
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test with pytest
-      run: |
-        python -m pytest tests --disable-warnings --ignore=tests/test_apis
-    # - name: Coverage
+    # - name: Test with pytest
     #   run: |
-    #     coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
-    #     coverage xml -o coverage.xml
-    #     bash <(wget -q -O - https://coverage.codacy.com/get.sh) report -l Python -r coverage.xml --partial
+    #     python -m pytest tests --disable-warnings --ignore=tests/test_apis
+    - name: Test and Coverage
+      run: |
+        coverage run -m pytest tests --disable-warnings --ignore=tests/test_apis
+        coverage xml -o coverage.xml
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: coverage.xml
+  codacy-coverage-reporter:
+    runs-on: ubuntu-latest
+    name: codacy-coverage-reporter
+    needs: test_and_coverage
+    steps:
+      - uses: actions/checkout@master
+      - name: Download coverage
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+
+      
