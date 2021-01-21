@@ -11,7 +11,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test and coverage:
 
     runs-on: ubuntu-latest
     strategy:
@@ -44,7 +44,7 @@ jobs:
   codacy-coverage-reporter:
     runs-on: ubuntu-latest
     name: codacy-coverage-reporter
-    needs: build
+    needs: test and coverage
     steps:
       - uses: actions/checkout@master
       - name: Download coverage
