@@ -5,7 +5,8 @@ name: Test BioThings Explorer Python Package
 
 on:
   push:
-    branches: [ master,  fix_issue_147, resolve_ids_refactor, integrate-codacy-to-github-actions ]
+    branches:
+      - '**'
   pull_request:
     branches: [ master ]
 
