@@ -16,6 +16,10 @@ install_requires = [
     "nest_asyncio",
 ]
 
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name="biothings_explorer",
@@ -23,6 +27,8 @@ setup(
     author="Jiwen Xin, Chunlei Wu",
     author_email="cwu@scripps.edu",
     description="Python Client for BioThings Explorer",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     license="BSD",
     keywords="schema biothings",
     url="https://github.com/biothings/biothings_explorer",
@@ -31,8 +37,6 @@ setup(
     package_data={"": ["data/smartapi_local_specs.json"]},
     classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
