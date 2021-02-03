@@ -4,6 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1213cfd2b04948e792e6f122944a4c5a)](https://app.codacy.com/gh/biothings/biothings_explorer?utm_source=github.com&utm_medium=referral&utm_content=biothings/biothings_explorer&utm_campaign=Badge_Grade_Dashboard)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1213cfd2b04948e792e6f122944a4c5a)](https://app.codacy.com/gh/biothings/biothings_explorer?utm_source=github.com&utm_medium=referral&utm_content=biothings/biothings_explorer&utm_campaign=Badge_Coverage_Dashboard)
 [![Documentation Status](https://readthedocs.org/projects/biothings-explorer/badge/?version=latest)](https://biothings-explorer.readthedocs.io/en/latest/?badge=latest)
+![PyPI](https://img.shields.io/pypi/v/biothings-explorer)
 
 ## Introduction
 
