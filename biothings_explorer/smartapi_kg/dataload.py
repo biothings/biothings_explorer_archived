@@ -10,12 +10,15 @@ from .config import SMARTAPI_URL
 def restructure_specs(spec):
     """SmartAPI API restructure each spec when storing them. This function converts them back to the original smartapi specification"""
     copy_spec = deepcopy(spec)
-    new_paths = {}
     if isinstance(copy_spec.get("paths"), list) and len(copy_spec.get("paths")) > 0:
+        new_paths = {}
         for path in copy_spec.get("paths"):
             new_paths[path.get("path")] = path.get("pathitem")
-    copy_spec["paths"] = new_paths
-    return copy_spec
+        copy_spec["paths"] = new_paths
+        return copy_spec
+    else:
+        return spec
+
 
 
 def load_specs(source="remote", tag="translator"):
