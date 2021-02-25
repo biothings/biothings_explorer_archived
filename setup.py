@@ -17,18 +17,20 @@ install_requires = [
 ]
 
 from os import path
+
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
+__version__ = "1.0.3"
 setup(
     name="biothings_explorer",
-    version="1.0.2",
+    version=__version__,
     author="Jiwen Xin, Chunlei Wu",
     author_email="cwu@scripps.edu",
     description="Python Client for BioThings Explorer",
     long_description=long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     license="BSD",
     keywords="schema biothings",
     url="https://github.com/biothings/biothings_explorer",
