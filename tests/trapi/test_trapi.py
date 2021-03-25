@@ -1,5 +1,6 @@
 import unittest
 from biothings_explorer.trapi import TRAPI
+import pandas as pd
 
 
 class TestTRAPIClass(unittest.TestCase):
@@ -52,3 +53,57 @@ class TestTRAPIClass(unittest.TestCase):
         }
         res = tp.query()
         self.assertIn("message", res)
+
+    def test_trapi_response_should_be_correctly_returned_even_if_query_returns_0_hits(
+        self,
+    ):
+        tp = TRAPI()
+        tp.query_graph = {
+            "message": {
+                "query_graph": {
+                    "nodes": {
+                        "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
+                        "n2": {"category": "biolink:Proteinn"},
+                    },
+                    "edges": {"e01": {"subject": "n0", "object": "n2"}},
+                }
+            }
+        }
+        res = tp.query()
+        self.assertIn("message", res)
+
+    def test_to_dataframe_should_return_DataFrame_with_correct_edge_id(self):
+        tp = TRAPI()
+        tp.query_graph = {
+            "message": {
+                "query_graph": {
+                    "nodes": {
+                        "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
+                        "n2": {"category": "biolink:Protein"},
+                    },
+                    "edges": {"e01": {"subject": "n0", "object": "n2"}},
+                }
+            }
+        }
+        tp.query()
+        df = tp.to_dataframe("e01")
+        self.assertIsInstance(df, pd.core.frame.DataFrame)
+        self.assertGreater(df.shape[0], 0)
+
+    def test_to_dataframe_should_return_empty_DataFrame_with_wrong_edge_id(self):
+        tp = TRAPI()
+        tp.query_graph = {
+            "message": {
+                "query_graph": {
+                    "nodes": {
+                        "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
+                        "n2": {"category": "biolink:Protein"},
+                    },
+                    "edges": {"e01": {"subject": "n0", "object": "n2"}},
+                }
+            }
+        }
+        tp.query()
+        df = tp.to_dataframe("e01")
+        self.assertIsInstance(df, pd.core.frame.DataFrame)
+        self.assertEqual(df.shape[0], 0)
