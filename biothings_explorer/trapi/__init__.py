@@ -9,6 +9,10 @@ class TRAPI:
         self._response = None
 
     @property
+    def response(self):
+        return self._response
+
+    @property
     def url(self):
         return self._url
 
