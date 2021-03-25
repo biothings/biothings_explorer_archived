@@ -53,6 +53,7 @@ class TestTRAPIClass(unittest.TestCase):
         }
         res = tp.query()
         self.assertIn("message", res)
+        self.assertIn("message", tp.response)
 
     def test_trapi_response_should_be_correctly_returned_even_if_query_returns_0_hits(
         self,
@@ -97,13 +98,13 @@ class TestTRAPIClass(unittest.TestCase):
                 "query_graph": {
                     "nodes": {
                         "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
-                        "n2": {"category": "biolink:Proteinn"},
+                        "n2": {"category": "biolink:Protein"},
                     },
                     "edges": {"e01": {"subject": "n0", "object": "n2"}},
                 }
             }
         }
         tp.query()
-        df = tp.to_dataframe("e01")
+        df = tp.to_dataframe("e02")
         self.assertIsInstance(df, pd.core.frame.DataFrame)
         self.assertEqual(df.shape[0], 0)
