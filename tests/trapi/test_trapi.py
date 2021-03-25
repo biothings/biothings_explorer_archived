@@ -25,3 +25,30 @@ class TestTRAPIClass(unittest.TestCase):
         tp = TRAPI()
         tp.query_graph = qg
         self.assertEqual(qg, tp.query_graph)
+
+    def test_if_query_graph_is_not_provided_should_raise_exception_when_query(self):
+        tp = TRAPI()
+        with self.assertRaises(Exception):
+            tp.query()
+
+    def test_if_query_graph_is_malformed_should_raise_exception_when_query(self):
+        tp = TRAPI()
+        tp.query_graph = {"a": "b"}
+        with self.assertRaises(Exception):
+            tp.query()
+
+    def test_trapi_response_should_be_correctly_returned_if_query_is_right(self):
+        tp = TRAPI()
+        tp.query_graph = {
+            "message": {
+                "query_graph": {
+                    "nodes": {
+                        "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
+                        "n2": {"category": "biolink:Protein"},
+                    },
+                    "edges": {"e01": {"subject": "n0", "object": "n2"}},
+                }
+            }
+        }
+        res = tp.query()
+        self.assertIn("message", res)
