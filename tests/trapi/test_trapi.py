@@ -97,7 +97,7 @@ class TestTRAPIClass(unittest.TestCase):
                 "query_graph": {
                     "nodes": {
                         "n0": {"id": "NCBIGENE:1017", "category": "biolink:Gene"},
-                        "n2": {"category": "biolink:Protein"},
+                        "n2": {"category": "biolink:Proteinn"},
                     },
                     "edges": {"e01": {"subject": "n0", "object": "n2"}},
                 }
