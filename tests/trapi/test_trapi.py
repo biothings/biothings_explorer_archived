@@ -10,9 +10,9 @@ class TestTRAPIClass(unittest.TestCase):
 
     def test_url_is_correctly_set(self):
         tp = TRAPI()
-        self.assertEqual(tp.url, "https://dev.api.bte.ncats.io/query")
-        tp.url = "https://api.bte.ncats.io/query"
-        self.assertEqual(tp.url, "https://api.bte.ncats.io/query")
+        self.assertEqual(tp.url, "https://dev.api.bte.ncats.io/v1/query")
+        tp.url = "https://api.bte.ncats.io/v1/query"
+        self.assertEqual(tp.url, "https://api.bte.ncats.io/v1/query")
 
     def test_if_query_graph_not_dict_raise_exception(self):
         tp = TRAPI()
