@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.1.0 (2021-03-26)
+
+### Feature
+* :sparkles: allow user to use BTE TRAPI endpoint through Python Client ([`pull_178`](https://github.com/biothings/biothings_explorer/pull/178))
+
+
 ### 1.0.3 (2021-02-24)
 
 ### Fix
