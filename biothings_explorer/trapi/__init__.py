@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+from .config import LEVEL_1_INFO, LEVEL_2_INFO
 
 
 class TRAPI:
@@ -91,6 +92,18 @@ class TRAPI:
             res.append(self._get_kg_edge_info(edge))
         return res
 
-    def to_dataframe(self, qg_edge_id):
+    def to_dataframe(self, qg_edge_id, info_level=2):
+        if not isinstance(info_level, int) or not info_level in [1, 2, 3]:
+            raise Exception("info_level parameter should only be 1 or 2 or 3")
         info = self._get_all_edge_info(qg_edge_id)
-        return pd.DataFrame(info)
+        df = pd.DataFrame(info)
+        column_names = df.columns.values.tolist()
+        if info_level == 1:
+            return df[LEVEL_1_INFO].drop_duplicates()
+        if info_level == 2:
+            return_column_names = list(
+                set(column_names).intersection(set(LEVEL_1_INFO + LEVEL_2_INFO))
+            )
+            return_column_names.sort()
+            return df[return_column_names]
+        return df
