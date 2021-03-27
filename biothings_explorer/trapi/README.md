@@ -64,3 +64,7 @@ You can view the results for individual edges as below:
 df = tp.to_dataframe("e01")
 
 ```
+
+## Example Jupyter Notebook
+
+Please find example notebook [here](https://github.com/biothings/biothings_explorer/blob/master/jupyter%20notebooks/How_to_use_bte_trapi_through_py_client.ipynb)
