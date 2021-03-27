@@ -30,6 +30,6 @@ class TestMultiThreading(unittest.TestCase):
 
         for index, thread in enumerate(threads):
             thread.join()
-        self.assertIn("MONDO:0013231", results[0])
-        self.assertIn("MONDO:0013231", results[1])
-        self.assertIn("MONDO:0013231", results[2])
+        self.assertIn("MONDO:0005578", results[0])
+        self.assertIn("MONDO:0005578", results[1])
+        self.assertIn("MONDO:0005578", results[2])
