@@ -5,7 +5,7 @@ from .config import LEVEL_1_INFO, LEVEL_2_INFO
 
 class TRAPI:
     def __init__(self):
-        self._url = "https://dev.api.bte.ncats.io/v1/query"
+        self._url = "https://api.bte.ncats.io/v1/query"
         self._query_graph = None
         self._response = None
 
