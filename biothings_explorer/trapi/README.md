@@ -35,18 +35,18 @@ qg = {
 		"query_graph": {
 			"nodes": {
 				"n0": {
-					"id": "NCBIGENE:1017",
-					"category":"biolink:Gene"
+					"ids": ["NCBIGene:1017"],
+					"categories": ["biolink:Gene"]
 				},
-                "n2": {
-                    "category": "biolink:Protein"
-                }
+                		"n2": {
+                    			"categories": ["biolink:Disease"]
+                		}
 			},
 			"edges": {
 				"e01": {
 					"subject": "n0",
-                    "object": "n2"
-                }
+                    			"object": "n2"
+                		}
 			}
 		}
 	}
