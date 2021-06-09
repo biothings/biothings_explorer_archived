@@ -14,13 +14,13 @@ By default, this libary will use the BTE dev server as the access point for TRAP
 If you would like to use the production server, you can change it using:
 
 ```python
-tp.url = 'https://api.bte.ncats.io/v1/query
+tp.url = 'https://api.bte.ncats.io/v1/query'
 ```
 
 You can also point to a local instance of BTE TRAPI service running at your local computer:
 
 ```python
-tp.url = 'http://localhost:3000/v1/query
+tp.url = 'http://localhost:3000/v1/query'
 ```
 
 ## Query the TRAPI service
