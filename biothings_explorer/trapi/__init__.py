@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from .config import LEVEL_1_INFO, LEVEL_2_INFO
+from biothings_explorer.config import LEVEL_1_INFO, LEVEL_2_INFO
 
 
 class TRAPI:
@@ -72,7 +72,7 @@ class TRAPI:
             res["object"] = rec.get("object")
             res.update(self._get_kg_node_info(res["object"], "object"))
             for attr in rec.get("attributes", []):
-                res[attr["name"]] = attr["value"]
+                res[attr["attribute_type_id"]] = attr["value"] # change "name" -> "attribute_type_id"
         return res
 
     def _get_kg_node_info(self, kg_node_id, _type):
@@ -82,7 +82,7 @@ class TRAPI:
             res[_type + "_name"] = rec.get("name")
             res[_type + "_category"] = rec.get("category")
             for attr in rec.get("attributes", []):
-                res[_type + "_" + attr["name"]] = attr["value"]
+                res[_type + "_" + attr["attribute_type_id"]] = attr["value"] # change "name" -> "attribute_type_id"
         return res
 
     def _get_all_edge_info(self, qg_edge_id):
