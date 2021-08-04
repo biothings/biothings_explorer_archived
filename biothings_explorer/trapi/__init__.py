@@ -1,14 +1,11 @@
 import requests
 import pandas as pd
-
-LEVEL_1_INFO = ["subject", "subject_name", "predicate", "object", "object_name"]
-
-LEVEL_2_INFO = ["provided_by", "publications", "api", "object_num_source_nodes"]
+from biothings_explorer.config import LEVEL_1_INFO, LEVEL_2_INFO
 
 
 class TRAPI:
     def __init__(self):
-        self._url = "https://dev.api.bte.ncats.io/v1/query"
+        self._url = "https://dev.api.bte.ncats.io/v1/query" #Development server 
         self._query_graph = None
         self._response = None
 
