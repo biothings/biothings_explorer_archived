@@ -5,7 +5,7 @@ from biothings_explorer.config import LEVEL_1_INFO, LEVEL_2_INFO
 
 class TRAPI:
     def __init__(self):
-        self._url = "https://dev.api.bte.ncats.io/v1/query" #Development server 
+        self._url = "https://dev.api.bte.ncats.io/v1/query"
         self._query_graph = None
         self._response = None
 
@@ -72,7 +72,7 @@ class TRAPI:
             res["object"] = rec.get("object")
             res.update(self._get_kg_node_info(res["object"], "object"))
             for attr in rec.get("attributes", []):
-                res[attr["attribute_type_id"]] = attr["value"] # change "name" --> "attribute_type_id"
+                res[attr["attribute_type_id"]] = attr["value"] # change "name" -> "attribute_type_id"
         return res
 
     def _get_kg_node_info(self, kg_node_id, _type):
@@ -82,7 +82,7 @@ class TRAPI:
             res[_type + "_name"] = rec.get("name")
             res[_type + "_category"] = rec.get("category")
             for attr in rec.get("attributes", []):
-                res[_type + "_" + attr["attribute_type_id"]] = attr["value"] # change "name" --> "attribute_type_id"
+                res[_type + "_" + attr["attribute_type_id"]] = attr["value"] # change "name" -> "attribute_type_id"
         return res
 
     def _get_all_edge_info(self, qg_edge_id):
