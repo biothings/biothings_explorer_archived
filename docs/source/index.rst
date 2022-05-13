@@ -8,6 +8,13 @@ BioThings Explorer Documentation
 ################################
 
 ************
+Obsolete repo
+************
+
+Note that this repo is for the python client for BioThings Explorer.  It is not currently being actively developed.  The primary development effort on the BioThings Explorer project is at https://github.com/biothings/BioThings_Explorer_TRAPI.
+
+
+************
 Introduction
 ************
 BioThings Explorer is an engine for autonomously querying a distributed knowledge graph. The distributed knowledge graph is made up of biomedical APIs that have been annotated with semantically-precise descriptions of their inputs and outputs. The knowledge graph is currently comprised by the APIs in this figure:
