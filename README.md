@@ -1,10 +1,17 @@
 # BioThings Explorer
 
+
 ![Test BioThings Explorer Python Package](https://github.com/biothings/biothings_explorer/workflows/Test%20BioThings%20Explorer%20Python%20Package/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1213cfd2b04948e792e6f122944a4c5a)](https://app.codacy.com/gh/biothings/biothings_explorer?utm_source=github.com&utm_medium=referral&utm_content=biothings/biothings_explorer&utm_campaign=Badge_Grade_Dashboard)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/1213cfd2b04948e792e6f122944a4c5a)](https://app.codacy.com/gh/biothings/biothings_explorer?utm_source=github.com&utm_medium=referral&utm_content=biothings/biothings_explorer&utm_campaign=Badge_Coverage_Dashboard)
 [![Documentation Status](https://readthedocs.org/projects/biothings-explorer/badge/?version=latest)](https://biothings-explorer.readthedocs.io/en/latest/?badge=latest)
 ![PyPI](https://img.shields.io/pypi/v/biothings-explorer)
+
+
+## Obsolete repo
+
+Note that this repo is for the python client for BioThings Explorer.  It is not currently being actively developed.  The primary development effort on the BioThings Explorer project is at https://github.com/biothings/BioThings_Explorer_TRAPI.
+
 
 ## Introduction
 
