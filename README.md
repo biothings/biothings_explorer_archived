@@ -8,9 +8,9 @@
 ![PyPI](https://img.shields.io/pypi/v/biothings-explorer)
 
 
-## Obsolete repo
+## Obsolete / archived repo
 
-Note that this repo is for the python client for BioThings Explorer.  It is not currently being actively developed.  The primary development effort on the BioThings Explorer project is at https://github.com/biothings/BioThings_Explorer_TRAPI.
+Note that this repo is for the python client for BioThings Explorer.  It is not currently being actively developed, so this repo is archived.  The primary development effort on the BioThings Explorer project is at https://github.com/biothings/BioThings_Explorer_TRAPI.
 
 
 ## Introduction
